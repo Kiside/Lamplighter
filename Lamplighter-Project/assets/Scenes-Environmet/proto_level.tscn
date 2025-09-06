@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://cfmoaycvrks0i"]
+
+[ext_resource type="PackedScene" uid="uid://c5mvvlosts20h" path="res://assets/Characters/Playable/charlie.tscn" id="1_qfi3i"]
+
+[node name="ProtoLevel" type="Node3D"]
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0358276, 0)
+size = Vector3(21.6799, 0.0296631, 20.2432)
+
+[node name="Charlie" parent="." instance=ExtResource("1_qfi3i")]

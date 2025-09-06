@@ -1,0 +1,22 @@
+[gd_scene load_steps=5 format=3 uid="uid://c5mvvlosts20h"]
+
+[ext_resource type="Script" uid="uid://cfa3lmuiqwqp8" path="res://assets/Scripts/Characters/Playable/CharlieController.cs" id="1_0iqh4"]
+[ext_resource type="Material" uid="uid://br8jrg5r6syxj" path="res://assets/Materials/Characters/proto_Charlie.tres" id="1_qebit"]
+[ext_resource type="Script" uid="uid://ktg5uom66wwd" path="res://assets/Scripts/Characters/Playable/CharlieMovement.cs" id="2_momr7"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_0bkd4"]
+
+[node name="Charlie" type="CharacterBody3D" node_paths=PackedStringArray("movement")]
+script = ExtResource("1_0iqh4")
+movement = NodePath("Movement")
+
+[node name="Pivot" type="Node3D" parent="."]
+
+[node name="CSGBox3D" type="CSGBox3D" parent="Pivot"]
+material_override = ExtResource("1_qebit")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_0bkd4")
+
+[node name="Movement" type="Node" parent="."]
+script = ExtResource("2_momr7")
