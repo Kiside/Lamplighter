@@ -1,9 +1,9 @@
 {
-    "godotTools.editorPath.godot4": "C:\\Users\\ABB_1\\Godot\\Editors\\.editor_config\\Lamplighter-Project\\Godot_v4.4.1-stable_mono_win64.exe",
-    "editor.tabSize": 4,
-    "editor.insertSpaces": false,
-    "files.eol": "\n",
-    "files.exclude": {
-        "**/*.gd.uid": true
-    }
+  "godotTools.editorPath.godot4": "c:\\Users\\ABB_1\\Godot\\Editors\\4.4.1-stable-mono\\Godot_v4.4.1-stable_mono_win64\\Godot_v4.4.1-stable_mono_win64_console.exe",
+  "editor.tabSize": 4,
+  "editor.insertSpaces": false,
+  "files.eol": "\n",
+  "files.exclude": {
+    "**/*.gd.uid": true
+  }
 }

@@ -6,14 +6,17 @@
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_0bkd4"]
 
-[node name="Charlie" type="CharacterBody3D" node_paths=PackedStringArray("movement")]
+[node name="Charlie" type="CharacterBody3D"]
 script = ExtResource("1_0iqh4")
-movement = NodePath("Movement")
+MovementNode = NodePath("Movement")
 
 [node name="Pivot" type="Node3D" parent="."]
 
 [node name="CSGBox3D" type="CSGBox3D" parent="Pivot"]
 material_override = ExtResource("1_qebit")
+
+[node name="Camera3D" type="Camera3D" parent="Pivot"]
+transform = Transform3D(-3.2543e-08, 0.667625, -0.744498, 2.91828e-08, 0.744498, 0.667625, 1, 0, -4.37114e-08, -2.21342, 1.76005, 0.034)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("BoxShape3D_0bkd4")

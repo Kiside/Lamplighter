@@ -4,9 +4,11 @@ using System;
 public abstract partial class AbstractMovement : Node
 {
 	[Export]
-	public int speed = 14;
+	public int Speed = 14;
 	[Export]
-	public int fall_acceleration = 75;
+	public int Fall_acceleration = 75;
+
+	protected Vector3 _targetVelocity = Vector3.Zero;
 
 	public abstract Godot.Vector3 Move(double delta);
 }
