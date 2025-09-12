@@ -1,25 +1,41 @@
 using Godot;
 using System;
 
-public partial class CharlieController : CharacterBody3D
+public partial class CharlieController : AbstractPlayableCharacterController
 {
 
-	[Export]
-	public NodePath MovementNode;
+	protected AbstractCombat<CharlieController> _combat;
+	protected AbstractMovement<CharlieController> _movement;
+	private bool _lockOn = false;
 
-	private AbstractMovement _movement;
+	public bool LockOn { get { return _lockOn; } set { _lockOn = value; } }
 
 	public override void _Ready()
 	{
 		base._Ready();
 
-		if (MovementNode != null)
-			_movement = GetNode<AbstractMovement>(MovementNode);
-		else
-			GD.PrintErr("There is no -MovementNode-");
+		_combat.Init(this);
+		_movement.Init(this);
 	}
+
+	protected override void NodeChecking()
+	{
+		string noNode = "There is no ";
+
+		if (MovementNode != null)
+			_movement = GetNode<AbstractMovement<CharlieController>>(MovementNode);
+		else
+			GD.PrintErr($"{noNode} -MovementNode-");
+
+		if (CombatNode != null)
+			_combat = GetNode<AbstractCombat<CharlieController>>(CombatNode);
+		else
+			GD.PrintErr($"{noNode} -CombatNode-");
+	}
+
 	public override void _PhysicsProcess(double delta)
 	{
+		_combat.Combat();
 		Velocity = _movement.Move(delta);
 		MoveAndSlide();
 	}

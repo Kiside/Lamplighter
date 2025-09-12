@@ -1,14 +1,16 @@
-[gd_scene load_steps=5 format=3 uid="uid://c5mvvlosts20h"]
+[gd_scene load_steps=6 format=3 uid="uid://c5mvvlosts20h"]
 
 [ext_resource type="Script" uid="uid://cfa3lmuiqwqp8" path="res://assets/Scripts/Characters/Playable/CharlieController.cs" id="1_0iqh4"]
 [ext_resource type="Material" uid="uid://br8jrg5r6syxj" path="res://assets/Materials/Characters/proto_Charlie.tres" id="1_qebit"]
 [ext_resource type="Script" uid="uid://ktg5uom66wwd" path="res://assets/Scripts/Characters/Playable/CharlieMovement.cs" id="2_momr7"]
+[ext_resource type="Script" uid="uid://lov737cbbet7" path="res://assets/Scripts/Characters/Playable/CharlieCombat.cs" id="4_cx7ps"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_0bkd4"]
 
 [node name="Charlie" type="CharacterBody3D"]
 script = ExtResource("1_0iqh4")
 MovementNode = NodePath("Movement")
+CombatNode = NodePath("Combat")
 
 [node name="Pivot" type="Node3D" parent="."]
 
@@ -23,3 +25,6 @@ shape = SubResource("BoxShape3D_0bkd4")
 
 [node name="Movement" type="Node" parent="."]
 script = ExtResource("2_momr7")
+
+[node name="Combat" type="Node" parent="."]
+script = ExtResource("4_cx7ps")

@@ -2,8 +2,13 @@ using Godot;
 using System;
 
 
-public partial class CharlieMovement : AbstractMovement
+public partial class CharlieMovement : AbstractMovement<CharlieController>
 {
+	public override void Init(CharlieController controller)
+	{
+		base.Init(controller);
+	}
+
 	public override Vector3 Move(double delta)
 	{
 		Vector3 direction = Vector3.Zero;
@@ -37,5 +42,13 @@ public partial class CharlieMovement : AbstractMovement
 		return _targetVelocity;
 	}
 
+	public void FreeMove()
+	{
 
+	}
+
+	public void CombatMove()
+	{
+
+	}
 }
