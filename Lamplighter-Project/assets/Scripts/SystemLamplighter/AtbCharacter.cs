@@ -11,6 +11,8 @@ namespace SystemLamplighter
 		int Speed;
 		// Collegamento diretto con il personaggio
 		AtbController Controller;
+		// Posizione del personaggio all'interno dell'ATB
+		float BarPosition;
 
 		public string Name => Controller.Name;
 
@@ -26,7 +28,7 @@ namespace SystemLamplighter
 		/// </summary>
 		public void Action()
 		{
-
+			Controller.Action();
 		}
 	}
 }

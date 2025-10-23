@@ -45,7 +45,7 @@ namespace SystemLamplighter
 		/// <param name="character">personaggio</param>
 		public void AddCharacter(AtbCharacter character)
 		{
-			_charactersInCombat.Add(character);
+			_model.AddCharacter(character);
 		}
 
 		/// <summary>
@@ -53,7 +53,7 @@ namespace SystemLamplighter
 		/// </summary>
 		public void ClearCharactersInCombat()
 		{
-			_charactersInCombat.Clear();
+			_model.ClearCharacters();
 		}
 
 		/// <summary>
@@ -62,8 +62,7 @@ namespace SystemLamplighter
 		/// <param name="character"></param>
 		public void RemoveCharacterInCombat(AtbCharacter character)
 		{
-			if (!_charactersInCombat.Remove(character))
-				Log.PrintWarning($"Non è stato possibile rimuovere {character.Name}");
+			_model.RemoveCharacter(character);
 		}
 	}
 }
