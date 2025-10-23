@@ -1,26 +1,29 @@
 using Godot;
 using System;
 
-public partial class CharlieCombat : AbstractCombat<CharlieController>
+namespace Characters.Playable
 {
-
-	public override void Init(CharlieController controller)
-	{
-		base.Init(controller);
-	}
-
-	public override void Combat()
+	public partial class CharlieCombat : AbstractCombat<CharlieController>
 	{
 
-	}
+		public override void Init(CharlieController controller)
+		{
+			base.Init(controller);
+		}
 
-	protected void LockOn()
-	{
+		public override void Combat()
+		{
 
-	}
+		}
 
-	protected void Attack()
-	{
+		protected void LockOn()
+		{
 
+		}
+
+		protected void Attack()
+		{
+
+		}
 	}
 }

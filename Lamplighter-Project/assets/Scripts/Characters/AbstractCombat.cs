@@ -1,18 +1,22 @@
 using Godot;
 using System;
 
-public abstract partial class AbstractCombat<TController> : Node
-where TController : AbstractPlayableCharacterController
+namespace Characters
 {
-	[Export]
-	public float Damage = 0;
-
-	TController _controller;
-
-	public virtual void Init(TController controller)
+	public abstract partial class AbstractCombat<TController> : Node
+	where TController : AbstractPlayableCharacterController
 	{
-		_controller = controller;
-	}
+		[Export]
+		public float Damage = 0;
 
-	public abstract void Combat();
+		TController _controller;
+
+		public virtual void Init(TController controller)
+		{
+			_controller = controller;
+		}
+
+		public abstract void Combat();
+	}
 }
+
