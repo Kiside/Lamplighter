@@ -16,4 +16,11 @@ namespace SystemLamplighter
 		public const string Right = "move_right";
 
 	}
+
+	public enum AtbCharacterType
+	{
+		ALLY,
+		ENEMY
+	}
+
 }

@@ -2,15 +2,17 @@
 
 [ext_resource type="Script" uid="uid://nemmvqj4xx84" path="res://assets/Scripts/SystemLamplighter/ActionTimeBattleView.cs" id="1_4n07o"]
 
-[node name="ActiveTimeBattleView" type="Control"]
+[node name="ActiveTimeBattleView" type="Control" node_paths=PackedStringArray("_playerContainer", "_enemyContainer")]
 custom_minimum_size = Vector2(300, 42.25)
 layout_mode = 3
 anchors_preset = 0
 offset_right = 300.0
 offset_bottom = 42.25
 script = ExtResource("1_4n07o")
+_playerContainer = NodePath("ActiveTimeBattleBar/PlayerContainer")
+_enemyContainer = NodePath("ActiveTimeBattleBar/EnemyContainer")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="ActiveTimeBattleBar" type="VBoxContainer" parent="."]
 custom_minimum_size = Vector2(300, 42.25)
 layout_mode = 1
 anchors_preset = 15
@@ -18,16 +20,23 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/separation = 0
 
-[node name="Control" type="Control" parent="VBoxContainer"]
-custom_minimum_size = Vector2(0, 10)
+[node name="PlayerContainer" type="Control" parent="ActiveTimeBattleBar"]
 layout_mode = 2
+size_flags_vertical = 3
 
-[node name="Control2" type="Control" parent="VBoxContainer"]
-custom_minimum_size = Vector2(0, 15)
+[node name="ColorRect" type="ColorRect" parent="ActiveTimeBattleBar/PlayerContainer"]
+layout_mode = 0
+offset_right = 9.999992
+offset_bottom = 15.0
+color = Color(0.9115703, 0, 0.057017803, 1)
+
+[node name="BarContainer" type="Control" parent="ActiveTimeBattleBar"]
 layout_mode = 2
+size_flags_vertical = 3
 
-[node name="ColorRect" type="ColorRect" parent="VBoxContainer/Control2"]
+[node name="ColorRect" type="ColorRect" parent="ActiveTimeBattleBar/BarContainer"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -36,6 +45,6 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.20881093, 0.420686, 0.80299157, 1)
 
-[node name="Control3" type="Control" parent="VBoxContainer"]
-custom_minimum_size = Vector2(0, 10)
+[node name="EnemyContainer" type="Control" parent="ActiveTimeBattleBar"]
 layout_mode = 2
+size_flags_vertical = 3

@@ -9,6 +9,8 @@ namespace SystemLamplighter
 	{
 		private List<AtbCharacter> _charactersInCombat;
 
+		
+
 		public override void _PhysicsProcess(double delta)
 		{
 			ClockingAtb();
@@ -19,7 +21,10 @@ namespace SystemLamplighter
 		/// </summary>
 		private void ClockingAtb()
 		{
-
+			//processa la posizione per ogni personaggio
+			//...
+			//Chiedo alla view di riposizionare i vari personaggi
+			//_view.UpdatePosition()
 		}
 
 		/// <summary>
@@ -46,6 +51,7 @@ namespace SystemLamplighter
 		public void AddCharacter(AtbCharacter character)
 		{
 			_model.AddCharacter(character);
+			
 		}
 
 		/// <summary>
