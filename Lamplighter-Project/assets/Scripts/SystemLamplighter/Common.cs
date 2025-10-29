@@ -1,11 +1,20 @@
 using System;
 using System.Collections.Generic;
+using System.Reflection.Metadata.Ecma335;
 
 namespace SystemLamplighter
 {
+
+
 	public static class Common
 	{
+		public const float ATB_COM_POSITION = 0.58f;
+		public const float ATB_COMAND_THRESHOLD = 0.45F;
 
+		public static float ToSingle(double value)
+		{
+			return (float)value;
+		}
 	}
 
 	public static class InputMap
@@ -21,6 +30,13 @@ namespace SystemLamplighter
 	{
 		ALLY,
 		ENEMY
+	}
+
+	public enum AtbCharacterStatus
+	{
+		CHARGE,
+		COM,
+		ACTION
 	}
 
 }
