@@ -8,6 +8,9 @@ namespace SystemLamplighter
 	{
 		private List<AtbCharacter> _charactersInCombat;
 
+		public int CharactersCount => _charactersInCombat.Count;
+		public List<AtbCharacter> Characters => _charactersInCombat;
+
 		/// <summary>
 		/// Aggiunge un personaggio alla lista
 		/// </summary>

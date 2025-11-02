@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=3 uid="uid://dbtex6mgn3dnh"]
+
+[ext_resource type="Script" uid="uid://d3k7w2o8grjys" path="res://assets/Scripts/SystemLamplighter/ActionTimeBattleController.cs" id="1_whxdx"]
+[ext_resource type="PackedScene" uid="uid://bsregimn7ywha" path="res://assets/UI/Scenes/ActiveTimeBattleView.tscn" id="2_815pk"]
+[ext_resource type="Script" uid="uid://bqm0j4uf4oxm2" path="res://assets/Scripts/SystemLamplighter/ActionTimeBattleModel.cs" id="3_0cpn8"]
+
+[node name="ATB" type="Node"]
+script = ExtResource("1_whxdx")
+View = NodePath("ActiveTimeBattleView")
+Model = NodePath("ActiveTimeBattleModel")
+
+[node name="ActiveTimeBattleView" parent="." instance=ExtResource("2_815pk")]
+
+[node name="ActiveTimeBattleModel" type="Node" parent="."]
+script = ExtResource("3_0cpn8")

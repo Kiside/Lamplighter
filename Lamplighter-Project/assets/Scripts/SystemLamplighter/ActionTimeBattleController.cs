@@ -35,11 +35,11 @@ namespace SystemLamplighter
 			{
 				// _currentIndex mantiene l'ultimo indice che è stato controllato
 				int i = _currentIndex;
-				while (i < _charactersInCombat.Count)
+				while (i < _model.CharactersCount)
 				{
-					float pos = Common.ToSingle(_charactersInCombat[i].Position);
+					float pos = Common.ToSingle(_model.Characters[i].Position);
 					// Se un personaggio entra in Command
-					if (_charactersInCombat[i].UpdatePosition(pos) == AtbCharacterStatus.COM)
+					if (_model.Characters[i].UpdatePosition(pos) == AtbCharacterStatus.COM)
 					{
 						// Bisogna evitare il continuo del ciclo è "fermare" il proseguimento dell'ATB
 						_inCharging = false;
@@ -61,7 +61,7 @@ namespace SystemLamplighter
 		/// </summary>
 		private void CommandAtb()
 		{
-
+			Log.PrintMessage("Sto in command");
 		}
 
 		/// <summary>
