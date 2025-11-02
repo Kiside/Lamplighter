@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://bjvqik1fmkboh"]
 
 [ext_resource type="PackedScene" uid="uid://dbtex6mgn3dnh" path="res://assets/Scenes-Node/Atb.tscn" id="1_7okkr"]
-[ext_resource type="Script" uid="uid://h6nntw8ksb10" path="res://assets/Scripts/SystemLamplighter/DebugButton.cs" id="2_4px06"]
+[ext_resource type="Script" uid="uid://diat8x8rgg5om" path="res://assets/Scripts/SystemLamplighter/Debug/DebugAtb.cs" id="2_4px06"]
 
 [node name="ProtoCombat" type="Node"]
 
@@ -16,6 +16,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 0
 grow_vertical = 2
+script = ExtResource("2_4px06")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="DebugATB"]
 custom_minimum_size = Vector2(80.31, 0)
@@ -30,13 +31,16 @@ grow_vertical = 2
 
 [node name="StartCombat" type="Button" parent="DebugATB/VBoxContainer"]
 layout_mode = 2
-script = ExtResource("2_4px06")
+text = "Start Combat"
 
 [node name="StopCombat" type="Button" parent="DebugATB/VBoxContainer"]
 layout_mode = 2
+text = "Stop Combat"
 
 [node name="RemoveCharacter" type="Button" parent="DebugATB/VBoxContainer"]
 layout_mode = 2
+text = "Remove Character"
 
 [node name="AddCharacters" type="Button" parent="DebugATB/VBoxContainer"]
 layout_mode = 2
+text = "Add Character"

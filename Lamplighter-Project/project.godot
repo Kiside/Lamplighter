@@ -18,6 +18,10 @@ config/icon="res://assets/icon.svg"
 
 project/assembly_name="Lamplighter-Project"
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/LamplighterPlugins/plugin.cfg")
+
 [input]
 
 move_up={

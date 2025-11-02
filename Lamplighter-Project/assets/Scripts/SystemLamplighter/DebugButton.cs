@@ -3,12 +3,12 @@ using Godot;
 [Tool]
 public partial class DebugButton : Button
 {
-	public override void _Process(double delta)
+	public override void _EnterTree()
 	{
-		if (!Engine.IsEditorHint())
-			return;
+		//base._EnterTree();
 
-		if (Text != Name)
-			Text = Name;
+		this.Text = Name;
 	}
+
+
 }

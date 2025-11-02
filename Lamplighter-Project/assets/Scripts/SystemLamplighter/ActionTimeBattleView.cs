@@ -63,5 +63,10 @@ namespace SystemLamplighter
 			float currentPosition = (minimumSize.X / _charactersPosition[index] + TEMP_DEFAULT_SIZE_AVATAR);
 			_charactersPosition[index] = currentPosition;
 		}
+
+		public void ClearCharacters()
+		{
+			_charactersPosition.Clear();
+		}
 	}
 }

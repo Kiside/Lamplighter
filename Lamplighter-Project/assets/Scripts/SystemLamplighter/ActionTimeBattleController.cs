@@ -9,7 +9,7 @@ namespace SystemLamplighter
 	{
 		private List<AtbCharacter> _charactersInCombat;
 
-		bool _inCharging = true;
+		bool _inCharging = false;
 		int _currentIndex;
 
 		public override void Init()
@@ -106,6 +106,13 @@ namespace SystemLamplighter
 		public void RemoveCharacterInCombat(AtbCharacter character)
 		{
 			_model.RemoveCharacter(character);
+		}
+
+		public void StopAtb()
+		{
+			_inCharging = false;
+			ClearCharactersInCombat();
+			_currentIndex = 0;
 		}
 	}
 }
