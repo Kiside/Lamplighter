@@ -11,14 +11,14 @@ namespace SystemLamplighter
 		// La velocità del personaggio sull'ATB
 		int _speed;
 		// Collegamento diretto con il personaggio
-		AtbController _controller;
+		AtbCharacterController _controller;
 		// Posizione del personaggio all'interno dell'ATB
 		float _barPosition;
 		//
 		AtbCharacterType _characterType;
 		AtbCharacterStatus _status;
 
-		AtbController Controller => _controller;
+		AtbCharacterController Controller => _controller;
 		public string Name => Controller.Name;
 		public AtbCharacterType CharacterType => _characterType;
 		public Image Avatar => _avatar;
@@ -55,7 +55,7 @@ namespace SystemLamplighter
 			_status = AtbCharacterStatus.CHARGE;
 		}
 
-		public AtbCharacter(Image avatar, int speed, AtbController controller, AtbCharacterType atbCharacterType)
+		public AtbCharacter(Image avatar, int speed, AtbCharacterController controller, AtbCharacterType atbCharacterType)
 		{
 			_avatar = avatar;
 			_speed = speed;

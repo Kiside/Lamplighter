@@ -3,12 +3,11 @@ using Godot;
 [Tool]
 public partial class DebugButton : Button
 {
-	public override void _EnterTree()
+	[ExportToolButton("EditNameNode")]
+	public Callable EditNameNodeButton => Callable.From(EditNameNodeButtonFunc);
+
+	public void EditNameNodeButtonFunc()
 	{
-		//base._EnterTree();
-
-		this.Text = Name;
+		Name = Text;
 	}
-
-
 }

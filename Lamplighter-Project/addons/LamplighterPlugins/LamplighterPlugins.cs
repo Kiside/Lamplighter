@@ -7,7 +7,7 @@ public partial class LamplighterPlugins : EditorPlugin
 {
 	public override void _EnterTree()
 	{
-		var script = GD.Load<Script>("res://addons/LamplighterPlugins/LamplighterPlugins.cs");
+		var script = GD.Load<Script>("res://assets/Scripts/SystemLamplighter/DebugButton.cs");
 		var texture = GD.Load<Texture2D>("res://assets/icon.svg");
 		AddCustomType("DebugButton", "Button", script, texture);
 		// Initialization of the plugin goes here.

@@ -26,11 +26,10 @@ theme_override_constants/separation = 0
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="ColorRect" type="ColorRect" parent="ActiveTimeBattleBar/PlayerContainer"]
+[node name="TextureRect" type="TextureRect" parent="ActiveTimeBattleBar/PlayerContainer"]
 layout_mode = 0
-offset_right = 9.999992
-offset_bottom = 15.0
-color = Color(0.9115703, 0, 0.057017803, 1)
+offset_right = 40.0
+offset_bottom = 40.0
 
 [node name="BarContainer" type="Control" parent="ActiveTimeBattleBar"]
 layout_mode = 2

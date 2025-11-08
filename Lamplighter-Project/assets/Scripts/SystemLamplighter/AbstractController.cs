@@ -4,8 +4,8 @@ using Godot;
 namespace SystemLamplighter
 {
 	public abstract partial class AbstractController<TView, TModel> : Node
-	where TView : Node
-	where TModel : Node
+	where TView : AbstractView
+	where TModel : AbstractModel
 	{
 		[Export]
 		public NodePath View;
@@ -29,15 +29,23 @@ namespace SystemLamplighter
 
 		public virtual void NodeChecking()
 		{
-			if (View is null || View is not TView)
+			if (View is null)
 				Log.PrintWarning("There is no View");
 			else
+			{
 				_view = GetNode<TView>(View);
+				_view.Init();
+			}
 
-			if (Model is null || Model is not TModel)
+
+			if (Model is null)
 				Log.PrintWarning("There is no Model");
 			else
+			{
 				_model = GetNode<TModel>(Model);
+				_model.Init();
+			}
+
 		}
 	}
 }

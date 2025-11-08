@@ -26,14 +26,21 @@ namespace SystemLamplighter
 			_charactersPosition = new List<float>();
 		}
 
+		/// <summary>
+		/// Metodo per aggiungere il personaggio nella View dell'atb
+		/// </summary>
+		/// <param name="character"></param>
 		public void AddCharacter(AtbCharacter character)
 		{
-
+			Log.PrintMessage("Adding character in view");
 			if (character is null)
 				Log.PrintMessage("No AtbCharacter");
 
 			TextureRect textureRect = new TextureRect();
 			textureRect.Texture = ImageTexture.CreateFromImage(character.Avatar);
+			textureRect.ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize;
+			textureRect.Size = new Vector2(14, 14);
+			textureRect.CustomMinimumSize = new Vector2(14, 14);
 
 			switch (character.CharacterType)
 			{
@@ -46,6 +53,14 @@ namespace SystemLamplighter
 			}
 
 			_charactersPosition.Add(0f);
+		}
+
+		/// <summary>
+		/// Rimuovere un personaggio nella View dell'ATB
+		/// </summary>
+		public void RemoveCharacter()
+		{
+
 		}
 
 		public void UpdatePositions(List<float> charactersPosition)
@@ -67,6 +82,14 @@ namespace SystemLamplighter
 		public void ClearCharacters()
 		{
 			_charactersPosition.Clear();
+			for (int i = 0; i < _enemyContainer.GetChildren().Count; i++)
+			{
+				_enemyContainer.RemoveChild(_enemyContainer.GetChildren()[i]);
+			}
+			for (int i = 0; i < _playerContainer.GetChildren().Count; i++)
+			{
+				_playerContainer.RemoveChild(_playerContainer.GetChildren()[i]);
+			}
 		}
 	}
 }

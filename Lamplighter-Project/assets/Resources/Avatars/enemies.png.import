@@ -1,0 +1,14 @@
+[remap]
+
+importer="image"
+type="Image"
+uid="uid://cqklojhdlw85m"
+path="res://.godot/imported/enemies.png-9fbecbdc65fcae24b26c25aa09a7fb6b.image"
+
+[deps]
+
+source_file="res://assets/Resources/Avatars/enemies.png"
+dest_files=["res://.godot/imported/enemies.png-9fbecbdc65fcae24b26c25aa09a7fb6b.image"]
+
+[params]
+

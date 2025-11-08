@@ -17,6 +17,7 @@ namespace SystemLamplighter
 			base.Init();
 
 			_currentIndex = 0;
+			_charactersInCombat = new List<AtbCharacter>();
 		}
 
 		public override void _PhysicsProcess(double delta)
@@ -30,8 +31,8 @@ namespace SystemLamplighter
 		private void ClockingAtb(double delta)
 		{
 			//processa la posizione per ogni personaggio
-			// Se lo stato di tutti i personaggi è in charging allora il ciclo può continuare
-			if (_inCharging)
+			// Se lo stato di tutti i personaggi è in charging e ci sono personaggi nell'atb allora il ciclo può continuare
+			if (_inCharging && _charactersInCombat.Count > 0)
 			{
 				// _currentIndex mantiene l'ultimo indice che è stato controllato
 				int i = _currentIndex;
@@ -52,6 +53,10 @@ namespace SystemLamplighter
 					i++;
 				}
 				_currentIndex = 0;
+			}
+			else if (_inCharging && _charactersInCombat.Count <= 0)
+			{
+				Log.PrintMessage("InCharge ma nessun personaggio");
 			}
 
 		}
@@ -88,7 +93,7 @@ namespace SystemLamplighter
 		public void AddCharacter(AtbCharacter character)
 		{
 			_model.AddCharacter(character);
-
+			_view.AddCharacter(character);
 		}
 
 		/// <summary>
@@ -97,6 +102,7 @@ namespace SystemLamplighter
 		public void ClearCharactersInCombat()
 		{
 			_model.ClearCharacters();
+			_view.ClearCharacters();
 		}
 
 		/// <summary>
@@ -106,6 +112,7 @@ namespace SystemLamplighter
 		public void RemoveCharacterInCombat(AtbCharacter character)
 		{
 			_model.RemoveCharacter(character);
+			_view.RemoveCharacter();
 		}
 
 		public void StopAtb()

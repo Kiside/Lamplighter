@@ -11,12 +11,19 @@ namespace SystemLamplighter
 		public int CharactersCount => _charactersInCombat.Count;
 		public List<AtbCharacter> Characters => _charactersInCombat;
 
+		public override void Init()
+		{
+			_charactersInCombat = new List<AtbCharacter>();
+		}
+
+
 		/// <summary>
 		/// Aggiunge un personaggio alla lista
 		/// </summary>
 		/// <param name="character">personaggio</param>
 		public void AddCharacter(AtbCharacter character)
 		{
+			Log.PrintMessage("Add character");
 			_charactersInCombat.Add(character);
 		}
 
