@@ -11,7 +11,15 @@ namespace SystemLamplighter
 		[Export]
 		private Control _enemyContainer;
 
-		private List<float> _charactersPosition;
+		[Export]
+		private Vector2 avatarSize = Vector2.Zero;
+		[Export]
+		private Vector2 avatarMinimumSize = Vector2.Zero;
+		[Export]
+		TextureRect.ExpandModeEnum avatarExpandMode = TextureRect.ExpandModeEnum.IgnoreSize;
+
+		//private List<float> _charactersPosition;
+		private List<TextureRect> _characters;
 
 		private const float TEMP_DEFAULT_SIZE_AVATAR = 15;
 
@@ -23,7 +31,7 @@ namespace SystemLamplighter
 			if (_enemyContainer is null)
 				Log.PrintWarning("There is no EnemyContainer");
 
-			_charactersPosition = new List<float>();
+			_characters = new List<TextureRect>();
 		}
 
 		/// <summary>
@@ -37,10 +45,8 @@ namespace SystemLamplighter
 				Log.PrintMessage("No AtbCharacter");
 
 			TextureRect textureRect = new TextureRect();
-			textureRect.Texture = ImageTexture.CreateFromImage(character.Avatar);
-			textureRect.ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize;
-			textureRect.Size = new Vector2(14, 14);
-			textureRect.CustomMinimumSize = new Vector2(14, 14);
+			textureRect.SettingUp(avatarSize, avatarMinimumSize, character.Avatar, avatarExpandMode);
+			textureRect.SetAnchors();
 
 			switch (character.CharacterType)
 			{
@@ -52,7 +58,7 @@ namespace SystemLamplighter
 					break;
 			}
 
-			_charactersPosition.Add(0f);
+			_characters.Add(textureRect);
 		}
 
 		/// <summary>
@@ -65,23 +71,29 @@ namespace SystemLamplighter
 
 		public void UpdatePositions(List<float> charactersPosition)
 		{
-			var minimumSize = this.GetMinimumSize();
-			for (int i = 0; i < _charactersPosition.Count; i++)
+			var minimumSize = this.CustomMinimumSize;
+			for (int i = 0; i < _characters.Count; i++)
 			{
-				float currentPosition = (minimumSize.X / _charactersPosition[i] + TEMP_DEFAULT_SIZE_AVATAR);
-				_charactersPosition[i] = currentPosition;
+				float currentPosition = (minimumSize.X / _characters[i].Position.X + TEMP_DEFAULT_SIZE_AVATAR);
+				_characters[i].Position = new Vector2(currentPosition, _characters[i].Position.Y);
 			}
 		}
 		public void UpdatePosition(float position, int index)
 		{
-			var minimumSize = this.GetMinimumSize();
-			float currentPosition = (minimumSize.X / _charactersPosition[index] + TEMP_DEFAULT_SIZE_AVATAR);
-			_charactersPosition[index] = currentPosition;
+			var barWidth = this.Size.X;
+
+			float x = Mathf.Lerp(0, barWidth - avatarSize.X, position);
+			_characters[index].Position = new Vector2(x, _characters[index].Position.Y);
+
+			//float currentPosition = (minimumSize.X / _characters[index].Position.X + TEMP_DEFAULT_SIZE_AVATAR);
+			//_characters[index].Position = new Vector2(currentPosition, _characters[index].Position.Y);
+			//_characters[index].SetPosition(new Vector2(currentPosition, _characters[index].Position.Y));
+			//Log.PrintMessage($"{index} - {currentPosition})");
 		}
 
 		public void ClearCharacters()
 		{
-			_charactersPosition.Clear();
+			_characters.Clear();
 			for (int i = 0; i < _enemyContainer.GetChildren().Count; i++)
 			{
 				_enemyContainer.RemoveChild(_enemyContainer.GetChildren()[i]);

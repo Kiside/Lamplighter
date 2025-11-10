@@ -7,7 +7,10 @@ public partial class DebugAtb : Node
 {
 	[Export]
 	public NodePath Atb;
-
+	[Export]
+	private TextEdit allyNumberIndex;
+	[Export]
+	private Slider sliderAlly;
 	[Export]
 	Image _alliesImage;
 	[Export]
@@ -41,7 +44,7 @@ public partial class DebugAtb : Node
 		{
 			AtbCharacterController atbCharacterController = new AtbCharacterController();
 			atbCharacterController.Name = $"Ciccio{i}";
-			AtbCharacter character = new AtbCharacter(_alliesImage, 1, atbCharacterController, AtbCharacterType.ALLY);
+			AtbCharacter character = new AtbCharacter(_alliesImage, 0.1f, atbCharacterController, AtbCharacterType.ALLY);
 			AddCharacter(character);
 		}
 
@@ -50,7 +53,7 @@ public partial class DebugAtb : Node
 		{
 			AtbCharacterController atbCharacterController = new AtbCharacterController();
 			atbCharacterController.Name = $"Ciccio{i}";
-			AtbCharacter character = new AtbCharacter(_enemiesImage, 1, atbCharacterController, AtbCharacterType.ENEMY);
+			AtbCharacter character = new AtbCharacter(_enemiesImage, 0.1f, atbCharacterController, AtbCharacterType.ENEMY);
 			AddCharacter(character);
 		}
 
@@ -65,4 +68,10 @@ public partial class DebugAtb : Node
 	{
 		_atbController.AddCharacter(character);
 	}
+
+	public void OnAllySliderChange(float value)
+	{
+		_atbController.CallViewUpdatePosition(value, allyNumberIndex.Text.ToInt());
+	}
+
 }

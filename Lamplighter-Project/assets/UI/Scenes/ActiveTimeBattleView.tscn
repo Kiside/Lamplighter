@@ -11,6 +11,8 @@ offset_bottom = 42.25
 script = ExtResource("1_4n07o")
 _playerContainer = NodePath("ActiveTimeBattleBar/PlayerContainer")
 _enemyContainer = NodePath("ActiveTimeBattleBar/EnemyContainer")
+avatarSize = Vector2(15, 15)
+avatarMinimumSize = Vector2(15, 15)
 
 [node name="ActiveTimeBattleBar" type="VBoxContainer" parent="."]
 custom_minimum_size = Vector2(300, 42.25)

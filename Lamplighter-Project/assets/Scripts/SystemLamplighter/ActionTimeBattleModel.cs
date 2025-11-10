@@ -44,5 +44,10 @@ namespace SystemLamplighter
 			if (!_charactersInCombat.Remove(character))
 				Log.PrintWarning($"Non è stato possibile rimuovere {character.Name}");
 		}
+
+		public float GetPosition(int index)
+		{
+			return _charactersInCombat[index].Position;
+		}
 	}
 }

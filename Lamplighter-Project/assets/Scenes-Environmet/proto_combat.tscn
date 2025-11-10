@@ -1,6 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://bjvqik1fmkboh"]
+[gd_scene load_steps=7 format=3 uid="uid://bjvqik1fmkboh"]
 
 [ext_resource type="PackedScene" uid="uid://dbtex6mgn3dnh" path="res://assets/Scenes-Node/Atb.tscn" id="1_7okkr"]
+[ext_resource type="Script" uid="uid://cq0rhvotjgmfs" path="res://assets/Scripts/SystemLamplighter/GameManager.cs" id="1_syokn"]
 [ext_resource type="Script" uid="uid://diat8x8rgg5om" path="res://assets/Scripts/SystemLamplighter/Debug/DebugAtb.cs" id="2_4px06"]
 [ext_resource type="Script" uid="uid://h6nntw8ksb10" path="res://assets/Scripts/SystemLamplighter/DebugButton.cs" id="3_hlmel"]
 [ext_resource type="Image" uid="uid://cqtat6q64v7p0" path="res://assets/Resources/Avatars/allies.png" id="3_khyje"]
@@ -8,9 +9,12 @@
 
 [node name="ProtoCombat" type="Node"]
 
+[node name="GameManager" type="Node" parent="."]
+script = ExtResource("1_syokn")
+
 [node name="ATB" parent="." instance=ExtResource("1_7okkr")]
 
-[node name="DebugATB" type="Control" parent="."]
+[node name="DebugATB" type="Control" parent="." node_paths=PackedStringArray("allyNumberIndex", "sliderAlly")]
 custom_minimum_size = Vector2(172.83, 0)
 layout_mode = 3
 anchors_preset = 11
@@ -21,45 +25,68 @@ grow_horizontal = 0
 grow_vertical = 2
 script = ExtResource("2_4px06")
 Atb = NodePath("../ATB")
+allyNumberIndex = NodePath("VBoxContainer/Ally Slider/TextEdit")
+sliderAlly = NodePath("VBoxContainer/Ally Slider/HSlider")
 _alliesImage = ExtResource("3_khyje")
 _enemiesImage = ExtResource("4_syokn")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="DebugATB"]
-custom_minimum_size = Vector2(80.31, 0)
+custom_minimum_size = Vector2(84.785, 0)
 layout_mode = 1
 anchors_preset = 11
 anchor_left = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -8.0
+offset_left = -255.0
 grow_horizontal = 0
 grow_vertical = 2
 
 [node name="Start Combat" type="Button" parent="DebugATB/VBoxContainer"]
+custom_minimum_size = Vector2(0, 90)
 layout_mode = 2
 text = "Start Combat"
 script = ExtResource("3_hlmel")
 metadata/_custom_type_script = "uid://h6nntw8ksb10"
 
 [node name="Stop Combat" type="Button" parent="DebugATB/VBoxContainer"]
+custom_minimum_size = Vector2(0, 90)
 layout_mode = 2
 text = "Stop Combat"
 script = ExtResource("3_hlmel")
 metadata/_custom_type_script = "uid://h6nntw8ksb10"
 
 [node name="Add Characters" type="Button" parent="DebugATB/VBoxContainer"]
+custom_minimum_size = Vector2(0, 90)
 layout_mode = 2
 text = "Add Characters"
 script = ExtResource("3_hlmel")
 metadata/_custom_type_script = "uid://h6nntw8ksb10"
 
 [node name="Remove Character" type="Button" parent="DebugATB/VBoxContainer"]
+custom_minimum_size = Vector2(0, 90)
 layout_mode = 2
 text = "Remove Character"
 script = ExtResource("3_hlmel")
 metadata/_custom_type_script = "uid://h6nntw8ksb10"
 
+[node name="Ally Slider" type="VBoxContainer" parent="DebugATB/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="DebugATB/VBoxContainer/Ally Slider"]
+layout_mode = 2
+text = "Ally position"
+
+[node name="TextEdit" type="TextEdit" parent="DebugATB/VBoxContainer/Ally Slider"]
+custom_minimum_size = Vector2(0, 25)
+layout_mode = 2
+
+[node name="HSlider" type="HSlider" parent="DebugATB/VBoxContainer/Ally Slider"]
+layout_mode = 2
+max_value = 1.0
+step = 0.05
+
 [connection signal="button_down" from="DebugATB/VBoxContainer/Start Combat" to="DebugATB" method="StartCombatClick"]
 [connection signal="button_down" from="DebugATB/VBoxContainer/Stop Combat" to="DebugATB" method="StopCombatClick"]
 [connection signal="button_down" from="DebugATB/VBoxContainer/Add Characters" to="DebugATB" method="AddCharacters"]
 [connection signal="button_down" from="DebugATB/VBoxContainer/Remove Character" to="DebugATB" method="RemoveCharacter"]
+[connection signal="value_changed" from="DebugATB/VBoxContainer/Ally Slider/HSlider" to="DebugATB" method="OnAllySliderChange"]

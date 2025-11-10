@@ -7,17 +7,17 @@ namespace SystemLamplighter
 {
 	public partial class ActionTimeBattleController() : AbstractController<ActionTimeBattleView, ActionTimeBattleModel>
 	{
-		private List<AtbCharacter> _charactersInCombat;
-
 		bool _inCharging = false;
 		int _currentIndex;
+
+		// PER DEBUG
+		public void CallViewUpdatePosition(float position, int index) => _view.UpdatePosition(position, index);
 
 		public override void Init()
 		{
 			base.Init();
 
 			_currentIndex = 0;
-			_charactersInCombat = new List<AtbCharacter>();
 		}
 
 		public override void _PhysicsProcess(double delta)
@@ -32,15 +32,14 @@ namespace SystemLamplighter
 		{
 			//processa la posizione per ogni personaggio
 			// Se lo stato di tutti i personaggi è in charging e ci sono personaggi nell'atb allora il ciclo può continuare
-			if (_inCharging && _charactersInCombat.Count > 0)
+			if (_inCharging && _model.CharactersCount > 0)
 			{
 				// _currentIndex mantiene l'ultimo indice che è stato controllato
 				int i = _currentIndex;
 				while (i < _model.CharactersCount)
 				{
-					float pos = Common.ToSingle(_model.Characters[i].Position);
 					// Se un personaggio entra in Command
-					if (_model.Characters[i].UpdatePosition(pos) == AtbCharacterStatus.COM)
+					if (_model.Characters[i].UpdatePosition((float)delta) == AtbCharacterStatus.COM)
 					{
 						// Bisogna evitare il continuo del ciclo è "fermare" il proseguimento dell'ATB
 						_inCharging = false;
@@ -49,12 +48,12 @@ namespace SystemLamplighter
 						break;
 					}
 					//Chiedo alla view di riposizionare i vari personaggi
-					_view.UpdatePosition(pos, i);
+					_view.UpdatePosition(_model.Characters[i].Position, i);
 					i++;
 				}
 				_currentIndex = 0;
 			}
-			else if (_inCharging && _charactersInCombat.Count <= 0)
+			else if (_inCharging && _model.CharactersCount <= 0)
 			{
 				Log.PrintMessage("InCharge ma nessun personaggio");
 			}
