@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 
 
-namespace SystemLamplighter
+namespace SystemLamplighter.ATB
 {
 	public partial class ActionTimeBattleController() : AbstractController<ActionTimeBattleView, ActionTimeBattleModel>
 	{

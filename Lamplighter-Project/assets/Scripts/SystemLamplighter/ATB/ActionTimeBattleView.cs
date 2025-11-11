@@ -2,7 +2,7 @@ using Godot;
 using System;
 using System.Collections.Generic;
 
-namespace SystemLamplighter
+namespace SystemLamplighter.ATB
 {
 	public partial class ActionTimeBattleView : AbstractView
 	{

@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://bsregimn7ywha"]
 
-[ext_resource type="Script" uid="uid://nemmvqj4xx84" path="res://assets/Scripts/SystemLamplighter/ActionTimeBattleView.cs" id="1_4n07o"]
+[ext_resource type="Script" uid="uid://nemmvqj4xx84" path="res://assets/Scripts/SystemLamplighter/ATB/ActionTimeBattleView.cs" id="1_4n07o"]
 
 [node name="ActiveTimeBattleView" type="Control" node_paths=PackedStringArray("_playerContainer", "_enemyContainer")]
 custom_minimum_size = Vector2(300, 42.25)
