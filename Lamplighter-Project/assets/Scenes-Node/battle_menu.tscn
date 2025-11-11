@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://bgsjemevth5s"]
+
+[ext_resource type="Script" uid="uid://nu5jt4rkw53g" path="res://assets/Scripts/SystemLamplighter/BattleMenu/BattleMenuController.cs" id="1_lw60u"]
+
+[node name="BattleMenuController" type="Node"]
+script = ExtResource("1_lw60u")
+
+[node name="BattleMenuView" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="BattleMenuModel" type="Node" parent="."]
