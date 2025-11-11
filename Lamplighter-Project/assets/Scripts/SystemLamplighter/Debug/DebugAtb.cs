@@ -5,12 +5,23 @@ using SystemLamplighter;
 
 public partial class DebugAtb : Node
 {
+	[ExportGroup("Atb")]
 	[Export]
 	public NodePath Atb;
+
+	[ExportGroup("Add Characters")]
 	[Export]
-	private TextEdit allyNumberIndex;
+	private OptionButton _optionButtonWhoAdd;
+	[Export]
+	private SpinBox maxNumberToAdd;
+
+	[ExportGroup("Move Ally")]
+	[Export]
+	private SpinBox allyNumberIndex;
 	[Export]
 	private Slider sliderAlly;
+
+	[ExportGroup("Avatar")]
 	[Export]
 	Image _alliesImage;
 	[Export]
@@ -23,6 +34,22 @@ public partial class DebugAtb : Node
 	public override void _Ready()
 	{
 		base._Ready();
+
+		if (Atb is null)
+			Log.PrintWarning("There is no Atb");
+		if (_optionButtonWhoAdd is null)
+			Log.PrintWarning("There is no _optionButtonWhoAdd");
+		if (maxNumberToAdd is null)
+			Log.PrintWarning("There is no maxNumberToAdd");
+		if (allyNumberIndex is null)
+			Log.PrintWarning("There is no allyNumberIndex");
+		if (sliderAlly is null)
+			Log.PrintWarning("There is no sliderAlly");
+		if (_alliesImage is null)
+			Log.PrintWarning("There is no _alliesImage");
+		if (_enemiesImage is null)
+			Log.PrintWarning("There is no _enemiesImage");
+
 
 		_atbController = GetNode<ActionTimeBattleController>(Atb);
 	}
@@ -39,24 +66,35 @@ public partial class DebugAtb : Node
 
 	public void AddCharacters()
 	{
-		Log.PrintMessage("Clicked add characters, allies");
-		for (int i = 0; i < 2; i++)
+		int maxValue = maxNumberToAdd.GetLineEdit().Text.ToInt();
+
+		switch (_optionButtonWhoAdd.GetSelectedId())
+		{
+			case 0:
+				AddingCharacter(AtbCharacterType.ALLY, maxValue, _alliesImage);
+				break;
+			case 1:
+				AddingCharacter(AtbCharacterType.ENEMY, maxValue, _enemiesImage);
+				break;
+			case 2:
+				AddingCharacter(AtbCharacterType.ALLY, maxValue, _alliesImage);
+				AddingCharacter(AtbCharacterType.ENEMY, maxValue, _enemiesImage);
+				break;
+
+		}
+	}
+
+	private void AddingCharacter(AtbCharacterType type, int maxValue, Image image)
+	{
+		Random random = new Random();
+		for (int i = 0; i < maxValue; i++)
 		{
 			AtbCharacterController atbCharacterController = new AtbCharacterController();
 			atbCharacterController.Name = $"Ciccio{i}";
-			AtbCharacter character = new AtbCharacter(_alliesImage, 0.1f, atbCharacterController, AtbCharacterType.ALLY);
+			double speed = 0.05 + random.NextDouble() * (0.3 - 0.05);
+			AtbCharacter character = new AtbCharacter(image, (float)speed, atbCharacterController, type);
 			AddCharacter(character);
 		}
-
-		Log.PrintMessage("Clicked add characters, enemies");
-		for (int i = 0; i < 2; i++)
-		{
-			AtbCharacterController atbCharacterController = new AtbCharacterController();
-			atbCharacterController.Name = $"Ciccio{i}";
-			AtbCharacter character = new AtbCharacter(_enemiesImage, 0.1f, atbCharacterController, AtbCharacterType.ENEMY);
-			AddCharacter(character);
-		}
-
 	}
 
 	public void RemoveCharacter()
@@ -71,7 +109,7 @@ public partial class DebugAtb : Node
 
 	public void OnAllySliderChange(float value)
 	{
-		_atbController.CallViewUpdatePosition(value, allyNumberIndex.Text.ToInt());
+		_atbController.CallViewUpdatePosition(value, allyNumberIndex.Prefix.ToInt());
 	}
 
 }
