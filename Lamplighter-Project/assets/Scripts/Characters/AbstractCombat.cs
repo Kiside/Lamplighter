@@ -4,7 +4,7 @@ using System;
 namespace Characters
 {
 	public abstract partial class AbstractCombat<TController> : Node
-	where TController : AbstractPlayableCharacterController
+	where TController : AbstractCharacterController
 	{
 		[Export]
 		public float Damage = 0;

@@ -41,4 +41,38 @@ namespace SystemLamplighter
 		ACTION
 	}
 
+	public enum ActionType
+	{
+		ATTACK,
+		GUARD,
+		MAGIC,
+		ITEM,
+		ESCAPE
+	}
+
+	public enum AttackType
+	{
+		LIGHT,
+		HEAVY,
+		RANGED,
+		PUSH,
+		AREA
+	}
+
+	public enum MagicType
+	{
+		DAMAGE,
+		RESTORE,
+		AREA
+	}
+
+	public enum ItemType
+	{
+		RESTORE,
+		REVIVE,
+		THROW
+	}
+
+
+
 }

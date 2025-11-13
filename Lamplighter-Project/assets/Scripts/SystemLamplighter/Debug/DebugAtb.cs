@@ -90,10 +90,9 @@ public partial class DebugAtb : Node
 		Random random = new Random();
 		for (int i = 0; i < maxValue; i++)
 		{
-			AtbCharacterController atbCharacterController = new AtbCharacterController();
-			atbCharacterController.Name = $"Ciccio{i}";
+			string name = $"Ciccio{i}";
 			double speed = 0.05 + random.NextDouble() * (0.3 - 0.05);
-			AtbCharacter character = new AtbCharacter(image, (float)speed, atbCharacterController, type);
+			AtbCharacter character = new AtbCharacter(image, (float)speed, name, type);
 			AddCharacter(character);
 		}
 	}

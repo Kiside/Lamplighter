@@ -3,7 +3,7 @@ using Godot;
 
 namespace Characters
 {
-	public abstract partial class AbstractPlayableCharacterController : CharacterBody3D
+	public abstract partial class AbstractCharacterController : CharacterBody3D, ICharacterController
 	{
 
 		[Export]
@@ -18,6 +18,8 @@ namespace Characters
 
 			NodeChecking();
 		}
+
+		public virtual void Init() { }
 
 		protected abstract void NodeChecking();
 	}

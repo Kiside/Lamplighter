@@ -4,7 +4,7 @@ using System;
 namespace Characters
 {
 	public abstract partial class AbstractMovement<TController> : Node
-	where TController : AbstractPlayableCharacterController
+	where TController : AbstractCharacterController
 	{
 		[Export]
 		public int Speed = 14;

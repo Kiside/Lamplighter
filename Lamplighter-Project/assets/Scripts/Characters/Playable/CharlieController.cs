@@ -3,7 +3,7 @@ using System;
 
 namespace Characters.Playable
 {
-	public partial class CharlieController : AbstractPlayableCharacterController
+	public partial class CharlieController : AbstractCharacterController, ICharacterControllerAtb
 	{
 
 		protected AbstractCombat<CharlieController> _combat;
@@ -16,6 +16,11 @@ namespace Characters.Playable
 		{
 			base._Ready();
 
+			Init();
+		}
+
+		public override void Init()
+		{
 			_combat.Init(this);
 			_movement.Init(this);
 		}
@@ -40,6 +45,11 @@ namespace Characters.Playable
 			_combat.Combat();
 			Velocity = _movement.Move(delta);
 			MoveAndSlide();
+		}
+
+		public void AtbAction()
+		{
+
 		}
 
 	}
