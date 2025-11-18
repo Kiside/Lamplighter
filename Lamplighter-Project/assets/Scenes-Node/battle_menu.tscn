@@ -1,14 +1,34 @@
-[gd_scene load_steps=2 format=3 uid="uid://bgsjemevth5s"]
+[gd_scene load_steps=12 format=3 uid="uid://bgsjemevth5s"]
 
 [ext_resource type="Script" uid="uid://nu5jt4rkw53g" path="res://assets/Scripts/SystemLamplighter/BattleMenu/BattleMenuController.cs" id="1_lw60u"]
+[ext_resource type="Script" uid="uid://dqy6v5c1tis0j" path="res://assets/Scripts/SystemLamplighter/BattleMenu/BattleMenuView.cs" id="2_s56ar"]
+[ext_resource type="Script" uid="uid://efakxwqf7t8l" path="res://assets/Scripts/SystemLamplighter/BattleMenu/BattleMenuModel.cs" id="3_8wnns"]
+[ext_resource type="Script" uid="uid://53pv7v0c5gad" path="res://assets/Scripts/SystemLamplighter/DataStructure/AttackAction.cs" id="4_ks2ia"]
+[ext_resource type="Resource" uid="uid://dlftjlcuk3pr4" path="res://assets/CustomResources/Prototype/attack.tres" id="5_64rrf"]
+[ext_resource type="Script" uid="uid://bnfdp5jkgnimd" path="res://assets/Scripts/SystemLamplighter/DataStructure/DefenseAction.cs" id="6_ues3h"]
+[ext_resource type="Resource" uid="uid://dcd5ackoimdk6" path="res://assets/CustomResources/Prototype/defense.tres" id="7_owqdi"]
+[ext_resource type="Script" uid="uid://cwd6nmn8t150p" path="res://assets/Scripts/SystemLamplighter/DataStructure/MagicAction.cs" id="8_fcl4w"]
+[ext_resource type="Resource" uid="uid://cdqt0xaj3qxg8" path="res://assets/CustomResources/Prototype/basic magic.tres" id="9_mwgcl"]
+[ext_resource type="Script" uid="uid://5a0tdn7lq42d" path="res://assets/Scripts/SystemLamplighter/DataStructure/HealItemAction.cs" id="10_541wf"]
+[ext_resource type="Resource" uid="uid://bjd0r2gvapdf" path="res://assets/CustomResources/Prototype/healthItem.tres" id="11_ej4na"]
 
 [node name="BattleMenuController" type="Node"]
 script = ExtResource("1_lw60u")
+View = NodePath("BattleMenuView")
+Model = NodePath("BattleMenuModel")
 
 [node name="BattleMenuView" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
+script = ExtResource("2_s56ar")
 
 [node name="BattleMenuModel" type="Node" parent="."]
+script = ExtResource("3_8wnns")
+_attack = Array[ExtResource("4_ks2ia")]([ExtResource("5_64rrf")])
+_defense = Array[ExtResource("6_ues3h")]([ExtResource("7_owqdi")])
+_magic = Array[ExtResource("8_fcl4w")]([ExtResource("9_mwgcl")])
+_items = Array[ExtResource("10_541wf")]([ExtResource("11_ej4na")])
+
+[node name="Node" type="Node" parent="."]

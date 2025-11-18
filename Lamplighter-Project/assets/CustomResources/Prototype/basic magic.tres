@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="MagicAction" load_steps=2 format=3 uid="uid://cdqt0xaj3qxg8"]
+
+[ext_resource type="Script" uid="uid://cwd6nmn8t150p" path="res://assets/Scripts/SystemLamplighter/DataStructure/MagicAction.cs" id="1_rplhs"]
+
+[resource]
+script = ExtResource("1_rplhs")
+_manaCost = 3
+_damage = 8.0
+_pushbackForce = 2.0
+_atbPositionDamage = 2.2
+_actionType = 2
+_name = "basic magic"
+metadata/_custom_type_script = "uid://cwd6nmn8t150p"
