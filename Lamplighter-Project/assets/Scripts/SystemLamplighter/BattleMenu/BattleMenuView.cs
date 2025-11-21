@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 using SystemLamplighter;
 
 namespace SystemLamplighter.BattleMenu
@@ -26,6 +27,19 @@ namespace SystemLamplighter.BattleMenu
 		public override void Init()
 		{
 			NodeChecking();
+		}
+
+		public void OpenSubMenu(SubMenuType subMenuType, List<string> subMenuButtonsName)
+		{
+			switch (subMenuType)
+			{
+				case SubMenuType.ATTACK:
+					break;
+				case SubMenuType.MAGIC:
+					break;
+				case SubMenuType.ITEMS:
+					break;
+			}
 		}
 
 		private void NodeChecking()

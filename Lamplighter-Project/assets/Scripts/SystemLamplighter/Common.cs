@@ -73,6 +73,11 @@ namespace SystemLamplighter
 		THROW
 	}
 
-
+	public enum SubMenuType
+	{
+		ATTACK,
+		MAGIC,
+		ITEMS
+	}
 
 }

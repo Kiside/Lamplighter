@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://cbxtyv05qx4l7"]
+[gd_scene load_steps=3 format=3 uid="uid://cbxtyv05qx4l7"]
 
 [ext_resource type="Theme" uid="uid://7my6irucoib0" path="res://assets/UI/Themes/font18px.tres" id="1_nx6hw"]
+[ext_resource type="Script" uid="uid://cf3gglm54ceea" path="res://assets/Scripts/SystemLamplighter/UI/ButtonUi.cs" id="2_gvai8"]
 
 [node name="BattleMenuUI" type="Control"]
 layout_mode = 3
@@ -36,6 +37,7 @@ layout_mode = 2
 size_flags_vertical = 3
 theme = ExtResource("1_nx6hw")
 text = "Attack"
+script = ExtResource("2_gvai8")
 
 [node name="Button2" type="Button" parent="Container/MenuLeft/VBoxContainer"]
 layout_mode = 2

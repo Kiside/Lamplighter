@@ -1,4 +1,8 @@
-public interface IButtonUi
+
+namespace SystemLamplighter.Interfaces
 {
-	public void OnClick();
+	public interface IButtonUi
+	{
+		public void OnClick();
+	}
 }

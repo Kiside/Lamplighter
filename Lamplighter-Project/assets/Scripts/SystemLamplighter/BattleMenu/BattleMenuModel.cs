@@ -28,5 +28,25 @@ namespace SystemLamplighter.BattleMenu
 		{
 			throw new NotImplementedException();
 		}
+
+		public List<string> Get(SubMenuType subMenuType)
+		{
+			return subMenuType switch
+			{
+				SubMenuType.ATTACK => GetNames(_attack),
+				SubMenuType.MAGIC => GetNames(_magic),
+				SubMenuType.ITEMS => GetNames(_items),
+				_ => new List<string>()
+			};
+		}
+
+		private List<string> GetNames<[MustBeVariant] T>(Godot.Collections.Array<T> list) where T : ActionData
+		{
+			var result = new List<string>(list.Count);
+			foreach (var action in list)
+				result.Add(action.Name);
+
+			return result;
+		}
 	}
 }
