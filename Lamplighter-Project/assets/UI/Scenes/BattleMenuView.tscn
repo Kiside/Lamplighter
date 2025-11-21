@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://dqlc8qckuerp6"]
+
+[ext_resource type="Script" uid="uid://dqy6v5c1tis0j" path="res://assets/Scripts/SystemLamplighter/BattleMenu/BattleMenuView.cs" id="1_xpko1"]
+
+[node name="BattleMenuView" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_xpko1")
