@@ -15,7 +15,6 @@ namespace Characters.Playable
 		public override void _Ready()
 		{
 			base._Ready();
-
 			Init();
 		}
 

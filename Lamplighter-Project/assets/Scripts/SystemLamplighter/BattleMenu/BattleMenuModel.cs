@@ -1,6 +1,8 @@
 using Godot;
+using Godot.Collections;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using SystemLamplighter;
 using SystemLamplighter.DataStructure;
 
@@ -24,9 +26,38 @@ namespace SystemLamplighter.BattleMenu
 		[Export]
 		private Godot.Collections.Array<HealItemAction> _items = new();
 
+		private System.Collections.Generic.Dictionary<string, ActionData> _actionsDictionary;
+
 		public override void Init()
 		{
-			throw new NotImplementedException();
+			if (_actionsDictionary is null)
+				_actionsDictionary = new System.Collections.Generic.Dictionary<string, ActionData>();
+			SetupDictionary();
+		}
+
+		private void SetupDictionary()
+		{
+			if (_actionsDictionary is not null)
+				_actionsDictionary.Clear();
+
+			foreach (var attack in _attack)
+			{
+				_actionsDictionary.Add(attack.Name, attack);
+			}
+
+			foreach (var defense in _defense)
+			{
+				_actionsDictionary.Add(defense.Name, defense);
+			}
+			foreach (var magic in _magic)
+			{
+				_actionsDictionary.Add(magic.Name, magic);
+			}
+
+			foreach (var item in _items)
+			{
+				_actionsDictionary.Add(item.Name, item);
+			}
 		}
 
 		public List<string> Get(SubMenuType subMenuType)
@@ -38,6 +69,12 @@ namespace SystemLamplighter.BattleMenu
 				SubMenuType.ITEMS => GetNames(_items),
 				_ => new List<string>()
 			};
+		}
+
+		public ActionData GetAction(string id)
+		{
+			_actionsDictionary.TryGetValue(id, out var actionData);
+			return actionData;
 		}
 
 		private List<string> GetNames<[MustBeVariant] T>(Godot.Collections.Array<T> list) where T : ActionData

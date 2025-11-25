@@ -8,25 +8,21 @@ namespace SystemLamplighter.BattleMenu
 
 	public partial class BattleMenuController : AbstractController<BattleMenuView, BattleMenuModel>
 	{
-		private IDisposable _disposable;
-		readonly private ISubscriber<ActionEvent> _subscriber;
+		public bool Visible => _view.Visible;
+		public void Show() => _view.Visible = true;
+		public void Hide() => _view.Visible = false;
+
 		// Called when the node enters the scene tree for the first time.
 		public override void _Ready()
 		{
-			var bag = DisposableBag.CreateBuilder();
+			base._Ready();
 
-			_subscriber.Subscribe(ManageEvent).AddTo(bag);
-
-			_disposable = bag.Build();
+			_view.OnActionClick += Action;
+			_view.OnSubMenu += OpenSubMenu;
 		}
 
 		// Called every frame. 'delta' is the elapsed time since the previous frame.
 		public override void _Process(double delta)
-		{
-
-		}
-
-		private void ManageEvent(ActionEvent actionEvent)
 		{
 
 		}
@@ -36,24 +32,20 @@ namespace SystemLamplighter.BattleMenu
 			_view.OpenSubMenu(subMenuType, _model.Get(subMenuType));
 		}
 
-		public void Attack()
-		{
-
-		}
-
-		public void Magic()
-		{
-
-		}
-
-		public void Guard()
+		private void Action(string id)
 		{
 
 		}
 
 		public override void _ExitTree()
 		{
-			_disposable.Dispose();
+			Unsubscribe();
+		}
+
+		private void Unsubscribe()
+		{
+			_view.OnActionClick -= Action;
+			_view.OnSubMenu -= OpenSubMenu;
 		}
 	}
 

@@ -75,6 +75,7 @@ namespace SystemLamplighter
 
 	public enum SubMenuType
 	{
+		NONE,
 		ATTACK,
 		MAGIC,
 		ITEMS

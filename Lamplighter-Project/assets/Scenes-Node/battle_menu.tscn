@@ -18,6 +18,7 @@ View = NodePath("BattleMenuView")
 Model = NodePath("BattleMenuModel")
 
 [node name="BattleMenuView" parent="." instance=ExtResource("2_ues3h")]
+visible = false
 
 [node name="BattleMenuModel" type="Node" parent="."]
 script = ExtResource("3_8wnns")
@@ -25,5 +26,3 @@ _attack = Array[ExtResource("4_ks2ia")]([ExtResource("5_64rrf")])
 _defense = Array[ExtResource("6_ues3h")]([ExtResource("7_owqdi")])
 _magic = Array[ExtResource("8_fcl4w")]([ExtResource("9_mwgcl")])
 _items = Array[ExtResource("10_541wf")]([ExtResource("11_ej4na")])
-
-[node name="Node" type="Node" parent="."]

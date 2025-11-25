@@ -10,6 +10,8 @@ namespace SystemLamplighter.ATB
 		bool _inCharging = false;
 		int _currentIndex;
 
+		public event Action OnCommandEvent;
+
 		// PER DEBUG
 		public void CallViewUpdatePosition(float position, int index) => _view.UpdatePosition(position, index);
 
@@ -66,6 +68,7 @@ namespace SystemLamplighter.ATB
 		private void CommandAtb()
 		{
 			Log.PrintMessage("Sto in command");
+			OnCommandEvent?.Invoke();
 		}
 
 		/// <summary>

@@ -3,12 +3,17 @@ using System;
 using System.Collections.Generic;
 using SystemLamplighter.ATB;
 using SystemLamplighter;
+using SystemLamplighter.BattleMenu;
 
 public partial class DebugAtb : Node
 {
 	[ExportGroup("Atb")]
 	[Export]
 	public NodePath Atb;
+
+	[ExportGroup("BattleMenu")]
+	[Export]
+	public NodePath BattleMenu;
 
 	[ExportGroup("Add Characters")]
 	[Export]
@@ -29,6 +34,7 @@ public partial class DebugAtb : Node
 	Image _enemiesImage;
 
 	private ActionTimeBattleController _atbController;
+	private BattleMenuController _battleMenuController;
 
 
 
@@ -50,9 +56,18 @@ public partial class DebugAtb : Node
 			Log.PrintWarning("There is no _alliesImage");
 		if (_enemiesImage is null)
 			Log.PrintWarning("There is no _enemiesImage");
+		if (BattleMenu is null)
+			Log.PrintWarning("There is no BattleMenu");
 
 
+		_battleMenuController = GetNode<BattleMenuController>(BattleMenu);
 		_atbController = GetNode<ActionTimeBattleController>(Atb);
+		_atbController.OnCommandEvent += ShowBattleMenu;
+	}
+
+	public void ShowBattleMenu()
+	{
+		_battleMenuController.Show();
 	}
 
 	public void StartCombatClick()
@@ -112,4 +127,11 @@ public partial class DebugAtb : Node
 		_atbController.CallViewUpdatePosition(value, allyNumberIndex.Prefix.ToInt());
 	}
 
+
+	public override void _ExitTree()
+	{
+		base._ExitTree();
+
+		_atbController.OnCommandEvent -= ShowBattleMenu;
+	}
 }

@@ -32,30 +32,33 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Button" type="Button" parent="Container/MenuLeft/VBoxContainer"]
+[node name="Attack" type="Button" parent="Container/MenuLeft/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 theme = ExtResource("1_nx6hw")
 text = "Attack"
 script = ExtResource("2_gvai8")
 
-[node name="Button2" type="Button" parent="Container/MenuLeft/VBoxContainer"]
+[node name="Guard" type="Button" parent="Container/MenuLeft/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 theme = ExtResource("1_nx6hw")
 text = "Guard"
+script = ExtResource("2_gvai8")
 
-[node name="Button3" type="Button" parent="Container/MenuLeft/VBoxContainer"]
+[node name="Magic" type="Button" parent="Container/MenuLeft/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 theme = ExtResource("1_nx6hw")
 text = "Magic"
+script = ExtResource("2_gvai8")
 
-[node name="Button4" type="Button" parent="Container/MenuLeft/VBoxContainer"]
+[node name="Items" type="Button" parent="Container/MenuLeft/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 theme = ExtResource("1_nx6hw")
 text = "Items"
+script = ExtResource("2_gvai8")
 
 [node name="MenuRight" type="ColorRect" parent="Container"]
 layout_mode = 2

@@ -3,6 +3,6 @@ namespace SystemLamplighter.Interfaces
 {
 	public interface IButtonUi
 	{
-		public void OnClick();
+		//public event Action<string> OnClick;
 	}
 }

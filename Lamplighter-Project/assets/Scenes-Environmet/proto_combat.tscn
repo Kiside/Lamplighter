@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://bjvqik1fmkboh"]
+[gd_scene load_steps=9 format=3 uid="uid://bjvqik1fmkboh"]
 
 [ext_resource type="PackedScene" uid="uid://dbtex6mgn3dnh" path="res://assets/Scenes-Node/Atb.tscn" id="1_7okkr"]
 [ext_resource type="Script" uid="uid://cq0rhvotjgmfs" path="res://assets/Scripts/SystemLamplighter/GameManager.cs" id="1_syokn"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://h6nntw8ksb10" path="res://assets/Scripts/SystemLamplighter/DebugButton.cs" id="3_hlmel"]
 [ext_resource type="Image" uid="uid://cqtat6q64v7p0" path="res://assets/Resources/Avatars/allies.png" id="3_khyje"]
 [ext_resource type="Image" uid="uid://cqklojhdlw85m" path="res://assets/Resources/Avatars/enemies.png" id="4_syokn"]
+[ext_resource type="PackedScene" uid="uid://bgsjemevth5s" path="res://assets/Scenes-Node/battle_menu.tscn" id="7_5f4u0"]
 
 [sub_resource type="Theme" id="Theme_syokn"]
 default_font_size = 10
@@ -29,6 +30,7 @@ grow_horizontal = 0
 grow_vertical = 2
 script = ExtResource("2_4px06")
 Atb = NodePath("../ATB")
+BattleMenu = NodePath("../BattleMenuController")
 _optionButtonWhoAdd = NodePath("VBoxContainer/VBoxAdding/OptionButtonWhoAdd")
 maxNumberToAdd = NodePath("VBoxContainer/VBoxAdding/HBoxContainer/VBoxContainer/MaxNumberToAdd")
 allyNumberIndex = NodePath("VBoxContainer/Ally Slider/AllyNumberIndex")
@@ -141,6 +143,8 @@ text = "Ally position"
 layout_mode = 2
 max_value = 1.0
 step = 0.05
+
+[node name="BattleMenuController" parent="." instance=ExtResource("7_5f4u0")]
 
 [connection signal="button_down" from="DebugATB/VBoxContainer/Start Combat" to="DebugATB" method="StartCombatClick"]
 [connection signal="button_down" from="DebugATB/VBoxContainer/Stop Combat" to="DebugATB" method="StopCombatClick"]

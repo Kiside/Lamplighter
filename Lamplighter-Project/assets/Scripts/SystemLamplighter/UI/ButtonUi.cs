@@ -7,25 +7,25 @@ using MessagePipe;
 
 public partial class ButtonUi : Button, IButtonUi
 {
-	private IPublisher<ActionEvent> _publisher { get; set; }
+	public event Action<string> OnClick;
 
-	[Export]
-	EventType.UIEvent _uiEvent;
-	private string _payLoad;
-
-	public void Init(string payLoad)
+	public void Init(string name)
 	{
-		_payLoad = payLoad;
-		this.Name = _uiEvent.ToString();
+		this.Name = name;
+		this.Text = name;
+		this.CustomMinimumSize = new Vector2(251, 60);
+
+		this.ButtonDown += Click;
 	}
 
-	public override void _Pressed()
+	public void Click()
 	{
-		OnClick();
+		OnClick?.Invoke(this.Name);
 	}
 
-	public void OnClick()
+	public override void _ExitTree()
 	{
-		_publisher?.Publish(new ActionEvent(_uiEvent, _payLoad));
+		base._ExitTree();
+		this.ButtonDown -= Click;
 	}
 }
