@@ -1,5 +1,6 @@
 using System;
 using Godot;
+using System.Diagnostics;
 
 namespace SystemLamplighter
 {
@@ -29,23 +30,19 @@ namespace SystemLamplighter
 
 		public virtual void NodeChecking()
 		{
-			if (View is null)
-				Log.PrintWarning("There is no View");
-			else
-			{
-				_view = GetNode<TView>(View);
-				_view.Init();
-			}
+			Assert();
+			_view = GetNode<TView>(View);
+			_view.Init();
 
+			_model = GetNode<TModel>(Model);
+			_model.Init();
 
-			if (Model is null)
-				Log.PrintWarning("There is no Model");
-			else
-			{
-				_model = GetNode<TModel>(Model);
-				_model.Init();
-			}
+		}
 
+		protected void Assert()
+		{
+			Debug.Assert(_model != null, "_model is null");
+			Debug.Assert(_view != null, "_view is null");
 		}
 	}
 }

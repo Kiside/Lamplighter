@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Diagnostics;
 using SystemLamplighter;
 
 namespace Characters.Playable

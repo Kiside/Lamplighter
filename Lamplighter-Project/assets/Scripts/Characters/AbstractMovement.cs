@@ -1,5 +1,7 @@
 using Godot;
 using System;
+using System.Diagnostics;
+
 
 namespace Characters
 {
@@ -17,6 +19,7 @@ namespace Characters
 
 		public virtual void Init(TController controller)
 		{
+			Debug.Assert(controller != null, "Controller is null");
 			_controller = controller;
 		}
 

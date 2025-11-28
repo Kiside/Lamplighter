@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace SystemLamplighter.ATB
 {
@@ -26,10 +27,8 @@ namespace SystemLamplighter.ATB
 
 		public override void Init()
 		{
-			if (_playerContainer is null)
-				Log.PrintWarning("There is no PlayerContainer");
-			if (_enemyContainer is null)
-				Log.PrintWarning("There is no EnemyContainer");
+			Debug.Assert(_enemyContainer != null, "_enemyContainer is null");
+			Debug.Assert(_playerContainer != null, "_playerContainer is null");
 
 			_characters = new List<TextureRect>();
 		}
@@ -40,9 +39,7 @@ namespace SystemLamplighter.ATB
 		/// <param name="character"></param>
 		public void AddCharacter(AtbCharacter character)
 		{
-			Log.PrintMessage("Adding character in view");
-			if (character is null)
-				Log.PrintMessage("No AtbCharacter");
+			Debug.Assert(character != null, "character is null");
 
 			TextureRect textureRect = new TextureRect();
 			textureRect.SettingUp(avatarSize, avatarMinimumSize, character.Avatar, avatarExpandMode);
@@ -71,6 +68,8 @@ namespace SystemLamplighter.ATB
 
 		public void UpdatePositions(List<float> charactersPosition)
 		{
+			Debug.Assert(_characters != null, "_characters is null");
+
 			var minimumSize = this.CustomMinimumSize;
 			for (int i = 0; i < _characters.Count; i++)
 			{
@@ -80,6 +79,9 @@ namespace SystemLamplighter.ATB
 		}
 		public void UpdatePosition(float position, int index)
 		{
+			Debug.Assert(_characters != null, "_characters is null");
+			Debug.Assert(index < _characters.Count, "index goes overflow");
+
 			var barWidth = this.Size.X;
 
 			float x = Mathf.Lerp(0, barWidth - avatarSize.X, position);
@@ -93,6 +95,10 @@ namespace SystemLamplighter.ATB
 
 		public void ClearCharacters()
 		{
+			Debug.Assert(_characters != null, "_characters is null");
+			Debug.Assert(_enemyContainer != null, "_enemyContainer is null");
+			Debug.Assert(_playerContainer != null, "_playerContainer is null");
+
 			_characters.Clear();
 			for (int i = 0; i < _enemyContainer.GetChildren().Count; i++)
 			{

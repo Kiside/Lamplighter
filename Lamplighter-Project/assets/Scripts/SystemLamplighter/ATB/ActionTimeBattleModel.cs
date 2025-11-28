@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace SystemLamplighter.ATB
 {
@@ -23,7 +24,9 @@ namespace SystemLamplighter.ATB
 		/// <param name="character">personaggio</param>
 		public void AddCharacter(AtbCharacter character)
 		{
-			Log.PrintMessage("Add character");
+			Debug.Assert(character != null, "character is null");
+			Debug.Assert(_charactersInCombat != null, "_charactersInCombat is null");
+
 			_charactersInCombat.Add(character);
 		}
 
@@ -32,6 +35,8 @@ namespace SystemLamplighter.ATB
 		/// </summary>
 		public void ClearCharacters()
 		{
+			Debug.Assert(_charactersInCombat != null, "_charactersInCombat is null");
+
 			_charactersInCombat.Clear();
 		}
 
@@ -41,12 +46,18 @@ namespace SystemLamplighter.ATB
 		/// <param name="character"></param>
 		public void RemoveCharacter(AtbCharacter character)
 		{
+			Debug.Assert(_charactersInCombat != null, "_charactersInCombat is null");
+
 			if (!_charactersInCombat.Remove(character))
 				Log.PrintWarning($"Non è stato possibile rimuovere {character.Name}");
 		}
 
 		public float GetPosition(int index)
 		{
+			Debug.Assert(_charactersInCombat != null, "_charactersInCombat is null");
+			Debug.Assert(index > -1, "index is negative");
+			Debug.Assert(index < _charactersInCombat.Count, "index goes overflow");
+
 			return _charactersInCombat[index].Position;
 		}
 	}

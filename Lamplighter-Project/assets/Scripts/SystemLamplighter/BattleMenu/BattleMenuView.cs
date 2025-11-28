@@ -2,6 +2,7 @@ using Godot;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Reflection.Metadata;
 using System.Runtime.CompilerServices;
 using SystemLamplighter;
 
@@ -55,30 +56,35 @@ namespace SystemLamplighter.BattleMenu
 
 		private void Subscribe()
 		{
-			Debug.Assert(_attackButton != null);
+			Debug.Assert(_attackButton != null, "_attackButton is null");
 			_attackButton.OnClick += HandleClick;
-			Debug.Assert(_magicButton != null);
+			Debug.Assert(_magicButton != null, "_magicButton is null");
 			_magicButton.OnClick += HandleClick;
-			Debug.Assert(_guardButton != null);
+			Debug.Assert(_guardButton != null, "_guardButton is null");
 			_guardButton.OnClick += HandleClick;
-			Debug.Assert(_itemButton != null);
+			Debug.Assert(_itemButton != null, "_itemButton is null");
 			_itemButton.OnClick += HandleClick;
 		}
 
 		private void Unsubscribe()
 		{
-			Debug.Assert(_attackButton != null);
+			Debug.Assert(_attackButton != null, "_attackButton is null");
 			_attackButton.OnClick -= HandleClick;
-			Debug.Assert(_magicButton != null);
+			Debug.Assert(_magicButton != null, "_magicButton is null");
 			_magicButton.OnClick -= HandleClick;
-			Debug.Assert(_guardButton != null);
+			Debug.Assert(_guardButton != null, "_guardButton is null");
 			_guardButton.OnClick -= HandleClick;
-			Debug.Assert(_itemButton != null);
+			Debug.Assert(_itemButton != null, "_itemButton is null");
 			_itemButton.OnClick -= HandleClick;
 		}
 
 		private void HandleClick(string idButton)
 		{
+			Debug.Assert(idButton != null || idButton == String.Empty, "idButton is null or empty!");
+
+			if (idButton == String.Empty)
+				return;
+
 			switch (idButton)
 			{
 				case var _ when idButton == AttackButtonId:
@@ -94,7 +100,7 @@ namespace SystemLamplighter.BattleMenu
 					ItemButtonHandle();
 					break;
 				default:
-
+					OnActionClick?.Invoke(idButton);
 					break;
 			}
 		}
@@ -112,38 +118,51 @@ namespace SystemLamplighter.BattleMenu
 			{
 				ButtonUi buttonToAdd = new ButtonUi();
 				buttonToAdd.Init(button);
+				buttonToAdd.SetMinimumSize(new Vector2(251, 60));
 				_subMenuContainer.AddChild(buttonToAdd);
+				buttonToAdd.OnClick += HandleClick;
 			}
 		}
 
 		private void ClearSubMenu()
 		{
+			Debug.Assert(_subMenuContainer != null, "There is no SubMenuContainer");
+
+			if (_subMenuContainer.GetChildCount() <= 0)
+				return;
+
 			foreach (var child in _subMenuContainer.GetChildren())
 				_subMenuContainer.RemoveChild(child);
 		}
 
 		private void NodeChecking()
 		{
-			if (_attackButtonPath is null)
-				Log.PrintWarning("AttackButton Path missing");
-			if (_magicButtonPath is null)
-				Log.PrintWarning("MagicButton Path missing");
-			if (_guardButtonPath is null)
-				Log.PrintWarning("GuardButton Path missing");
-			if (_itemButtonPath is null)
-				Log.PrintWarning("ItemButton Path missing");
-			if (_subMenuContainerPath is null)
-				Log.PrintWarning("SubMenuContainer Path missing");
-		}
-
-		public void OnMainButtonBattleMenuClicked()
-		{
-
+			Debug.Assert(_attackButton != null, "_attackButton is null");
+			Debug.Assert(_magicButton != null, "_magicButton is null");
+			Debug.Assert(_guardButton != null, "_guardButton is null");
+			Debug.Assert(_itemButton != null, "_itemButton is null");
 		}
 
 		public override void _ExitTree()
 		{
 			Unsubscribe();
+			UnsubscrieSubMenu();
+		}
+
+		private void UnsubscrieSubMenu()
+		{
+			Debug.Assert(_subMenuContainer != null, "There is no _subMenuContainer");
+
+			if (_subMenuContainer.GetChildCount() > 0)
+			{
+				foreach (var child in _subMenuContainer.GetChildren())
+				{
+					if (child is ButtonUi button)
+					{
+						button.OnClick -= HandleClick;
+					}
+				}
+			}
 		}
 	}
 }

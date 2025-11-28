@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Diagnostics;
 
 namespace Characters.Playable
 {
@@ -27,16 +28,14 @@ namespace Characters.Playable
 		protected override void NodeChecking()
 		{
 			string noNode = "There is no ";
+			Debug.Assert(MovementNode != null, $"{noNode} is null.");
+			Debug.Assert(CombatNode != null, $"{noNode} is null.");
 
 			if (MovementNode != null)
 				_movement = GetNode<AbstractMovement<CharlieController>>(MovementNode);
-			else
-				GD.PrintErr($"{noNode} -MovementNode-");
 
 			if (CombatNode != null)
 				_combat = GetNode<AbstractCombat<CharlieController>>(CombatNode);
-			else
-				GD.PrintErr($"{noNode} -CombatNode-");
 		}
 
 		public override void _PhysicsProcess(double delta)
