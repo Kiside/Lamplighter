@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using Godot;
 
 namespace SystemLamplighter.DataStructure
@@ -24,6 +25,9 @@ namespace SystemLamplighter.DataStructure
 
 		public ActionData(ActionType actionType, string name, float actionSpeed)
 		{
+			Debug.Assert(name != String.Empty, "name is empty");
+			Debug.Assert(_actionSpeed > 0, "actionSpeed is negative");
+
 			_actionType = actionType;
 			_name = name;
 			_actionSpeed = actionSpeed;

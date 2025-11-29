@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using Godot;
 
 namespace SystemLamplighter.DataStructure
@@ -14,6 +15,7 @@ namespace SystemLamplighter.DataStructure
 
 		public HealItemAction(float healAmount)
 		{
+			Debug.Assert(healAmount > 0, "healAmount is negative");
 			_healAmount = healAmount;
 		}
 	}

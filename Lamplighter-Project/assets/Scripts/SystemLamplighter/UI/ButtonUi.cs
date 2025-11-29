@@ -3,6 +3,7 @@ using Godot;
 using SystemLamplighter;
 using SystemLamplighter.Interfaces;
 using MessagePipe;
+using System.Diagnostics;
 
 
 public partial class ButtonUi : Button, IButtonUi
@@ -19,6 +20,9 @@ public partial class ButtonUi : Button, IButtonUi
 
 	public void Init(string name)
 	{
+		Debug.Assert(name != null, "name is null");
+		Debug.Assert(name != String.Empty, "name is empty");
+
 		this.Name = name;
 		this.Text = name;
 	}

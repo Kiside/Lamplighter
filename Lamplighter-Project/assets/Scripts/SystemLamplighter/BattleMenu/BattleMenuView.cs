@@ -114,6 +114,9 @@ namespace SystemLamplighter.BattleMenu
 		{
 			ClearSubMenu();
 
+			Debug.Assert(subMenuButtonsName != null, "subMenuButtonsName is null");
+			Debug.Assert(subMenuButtonsName.Count > 0, "subMenuButtonsName has 0 elements");
+
 			foreach (var button in subMenuButtonsName)
 			{
 				ButtonUi buttonToAdd = new ButtonUi();

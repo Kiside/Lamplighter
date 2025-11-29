@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using Godot;
 
 public static class TextureRectExstension
@@ -8,6 +9,8 @@ public static class TextureRectExstension
 	TextureRect.ExpandModeEnum expandModeEnum =
 	TextureRect.ExpandModeEnum.KeepSize)
 	{
+		Debug.Assert(image != null, "image is null");
+
 		textureRect.Texture = ImageTexture.CreateFromImage(image);
 		textureRect.ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize;
 		textureRect.Size = new Vector2(14, 14);

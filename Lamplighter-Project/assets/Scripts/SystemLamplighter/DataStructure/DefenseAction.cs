@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using Godot;
 
 namespace SystemLamplighter.DataStructure
@@ -15,6 +16,8 @@ namespace SystemLamplighter.DataStructure
 
 		public DefenseAction(float defensiveAmount)
 		{
+			Debug.Assert(defensiveAmount > 0, "defensiveAmount is negative");
+
 			_actionType = ActionType.GUARD;
 			_defensiveAmount = defensiveAmount;
 		}

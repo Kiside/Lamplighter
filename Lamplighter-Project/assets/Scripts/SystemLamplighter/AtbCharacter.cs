@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using Characters;
 using Godot;
 
@@ -36,6 +37,11 @@ namespace SystemLamplighter
 		#region CONSTRUCTOR
 		public AtbCharacter(Image avatar, float speed, string name, AtbCharacterType atbCharacterType)
 		{
+			Debug.Assert(avatar != null, "avatar is null");
+			Debug.Assert(name != null, "name is null");
+			Debug.Assert(name != String.Empty, "name is empty");
+			Debug.Assert(speed > 0, "speed is negative");
+
 			_avatar = avatar;
 			_speed = speed;
 			_name = name;
@@ -52,6 +58,8 @@ namespace SystemLamplighter
 		/// <returns></returns>
 		public AtbCharacterStatus UpdatePosition(float value)
 		{
+			Debug.Assert(value > 0, "speed is negative");
+
 			if (_status == AtbCharacterStatus.COM)
 				return _status;
 

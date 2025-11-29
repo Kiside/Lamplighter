@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using Godot;
 
 namespace SystemLamplighter.DataStructure
@@ -25,6 +26,11 @@ namespace SystemLamplighter.DataStructure
 
 		public MagicAction(MagicType magicType, int manaCost, float damage, float pushbackForce, float atbPositionDamage, ActionType actionType)
 		{
+			Debug.Assert(manaCost > 0, "manaCost is negative");
+			Debug.Assert(damage > 0, "damage is negative");
+			Debug.Assert(pushbackForce > 0, "pushbackForce is negative");
+			Debug.Assert(atbPositionDamage > 0, "atbPositionDamage is negative");
+
 			_actionType = actionType;
 			_magicType = magicType;
 			_manaCost = manaCost;
