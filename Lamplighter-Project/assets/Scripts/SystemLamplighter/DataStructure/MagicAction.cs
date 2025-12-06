@@ -5,7 +5,7 @@ using Godot;
 namespace SystemLamplighter.DataStructure
 {
 	[GlobalClass]
-	public partial class MagicAction : ActionData
+	public partial class MagicAction : EquipableActionData
 	{
 		[Export]
 		// Tipo di magia
@@ -22,21 +22,17 @@ namespace SystemLamplighter.DataStructure
 		// Quanta posizione sottrae l'attacco sull'atb
 		private float _atbPositionDamage;
 
-		public MagicAction() : this(MagicType.AREA, 0, 0f, 0f, 0f, ActionType.MAGIC) { }
+		public MagicAction() : this(MagicType.AREA, 0, 0f, 0f, 0f, ActionType.MAGIC, false) { }
 
-		public MagicAction(MagicType magicType, int manaCost, float damage, float pushbackForce, float atbPositionDamage, ActionType actionType)
+		public MagicAction(MagicType magicType, int manaCost, float damage, float pushbackForce, float atbPositionDamage, ActionType actionType, bool isEquipped)
 		{
-			Debug.Assert(manaCost > 0, "manaCost is negative");
-			Debug.Assert(damage > 0, "damage is negative");
-			Debug.Assert(pushbackForce > 0, "pushbackForce is negative");
-			Debug.Assert(atbPositionDamage > 0, "atbPositionDamage is negative");
-
 			_actionType = actionType;
 			_magicType = magicType;
 			_manaCost = manaCost;
 			_damage = damage;
 			_pushbackForce = pushbackForce;
 			_atbPositionDamage = atbPositionDamage;
+			_isEquipped = isEquipped;
 		}
 
 	}

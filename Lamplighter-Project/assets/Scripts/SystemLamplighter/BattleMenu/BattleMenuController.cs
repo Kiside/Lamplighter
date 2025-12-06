@@ -34,7 +34,7 @@ namespace SystemLamplighter.BattleMenu
 
 		private void Action(string id)
 		{
-
+			Log.PrintMessage($"Action: {id}");
 		}
 
 		public override void _ExitTree()

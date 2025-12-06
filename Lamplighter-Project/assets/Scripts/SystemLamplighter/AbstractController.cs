@@ -30,13 +30,14 @@ namespace SystemLamplighter
 
 		public virtual void NodeChecking()
 		{
-			Assert();
+			
 			_view = GetNode<TView>(View);
 			_view.Init();
 
 			_model = GetNode<TModel>(Model);
 			_model.Init();
 
+			Assert();
 		}
 
 		protected void Assert()

@@ -39,9 +39,10 @@ namespace SystemLamplighter.BattleMenu
 
 		public override void Init()
 		{
-			NodeChecking();
+			NodeCheckingPath();
 
 			GetNodes();
+			NodeChecking();
 			Subscribe();
 		}
 
@@ -84,6 +85,8 @@ namespace SystemLamplighter.BattleMenu
 
 			if (idButton == String.Empty)
 				return;
+
+			Log.PrintMessage($"in HandleClick {idButton}");			
 
 			switch (idButton)
 			{
@@ -136,6 +139,14 @@ namespace SystemLamplighter.BattleMenu
 
 			foreach (var child in _subMenuContainer.GetChildren())
 				_subMenuContainer.RemoveChild(child);
+		}
+
+		private void NodeCheckingPath()
+		{
+			Debug.Assert(_attackButtonPath != null, "_attackButtonPath is null");
+			Debug.Assert(_magicButtonPath != null, "_magicButtonPath is null");
+			Debug.Assert(_guardButtonPath != null, "_guardButtonPath is null");
+			Debug.Assert(_itemButtonPath != null, "_itemButtonPath is null");
 		}
 
 		private void NodeChecking()

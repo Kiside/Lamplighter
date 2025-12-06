@@ -15,7 +15,6 @@ namespace SystemLamplighter.DataStructure
 
 		public HealItemAction(float healAmount)
 		{
-			Debug.Assert(healAmount > 0, "healAmount is negative");
 			_healAmount = healAmount;
 		}
 	}
