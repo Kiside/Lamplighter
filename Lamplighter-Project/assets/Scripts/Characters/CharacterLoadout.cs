@@ -15,7 +15,7 @@ namespace Characters
 		EquipmentLoadout _equipmentLoadout;
 
 		public List<string> GetAttacks() => _combatLoadout.GetAttacksId();
-		public List<string> GetMagics() => _combatLoadout.GetMagicId();
+		public List<string> GetMagics() => _combatLoadout.GetMagicsId();
 		public List<string> GetItems() => _combatLoadout.GetItemsId();
 
 

@@ -4,9 +4,16 @@ using System.Collections.Generic;
 using SystemLamplighter.ATB;
 using SystemLamplighter;
 using SystemLamplighter.BattleMenu;
+using Characters;
+using Characters.Playable;
 
 public partial class DebugAtb : Node
 {
+	[Export]
+	public Godot.Collections.Array<AbstractCharacterController> _allies;
+	[Export]
+	public Godot.Collections.Array<AbstractCharacterController> _enemies;
+
 	[ExportGroup("Atb")]
 	[Export]
 	public NodePath Atb;
@@ -102,13 +109,37 @@ public partial class DebugAtb : Node
 
 	private void AddingCharacter(AtbCharacterType type, int maxValue, Image image)
 	{
-		Random random = new Random();
-		for (int i = 0; i < maxValue; i++)
+		if((_allies == null || _allies.Count == 0) && (_enemies == null || _enemies.Count == 0))
 		{
-			string name = $"Ciccio{i}";
-			double speed = 0.05 + random.NextDouble() * (0.3 - 0.05);
-			AtbCharacter character = new AtbCharacter(image, (float)speed, name, type);
-			AddCharacter(character);
+			Random random = new Random();
+			for (int i = 0; i < maxValue; i++)
+			{
+				string name = $"Ciccio{i}";
+				double speed = 0.05 + random.NextDouble() * (0.3 - 0.05);
+				
+				// AtbCharacter character = new AtbCharacter(image, (float)speed, name, type, );
+				// AddCharacter(character);
+			}
+		}
+		else
+		{
+			if(_allies != null && _allies.Count > 0)
+			{
+				for (int i = 0; i < _allies.Count; i++)
+				{
+					if(_allies[i] is CharlieController)
+					{
+						
+					}
+					//_allies.GetNode
+					// AtbCharacter atbCharacter = _allies[i].;
+					// AddCharacter(_allies[i] as AtbCharacter);
+				}
+			}
+			if(_enemies != null && _enemies.Count > 0)
+			{
+				
+			}
 		}
 	}
 
@@ -117,7 +148,7 @@ public partial class DebugAtb : Node
 
 	}
 
-	public void AddCharacter(AtbCharacter character)
+	public void AddCharacter(AtbCharacterProperties character)
 	{
 		_atbController.AddCharacter(character);
 	}

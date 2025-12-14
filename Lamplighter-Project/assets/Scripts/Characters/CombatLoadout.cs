@@ -25,7 +25,7 @@ namespace Characters
 
 		[ExportGroup("Items")]
 		[Export]
-		private Godot.Collections.Array<HealItemAction> _items = new();
+		private Godot.Collections.Array<ItemAction> _items = new();
 
 		private System.Collections.Generic.Dictionary<string, ActionData> _actionsDictionary;
 
@@ -35,8 +35,10 @@ namespace Characters
 			Debug.Assert(_magic != null, "_magic is null");
 			Debug.Assert(_items != null, "_items is null");
 			Debug.Assert(_defense != null, "_defense is null");
+
 			if (_actionsDictionary is null)
 				_actionsDictionary = new System.Collections.Generic.Dictionary<string, ActionData>();
+				
 			SetupDictionary();
 		}
 
@@ -72,7 +74,7 @@ namespace Characters
 
 			return PrepareList(_attack);
 		}
-		public List<string> GetMagicId()
+		public List<string> GetMagicsId()
 		{
 			Debug.Assert(_magic != null, "_magic is null");
 			Debug.Assert(_magic.Count > 0, "_magic is empty");

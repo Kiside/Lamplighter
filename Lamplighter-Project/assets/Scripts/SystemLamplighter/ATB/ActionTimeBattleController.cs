@@ -84,7 +84,7 @@ namespace SystemLamplighter.ATB
 		/// <summary>
 		/// Avvio del richiamo per far effettuare l'azione al personaggio
 		/// </summary>
-		private void Action(AtbCharacter character)
+		private void Action(AtbCharacterProperties character)
 		{
 			Debug.Assert(character != null, "character is null");
 			character.Action();
@@ -95,7 +95,7 @@ namespace SystemLamplighter.ATB
 		/// Aggiunge un personaggio alla lista
 		/// </summary>
 		/// <param name="character">personaggio</param>
-		public void AddCharacter(AtbCharacter character)
+		public void AddCharacter(AtbCharacterProperties character)
 		{
 			Debug.Assert(character != null, "character is null");
 			Assert();
@@ -119,7 +119,7 @@ namespace SystemLamplighter.ATB
 		/// Rimuove un personaggio dalla lista
 		/// </summary>
 		/// <param name="character"></param>
-		public void RemoveCharacterInCombat(AtbCharacter character)
+		public void RemoveCharacterInCombat(AtbCharacterProperties character)
 		{
 			Assert();
 

@@ -7,14 +7,14 @@ namespace SystemLamplighter.ATB
 {
 	public partial class ActionTimeBattleModel : AbstractModel
 	{
-		private List<AtbCharacter> _charactersInCombat;
+		private List<AtbCharacterProperties> _charactersInCombat;
 
 		public int CharactersCount => _charactersInCombat.Count;
-		public List<AtbCharacter> Characters => _charactersInCombat;
+		public List<AtbCharacterProperties> Characters => _charactersInCombat;
 
 		public override void Init()
 		{
-			_charactersInCombat = new List<AtbCharacter>();
+			_charactersInCombat = new List<AtbCharacterProperties>();
 		}
 
 
@@ -22,7 +22,7 @@ namespace SystemLamplighter.ATB
 		/// Aggiunge un personaggio alla lista
 		/// </summary>
 		/// <param name="character">personaggio</param>
-		public void AddCharacter(AtbCharacter character)
+		public void AddCharacter(AtbCharacterProperties character)
 		{
 			Debug.Assert(character != null, "character is null");
 			Debug.Assert(_charactersInCombat != null, "_charactersInCombat is null");
@@ -44,7 +44,7 @@ namespace SystemLamplighter.ATB
 		/// Rimuove un personaggio dalla lista
 		/// </summary>
 		/// <param name="character"></param>
-		public void RemoveCharacter(AtbCharacter character)
+		public void RemoveCharacter(AtbCharacterProperties character)
 		{
 			Debug.Assert(_charactersInCombat != null, "_charactersInCombat is null");
 

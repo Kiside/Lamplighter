@@ -32,5 +32,6 @@ public partial class AttackAction : EquipableActionData
 		_pushbackForce = pushbackForce;
 		_atbPositionDamage = atbPositionDamage;
 		_actionSpeed = actionSpeed;
+		_isEquipped = isEquipped;
 	}
 }

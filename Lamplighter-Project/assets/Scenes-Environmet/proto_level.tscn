@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://cfmoaycvrks0i"]
+[gd_scene load_steps=3 format=3 uid="uid://cfmoaycvrks0i"]
 
 [ext_resource type="PackedScene" uid="uid://c5mvvlosts20h" path="res://assets/Characters/Playable/charlie.tscn" id="1_qfi3i"]
+[ext_resource type="PackedScene" uid="uid://bjvqik1fmkboh" path="res://assets/Scenes-Environmet/proto_combat.tscn" id="2_mw5we"]
 
 [node name="ProtoLevel" type="Node3D"]
 
@@ -13,3 +14,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.474787, 0)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="Charlie"]
 transform = Transform3D(1, 0, 0, 0, 0.563367, 0.826207, 0, -0.826207, 0.563367, 0, 0, 0)
+
+[node name="ProtoCombat" parent="." instance=ExtResource("2_mw5we")]
+
+[node name="DebugATB" parent="ProtoCombat" index="2" node_paths=PackedStringArray("_enemies")]
+_enemies = []
+
+[editable path="ProtoCombat"]

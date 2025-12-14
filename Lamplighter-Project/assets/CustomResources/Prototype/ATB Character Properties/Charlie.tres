@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="AtbCharacterProperties" load_steps=2 format=3 uid="uid://di5386yh3jgk7"]
+
+[ext_resource type="Script" uid="uid://dpwp74optcgd5" path="res://assets/Scripts/SystemLamplighter/AtbCharacterProperties.cs" id="1_ui2r5"]
+
+[resource]
+script = ExtResource("1_ui2r5")
+metadata/_custom_type_script = "uid://dpwp74optcgd5"

@@ -5,21 +5,24 @@ using Godot;
 
 namespace SystemLamplighter
 {
+	[GlobalClass]
 	// Classe che costruisce e mantiene le info dei avatar sul ATB
-	public class AtbCharacter
+	public partial class AtbCharacterProperties : Resource
 	{
 		#region PRIVATE PROPERTIES
 		// I personaggi hanno un immagine di un piccolo avatar
+		[Export]
 		Image _avatar;
 		// La velocità del personaggio sull'ATB
+		[Export]
 		float _speed;
-		// Collegamento diretto con il personaggio
-		ICharacterControllerAtb _character;
 		// Posizione del personaggio all'interno dell'ATB
 		float _barPosition;
 		// Name of Character 
+		[Export]
 		private string _name;
 		// Il tipo del personaggio alleato o nemico
+		[Export]
 		AtbCharacterType _characterType;
 		// Lo status del personaggio
 		AtbCharacterStatus _status;
@@ -31,16 +34,17 @@ namespace SystemLamplighter
 		public Image Avatar => _avatar;
 		public float Speed => _speed;
 		public float Position => _barPosition;
-		AtbCharacterStatus Status => _status;
+		public AtbCharacterStatus Status => _status;
 		#endregion
 
 		#region CONSTRUCTOR
-		public AtbCharacter(Image avatar, float speed, string name, AtbCharacterType atbCharacterType)
+		public void Init(Image avatar, float speed, string name, AtbCharacterType atbCharacterType,ICharacterControllerAtb character)
 		{
 			Debug.Assert(avatar != null, "avatar is null");
 			Debug.Assert(name != null, "name is null");
 			Debug.Assert(name != String.Empty, "name is empty");
 			Debug.Assert(speed > 0, "speed is negative");
+			Debug.Assert(character != null, "character is null");
 
 			_avatar = avatar;
 			_speed = speed;
@@ -102,7 +106,7 @@ namespace SystemLamplighter
 		/// </summary>
 		public void Action()
 		{
-			_character.AtbAction();
+			//_character.AtbAction();
 		}
 		#endregion
 	}

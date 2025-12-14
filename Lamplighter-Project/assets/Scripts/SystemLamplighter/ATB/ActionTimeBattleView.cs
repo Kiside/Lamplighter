@@ -37,7 +37,7 @@ namespace SystemLamplighter.ATB
 		/// Metodo per aggiungere il personaggio nella View dell'atb
 		/// </summary>
 		/// <param name="character"></param>
-		public void AddCharacter(AtbCharacter character)
+		public void AddCharacter(AtbCharacterProperties character)
 		{
 			Debug.Assert(character != null, "character is null");
 

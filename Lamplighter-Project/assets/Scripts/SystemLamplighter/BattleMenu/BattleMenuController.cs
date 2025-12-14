@@ -12,6 +12,8 @@ namespace SystemLamplighter.BattleMenu
 		public void Show() => _view.Visible = true;
 		public void Hide() => _view.Visible = false;
 
+		
+
 		// Called when the node enters the scene tree for the first time.
 		public override void _Ready()
 		{

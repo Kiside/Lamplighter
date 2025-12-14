@@ -1,25 +1,40 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using SystemLamplighter;
 
 namespace Characters.Playable
 {
-	public partial class CharlieController : AbstractCharacterController, ICharacterControllerAtb
+	public partial class CharlieController : CharacterController<CharlieView,CharlieModel>, ICharacterControllerAtb
 	{
+		#region EXPORT PROPERTIES
+		[Export]
+		protected NodePath _combatLoadoutNode;
+		[Export]
+		protected AtbCharacterProperties _atbCharacterProperties;
+		#endregion
 
+		#region PROTECTED PROPERTIES 
 		protected AbstractCombat<CharlieController> _combat;
 		protected AbstractMovement<CharlieController> _movement;
-		private bool _lockOn = false;
 
+		protected CombatLoadout _combatLoadout;
+
+		private bool _lockOn = false;
+		#endregion
+		
+		#region PUBLIC PROPERTIES
 		public bool LockOn { get { return _lockOn; } set { _lockOn = value; } }
+		#endregion
+
 
 		public override void _Ready()
 		{
 			base._Ready();
-			Init();
 		}
 
-		public override void Init()
+		protected override void OnInit()
 		{
 			_combat.Init(this);
 			_movement.Init(this);
@@ -27,15 +42,21 @@ namespace Characters.Playable
 
 		protected override void NodeChecking()
 		{
+			base.NodeChecking();
+
 			string noNode = "There is no ";
-			Debug.Assert(MovementNode != null, $"{noNode} is null.");
-			Debug.Assert(CombatNode != null, $"{noNode} is null.");
+			Debug.Assert(MovementNode != null, $"{noNode} MovementNode is null.");
+			Debug.Assert(CombatNode != null, $"{noNode} CombatNode is null.");
+			Debug.Assert(_combatLoadoutNode != null, $"{noNode} CombatLoadout is null");
 
 			if (MovementNode != null)
 				_movement = GetNode<AbstractMovement<CharlieController>>(MovementNode);
 
 			if (CombatNode != null)
 				_combat = GetNode<AbstractCombat<CharlieController>>(CombatNode);
+
+			if(_combatLoadoutNode != null)
+				_combatLoadout  = GetNode<CombatLoadout>(_combatLoadoutNode);
 		}
 
 		public override void _PhysicsProcess(double delta)
@@ -50,5 +71,13 @@ namespace Characters.Playable
 
 		}
 
+
+		#region COMBATLOADOUT METHODS
+		
+		public override List<string> GetAttacksId() => _combatLoadout.GetAttacksId();
+		public override List<string> GetMagicsId() => _combatLoadout.GetMagicsId();
+		public override List<string> GetItemsId() => _combatLoadout.GetItemsId();
+
+		#endregion
 	}
 }

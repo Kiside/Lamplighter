@@ -1,8 +1,12 @@
 using System;
 using Godot;
+using SystemLamplighter;
 
 namespace Characters
 {
+	/// <summary>
+	/// Classe astratta base per i personaggi
+	/// </summary>
 	public abstract partial class AbstractCharacterController : CharacterBody3D, ICharacterController
 	{
 
@@ -16,7 +20,7 @@ namespace Characters
 		{
 			base._Ready();
 
-			NodeChecking();
+			Init();
 		}
 
 		public virtual void Init() { }
