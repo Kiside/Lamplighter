@@ -8,19 +8,12 @@ namespace Characters.Playable
 {
 	public partial class CharlieController : CharacterController<CharlieView,CharlieModel>, ICharacterControllerAtb
 	{
-		#region EXPORT PROPERTIES
-		[Export]
+		#region PROTECTED/PRIVATE PROPERTIES 
 		protected NodePath _combatLoadoutNode;
-		[Export]
-		protected AtbCharacterProperties _atbCharacterProperties;
-		#endregion
-
-		#region PROTECTED PROPERTIES 
-		protected AbstractCombat<CharlieController> _combat;
-		protected AbstractMovement<CharlieController> _movement;
-
-		protected CombatLoadout _combatLoadout;
-
+		protected AtbCharacterProperties _atbCharacterProperties => _model.AtbCharacterProperties;
+		protected AbstractCombat<CharlieController> _combat { get => _model.Combat; set => _model.Combat = value; }
+		protected AbstractMovement<CharlieController> _movement { get => _model.Movement; set => _model.Movement = value; }
+		protected CombatLoadout _combatLoadout { get => _model.CombatLoadout; set => _model.CombatLoadout = value; }
 		private bool _lockOn = false;
 		#endregion
 		

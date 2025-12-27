@@ -5,7 +5,7 @@ using System.Diagnostics;
 
 namespace SystemLamplighter.ATB
 {
-	public partial class ActionTimeBattleView : AbstractView
+	public partial class ActionTimeBattleView : ControlView
 	{
 		[Export]
 		private Control _playerContainer;
@@ -70,7 +70,7 @@ namespace SystemLamplighter.ATB
 		{
 			Debug.Assert(_characters != null, "_characters is null");
 
-			var minimumSize = this.CustomMinimumSize;
+			var minimumSize = _control.CustomMinimumSize;
 			for (int i = 0; i < _characters.Count; i++)
 			{
 				float currentPosition = (minimumSize.X / _characters[i].Position.X + TEMP_DEFAULT_SIZE_AVATAR);
@@ -82,7 +82,7 @@ namespace SystemLamplighter.ATB
 			Debug.Assert(_characters != null, "_characters is null");
 			Debug.Assert(index < _characters.Count, "index goes overflow");
 
-			var barWidth = this.Size.X;
+			var barWidth = _control.Size.X;
 
 			float x = Mathf.Lerp(0, barWidth - avatarSize.X, position);
 			_characters[index].Position = new Vector2(x, _characters[index].Position.Y);

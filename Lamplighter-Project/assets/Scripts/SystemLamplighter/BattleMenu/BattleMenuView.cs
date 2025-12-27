@@ -8,7 +8,7 @@ using SystemLamplighter;
 
 namespace SystemLamplighter.BattleMenu
 {
-	public partial class BattleMenuView : AbstractView
+	public partial class BattleMenuView : ControlView
 	{
 		[Export]
 		private NodePath _attackButtonPath;

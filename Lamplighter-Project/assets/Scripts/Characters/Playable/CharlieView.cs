@@ -3,11 +3,11 @@ using SystemLamplighter;
 
 namespace Characters.Playable
 {
-	public partial class CharlieView : AbstractView
+	public partial class CharlieView : WorldView
 	{
 		public override void Init()
 		{
-			throw new System.NotImplementedException();
+			
 		}
 	}
 }

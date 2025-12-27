@@ -1,26 +1,34 @@
-[gd_scene load_steps=15 format=3 uid="uid://c5mvvlosts20h"]
+[gd_scene load_steps=14 format=3 uid="uid://c5mvvlosts20h"]
 
 [ext_resource type="Script" uid="uid://cfa3lmuiqwqp8" path="res://assets/Scripts/Characters/Playable/CharlieController.cs" id="1_0iqh4"]
 [ext_resource type="Material" uid="uid://br8jrg5r6syxj" path="res://assets/Materials/Characters/proto_Charlie.tres" id="1_qebit"]
+[ext_resource type="Script" uid="uid://bvug2c1cs51ko" path="res://assets/Scripts/Characters/Playable/CharlieModel.cs" id="2_l8s2m"]
 [ext_resource type="Script" uid="uid://ktg5uom66wwd" path="res://assets/Scripts/Characters/Playable/CharlieMovement.cs" id="2_momr7"]
+[ext_resource type="Resource" uid="uid://di5386yh3jgk7" path="res://assets/CustomResources/Prototype/ATB Character Properties/Charlie.tres" id="3_xa4mk"]
 [ext_resource type="Script" uid="uid://lov737cbbet7" path="res://assets/Scripts/Characters/Playable/CharlieCombat.cs" id="4_cx7ps"]
+[ext_resource type="Script" uid="uid://do1ysamnuf2q7" path="res://assets/Scripts/Characters/Playable/CharlieView.cs" id="4_wjmeh"]
 [ext_resource type="Script" uid="uid://hpv57386fhw0" path="res://assets/Scripts/Characters/CombatLoadout.cs" id="5_xa4mk"]
-[ext_resource type="Script" uid="uid://53pv7v0c5gad" path="res://assets/Scripts/SystemLamplighter/DataStructure/AttackAction.cs" id="6_wjmeh"]
 [ext_resource type="Resource" uid="uid://dlftjlcuk3pr4" path="res://assets/CustomResources/Prototype/attack.tres" id="7_uuub8"]
-[ext_resource type="Script" uid="uid://bnfdp5jkgnimd" path="res://assets/Scripts/SystemLamplighter/DataStructure/DefenseAction.cs" id="8_lb2da"]
 [ext_resource type="Resource" uid="uid://dcd5ackoimdk6" path="res://assets/CustomResources/Prototype/defense.tres" id="9_vju8h"]
-[ext_resource type="Script" uid="uid://cwd6nmn8t150p" path="res://assets/Scripts/SystemLamplighter/DataStructure/MagicAction.cs" id="10_voq6j"]
 [ext_resource type="Resource" uid="uid://cdqt0xaj3qxg8" path="res://assets/CustomResources/Prototype/basic magic.tres" id="11_x47ln"]
-[ext_resource type="Script" uid="uid://bpc15l8suoj7p" path="res://assets/Scripts/SystemLamplighter/DataStructure/ItemAction.cs" id="12_lox3l"]
 [ext_resource type="Resource" uid="uid://bjd0r2gvapdf" path="res://assets/CustomResources/Prototype/healthItem.tres" id="13_1psa7"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_0bkd4"]
 
 [node name="Charlie" type="CharacterBody3D"]
 script = ExtResource("1_0iqh4")
-_combatLoadoutNode = NodePath("CombatLoadout")
+View = NodePath("CharlieView")
+Model = NodePath("CharlieModel")
 MovementNode = NodePath("Movement")
 CombatNode = NodePath("Combat")
+
+[node name="CharlieModel" type="Node" parent="."]
+script = ExtResource("2_l8s2m")
+_combatLoadoutNode = NodePath("../CombatLoadout")
+_atbCharacterProperties = ExtResource("3_xa4mk")
+
+[node name="CharlieView" type="Node" parent="."]
+script = ExtResource("4_wjmeh")
 
 [node name="Pivot" type="Node3D" parent="."]
 
@@ -41,7 +49,7 @@ script = ExtResource("4_cx7ps")
 
 [node name="CombatLoadout" type="Node" parent="."]
 script = ExtResource("5_xa4mk")
-_attack = Array[ExtResource("6_wjmeh")]([ExtResource("7_uuub8")])
-_defense = Array[ExtResource("8_lb2da")]([ExtResource("9_vju8h")])
-_magic = Array[ExtResource("10_voq6j")]([ExtResource("11_x47ln")])
-_items = Array[ExtResource("12_lox3l")]([ExtResource("13_1psa7")])
+_attack = [ExtResource("7_uuub8")]
+_defense = [ExtResource("9_vju8h")]
+_magic = [ExtResource("11_x47ln")]
+_items = [ExtResource("13_1psa7")]

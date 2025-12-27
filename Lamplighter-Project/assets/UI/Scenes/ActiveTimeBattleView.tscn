@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://nemmvqj4xx84" path="res://assets/Scripts/SystemLamplighter/ATB/ActionTimeBattleView.cs" id="1_4n07o"]
 
-[node name="ActiveTimeBattleView" type="Control" node_paths=PackedStringArray("_playerContainer", "_enemyContainer")]
+[node name="ActiveTimeBattleView" type="Control" node_paths=PackedStringArray("_playerContainer", "_enemyContainer", "_control")]
 custom_minimum_size = Vector2(300, 42.25)
 layout_mode = 3
 anchors_preset = 0
@@ -13,6 +13,7 @@ _playerContainer = NodePath("ActiveTimeBattleBar/PlayerContainer")
 _enemyContainer = NodePath("ActiveTimeBattleBar/EnemyContainer")
 avatarSize = Vector2(15, 15)
 avatarMinimumSize = Vector2(15, 15)
+_control = NodePath(".")
 
 [node name="ActiveTimeBattleBar" type="VBoxContainer" parent="."]
 custom_minimum_size = Vector2(300, 42.25)

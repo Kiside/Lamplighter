@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://cfmoaycvrks0i"]
+[gd_scene load_steps=4 format=3 uid="uid://cfmoaycvrks0i"]
 
 [ext_resource type="PackedScene" uid="uid://c5mvvlosts20h" path="res://assets/Characters/Playable/charlie.tscn" id="1_qfi3i"]
 [ext_resource type="PackedScene" uid="uid://bjvqik1fmkboh" path="res://assets/Scenes-Environmet/proto_combat.tscn" id="2_mw5we"]
+[ext_resource type="Resource" uid="uid://di5386yh3jgk7" path="res://assets/CustomResources/Prototype/ATB Character Properties/Charlie.tres" id="2_qcquh"]
 
 [node name="ProtoLevel" type="Node3D"]
 
@@ -11,6 +12,8 @@ size = Vector3(21.6799, 0.0296631, 20.2432)
 
 [node name="Charlie" parent="." instance=ExtResource("1_qfi3i")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.474787, 0)
+_combatLoadoutNode = null
+_atbCharacterProperties = ExtResource("2_qcquh")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="Charlie"]
 transform = Transform3D(1, 0, 0, 0, 0.563367, 0.826207, 0, -0.826207, 0.563367, 0, 0, 0)
