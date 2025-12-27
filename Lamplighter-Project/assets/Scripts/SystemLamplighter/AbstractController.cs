@@ -1,6 +1,6 @@
 using System;
 using Godot;
-using System.Diagnostics;
+using SystemLamplighter.Debug;
 
 namespace SystemLamplighter
 {
@@ -42,8 +42,8 @@ namespace SystemLamplighter
 
 		protected void Assert()
 		{
-			Debug.Assert(_model != null, "_model is null");
-			Debug.Assert(_view != null, "_view is null");
+			DebugLamplighter.Assert(_model != null, "_model is null");
+			DebugLamplighter.Assert(_view != null, "_view is null");
 		}
 	}
 }

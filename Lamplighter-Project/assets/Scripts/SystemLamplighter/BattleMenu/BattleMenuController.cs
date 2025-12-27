@@ -1,6 +1,7 @@
 using Godot;
 using MessagePipe;
 using System;
+using System.Collections.Generic;
 using SystemLamplighter;
 
 namespace SystemLamplighter.BattleMenu
@@ -12,13 +13,18 @@ namespace SystemLamplighter.BattleMenu
 		public void Show() => _view.Visible = true;
 		public void Hide() => _view.Visible = false;
 
+		public event Action<SubMenuType> OnOpenSubMenu;
+
 		// Called when the node enters the scene tree for the first time.
 		public override void _Ready()
 		{
 			base._Ready();
 
 			_view.OnActionClick += Action;
-			_view.OnSubMenu += OpenSubMenu;
+			_view.OnSubMenu += RequestOpenSubMenu;
+
+			if(_model.startHide)
+				Hide();
 		}
 
 		// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -27,9 +33,14 @@ namespace SystemLamplighter.BattleMenu
 
 		}
 
-		private void OpenSubMenu(SubMenuType subMenuType)
+		private void RequestOpenSubMenu(SubMenuType subMenuType)
 		{
-			_view.OpenSubMenu(subMenuType, _model.Get(subMenuType));
+			OnOpenSubMenu?.Invoke(subMenuType);
+		}
+
+		public void OpenSubMenu(SubMenuType subMenuType, List<string> subMenuButtonNames)
+		{
+			_view.OpenSubMenu(subMenuType, subMenuButtonNames);
 		}
 
 		private void Action(string id)
@@ -45,7 +56,7 @@ namespace SystemLamplighter.BattleMenu
 		private void Unsubscribe()
 		{
 			_view.OnActionClick -= Action;
-			_view.OnSubMenu -= OpenSubMenu;
+			_view.OnSubMenu -= RequestOpenSubMenu;
 		}
 	}
 

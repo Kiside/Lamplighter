@@ -2,6 +2,7 @@ using Godot;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using SystemLamplighter.Debug;
 
 
 namespace SystemLamplighter.ATB
@@ -33,7 +34,7 @@ namespace SystemLamplighter.ATB
 		/// </summary>
 		private void ClockingAtb(double delta)
 		{
-			Debug.Assert(_model != null, "character is null");
+			DebugLamplighter.Assert(_model != null, "character is null");
 			//processa la posizione per ogni personaggio
 			// Se lo stato di tutti i personaggi è in charging e ci sono personaggi nell'atb allora il ciclo può continuare
 			if (_inCharging && _model.CharactersCount > 0)
@@ -86,7 +87,7 @@ namespace SystemLamplighter.ATB
 		/// </summary>
 		private void Action(AtbCharacterProperties character)
 		{
-			Debug.Assert(character != null, "character is null");
+			DebugLamplighter.Assert(character != null, "character is null");
 			character.Action();
 		}
 
@@ -97,7 +98,7 @@ namespace SystemLamplighter.ATB
 		/// <param name="character">personaggio</param>
 		public void AddCharacter(AtbCharacterProperties character)
 		{
-			Debug.Assert(character != null, "character is null");
+			DebugLamplighter.Assert(character != null, "character is null");
 			Assert();
 
 			_model.AddCharacter(character);

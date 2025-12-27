@@ -2,6 +2,7 @@ using Godot;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using SystemLamplighter.Debug;
 
 namespace SystemLamplighter.ATB
 {
@@ -14,7 +15,8 @@ namespace SystemLamplighter.ATB
 
 		public override void Init()
 		{
-			_charactersInCombat = new List<AtbCharacterProperties>();
+			if(_charactersInCombat == null)
+				_charactersInCombat = new List<AtbCharacterProperties>();
 		}
 
 
@@ -24,8 +26,8 @@ namespace SystemLamplighter.ATB
 		/// <param name="character">personaggio</param>
 		public void AddCharacter(AtbCharacterProperties character)
 		{
-			Debug.Assert(character != null, "character is null");
-			Debug.Assert(_charactersInCombat != null, "_charactersInCombat is null");
+			DebugLamplighter.Assert(character != null, "character is null");
+			DebugLamplighter.Assert(_charactersInCombat != null, "_charactersInCombat is null");
 
 			_charactersInCombat.Add(character);
 		}
@@ -35,7 +37,7 @@ namespace SystemLamplighter.ATB
 		/// </summary>
 		public void ClearCharacters()
 		{
-			Debug.Assert(_charactersInCombat != null, "_charactersInCombat is null");
+			DebugLamplighter.Assert(_charactersInCombat != null, "_charactersInCombat is null");
 
 			_charactersInCombat.Clear();
 		}
@@ -46,7 +48,7 @@ namespace SystemLamplighter.ATB
 		/// <param name="character"></param>
 		public void RemoveCharacter(AtbCharacterProperties character)
 		{
-			Debug.Assert(_charactersInCombat != null, "_charactersInCombat is null");
+			DebugLamplighter.Assert(_charactersInCombat != null, "_charactersInCombat is null");
 
 			if (!_charactersInCombat.Remove(character))
 				Log.PrintWarning($"Non è stato possibile rimuovere {character.Name}");
@@ -54,9 +56,9 @@ namespace SystemLamplighter.ATB
 
 		public float GetPosition(int index)
 		{
-			Debug.Assert(_charactersInCombat != null, "_charactersInCombat is null");
-			Debug.Assert(index > -1, "index is negative");
-			Debug.Assert(index < _charactersInCombat.Count, "index goes overflow");
+			DebugLamplighter.Assert(_charactersInCombat != null, "_charactersInCombat is null");
+			DebugLamplighter.Assert(index > -1, "index is negative");
+			DebugLamplighter.Assert(index < _charactersInCombat.Count, "index goes overflow");
 
 			return _charactersInCombat[index].Position;
 		}

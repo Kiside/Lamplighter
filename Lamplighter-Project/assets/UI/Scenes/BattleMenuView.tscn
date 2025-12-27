@@ -3,23 +3,28 @@
 [ext_resource type="Script" uid="uid://dqy6v5c1tis0j" path="res://assets/Scripts/SystemLamplighter/BattleMenu/BattleMenuView.cs" id="1_xpko1"]
 [ext_resource type="PackedScene" uid="uid://cbxtyv05qx4l7" path="res://assets/UI/Scenes/BattleMenuUI.tscn" id="2_owam7"]
 
-[node name="BattleMenuView" type="Control" node_paths=PackedStringArray("_control")]
+[node name="BattleMenuView" type="Node" node_paths=PackedStringArray("_control")]
+script = ExtResource("1_xpko1")
+_attackButtonPath = NodePath("RootUI/BattleMenuUI/Container/MenuLeft/VBoxContainer/Attack")
+_magicButtonPath = NodePath("RootUI/BattleMenuUI/Container/MenuLeft/VBoxContainer/Magic")
+_guardButtonPath = NodePath("RootUI/BattleMenuUI/Container/MenuLeft/VBoxContainer/Guard")
+_itemButtonPath = NodePath("RootUI/BattleMenuUI/Container/MenuLeft/VBoxContainer/Items")
+_subMenuContainerPath = NodePath("RootUI/BattleMenuUI/Container/MenuRight/VBoxContainer")
+_control = NodePath("RootUI")
+
+[node name="RootUI" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_top = -253.0
+offset_top = 142.0
 offset_right = 507.0
+offset_bottom = 395.0
 grow_vertical = 0
-script = ExtResource("1_xpko1")
-_attackButtonPath = NodePath("BattleMenuUI/Container/MenuLeft/VBoxContainer/Attack")
-_magicButtonPath = NodePath("BattleMenuUI/Container/MenuLeft/VBoxContainer/Magic")
-_guardButtonPath = NodePath("BattleMenuUI/Container/MenuLeft/VBoxContainer/Guard")
-_itemButtonPath = NodePath("BattleMenuUI/Container/MenuLeft/VBoxContainer/Items")
-_subMenuContainerPath = NodePath("BattleMenuUI/Container/MenuRight/VBoxContainer")
-_control = NodePath(".")
 
-[node name="BattleMenuUI" parent="." instance=ExtResource("2_owam7")]
+[node name="BattleMenuUI" parent="RootUI" instance=ExtResource("2_owam7")]
 layout_mode = 1
+offset_top = -395.0
+offset_bottom = -395.0
 
-[editable path="BattleMenuUI"]
+[editable path="RootUI/BattleMenuUI"]

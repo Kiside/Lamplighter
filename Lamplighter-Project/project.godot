@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Lamplighter-Project"
-run/main_scene="uid://bjvqik1fmkboh"
+run/main_scene="uid://cfmoaycvrks0i"
 config/features=PackedStringArray("4.5", "C#")
 config/icon="res://assets/icon.svg"
 

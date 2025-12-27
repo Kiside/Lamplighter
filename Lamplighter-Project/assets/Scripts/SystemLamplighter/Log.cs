@@ -8,6 +8,7 @@ namespace SystemLamplighter
 {
 	public static class Log
 	{
+		public static string ClassName => GetCallerClassName();
 		public static void PrintMessageInCycle(int howMany, string message = "")
 		{
 			if (howMany <= 0)

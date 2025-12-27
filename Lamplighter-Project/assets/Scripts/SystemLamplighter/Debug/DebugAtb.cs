@@ -6,6 +6,7 @@ using SystemLamplighter;
 using SystemLamplighter.BattleMenu;
 using Characters;
 using Characters.Playable;
+using System.Diagnostics;
 
 public partial class DebugAtb : Node
 {
@@ -72,6 +73,33 @@ public partial class DebugAtb : Node
 		_atbController.OnCommandEvent += ShowBattleMenu;
 	}
 
+	private void AutoAddCharacters()
+	{
+		if(_allies != null && _allies.Count > 0)
+		{
+			for (int i = 0; i < _allies.Count; i++)
+			{
+				
+				if(_allies[i] is ICharacterControllerAtb ally)
+				{
+					AddCharacter(ally.ATB_GetCharacterProperties());
+				}	
+					
+				
+			}
+		}
+		if(_enemies != null && _enemies.Count > 0)
+		{
+			for (int i = 0; i < _enemies.Count; i++)
+			{
+
+				if(_enemies[i] is ICharacterControllerAtb enemy)	
+					AddCharacter(enemy.ATB_GetCharacterProperties());
+				
+			}
+		}
+	}
+
 	public void ShowBattleMenu()
 	{
 		_battleMenuController.Show();
@@ -79,6 +107,7 @@ public partial class DebugAtb : Node
 
 	public void StartCombatClick()
 	{
+		AutoAddCharacters();
 		_atbController.ContinueAtb();
 	}
 
@@ -87,7 +116,7 @@ public partial class DebugAtb : Node
 		_atbController.StopAtb();
 	}
 
-	public void AddCharacters()
+	public void OnAddCharactersClick()
 	{
 		int maxValue = maxNumberToAdd.GetLineEdit().Text.ToInt();
 
@@ -121,29 +150,9 @@ public partial class DebugAtb : Node
 				// AddCharacter(character);
 			}
 		}
-		else
-		{
-			if(_allies != null && _allies.Count > 0)
-			{
-				for (int i = 0; i < _allies.Count; i++)
-				{
-					if(_allies[i] is CharlieController)
-					{
-						
-					}
-					//_allies.GetNode
-					// AtbCharacter atbCharacter = _allies[i].;
-					// AddCharacter(_allies[i] as AtbCharacter);
-				}
-			}
-			if(_enemies != null && _enemies.Count > 0)
-			{
-				
-			}
-		}
 	}
 
-	public void RemoveCharacter()
+	public void OnRemoveCharacterClick()
 	{
 
 	}

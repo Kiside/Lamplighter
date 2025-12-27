@@ -1,7 +1,7 @@
 using Godot;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
+using SystemLamplighter.Debug;
 
 namespace SystemLamplighter.ATB
 {
@@ -27,8 +27,8 @@ namespace SystemLamplighter.ATB
 
 		public override void Init()
 		{
-			Debug.Assert(_enemyContainer != null, "_enemyContainer is null");
-			Debug.Assert(_playerContainer != null, "_playerContainer is null");
+			DebugLamplighter.Assert(_enemyContainer != null, "_enemyContainer is null");
+			DebugLamplighter.Assert(_playerContainer != null, "_playerContainer is null");
 
 			_characters = new List<TextureRect>();
 		}
@@ -39,8 +39,9 @@ namespace SystemLamplighter.ATB
 		/// <param name="character"></param>
 		public void AddCharacter(AtbCharacterProperties character)
 		{
-			Debug.Assert(character != null, "character is null");
+			DebugLamplighter.Assert(character != null, "character is null");
 
+			Log.PrintMessage($"questo è null? {character}");
 			TextureRect textureRect = new TextureRect();
 			textureRect.SettingUp(avatarSize, avatarMinimumSize, character.Avatar, avatarExpandMode);
 			textureRect.SetAnchors();
@@ -68,7 +69,7 @@ namespace SystemLamplighter.ATB
 
 		public void UpdatePositions(List<float> charactersPosition)
 		{
-			Debug.Assert(_characters != null, "_characters is null");
+			DebugLamplighter.Assert(_characters != null, "_characters is null");
 
 			var minimumSize = _control.CustomMinimumSize;
 			for (int i = 0; i < _characters.Count; i++)
@@ -79,8 +80,8 @@ namespace SystemLamplighter.ATB
 		}
 		public void UpdatePosition(float position, int index)
 		{
-			Debug.Assert(_characters != null, "_characters is null");
-			Debug.Assert(index < _characters.Count, "index goes overflow");
+			DebugLamplighter.Assert(_characters != null, "_characters is null");
+			DebugLamplighter.Assert(index < _characters.Count, "index goes overflow");
 
 			var barWidth = _control.Size.X;
 
@@ -95,9 +96,9 @@ namespace SystemLamplighter.ATB
 
 		public void ClearCharacters()
 		{
-			Debug.Assert(_characters != null, "_characters is null");
-			Debug.Assert(_enemyContainer != null, "_enemyContainer is null");
-			Debug.Assert(_playerContainer != null, "_playerContainer is null");
+			DebugLamplighter.Assert(_characters != null, "_characters is null");
+			DebugLamplighter.Assert(_enemyContainer != null, "_enemyContainer is null");
+			DebugLamplighter.Assert(_playerContainer != null, "_playerContainer is null");
 
 			_characters.Clear();
 			for (int i = 0; i < _enemyContainer.GetChildren().Count; i++)

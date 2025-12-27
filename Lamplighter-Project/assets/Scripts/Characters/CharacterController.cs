@@ -22,18 +22,28 @@ namespace Characters
 
 		protected TView _view;
 		protected TModel _model;
+		
 
+		/// <summary>
+		/// Prima implementazione basilare di Init()
+		/// </summary>
 		public sealed override void Init()
 		{
 			NodeChecking();
 			OnInit();
 		}
 
+		/// <summary>
+		/// Metodo per l'inizializzazione post Init()
+		/// </summary>
 		protected virtual void OnInit()
 		{
 			
 		}
 
+		/// <summary>
+		/// Metodo base del NodeChecking() che controlla le variabili del Model e della View
+		/// </summary>
 		protected override void NodeChecking()
 		{
 			_view = GetNode<TView>(View);

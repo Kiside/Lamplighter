@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://c5mvvlosts20h"]
+[gd_scene load_steps=19 format=3 uid="uid://c5mvvlosts20h"]
 
 [ext_resource type="Script" uid="uid://cfa3lmuiqwqp8" path="res://assets/Scripts/Characters/Playable/CharlieController.cs" id="1_0iqh4"]
 [ext_resource type="Material" uid="uid://br8jrg5r6syxj" path="res://assets/Materials/Characters/proto_Charlie.tres" id="1_qebit"]
@@ -10,8 +10,13 @@
 [ext_resource type="Script" uid="uid://hpv57386fhw0" path="res://assets/Scripts/Characters/CombatLoadout.cs" id="5_xa4mk"]
 [ext_resource type="Resource" uid="uid://dlftjlcuk3pr4" path="res://assets/CustomResources/Prototype/attack.tres" id="7_uuub8"]
 [ext_resource type="Resource" uid="uid://dcd5ackoimdk6" path="res://assets/CustomResources/Prototype/defense.tres" id="9_vju8h"]
+[ext_resource type="Script" uid="uid://53pv7v0c5gad" path="res://assets/Scripts/SystemLamplighter/DataStructure/AttackAction.cs" id="9_voq6j"]
+[ext_resource type="Script" uid="uid://bnfdp5jkgnimd" path="res://assets/Scripts/SystemLamplighter/DataStructure/DefenseAction.cs" id="11_lox3l"]
 [ext_resource type="Resource" uid="uid://cdqt0xaj3qxg8" path="res://assets/CustomResources/Prototype/basic magic.tres" id="11_x47ln"]
 [ext_resource type="Resource" uid="uid://bjd0r2gvapdf" path="res://assets/CustomResources/Prototype/healthItem.tres" id="13_1psa7"]
+[ext_resource type="Script" uid="uid://cwd6nmn8t150p" path="res://assets/Scripts/SystemLamplighter/DataStructure/MagicAction.cs" id="13_javlh"]
+[ext_resource type="Script" uid="uid://bpc15l8suoj7p" path="res://assets/Scripts/SystemLamplighter/DataStructure/ItemAction.cs" id="15_ugvtw"]
+[ext_resource type="PackedScene" uid="uid://bgsjemevth5s" path="res://assets/Scenes-Node/battle_menu.tscn" id="17_rd6aq"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_0bkd4"]
 
@@ -26,6 +31,7 @@ CombatNode = NodePath("Combat")
 script = ExtResource("2_l8s2m")
 _combatLoadoutNode = NodePath("../CombatLoadout")
 _atbCharacterProperties = ExtResource("3_xa4mk")
+_battleMenuNode = NodePath("../BattleMenuController")
 
 [node name="CharlieView" type="Node" parent="."]
 script = ExtResource("4_wjmeh")
@@ -49,7 +55,9 @@ script = ExtResource("4_cx7ps")
 
 [node name="CombatLoadout" type="Node" parent="."]
 script = ExtResource("5_xa4mk")
-_attack = [ExtResource("7_uuub8")]
-_defense = [ExtResource("9_vju8h")]
-_magic = [ExtResource("11_x47ln")]
-_items = [ExtResource("13_1psa7")]
+_attack = Array[ExtResource("9_voq6j")]([ExtResource("7_uuub8")])
+_defense = Array[ExtResource("11_lox3l")]([ExtResource("9_vju8h")])
+_magic = Array[ExtResource("13_javlh")]([ExtResource("11_x47ln")])
+_items = Array[ExtResource("15_ugvtw")]([ExtResource("13_1psa7")])
+
+[node name="BattleMenuController" parent="." instance=ExtResource("17_rd6aq")]
