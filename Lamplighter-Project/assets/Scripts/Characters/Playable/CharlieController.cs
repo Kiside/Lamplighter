@@ -7,13 +7,16 @@ using SystemLamplighter.BattleMenu;
 
 namespace Characters.Playable
 {
-	public partial class CharlieController : CharacterController<CharlieView,CharlieModel>, ICharacterControllerAtb
+	public partial class CharlieController : CharacterController<CharlieView,CharlieModel>, ICharacterControllerAtb, ICombatActor
 	{
+		#region PUBLIC
+		public AtbCharacterProperties AtbProperties => _model.AtbCharacterProperties;
+		public CombatLoadout CombatLoadout { get => _model.CombatLoadout; set => _model.CombatLoadout = value; }
+		#endregion
+
 		#region PROTECTED/PRIVATE PROPERTIES 
-		protected AtbCharacterProperties _atbCharacterProperties => _model.AtbCharacterProperties;
 		protected AbstractCombat<CharlieController> _combat { get => _model.Combat; set => _model.Combat = value; }
 		protected AbstractMovement<CharlieController> _movement { get => _model.Movement; set => _model.Movement = value; }
-		protected CombatLoadout _combatLoadout { get => _model.CombatLoadout; set => _model.CombatLoadout = value; }
 		protected BattleMenuController _battleMenuController { get => _model.BattleMenu;}
 		private bool _lockOn = false;
 		#endregion
@@ -81,7 +84,7 @@ namespace Characters.Playable
 					subMenuIds = GetItemsId();
 				break;
 			}
-			
+
 			_battleMenuController.OpenSubMenu(subMenuType, subMenuIds);
 		}
 
