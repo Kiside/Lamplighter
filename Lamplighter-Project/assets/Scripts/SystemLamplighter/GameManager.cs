@@ -1,26 +1,37 @@
 using Godot;
 using SystemLamplighter;
 using Microsoft.Extensions.DependencyInjection;
+using MessagePipe;
 using System;
 
 public partial class GameManager : Node
 {
-	public static ServiceProvider Services;
+	public static IServiceProvider Services {get; private set;}
 	public override void _EnterTree()
 	{
 		base._EnterTree();
 
-		SubscribeServices();
+		BuildServices();
 	}
 
-	private void SubscribeServices()
+	private void BuildServices()
 	{
-		var Services = new ServiceCollection();
+		var services = new ServiceCollection();
+
+		services.AddMessagePipe();
+
+		// Se vuoi registrare altri servizi globali, fallo qui
+        // services.AddSingleton<IMyService, MyService>();
+
+		Services = services.BuildServiceProvider();
 	}
 
 
 	public override void _ExitTree()
 	{
-		Log.Dispose();
+		if(Services is IDisposable disposable)
+		{
+			disposable.Dispose();
+		}
 	}
 }

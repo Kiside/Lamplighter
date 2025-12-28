@@ -1,3 +1,4 @@
+using Characters.Interfaces;
 using Godot;
 using System;
 using System.Collections.Generic;
@@ -22,6 +23,8 @@ namespace SystemLamplighter.ATB
 			base.Init();
 
 			_currentIndex = 0;
+
+			
 		}
 
 		public override void _PhysicsProcess(double delta)
@@ -44,16 +47,17 @@ namespace SystemLamplighter.ATB
 				while (i < _model.CharactersCount)
 				{
 					// Se un personaggio entra in Command
-					if (_model.Characters[i].UpdatePosition((float)delta) == AtbCharacterStatus.COM)
+					if (_model.Characters[i].AtbProperties.UpdatePosition((float)delta) == AtbCharacterStatus.COM)
 					{
 						// Bisogna evitare il continuo del ciclo è "fermare" il proseguimento dell'ATB
 						_inCharging = false;
 						_currentIndex = i;
-						CommandAtb();
+						this.PublishEvent<AtbCommandPhaseStartedEvent>(new AtbCommandPhaseStartedEvent(_model.Characters[i]));
+						//CommandAtb();
 						break;
 					}
 					//Chiedo alla view di riposizionare i vari personaggi
-					_view.UpdatePosition(_model.Characters[i].Position, i);
+					_view.UpdatePosition(_model.Characters[i].AtbProperties.Position, i);
 					i++;
 				}
 				_currentIndex = 0;
@@ -96,7 +100,7 @@ namespace SystemLamplighter.ATB
 		/// Aggiunge un personaggio alla lista
 		/// </summary>
 		/// <param name="character">personaggio</param>
-		public void AddCharacter(AtbCharacterProperties character)
+		public void AddCharacter(ICombatActor character)
 		{
 			DebugLamplighter.Assert(character != null, "character is null");
 			Assert();
@@ -120,7 +124,7 @@ namespace SystemLamplighter.ATB
 		/// Rimuove un personaggio dalla lista
 		/// </summary>
 		/// <param name="character"></param>
-		public void RemoveCharacterInCombat(AtbCharacterProperties character)
+		public void RemoveCharacterInCombat(ICombatActor character)
 		{
 			Assert();
 

@@ -1,3 +1,4 @@
+using Characters.Interfaces;
 using Godot;
 using System;
 using System.Collections.Generic;
@@ -8,15 +9,15 @@ namespace SystemLamplighter.ATB
 {
 	public partial class ActionTimeBattleModel : AbstractModel
 	{
-		private List<AtbCharacterProperties> _charactersInCombat;
+		private List<ICombatActor> _charactersInCombat;
 
 		public int CharactersCount => _charactersInCombat.Count;
-		public List<AtbCharacterProperties> Characters => _charactersInCombat;
+		public List<ICombatActor> Characters => _charactersInCombat;
 
 		public override void Init()
 		{
 			if(_charactersInCombat == null)
-				_charactersInCombat = new List<AtbCharacterProperties>();
+				_charactersInCombat = new List<ICombatActor>();
 		}
 
 
@@ -24,7 +25,7 @@ namespace SystemLamplighter.ATB
 		/// Aggiunge un personaggio alla lista
 		/// </summary>
 		/// <param name="character">personaggio</param>
-		public void AddCharacter(AtbCharacterProperties character)
+		public void AddCharacter(ICombatActor character)
 		{
 			DebugLamplighter.Assert(character != null, "character is null");
 			DebugLamplighter.Assert(_charactersInCombat != null, "_charactersInCombat is null");
@@ -46,12 +47,12 @@ namespace SystemLamplighter.ATB
 		/// Rimuove un personaggio dalla lista
 		/// </summary>
 		/// <param name="character"></param>
-		public void RemoveCharacter(AtbCharacterProperties character)
+		public void RemoveCharacter(ICombatActor character)
 		{
 			DebugLamplighter.Assert(_charactersInCombat != null, "_charactersInCombat is null");
 
 			if (!_charactersInCombat.Remove(character))
-				Log.PrintWarning($"Non è stato possibile rimuovere {character.Name}");
+				Log.PrintWarning($"Non è stato possibile rimuovere {character.AtbProperties.Name}");
 		}
 
 		public float GetPosition(int index)
@@ -60,7 +61,7 @@ namespace SystemLamplighter.ATB
 			DebugLamplighter.Assert(index > -1, "index is negative");
 			DebugLamplighter.Assert(index < _charactersInCombat.Count, "index goes overflow");
 
-			return _charactersInCombat[index].Position;
+			return _charactersInCombat[index].AtbProperties.Position;
 		}
 	}
 }

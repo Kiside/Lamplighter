@@ -1,3 +1,4 @@
+using Characters.Interfaces;
 using Godot;
 using System;
 using System.Collections.Generic;
@@ -37,16 +38,16 @@ namespace SystemLamplighter.ATB
 		/// Metodo per aggiungere il personaggio nella View dell'atb
 		/// </summary>
 		/// <param name="character"></param>
-		public void AddCharacter(AtbCharacterProperties character)
+		public void AddCharacter(ICombatActor character)
 		{
 			DebugLamplighter.Assert(character != null, "character is null");
 
 			Log.PrintMessage($"questo è null? {character}");
 			TextureRect textureRect = new TextureRect();
-			textureRect.SettingUp(avatarSize, avatarMinimumSize, character.Avatar, avatarExpandMode);
+			textureRect.SettingUp(avatarSize, avatarMinimumSize, character.AtbProperties.Avatar, avatarExpandMode);
 			textureRect.SetAnchors();
 
-			switch (character.CharacterType)
+			switch (character.AtbProperties.CharacterType)
 			{
 				case AtbCharacterType.ALLY:
 					_playerContainer.AddChild(textureRect);

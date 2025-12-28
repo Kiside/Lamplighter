@@ -1,8 +1,12 @@
 using SystemLamplighter;
 using Characters;
-public interface ICombatActor
+
+namespace Characters.Interfaces
 {
-	AtbCharacterProperties AtbProperties { get; }
-    CombatLoadout CombatLoadout { get; }
-    //AtbCharacterType CharacterType { get; }
+    public interface ICombatActor
+    {
+        AtbCharacterProperties AtbProperties { get; }
+        CombatLoadout CombatLoadout { get; }
+        //AtbCharacterType CharacterType { get; }
+    }    
 }

@@ -4,10 +4,15 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using SystemLamplighter;
 using SystemLamplighter.BattleMenu;
+using Characters.Interfaces;
+using Characters.Inteaces;
+using Microsoft.Extensions.DependencyInjection;
+using MessagePipe;
 
 namespace Characters.Playable
 {
-	public partial class CharlieController : CharacterController<CharlieView,CharlieModel>, ICharacterControllerAtb, ICombatActor
+	public partial class CharlieController : CharacterController<CharlieView,CharlieModel>, 
+	ICombatActor, ICombatCommandHandler ,ICombatActionExecutor
 	{
 		#region PUBLIC
 		public AtbCharacterProperties AtbProperties => _model.AtbCharacterProperties;
@@ -19,6 +24,8 @@ namespace Characters.Playable
 		protected AbstractMovement<CharlieController> _movement { get => _model.Movement; set => _model.Movement = value; }
 		protected BattleMenuController _battleMenuController { get => _model.BattleMenu;}
 		private bool _lockOn = false;
+
+		private readonly DisposableBagBuilder _bag = DisposableBag.CreateBuilder();
 		#endregion
 		
 		#region PUBLIC PROPERTIES
@@ -36,6 +43,8 @@ namespace Characters.Playable
 			_movement.Init(this);
 
 			_model.OnOpenBattleSubMenu += OpenBattleSubMenuHandler;
+
+			this.SubscribeEvent<AtbCommandPhaseStartedEvent>(OnCommandPhaseStarted).AddTo(_bag);
 		}
 
 		protected override void NodeChecking()
@@ -60,15 +69,6 @@ namespace Characters.Playable
 			MoveAndSlide();
 		}
 
-		#region ICharacterControllerAtb Methods
-		public void ATB_Action()
-		{
-
-		}
-
-		public AtbCharacterProperties ATB_GetCharacterProperties() => _atbCharacterProperties;
-		#endregion
-
 		public void OpenBattleSubMenuHandler(SubMenuType subMenuType)
 		{
 			List <string> subMenuIds = new List<string>();
@@ -92,10 +92,35 @@ namespace Characters.Playable
 
 		#region COMBATLOADOUT METHODS
 		
-		public override List<string> GetAttacksId() => _combatLoadout.GetAttacksId();
-		public override List<string> GetMagicsId() => _combatLoadout.GetMagicsId();
-		public override List<string> GetItemsId() => _combatLoadout.GetItemsId();
-
+		public override List<string> GetAttacksId() => CombatLoadout.GetAttacksId();
+		public override List<string> GetMagicsId() => CombatLoadout.GetMagicsId();
+		public override List<string> GetItemsId() => CombatLoadout.GetItemsId();
 		#endregion
+
+		#region ICombatActionExecutor
+		public void OnExecuteCombatAction(AtbCommandPhaseStartedEvent ev)
+		{
+			
+		}
+		#endregion
+
+		#region ICombatCommandHandler
+		public void OnCommandPhaseStarted(AtbCommandPhaseStartedEvent ev)
+		{
+			if(ev.Actor != this)
+				return;
+			
+			Log.PrintMessage("HA FUNZIONATO");
+			// Richiamo Combat menu
+			_battleMenuController.Show();
+		}
+		#endregion
+
+		public override void _ExitTree()
+		{
+			_bag.Build().Dispose();
+
+			base._ExitTree();
+		}
 	}
 }

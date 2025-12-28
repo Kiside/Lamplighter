@@ -7,6 +7,7 @@ using SystemLamplighter.BattleMenu;
 using Characters;
 using Characters.Playable;
 using System.Diagnostics;
+using Characters.Interfaces;
 
 public partial class DebugAtb : Node
 {
@@ -80,9 +81,9 @@ public partial class DebugAtb : Node
 			for (int i = 0; i < _allies.Count; i++)
 			{
 				
-				if(_allies[i] is ICharacterControllerAtb ally)
+				if(_allies[i] is ICombatActor ally)
 				{
-					AddCharacter(ally.ATB_GetCharacterProperties());
+					AddCharacter(ally);
 				}	
 					
 				
@@ -93,8 +94,8 @@ public partial class DebugAtb : Node
 			for (int i = 0; i < _enemies.Count; i++)
 			{
 
-				if(_enemies[i] is ICharacterControllerAtb enemy)	
-					AddCharacter(enemy.ATB_GetCharacterProperties());
+				if(_enemies[i] is ICombatActor enemy)	
+					AddCharacter(enemy);
 				
 			}
 		}
@@ -157,7 +158,7 @@ public partial class DebugAtb : Node
 
 	}
 
-	public void AddCharacter(AtbCharacterProperties character)
+	public void AddCharacter(ICombatActor character)
 	{
 		_atbController.AddCharacter(character);
 	}
