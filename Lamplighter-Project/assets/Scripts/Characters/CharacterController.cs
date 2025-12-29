@@ -61,10 +61,10 @@ namespace Characters
 			Debug.Assert(_view != null, "_view is null");
 		}
 
-		public virtual List<string> GetAttacksId() { return new List<string>();}
+		public virtual List<IActionData> GetAttacksId() { return new List<IActionData>();}
 
-		public virtual List<string> GetMagicsId(){ return new List<string>();}
-		public virtual List<string> GetItemsId() { return new List<string>();}
+		public virtual List<IActionData> GetMagicsId(){ return new List<IActionData>();}
+		public virtual List<IActionData> GetItemsId() { return new List<IActionData>();}
 
 	}
 }

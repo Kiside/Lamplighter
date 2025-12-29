@@ -67,21 +67,21 @@ namespace Characters
 			}
 		}
 
-		public List<string> GetAttacksId()
+		public List<IActionData> GetAttacksId()
 		{
 			Debug.Assert(_attack != null, "_attack is null");
 			Debug.Assert(_attack.Count > 0, "_attack is empty");
 
 			return PrepareList(_attack);
 		}
-		public List<string> GetMagicsId()
+		public List<IActionData> GetMagicsId()
 		{
 			Debug.Assert(_magic != null, "_magic is null");
 			Debug.Assert(_magic.Count > 0, "_magic is empty");
 
 			return PrepareList(_magic);
 		}
-		public List<string> GetItemsId()
+		public List<IActionData> GetItemsId()
 		{
 			Debug.Assert(_items != null, "_attack is null");
 			Debug.Assert(_items.Count > 0, "_attack is empty");
@@ -89,18 +89,18 @@ namespace Characters
 			return PrepareList(_items);
 		}
 
-		private List<string> PrepareList<[MustBeVariant] T>(Godot.Collections.Array<T> list) where T : ActionData
+		private List<IActionData> PrepareList<[MustBeVariant] T>(Godot.Collections.Array<T> list) where T : ActionData
 		{
-			var result = new List<string> ();
+			var result = new List<IActionData> ();
 			foreach(var value in list)
 			{
 				if (value is EquipableActionData equip && equip.IsEquipped)
 				{
-					result.Add(value.Name);
+					result.Add(value);
 				}
 				else
 				{
-					result.Add(value.Name);
+					result.Add(value);
 				}
 				
 			}

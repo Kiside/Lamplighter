@@ -113,7 +113,7 @@ namespace SystemLamplighter.BattleMenu
 		private void GuardButtonHandle(string idButton) => OnActionClick?.Invoke(idButton);
 		private void ItemButtonHandle() => OnSubMenu?.Invoke(SubMenuType.ITEMS);
 
-		public void OpenSubMenu(SubMenuType subMenuType, List<string> subMenuButtonsName)
+		public void OpenSubMenu(SubMenuType subMenuType, List<IActionData> subMenuButtonsName)
 		{
 			ClearSubMenu();
 
@@ -123,7 +123,7 @@ namespace SystemLamplighter.BattleMenu
 			foreach (var button in subMenuButtonsName)
 			{
 				ButtonUi buttonToAdd = new ButtonUi();
-				buttonToAdd.Init(button);
+				buttonToAdd.Init(button.Name);
 				buttonToAdd.SetMinimumSize(new Vector2(251, 60));
 				_subMenuContainer.AddChild(buttonToAdd);
 				buttonToAdd.OnClick += HandleClick;

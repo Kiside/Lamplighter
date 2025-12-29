@@ -53,7 +53,6 @@ namespace SystemLamplighter.ATB
 						_inCharging = false;
 						_currentIndex = i;
 						this.PublishEvent<AtbCommandPhaseStartedEvent>(new AtbCommandPhaseStartedEvent(_model.Characters[i]));
-						//CommandAtb();
 						break;
 					}
 					//Chiedo alla view di riposizionare i vari personaggi

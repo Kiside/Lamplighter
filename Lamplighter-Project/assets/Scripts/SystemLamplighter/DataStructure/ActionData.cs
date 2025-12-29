@@ -5,7 +5,7 @@ using Godot;
 namespace SystemLamplighter.DataStructure
 {
 	[GlobalClass]
-	public partial class ActionData : Resource
+	public partial class ActionData : Resource, IActionData
 	{
 		// Che tipo di azione è
 		[Export]

@@ -12,26 +12,10 @@ namespace SystemLamplighter.BattleMenu
 {
 	public partial class BattleMenuModel : AbstractModel
 	{
-		// [ExportGroup("Attacks")]
-		// [Export]
-		// private Godot.Collections.Array<AttackAction> _attack = new();
-
-		// [ExportGroup("Guard")]
-		// [Export]
-		// private Godot.Collections.Array<DefenseAction> _defense = new();
-
-		// [ExportGroup("Magic")]
-		// [Export]
-		// private Godot.Collections.Array<MagicAction> _magic = new();
-
-		// [ExportGroup("Items")]
-		// [Export]
-		// private Godot.Collections.Array<HealItemAction> _items = new();
-
-		// private System.Collections.Generic.Dictionary<string, ActionData> _actionsDictionary;
-
 		[Export]
 		public bool startHide {get; private set;} = true;
+
+		public IReadOnlyList<IActionData> SubMenuActions {get; private set;}
 
 		private List<string> _attacks;
 
@@ -42,6 +26,13 @@ namespace SystemLamplighter.BattleMenu
 		{
 
 		}
+
+		public void SetSubMenuActions(IEnumerable<IActionData> actionDatas)
+		{
+			SubMenuActions = actionDatas.ToList();
+		}
+
+		public void ClearSubMenuActions() => SubMenuActions = System.Array.Empty<IActionData>();
 
 		public void Init(List<string> attacks, List<string> magics, List<string> items)
 		{

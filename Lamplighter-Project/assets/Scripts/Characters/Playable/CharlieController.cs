@@ -24,7 +24,6 @@ namespace Characters.Playable
 		protected AbstractMovement<CharlieController> _movement { get => _model.Movement; set => _model.Movement = value; }
 		protected BattleMenuController _battleMenuController { get => _model.BattleMenu;}
 		private bool _lockOn = false;
-
 		private readonly DisposableBagBuilder _bag = DisposableBag.CreateBuilder();
 		#endregion
 		
@@ -71,7 +70,7 @@ namespace Characters.Playable
 
 		public void OpenBattleSubMenuHandler(SubMenuType subMenuType)
 		{
-			List <string> subMenuIds = new List<string>();
+			List <IActionData> subMenuIds = new List<IActionData>();
 			switch(subMenuType)
 			{
 				case SubMenuType.ATTACK:
@@ -92,9 +91,9 @@ namespace Characters.Playable
 
 		#region COMBATLOADOUT METHODS
 		
-		public override List<string> GetAttacksId() => CombatLoadout.GetAttacksId();
-		public override List<string> GetMagicsId() => CombatLoadout.GetMagicsId();
-		public override List<string> GetItemsId() => CombatLoadout.GetItemsId();
+		public override List<IActionData> GetAttacksId() => CombatLoadout.GetAttacksId();
+		public override List<IActionData> GetMagicsId() => CombatLoadout.GetMagicsId();
+		public override List<IActionData> GetItemsId() => CombatLoadout.GetItemsId();
 		#endregion
 
 		#region ICombatActionExecutor
@@ -110,7 +109,6 @@ namespace Characters.Playable
 			if(ev.Actor != this)
 				return;
 			
-			Log.PrintMessage("HA FUNZIONATO");
 			// Richiamo Combat menu
 			_battleMenuController.Show();
 		}

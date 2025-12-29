@@ -38,7 +38,7 @@ namespace SystemLamplighter.BattleMenu
 			OnOpenSubMenu?.Invoke(subMenuType);
 		}
 
-		public void OpenSubMenu(SubMenuType subMenuType, List<string> subMenuButtonNames)
+		public void OpenSubMenu(SubMenuType subMenuType, List<IActionData> subMenuButtonNames)
 		{
 			_view.OpenSubMenu(subMenuType, subMenuButtonNames);
 		}
@@ -46,6 +46,7 @@ namespace SystemLamplighter.BattleMenu
 		private void Action(string id)
 		{
 			Log.PrintMessage($"Action: {id}");
+
 		}
 
 		public override void _ExitTree()
