@@ -6,11 +6,12 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using SystemLamplighter.Debug;
 using SystemLamplighter.Events;
+using SystemLamplighter.Interfaces;
 
 
 namespace SystemLamplighter.ATB
 {
-	public partial class ActionTimeBattleController() : AbstractController<ActionTimeBattleView, ActionTimeBattleModel>
+	public partial class ActionTimeBattleController() : AbstractController<ActionTimeBattleView, ActionTimeBattleModel>, IDisposable
 	{
 		bool _inCharging = false;
 		int _currentIndex;
@@ -18,6 +19,9 @@ namespace SystemLamplighter.ATB
 		public event Action OnCommandEvent;
 
 		private readonly DisposableBagBuilder _bag = DisposableBag.CreateBuilder();
+		private IDisposable? _atbCommandEndSubscription;
+
+		private ICombatActor _currentActorInCommand;
 
 		// PER DEBUG
 		public void CallViewUpdatePosition(float position, int index) => _view.UpdatePosition(position, index);
@@ -50,14 +54,17 @@ namespace SystemLamplighter.ATB
 				int i = _currentIndex;
 				while (i < _model.CharactersCount)
 				{
+					var currentCharacter = _model.Characters[i];
 					// Se un personaggio entra in Command
-					if (_model.Characters[i].AtbProperties.UpdatePosition((float)delta) == AtbCharacterStatus.COM)
+					if (currentCharacter.AtbProperties.UpdatePosition((float)delta) == AtbCharacterStatus.COM)
 					{
 						// Bisogna evitare il continuo del ciclo è "fermare" il proseguimento dell'ATB
 						_inCharging = false;
 						_currentIndex = i;
-						this.SubscribeEvent<AtbCommandPhaseEndEvent>(OnCommandEnd).AddTo(_bag);
-						this.PublishEvent<AtbCommandPhaseStartedEvent>(new AtbCommandPhaseStartedEvent(_model.Characters[i]));
+						_currentActorInCommand = currentCharacter;
+						_atbCommandEndSubscription = this.SubscribeEvent<AtbCommandPhaseEndEvent>(OnCommandEnd);
+						_atbCommandEndSubscription.AddTo(_bag);
+						this.PublishEvent(new AtbCommandPhaseStartedEvent(currentCharacter));
 						break;
 					}
 					//Chiedo alla view di riposizionare i vari personaggi
@@ -87,7 +94,13 @@ namespace SystemLamplighter.ATB
 		/// </summary>
 		public void OnCommandEnd(AtbCommandPhaseEndEvent ev)
 		{
-			// BISOGNA CONTINUARE QUI A SVILUPPARE
+			DebugLamplighter.Assert(ev != null, "ev is null");
+			DebugLamplighter.Assert(_currentActorInCommand != null, "_currentActorInCommand is null");
+			
+			_atbCommandEndSubscription?.Dispose();
+			_currentActorInCommand.AtbProperties.SpeedMultiplier = ev.ActionData.ActionSpeedMultiplier;
+			_currentActorInCommand = null;
+			
 			_inCharging = true;
 		}
 
@@ -148,7 +161,12 @@ namespace SystemLamplighter.ATB
 		{
 			base._ExitTree();
 
-			_bag.Build().Dispose();	
+			Dispose();
+		}
+
+		public void Dipose()
+		{
+			_bag.Build().Dispose();
 		}
 	}
 }

@@ -116,9 +116,14 @@ namespace Characters.Playable
 
 		public override void _ExitTree()
 		{
-			_bag.Build().Dispose();
+			Dispose();
 
 			base._ExitTree();
+		}
+
+		public new void Dispose()
+		{
+			_bag.Build().Dispose();
 		}
 	}
 }

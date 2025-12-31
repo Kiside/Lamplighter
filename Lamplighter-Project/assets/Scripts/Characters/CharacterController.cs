@@ -11,7 +11,7 @@ namespace Characters
 	/// </summary>
 	/// <typeparam name="TView"></typeparam>
 	/// <typeparam name="TModel"></typeparam>
-	public partial class CharacterController<TView, TModel> : AbstractCharacterController 
+	public partial class CharacterController<TView, TModel> : AbstractCharacterController
 	where TView : AbstractView
 	where TModel : AbstractModel
 	{

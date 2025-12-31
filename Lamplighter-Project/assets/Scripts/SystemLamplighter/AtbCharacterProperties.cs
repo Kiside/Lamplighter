@@ -17,6 +17,9 @@ namespace SystemLamplighter
 		// La velocità del personaggio sull'ATB
 		[Export]
 		float _speed;
+		// Il moltiplicatore alla velocità aggiunto dall'uso di un action
+		[Export]
+		float _speedMultiplier = 1;
 		// Posizione del personaggio all'interno dell'ATB
 		float _barPosition;
 		// Name of Character 
@@ -34,6 +37,7 @@ namespace SystemLamplighter
 		public AtbCharacterType CharacterType => _characterType;
 		public Image Avatar => _avatar;
 		public float Speed => _speed;
+		public float SpeedMultiplier {get {return _speedMultiplier;} set {_speedMultiplier = value;}}
 		public float Position => _barPosition;
 		public AtbCharacterStatus Status => _status;
 		#endregion
@@ -68,7 +72,7 @@ namespace SystemLamplighter
 			if (_status == AtbCharacterStatus.COM)
 				return _status;
 
-			_barPosition += _speed * value;
+			_barPosition += (_speed * _speedMultiplier) * value;
 			_barPosition = Mathf.Clamp(_barPosition, 0, 1);
 
 			return CheckPositionStatus();
