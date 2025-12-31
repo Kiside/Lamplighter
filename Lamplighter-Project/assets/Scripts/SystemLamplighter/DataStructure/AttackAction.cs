@@ -21,7 +21,7 @@ public partial class AttackAction : EquipableActionData
 	// Quanta posizione sottrae l'attacco sull'atb
 	private float _atbPositionDamage;
 
-	public AttackAction() : this("", AttackType.LIGHT, 0f, 0f, 0f, 0f, false) { }
+	public AttackAction() : this("", AttackType.LIGHT, 0f, 0f, 0f, 1f, false) { }
 
 	public AttackAction(string name, AttackType attackType, float damage, float pushbackForce, float atbPositionDamage, float actionSpeed, bool isEquipped)
 	{
@@ -31,7 +31,7 @@ public partial class AttackAction : EquipableActionData
 		_damage = damage;
 		_pushbackForce = pushbackForce;
 		_atbPositionDamage = atbPositionDamage;
-		_actionSpeed = actionSpeed;
+		_actionSpeedMultiplier = actionSpeed;
 		_isEquipped = isEquipped;
 	}
 }

@@ -14,9 +14,9 @@ namespace Characters
 		CombatLoadout _combatLoadout;
 		EquipmentLoadout _equipmentLoadout;
 
-		public List<string> GetAttacks() => _combatLoadout.GetAttacksId();
-		public List<string> GetMagics() => _combatLoadout.GetMagicsId();
-		public List<string> GetItems() => _combatLoadout.GetItemsId();
+		public List<IActionData> GetAttacks() => _combatLoadout.GetAttacksId();
+		public List<IActionData> GetMagics() => _combatLoadout.GetMagicsId();
+		public List<IActionData> GetItems() => _combatLoadout.GetItemsId();
 
 
 

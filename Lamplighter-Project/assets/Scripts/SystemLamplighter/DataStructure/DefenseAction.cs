@@ -12,12 +12,13 @@ namespace SystemLamplighter.DataStructure
 
 		public float DefensiveAmount => _defensiveAmount;
 
-		public DefenseAction() : this(0f) { }
+		public DefenseAction() : this(0f, 10f) { }
 
-		public DefenseAction(float defensiveAmount)
+		public DefenseAction(float defensiveAmount, float speed)
 		{
 			_actionType = ActionType.GUARD;
 			_defensiveAmount = defensiveAmount;
+			_actionSpeedMultiplier = speed;
 		}
 	}
 }

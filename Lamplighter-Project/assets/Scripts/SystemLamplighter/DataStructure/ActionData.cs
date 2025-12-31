@@ -15,19 +15,19 @@ namespace SystemLamplighter.DataStructure
 		protected string _name;
 		// La velocità che avrà l'azione
 		[Export]
-		protected float _actionSpeed;
+		protected float _actionSpeedMultiplier;
 
 		public ActionType ActionType => _actionType;
 		public string Name => _name;
-		public float ActionSpeed => _actionSpeed;
+		public float ActionSpeedMultiplier => _actionSpeedMultiplier;
 
-		public ActionData() : this(ActionType.ATTACK, "", 0f) { }
+		public ActionData() : this(ActionType.ATTACK, "", 1f) { }
 
 		public ActionData(ActionType actionType, string name, float actionSpeed)
 		{
 			_actionType = actionType;
 			_name = name;
-			_actionSpeed = actionSpeed;
+			_actionSpeedMultiplier = actionSpeed;
 		}
 	}
 }

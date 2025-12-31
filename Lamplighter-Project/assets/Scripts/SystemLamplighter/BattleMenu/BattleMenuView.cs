@@ -35,11 +35,16 @@ namespace SystemLamplighter.BattleMenu
 		public string ItemButtonId => _itemButton.Name;
 
 		public event Action<SubMenuType> OnSubMenu;
-		public event Action<string> OnActionClick;
+		public event Action<IActionData> OnActionClick;
+
+		public List<IActionData> SubMenuButtons {get; private set;}
 
 		public override void Init()
 		{
 			NodeCheckingPath();
+
+			if(SubMenuButtons == null)
+				SubMenuButtons = new List<IActionData>();
 
 			GetNodes();
 			NodeChecking();
@@ -103,25 +108,45 @@ namespace SystemLamplighter.BattleMenu
 					ItemButtonHandle();
 					break;
 				default:
-					OnActionClick?.Invoke(idButton);
+					ActionButtonHandle(idButton);
 					break;
 			}
 		}
 
 		private void AttackHandle() => OnSubMenu?.Invoke(SubMenuType.ATTACK);
 		private void MagicButtonHandle() => OnSubMenu?.Invoke(SubMenuType.MAGIC);
-		private void GuardButtonHandle(string idButton) => OnActionClick?.Invoke(idButton);
+		private void GuardButtonHandle(string idButton) => ActionButtonHandle(idButton);
 		private void ItemButtonHandle() => OnSubMenu?.Invoke(SubMenuType.ITEMS);
 
+		public void ActionButtonHandle(string id)
+		{
+			DebugLamplighter.Assert(SubMenuButtons != null, "SubMenuButtons is null");
+			DebugLamplighter.Assert(id != string.Empty, "id string is empty");
+
+			var actionData = SubMenuButtons.Find(s => s.Name == id);
+			DebugLamplighter.Assert(actionData != null, "actionData is null, no action finded");
+			
+			OnActionClick?.Invoke(actionData);
+		}
+
+		/// <summary>
+		/// Metodo per l'apertura del sub menu delle azioni/oggetti posseduti dal personaggio
+		/// </summary>
+		/// <param name="subMenuType"></param>
+		/// <param name="subMenuButtonsName"></param>
 		public void OpenSubMenu(SubMenuType subMenuType, List<IActionData> subMenuButtonsName)
 		{
 			ClearSubMenu();
+			if(SubMenuButtons.Count > 0)
+				SubMenuButtons.Clear();
 
+			DebugLamplighter.Assert(SubMenuButtons != null, "SubMeneuButtons is null");
 			DebugLamplighter.Assert(subMenuButtonsName != null, "subMenuButtonsName is null");
 			DebugLamplighter.Assert(subMenuButtonsName.Count > 0, "subMenuButtonsName has 0 elements");
 
 			foreach (var button in subMenuButtonsName)
 			{
+				SubMenuButtons.Add(button);
 				ButtonUi buttonToAdd = new ButtonUi();
 				buttonToAdd.Init(button.Name);
 				buttonToAdd.SetMinimumSize(new Vector2(251, 60));

@@ -3,6 +3,7 @@ using MessagePipe;
 using System;
 using System.Collections.Generic;
 using SystemLamplighter;
+using SystemLamplighter.Events;
 
 namespace SystemLamplighter.BattleMenu
 {
@@ -43,10 +44,9 @@ namespace SystemLamplighter.BattleMenu
 			_view.OpenSubMenu(subMenuType, subMenuButtonNames);
 		}
 
-		private void Action(string id)
+		private void Action(IActionData actionData)
 		{
-			Log.PrintMessage($"Action: {id}");
-
+			this.PublishEvent<AtbCommandPhaseEndEvent>(new AtbCommandPhaseEndEvent(actionData));
 		}
 
 		public override void _ExitTree()

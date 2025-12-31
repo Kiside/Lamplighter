@@ -109,7 +109,7 @@ public partial class DebugAtb : Node
 	public void StartCombatClick()
 	{
 		AutoAddCharacters();
-		_atbController.ContinueAtb();
+		_atbController.OnCommandEnd();
 	}
 
 	public void StopCombatClick()

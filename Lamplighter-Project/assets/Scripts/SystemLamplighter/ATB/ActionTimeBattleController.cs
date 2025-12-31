@@ -1,9 +1,11 @@
 using Characters.Interfaces;
 using Godot;
+using MessagePipe;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using SystemLamplighter.Debug;
+using SystemLamplighter.Events;
 
 
 namespace SystemLamplighter.ATB
@@ -14,6 +16,8 @@ namespace SystemLamplighter.ATB
 		int _currentIndex;
 
 		public event Action OnCommandEvent;
+
+		private readonly DisposableBagBuilder _bag = DisposableBag.CreateBuilder();
 
 		// PER DEBUG
 		public void CallViewUpdatePosition(float position, int index) => _view.UpdatePosition(position, index);
@@ -52,6 +56,7 @@ namespace SystemLamplighter.ATB
 						// Bisogna evitare il continuo del ciclo è "fermare" il proseguimento dell'ATB
 						_inCharging = false;
 						_currentIndex = i;
+						this.SubscribeEvent<AtbCommandPhaseEndEvent>(OnCommandEnd).AddTo(_bag);
 						this.PublishEvent<AtbCommandPhaseStartedEvent>(new AtbCommandPhaseStartedEvent(_model.Characters[i]));
 						break;
 					}
@@ -80,8 +85,9 @@ namespace SystemLamplighter.ATB
 		/// <summary>
 		/// Metodo per far continuare a ciclare l'ATB dopo che l'utente ha selezionato il comand
 		/// </summary>
-		public void ContinueAtb()
+		public void OnCommandEnd(AtbCommandPhaseEndEvent ev)
 		{
+			// BISOGNA CONTINUARE QUI A SVILUPPARE
 			_inCharging = true;
 		}
 
@@ -136,6 +142,13 @@ namespace SystemLamplighter.ATB
 			_inCharging = false;
 			ClearCharactersInCombat();
 			_currentIndex = 0;
+		}
+
+		public override void _ExitTree()
+		{
+			base._ExitTree();
+
+			_bag.Build().Dispose();	
 		}
 	}
 }
