@@ -1,16 +1,13 @@
-
 using Characters.Interfaces;
 
 namespace SystemLamplighter.Events
 {
-	public sealed class AtbCommandPhaseEndEvent
+	public sealed class AtbExecuteActionEvent
 	{
 		public ICombatActor Actor {get;}
-
-		public AtbCommandPhaseEndEvent(ICombatActor actor)
+		public AtbExecuteActionEvent(ICombatActor actor)
 		{
 			Actor = actor;
 		}
-
 	}
 }

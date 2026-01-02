@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Reflection.Metadata;
 using System.Runtime.CompilerServices;
 using SystemLamplighter;
+using SystemLamplighter.DataStructure;
 using SystemLamplighter.Debug;
 
 namespace SystemLamplighter.BattleMenu
@@ -115,20 +116,27 @@ namespace SystemLamplighter.BattleMenu
 
 		private void AttackHandle() => OnSubMenu?.Invoke(SubMenuType.ATTACK);
 		private void MagicButtonHandle() => OnSubMenu?.Invoke(SubMenuType.MAGIC);
-		private void GuardButtonHandle(string idButton) => ActionButtonHandle(idButton);
+		private void GuardButtonHandle(string idButton) => OnSubMenu?.Invoke(SubMenuType.DEFEND);
 		private void ItemButtonHandle() => OnSubMenu?.Invoke(SubMenuType.ITEMS);
 
-		public void ActionButtonHandle(string id)
+		
+		public void ActionButtonHandle(string id, IActionData actionD = null)
 		{
 			DebugLamplighter.Assert(SubMenuButtons != null, "SubMenuButtons is null");
 			DebugLamplighter.Assert(id != string.Empty, "id string is empty");
 
-			var actionData = SubMenuButtons.Find(s => s.Name == id);
+			IActionData actionData;
+			if(actionD == null)
+				actionData = SubMenuButtons.Find(s => s.Name == id);
+			else
+				actionData = actionD;
+
+			Log.PrintMessage($"string id: {id} - ActionData: {actionData.Name}");
 			DebugLamplighter.Assert(actionData != null, "actionData is null, no action finded");
 			
 			OnActionClick?.Invoke(actionData);
 		}
-
+		
 		/// <summary>
 		/// Metodo per l'apertura del sub menu delle azioni/oggetti posseduti dal personaggio
 		/// </summary>

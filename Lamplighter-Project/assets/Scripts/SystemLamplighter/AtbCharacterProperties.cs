@@ -1,8 +1,12 @@
 using System;
 using System.Diagnostics;
 using Characters;
+using Characters.Interfaces;
 using Godot;
+using MessagePipe;
 using SystemLamplighter.Debug;
+using SystemLamplighter.Events;
+using SystemLamplighter.Extensions;
 
 namespace SystemLamplighter
 {
@@ -42,6 +46,9 @@ namespace SystemLamplighter
 		public AtbCharacterStatus Status => _status;
 		#endregion
 
+		private readonly DisposableBagBuilder _bag = DisposableBag.CreateBuilder();
+		
+
 		#region CONSTRUCTOR
 		public void Init(Image avatar, float speed, string name, AtbCharacterType atbCharacterType,ICharacterControllerAtb character)
 		{
@@ -58,6 +65,16 @@ namespace SystemLamplighter
 			_status = AtbCharacterStatus.CHARGE;
 		}
 		#endregion
+
+		public void Subscribe()
+		{
+			this.SubscribeEventResource<AtbEndExecuteActionEvent>(OnEndAction).AddTo(_bag);
+		}
+
+		public void Unsubscribe()
+		{
+			_bag?.Build().Dispose();
+		}
 
 		#region METHODS
 		/// <summary>
@@ -84,24 +101,39 @@ namespace SystemLamplighter
 		/// <returns></returns>
 		private AtbCharacterStatus CheckPositionStatus()
 		{
-			if (_status == AtbCharacterStatus.CHARGE)
+			if (_status == AtbCharacterStatus.CHARGE && _barPosition >= Common.ATB_COMAND_THRESHOLD)
 			{
-				if (_barPosition >= Common.ATB_COMAND_THRESHOLD)
-				{
-					_barPosition = Common.ATB_COMAND_THRESHOLD;
-					_status = AtbCharacterStatus.COM;
-				}
+				
+				_barPosition = Common.ATB_COMAND_THRESHOLD;
+				_status = AtbCharacterStatus.COM;
+				
+			}
+			else if(_status == AtbCharacterStatus.CHARGE_ACTION && _barPosition >= Common.ATB_END)
+			{
+				
+				Log.PrintMessage("STATO PERSONAGGIO ACTION");
+				_status = AtbCharacterStatus.ACTION;
 			}
 
 			return _status;
 		}
 
-		/// <summary>
-		/// Resetta le posizioni
-		/// </summary>
-		public void ResetAtbPosition()
+		public void EndCommandStatus(float speedMultiplier) 
 		{
+			_speedMultiplier = speedMultiplier;
+			_status = AtbCharacterStatus.CHARGE_ACTION;
+		}
+
+		/// <summary>
+		/// Alla fine dell'azione avvenuta resetta le posizioni
+		/// </summary>
+		public void OnEndAction(AtbEndExecuteActionEvent ev)
+		{
+			if(ev.Actor.AtbProperties != this)
+				return;
+			Log.PrintMessage("ON END ACTION2");
 			_barPosition = 0f;
+			_speedMultiplier = 1f;
 			_status = AtbCharacterStatus.CHARGE;
 		}
 

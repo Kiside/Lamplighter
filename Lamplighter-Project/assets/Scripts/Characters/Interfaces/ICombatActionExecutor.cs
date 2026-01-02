@@ -1,8 +1,10 @@
 using Characters.Interfaces;
+using SystemLamplighter.Events;
+
 namespace Characters.Inteaces
 {
 	public interface ICombatActionExecutor
 	{
-		void OnExecuteCombatAction (AtbCommandPhaseStartedEvent ev);
+		void OnExecuteCombatAction (AtbExecuteActionEvent ev);
 	}
 }

@@ -7,6 +7,7 @@ namespace Characters.Interfaces
     {
         AtbCharacterProperties AtbProperties { get; }
         CombatLoadout CombatLoadout { get; }
+        IActionData CurrentAction  {get; }
         //AtbCharacterType CharacterType { get; }
     }    
 }

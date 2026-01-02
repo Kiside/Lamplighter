@@ -63,6 +63,13 @@ text = "Stop Combat"
 script = ExtResource("3_hlmel")
 metadata/_custom_type_script = "uid://h6nntw8ksb10"
 
+[node name="Remove All" type="Button" parent="DebugATB/VBoxContainer"]
+custom_minimum_size = Vector2(0, 25.635)
+layout_mode = 2
+text = "Remove All"
+script = ExtResource("3_hlmel")
+metadata/_custom_type_script = "uid://h6nntw8ksb10"
+
 [node name="VBoxAdding" type="VBoxContainer" parent="DebugATB/VBoxContainer"]
 layout_mode = 2
 
@@ -150,6 +157,7 @@ step = 0.05
 
 [connection signal="button_down" from="DebugATB/VBoxContainer/Start Combat" to="DebugATB" method="StartCombatClick"]
 [connection signal="button_down" from="DebugATB/VBoxContainer/Stop Combat" to="DebugATB" method="StopCombatClick"]
+[connection signal="button_down" from="DebugATB/VBoxContainer/Remove All" to="DebugATB" method="OnRemoveAllClicked"]
 [connection signal="button_down" from="DebugATB/VBoxContainer/VBoxAdding/HBoxContainer/Add Characters" to="DebugATB" method="OnAddCharactersClick"]
 [connection signal="button_down" from="DebugATB/VBoxContainer/Remove Character" to="DebugATB" method="OnRemoveCharacterClick"]
 [connection signal="value_changed" from="DebugATB/VBoxContainer/Ally Slider/HSlider" to="DebugATB" method="OnAllySliderChange"]

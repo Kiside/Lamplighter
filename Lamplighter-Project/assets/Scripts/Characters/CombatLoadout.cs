@@ -89,6 +89,11 @@ namespace Characters
 			return PrepareList(_items);
 		}
 
+		public List<IActionData> GetDefenseId()
+		{
+			return PrepareList(_defense);
+		}
+
 		private List<IActionData> PrepareList<[MustBeVariant] T>(Godot.Collections.Array<T> list) where T : ActionData
 		{
 			var result = new List<IActionData> ();

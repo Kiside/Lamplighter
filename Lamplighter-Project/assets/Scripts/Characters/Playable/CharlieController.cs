@@ -8,6 +8,9 @@ using Characters.Interfaces;
 using Characters.Inteaces;
 using Microsoft.Extensions.DependencyInjection;
 using MessagePipe;
+using SystemLamplighter.Events;
+using SystemLamplighter.Extensions;
+using System.Linq;
 
 namespace Characters.Playable
 {
@@ -17,6 +20,7 @@ namespace Characters.Playable
 		#region PUBLIC
 		public AtbCharacterProperties AtbProperties => _model.AtbCharacterProperties;
 		public CombatLoadout CombatLoadout { get => _model.CombatLoadout; set => _model.CombatLoadout = value; }
+		public IActionData CurrentAction {get => _model.CurrentAction; set => _model.CurrentAction = value; }
 		#endregion
 
 		#region PROTECTED/PRIVATE PROPERTIES 
@@ -41,9 +45,23 @@ namespace Characters.Playable
 			_combat.Init(this);
 			_movement.Init(this);
 
-			_model.OnOpenBattleSubMenu += OpenBattleSubMenuHandler;
+			Subscribe();
+		}
 
+		private void Subscribe()
+		{
+			_model.OnOpenBattleSubMenu += OpenBattleSubMenuHandler;
+			_model.OnActionClicked += ActionChoosedHandler;
+
+			this.SubscribeEvent<AtbExecuteActionEvent>(OnExecuteCombatAction).AddTo(_bag);
 			this.SubscribeEvent<AtbCommandPhaseStartedEvent>(OnCommandPhaseStarted).AddTo(_bag);
+		}
+		private void Unsubscribe()
+		{
+			_model.OnOpenBattleSubMenu -= OpenBattleSubMenuHandler;
+			_model.OnActionClicked -= ActionChoosedHandler;
+
+			_bag.Build().Dispose();
 		}
 
 		protected override void NodeChecking()
@@ -68,6 +86,8 @@ namespace Characters.Playable
 			MoveAndSlide();
 		}
 
+
+		#region BATTLE MENU EVENTS
 		public void OpenBattleSubMenuHandler(SubMenuType subMenuType)
 		{
 			List <IActionData> subMenuIds = new List<IActionData>();
@@ -82,24 +102,40 @@ namespace Characters.Playable
 				case SubMenuType.ITEMS:
 					subMenuIds = GetItemsId();
 				break;
+				case SubMenuType.DEFEND:
+					CurrentAction = GetDefenseId().First();
+					this.PublishEvent<AtbCommandPhaseEndEvent>(new AtbCommandPhaseEndEvent(this));
+					return;
 			}
 
 			_battleMenuController.OpenSubMenu(subMenuType, subMenuIds);
 		}
 
-		
+		public void ActionChoosedHandler()
+		{
+			this.PublishEvent<AtbCommandPhaseEndEvent>(new AtbCommandPhaseEndEvent(this));
+		}
+		#endregion
 
 		#region COMBATLOADOUT METHODS
 		
 		public override List<IActionData> GetAttacksId() => CombatLoadout.GetAttacksId();
 		public override List<IActionData> GetMagicsId() => CombatLoadout.GetMagicsId();
 		public override List<IActionData> GetItemsId() => CombatLoadout.GetItemsId();
+		public override List<IActionData> GetDefenseId() => CombatLoadout.GetDefenseId();
 		#endregion
 
 		#region ICombatActionExecutor
-		public void OnExecuteCombatAction(AtbCommandPhaseStartedEvent ev)
+		public void OnExecuteCombatAction(AtbExecuteActionEvent ev)
 		{
 			
+			if(ev.Actor != this)
+				return;
+			
+			Log.PrintMessage("ESEGUO L'AZIONE");
+			// Eseguo l'azione
+			// Ad azione eseguita resetto la posizione del personaggio sull'ATB
+			this.PublishEvent(new AtbEndExecuteActionEvent(this));
 		}
 		#endregion
 
@@ -116,14 +152,9 @@ namespace Characters.Playable
 
 		public override void _ExitTree()
 		{
-			Dispose();
-
+			Unsubscribe();
+			AtbProperties.Unsubscribe();
 			base._ExitTree();
-		}
-
-		public new void Dispose()
-		{
-			_bag.Build().Dispose();
 		}
 	}
 }

@@ -74,6 +74,18 @@ public partial class DebugAtb : Node
 		_atbController.OnCommandEvent += ShowBattleMenu;
 	}
 
+	public void OnRemoveAllClicked()
+	{
+		foreach(var a in _allies)
+		{
+			a.QueueFree();
+		}
+		foreach(var e in _enemies)
+		{
+			e.QueueFree();
+		}
+	}
+
 	private void AutoAddCharacters()
 	{
 		if(_allies != null && _allies.Count > 0)
@@ -109,6 +121,7 @@ public partial class DebugAtb : Node
 	public void StartCombatClick()
 	{
 		AutoAddCharacters();
+		_atbController.ActivateATB(true);
 	}
 
 	public void StopCombatClick()

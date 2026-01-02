@@ -6,6 +6,6 @@
 [resource]
 script = ExtResource("1_ui2r5")
 _avatar = ExtResource("1_rwar7")
-_speed = 1.0
+_speed = 0.2
 _name = "Charlie"
 metadata/_custom_type_script = "uid://dpwp74optcgd5"

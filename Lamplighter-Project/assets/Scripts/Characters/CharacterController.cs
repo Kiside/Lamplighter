@@ -65,6 +65,7 @@ namespace Characters
 
 		public virtual List<IActionData> GetMagicsId(){ return new List<IActionData>();}
 		public virtual List<IActionData> GetItemsId() { return new List<IActionData>();}
+		public virtual List<IActionData> GetDefenseId() {return new List<IActionData>();}
 
 	}
 }

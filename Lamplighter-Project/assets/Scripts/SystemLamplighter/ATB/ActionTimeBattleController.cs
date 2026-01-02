@@ -7,6 +7,7 @@ using System.Diagnostics;
 using SystemLamplighter.Debug;
 using SystemLamplighter.Events;
 using SystemLamplighter.Interfaces;
+using SystemLamplighter.Extensions;
 
 
 namespace SystemLamplighter.ATB
@@ -19,8 +20,9 @@ namespace SystemLamplighter.ATB
 		public event Action OnCommandEvent;
 
 		private readonly DisposableBagBuilder _bag = DisposableBag.CreateBuilder();
+		#nullable enable
 		private IDisposable? _atbCommandEndSubscription;
-
+		#nullable disable
 		private ICombatActor _currentActorInCommand;
 
 		// PER DEBUG
@@ -31,8 +33,11 @@ namespace SystemLamplighter.ATB
 			base.Init();
 
 			_currentIndex = 0;
+		}
 
-			
+		public void ActivateATB(bool value)
+		{
+			_inCharging = value;
 		}
 
 		public override void _PhysicsProcess(double delta)
@@ -55,21 +60,31 @@ namespace SystemLamplighter.ATB
 				while (i < _model.CharactersCount)
 				{
 					var currentCharacter = _model.Characters[i];
-					// Se un personaggio entra in Command
-					if (currentCharacter.AtbProperties.UpdatePosition((float)delta) == AtbCharacterStatus.COM)
+					Log.PrintMessage($"status: {currentCharacter.AtbProperties.Status}");
+					if(currentCharacter.AtbProperties.Status == AtbCharacterStatus.CHARGE || currentCharacter.AtbProperties.Status == AtbCharacterStatus.CHARGE_ACTION)
 					{
-						// Bisogna evitare il continuo del ciclo è "fermare" il proseguimento dell'ATB
-						_inCharging = false;
-						_currentIndex = i;
-						_currentActorInCommand = currentCharacter;
-						_atbCommandEndSubscription = this.SubscribeEvent<AtbCommandPhaseEndEvent>(OnCommandEnd);
-						_atbCommandEndSubscription.AddTo(_bag);
-						this.PublishEvent(new AtbCommandPhaseStartedEvent(currentCharacter));
-						break;
+						switch(currentCharacter.AtbProperties.UpdatePosition((float)delta))
+						{
+							// Se un personaggio entra in Command
+							case AtbCharacterStatus.COM:
+							// Bisogna evitare il continuo del ciclo è "fermare" il proseguimento dell'ATB
+							_inCharging = false;
+							_currentIndex = i;
+							_currentActorInCommand = currentCharacter;
+							_atbCommandEndSubscription = this.SubscribeEvent<AtbCommandPhaseEndEvent>(OnCommandEnd);
+							_atbCommandEndSubscription.AddTo(_bag);
+							this.PublishEvent(new AtbCommandPhaseStartedEvent(currentCharacter));
+							break;
+							// In stato Action
+							case AtbCharacterStatus.ACTION:
+							// Bisogna chiamare l'eseguimento dell'azione
+							this.PublishEvent(new AtbExecuteActionEvent(currentCharacter));
+							break;
+						}
 					}
-					//Chiedo alla view di riposizionare i vari personaggi
-					_view.UpdatePosition(_model.Characters[i].AtbProperties.Position, i);
-					i++;
+						//Chiedo alla view di riposizionare i vari personaggi
+						_view.UpdatePosition(_model.Characters[i].AtbProperties.Position, i);
+						i++;
 				}
 				_currentIndex = 0;
 			}
@@ -96,9 +111,10 @@ namespace SystemLamplighter.ATB
 		{
 			DebugLamplighter.Assert(ev != null, "ev is null");
 			DebugLamplighter.Assert(_currentActorInCommand != null, "_currentActorInCommand is null");
-			
+
 			_atbCommandEndSubscription?.Dispose();
-			_currentActorInCommand.AtbProperties.SpeedMultiplier = ev.ActionData.ActionSpeedMultiplier;
+
+			_currentActorInCommand.AtbProperties.EndCommandStatus(ev.Actor.AtbProperties.SpeedMultiplier);
 			_currentActorInCommand = null;
 			
 			_inCharging = true;
@@ -123,6 +139,7 @@ namespace SystemLamplighter.ATB
 			DebugLamplighter.Assert(character != null, "character is null");
 			Assert();
 
+			character.AtbProperties.Subscribe();
 			_model.AddCharacter(character);
 			_view.AddCharacter(character);
 		}

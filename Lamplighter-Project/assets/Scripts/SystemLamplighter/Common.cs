@@ -12,6 +12,7 @@ namespace SystemLamplighter
 	{
 		public const float ATB_COM_POSITION = 0.58f;
 		public const float ATB_COMAND_THRESHOLD = 0.45F;
+		public const float ATB_END = 1f;
 
 		public static float ToSingle(double value)
 		{
@@ -38,6 +39,7 @@ namespace SystemLamplighter
 	{
 		CHARGE,
 		COM,
+		CHARGE_ACTION,
 		ACTION
 	}
 
@@ -77,6 +79,7 @@ namespace SystemLamplighter
 	{
 		NONE,
 		ATTACK,
+		DEFEND,
 		MAGIC,
 		ITEMS
 	}

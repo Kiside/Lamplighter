@@ -40,6 +40,10 @@ namespace SystemLamplighter.ATB
 		{
 			DebugLamplighter.Assert(_charactersInCombat != null, "_charactersInCombat is null");
 
+			foreach(var c in _charactersInCombat)
+			{
+				c.AtbProperties.Unsubscribe();
+			}
 			_charactersInCombat.Clear();
 		}
 

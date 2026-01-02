@@ -28,6 +28,8 @@ namespace Characters.Playable
 
 		protected CombatLoadout _combatLoadout;
 
+		protected IActionData _currentAction;
+
 		private bool _lockOn = false;
 		#endregion
 
@@ -39,9 +41,11 @@ namespace Characters.Playable
 		public NodePath CombatLoadoutNode {get => _combatLoadoutNode;}
 		public AtbCharacterProperties AtbCharacterProperties => _atbCharacterProperties;
 		public bool LockOn { get => _lockOn; set => _lockOn = value; }
+		public IActionData CurrentAction {get => _currentAction; set => _currentAction = value; }
 		#endregion
 
 		public event Action<SubMenuType> OnOpenBattleSubMenu;  
+		public event Action OnActionClicked;
 
 		public override void Init()
 		{
@@ -49,12 +53,32 @@ namespace Characters.Playable
 			SubscribeBattleMenu();
 		}
 
-		private void SubscribeBattleMenu() => _battleMenu.OnOpenSubMenu += TriggerOnOpenSubMenu;
-		private void UnsubscribeBattleMenu() => _battleMenu.OnOpenSubMenu -= TriggerOnOpenSubMenu;
+		private void SubscribeBattleMenu() 
+		{
+			_battleMenu.OnOpenSubMenu += TriggerOnOpenSubMenu;
+			_battleMenu.OnActionClick += TriggerOnActionClicked;
+		}
+		private void UnsubscribeBattleMenu() 
+		{
+			_battleMenu.OnOpenSubMenu -= TriggerOnOpenSubMenu;
+			_battleMenu.OnActionClick -= TriggerOnActionClicked;
+		}
+
 
 		private void TriggerOnOpenSubMenu(SubMenuType subMenuType)
 		{
+			DebugLamplighter.Assert(subMenuType != SubMenuType.NONE, "subMenuType is NONE");
+
 			OnOpenBattleSubMenu?.Invoke(subMenuType);
+		}
+
+		private void TriggerOnActionClicked(IActionData actionData)
+		{
+			Log.PrintMessage($"TRIGGER ON ACTION CLICKED");
+			DebugLamplighter.Assert(actionData != null, "actionData is null");
+
+			_currentAction = actionData;
+			OnActionClicked?.Invoke();
 		}
 
 		private void NodeChecking()

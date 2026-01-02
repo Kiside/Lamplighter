@@ -15,6 +15,7 @@ namespace SystemLamplighter.BattleMenu
 		public void Hide() => _view.Visible = false;
 
 		public event Action<SubMenuType> OnOpenSubMenu;
+		public event Action<IActionData> OnActionClick;
 
 		// Called when the node enters the scene tree for the first time.
 		public override void _Ready()
@@ -46,7 +47,8 @@ namespace SystemLamplighter.BattleMenu
 
 		private void Action(IActionData actionData)
 		{
-			this.PublishEvent<AtbCommandPhaseEndEvent>(new AtbCommandPhaseEndEvent(actionData));
+			Hide();
+			OnActionClick?.Invoke(actionData);
 		}
 
 		public override void _ExitTree()
