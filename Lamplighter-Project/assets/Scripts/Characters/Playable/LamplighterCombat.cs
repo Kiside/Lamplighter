@@ -3,10 +3,10 @@ using System;
 
 namespace Characters.Playable
 {
-	public partial class CharlieCombat : AbstractCombat<CharlieController>
+	public partial class LamplighterCombat : AbstractCombat<PlayableCharacterController>
 	{
 
-		public override void Init(CharlieController controller)
+		public override void Init(PlayableCharacterController controller)
 		{
 			base.Init(controller);
 		}

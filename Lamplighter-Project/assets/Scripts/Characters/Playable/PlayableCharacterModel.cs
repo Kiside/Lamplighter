@@ -8,7 +8,7 @@ using SystemLamplighter.Debug;
 
 namespace Characters.Playable
 {
-	public partial class CharlieModel : AbstractModel
+	public partial class PlayableCharacterModel : AbstractModel
 	{
 		#region EXPORT PROPERTIES
 		[Export]
@@ -21,8 +21,8 @@ namespace Characters.Playable
 		#endregion
 
 		#region PROTECTED PROPERTIES 
-		protected AbstractCombat<CharlieController> _combat;
-		protected AbstractMovement<CharlieController> _movement;
+		protected AbstractCombat<PlayableCharacterController> _combat;
+		protected AbstractMovement<PlayableCharacterController> _movement;
 
 		protected BattleMenuController _battleMenu;
 
@@ -34,8 +34,8 @@ namespace Characters.Playable
 		#endregion
 
 		#region PUBLIC PROPERTIES
-		public AbstractCombat<CharlieController> Combat { get => _combat; set => _combat = value; }
-		public AbstractMovement<CharlieController> Movement { get => _movement; set => _movement = value; }
+		public AbstractCombat<PlayableCharacterController> Combat { get => _combat; set => _combat = value; }
+		public AbstractMovement<PlayableCharacterController> Movement { get => _movement; set => _movement = value; }
 		public BattleMenuController BattleMenu {get => _battleMenu;}
 		public CombatLoadout CombatLoadout { get => _combatLoadout; set => _combatLoadout = value; }
 		public NodePath CombatLoadoutNode {get => _combatLoadoutNode;}

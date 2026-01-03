@@ -14,7 +14,7 @@ using System.Linq;
 
 namespace Characters.Playable
 {
-	public partial class CharlieController : CharacterController<CharlieView,CharlieModel>, 
+	public partial class PlayableCharacterController : CharacterController<PlayableCharacterView,PlayableCharacterModel>, 
 	ICombatActor, ICombatCommandHandler ,ICombatActionExecutor
 	{
 		#region PUBLIC
@@ -24,8 +24,8 @@ namespace Characters.Playable
 		#endregion
 
 		#region PROTECTED/PRIVATE PROPERTIES 
-		protected AbstractCombat<CharlieController> _combat { get => _model.Combat; set => _model.Combat = value; }
-		protected AbstractMovement<CharlieController> _movement { get => _model.Movement; set => _model.Movement = value; }
+		protected AbstractCombat<PlayableCharacterController> _combat { get => _model.Combat; set => _model.Combat = value; }
+		protected AbstractMovement<PlayableCharacterController> _movement { get => _model.Movement; set => _model.Movement = value; }
 		protected BattleMenuController _battleMenuController { get => _model.BattleMenu;}
 		private bool _lockOn = false;
 		private readonly DisposableBagBuilder _bag = DisposableBag.CreateBuilder();
@@ -48,15 +48,17 @@ namespace Characters.Playable
 			Subscribe();
 		}
 
-		private void Subscribe()
+		protected override void Subscribe()
 		{
+			// QUESTI DUE METODI SONO IMPORTANTI PER I PLAYERS
 			_model.OnOpenBattleSubMenu += OpenBattleSubMenuHandler;
 			_model.OnActionClicked += ActionChoosedHandler;
 
+			// QUESTE DUE SOTTOSCRIZIONI POTREBBERO ESSERE IMPORTANTI PER I CHARACTERS CHE ENTRANO IN COMBATTIMENTO
 			this.SubscribeEvent<AtbExecuteActionEvent>(OnExecuteCombatAction).AddTo(_bag);
 			this.SubscribeEvent<AtbCommandPhaseStartedEvent>(OnCommandPhaseStarted).AddTo(_bag);
 		}
-		private void Unsubscribe()
+		protected override void Unsubscribe()
 		{
 			_model.OnOpenBattleSubMenu -= OpenBattleSubMenuHandler;
 			_model.OnActionClicked -= ActionChoosedHandler;
@@ -73,10 +75,10 @@ namespace Characters.Playable
 			Debug.Assert(CombatNode != null, $"{noNode} CombatNode is null.");
 
 			if (MovementNode != null)
-				_movement = GetNode<AbstractMovement<CharlieController>>(MovementNode);
+				_movement = GetNode<AbstractMovement<PlayableCharacterController>>(MovementNode);
 
 			if (CombatNode != null)
-				_combat = GetNode<AbstractCombat<CharlieController>>(CombatNode);
+				_combat = GetNode<AbstractCombat<PlayableCharacterController>>(CombatNode);
 		}
 
 		public override void _PhysicsProcess(double delta)
@@ -86,7 +88,7 @@ namespace Characters.Playable
 			MoveAndSlide();
 		}
 
-
+		// QUESTA REGION È IMPORTANTE PER I PLAYERS
 		#region BATTLE MENU EVENTS
 		public void OpenBattleSubMenuHandler(SubMenuType subMenuType)
 		{
@@ -117,15 +119,17 @@ namespace Characters.Playable
 		}
 		#endregion
 
+		// QUESTA REGION È IMPORTANTE PER I PLAYERS E FORSE ANCHE PER I CHARACTERS IN COMBATTIMENTO
 		#region COMBATLOADOUT METHODS
-		
 		public override List<IActionData> GetAttacksId() => CombatLoadout.GetAttacksId();
 		public override List<IActionData> GetMagicsId() => CombatLoadout.GetMagicsId();
 		public override List<IActionData> GetItemsId() => CombatLoadout.GetItemsId();
 		public override List<IActionData> GetDefenseId() => CombatLoadout.GetDefenseId();
 		#endregion
 
+		// QUESTA REGION È IMPORTANTE PER I PLAYERS
 		#region ICombatActionExecutor
+		// QUESTO METODO POTREBBE ESSERE IMPORTANTE PER I CHARACTERS IN COMBATTIMENTO
 		public void OnExecuteCombatAction(AtbExecuteActionEvent ev)
 		{
 			
@@ -140,6 +144,7 @@ namespace Characters.Playable
 		#endregion
 
 		#region ICombatCommandHandler
+		// QUESTO METODO POTREBBE ESSERE IMPORTANTE PER I CHARACTERS IN COMBATTIMENTO
 		public void OnCommandPhaseStarted(AtbCommandPhaseStartedEvent ev)
 		{
 			if(ev.Actor != this)

@@ -5,9 +5,9 @@ using SystemLamplighter;
 
 namespace Characters.Playable
 {
-	public partial class CharlieMovement : AbstractMovement<CharlieController>
+	public partial class LamplighterMovement : AbstractMovement<PlayableCharacterController>
 	{
-		public override void Init(CharlieController controller)
+		public override void Init(PlayableCharacterController controller)
 		{
 			base.Init(controller);
 		}
