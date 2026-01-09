@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://bvygo0ty7e5kj"]
+
+[ext_resource type="PackedScene" uid="uid://cdxru7lkcqri4" path="res://assets/Resources/Models/Characters/Proto/Main.glb" id="1_ktrli"]
+[ext_resource type="Material" uid="uid://br8jrg5r6syxj" path="res://assets/Materials/Characters/proto_Charlie.tres" id="2_vl5pt"]
+
+[node name="Main" instance=ExtResource("1_ktrli")]
+
+[node name="Cube" parent="." index="0"]
+material_override = ExtResource("2_vl5pt")

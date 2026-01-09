@@ -27,6 +27,7 @@ namespace Characters.Playable
 		protected AbstractCombat<PlayableCharacterController> _combat { get => _model.Combat; set => _model.Combat = value; }
 		protected AbstractMovement<PlayableCharacterController> _movement { get => _model.Movement; set => _model.Movement = value; }
 		protected BattleMenuController _battleMenuController { get => _model.BattleMenu;}
+		protected List<string> _groups {get => _model.Groups;}
 		private bool _lockOn = false;
 		private readonly DisposableBagBuilder _bag = DisposableBag.CreateBuilder();
 		#endregion
@@ -46,8 +47,10 @@ namespace Characters.Playable
 			_movement.Init(this);
 
 			Subscribe();
+			GroupsInit();
 		}
 
+		#region Subscribe/Unsubscribe
 		protected override void Subscribe()
 		{
 			// QUESTI DUE METODI SONO IMPORTANTI PER I PLAYERS
@@ -65,6 +68,32 @@ namespace Characters.Playable
 
 			_bag.Build().Dispose();
 		}
+		#endregion
+
+		#region Groups
+		protected void GroupsInit()
+		{
+			if(_groups == null || _groups.Count <= 0)
+			{
+				Log.PrintMessage("There are no groups");
+				return;
+			}
+
+			foreach(var group in _groups)
+			{
+				AddToGroup(group);
+				
+			}
+		}
+
+		protected void RemoveFromGroups()
+		{
+			foreach(var group in _groups)
+			{
+				RemoveFromGroup(group);
+			}
+		}
+		#endregion
 
 		protected override void NodeChecking()
 		{
@@ -115,9 +144,55 @@ namespace Characters.Playable
 
 		public void ActionChoosedHandler()
 		{
+			// Che tipo di azione è? In base alla tipologia di azione ci saranno "cose da fare"
+			switch(CurrentAction.ActionType)
+			{
+				case ActionType.ATTACK:
+				HandleAttackAction();
+				break;
+				case ActionType.GUARD:
+				HandleGuardAction();
+				break;
+				case ActionType.MAGIC:
+				HandleMagicAction();
+				break;
+				case ActionType.ITEM:
+				HandleItemAction();
+				break;
+				case ActionType.ESCAPE:
+				HandleEscapeAction();
+				break;
+			}
+
 			this.PublishEvent<AtbCommandPhaseEndEvent>(new AtbCommandPhaseEndEvent(this));
 		}
 		#endregion
+
+		private void HandleAttackAction()
+		{
+			if(CurrentAction is AttackAction action)
+			{
+				switch(action.AttackType)
+				{
+					case AttackType.AREA:
+					break;
+					case AttackType.PUSH:
+					break;
+					// Il caso di default è per tutte le tipologie di attacco che hanno come selezione un singolo target
+					default:
+
+					break;
+				}
+			}
+		}
+		private void HandleGuardAction()
+		{}
+		private void HandleMagicAction()
+		{}
+		private void HandleItemAction()
+		{}
+		private void HandleEscapeAction()
+		{}
 
 		// QUESTA REGION È IMPORTANTE PER I PLAYERS E FORSE ANCHE PER I CHARACTERS IN COMBATTIMENTO
 		#region COMBATLOADOUT METHODS
@@ -159,6 +234,8 @@ namespace Characters.Playable
 		{
 			Unsubscribe();
 			AtbProperties.Unsubscribe();
+			RemoveFromGroups();
+			
 			base._ExitTree();
 		}
 	}

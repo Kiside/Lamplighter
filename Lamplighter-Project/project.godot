@@ -23,6 +23,12 @@ project/assembly_name="Lamplighter-Project"
 
 enabled=PackedStringArray("res://addons/LamplighterPlugins/plugin.cfg")
 
+[global_group]
+
+enemy="gruppo generico per nemici"
+ally="gruppo generico per gli alleati"
+neutral_npc="gruppo generico per gli npc neutrali"
+
 [input]
 
 move_up={

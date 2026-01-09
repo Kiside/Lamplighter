@@ -20,6 +20,14 @@ namespace SystemLamplighter
 		}
 	}
 
+	[Serializable]
+	public enum GroupsName
+	{
+		ally,
+		enemy,
+		neutral_npc
+	}
+
 	public static class InputMap
 	{
 		public const string Up = "move_up";

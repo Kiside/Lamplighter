@@ -1,5 +1,6 @@
-[gd_resource type="Resource" script_class="AttackAction" load_steps=2 format=3 uid="uid://dlftjlcuk3pr4"]
+[gd_resource type="Resource" script_class="AttackAction" load_steps=3 format=3 uid="uid://dlftjlcuk3pr4"]
 
+[ext_resource type="Animation" uid="uid://qmk2rfydunp3" path="res://assets/Resources/Animations/Characters/Proto/Main_Attack01.res" id="1_dnjco"]
 [ext_resource type="Script" uid="uid://53pv7v0c5gad" path="res://assets/Scripts/SystemLamplighter/DataStructure/AttackAction.cs" id="1_snht1"]
 
 [resource]
@@ -8,5 +9,5 @@ _damage = 1.2
 _pushbackForce = 0.2
 _atbPositionDamage = 0.1
 _name = "attack"
-_actionSpeed = 1.2
+_animation = ExtResource("1_dnjco")
 metadata/_custom_type_script = "uid://53pv7v0c5gad"

@@ -2,6 +2,7 @@ using Godot;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using SystemLamplighter;
 using SystemLamplighter.BattleMenu;
 using SystemLamplighter.Debug;
@@ -15,9 +16,10 @@ namespace Characters.Playable
 		protected NodePath _combatLoadoutNode;
 		[Export]
 		protected AtbCharacterProperties _atbCharacterProperties;
-
 		[Export]
 		protected NodePath _battleMenuNode;
+		[Export]
+		protected Godot.Collections.Array<GroupsName> _groups;
 		#endregion
 
 		#region PROTECTED PROPERTIES 
@@ -42,6 +44,7 @@ namespace Characters.Playable
 		public AtbCharacterProperties AtbCharacterProperties => _atbCharacterProperties;
 		public bool LockOn { get => _lockOn; set => _lockOn = value; }
 		public IActionData CurrentAction {get => _currentAction; set => _currentAction = value; }
+		public List<string> Groups {get => _groups.Select(g => g.ToString()).ToList<string>();}
 		#endregion
 
 		public event Action<SubMenuType> OnOpenBattleSubMenu;  

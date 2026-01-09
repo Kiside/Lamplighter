@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://c5mvvlosts20h"]
+[gd_scene load_steps=20 format=3 uid="uid://c5mvvlosts20h"]
 
 [ext_resource type="Script" uid="uid://0rkd4hh7dr53" path="res://assets/Scripts/Characters/Playable/PlayableCharacterController.cs" id="1_0iqh4"]
 [ext_resource type="Material" uid="uid://br8jrg5r6syxj" path="res://assets/Materials/Characters/proto_Charlie.tres" id="1_qebit"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" uid="uid://43moiapfoih4" path="res://assets/Scripts/Characters/Playable/LamplighterCombat.cs" id="4_cx7ps"]
 [ext_resource type="Script" uid="uid://i2ivjf6e807r" path="res://assets/Scripts/Characters/Playable/PlayableCharacterView.cs" id="4_wjmeh"]
 [ext_resource type="Script" uid="uid://hpv57386fhw0" path="res://assets/Scripts/Characters/CombatLoadout.cs" id="5_xa4mk"]
+[ext_resource type="PackedScene" uid="uid://bvygo0ty7e5kj" path="res://assets/Resources/Models/Characters/Proto/main.tscn" id="6_voq6j"]
 [ext_resource type="Resource" uid="uid://dlftjlcuk3pr4" path="res://assets/CustomResources/Prototype/attack.tres" id="7_uuub8"]
 [ext_resource type="Resource" uid="uid://dcd5ackoimdk6" path="res://assets/CustomResources/Prototype/defense.tres" id="9_vju8h"]
 [ext_resource type="Script" uid="uid://53pv7v0c5gad" path="res://assets/Scripts/SystemLamplighter/DataStructure/AttackAction.cs" id="9_voq6j"]
@@ -32,6 +33,7 @@ script = ExtResource("2_l8s2m")
 _combatLoadoutNode = NodePath("../CombatLoadout")
 _atbCharacterProperties = ExtResource("3_xa4mk")
 _battleMenuNode = NodePath("../BattleMenuController")
+_groups = Array[int]([0])
 
 [node name="CharlieView" type="Node" parent="."]
 script = ExtResource("4_wjmeh")
@@ -39,12 +41,17 @@ script = ExtResource("4_wjmeh")
 [node name="Pivot" type="Node3D" parent="."]
 
 [node name="CSGBox3D" type="CSGBox3D" parent="Pivot"]
+visible = false
 material_override = ExtResource("1_qebit")
 
 [node name="Camera3D" type="Camera3D" parent="Pivot"]
-transform = Transform3D(-3.2543e-08, 0.667625, -0.744498, 2.91828e-08, 0.744498, 0.667625, 1, 0, -4.37114e-08, -2.21342, 1.76005, 0.034)
+transform = Transform3D(-3.2543e-08, 0.66762483, -0.74449784, 2.91828e-08, 0.74449784, 0.66762483, 1, -1.5987208e-14, -4.3711356e-08, -2.1404297, 2.184058, 0.034)
+
+[node name="Main" parent="Pivot" instance=ExtResource("6_voq6j")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 shape = SubResource("BoxShape3D_0bkd4")
 
 [node name="Movement" type="Node" parent="."]
@@ -61,3 +68,5 @@ _magic = Array[ExtResource("13_javlh")]([ExtResource("11_x47ln")])
 _items = Array[ExtResource("15_ugvtw")]([ExtResource("13_1psa7")])
 
 [node name="BattleMenuController" parent="." instance=ExtResource("17_rd6aq")]
+
+[editable path="Pivot/Main"]
