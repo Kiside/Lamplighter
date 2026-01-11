@@ -32,7 +32,14 @@ namespace SystemLamplighter.ATB
 		{
 			base.Init();
 
+			BattleManager.TriggerOnStartCombat += StartCombat;
 			_currentIndex = 0;
+		}
+
+		public void StartCombat(List<ICombatActor> combatActors)
+		{			
+			AddCharacters(combatActors);
+			ActivateATB(true);
 		}
 
 		public void ActivateATB(bool value)
@@ -145,6 +152,21 @@ namespace SystemLamplighter.ATB
 		}
 
 		/// <summary>
+		/// Aggiunge una lista di personaggi
+		/// </summary>
+		/// <param name="characters"></param>
+		public void AddCharacters(List<ICombatActor> characters)
+		{
+			DebugLamplighter.Assert(characters != null, "character is null");
+			DebugLamplighter.Assert(characters.Count > 0, "character count is zero");
+
+			foreach(var c in characters)
+			{
+				AddCharacter(c);
+			}
+		}
+
+		/// <summary>
 		/// Pulisce l'intera lista
 		/// </summary>
 		public void ClearCharactersInCombat()
@@ -183,6 +205,7 @@ namespace SystemLamplighter.ATB
 
 		public void Dipose()
 		{
+			BattleManager.TriggerOnStartCombat -= StartCombat;
 			_bag.Build().Dispose();
 		}
 	}

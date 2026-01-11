@@ -120,8 +120,9 @@ public partial class DebugAtb : Node
 
 	public void StartCombatClick()
 	{
-		AutoAddCharacters();
-		_atbController.ActivateATB(true);
+		// AutoAddCharacters();
+		// _atbController.ActivateATB(true);
+		BattleManager.StartBattle();
 	}
 
 	public void StopCombatClick()

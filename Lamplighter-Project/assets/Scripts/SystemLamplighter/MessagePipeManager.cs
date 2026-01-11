@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using MessagePipe;
 using System;
 
-public partial class GameManager : Node
+public partial class MessagePipeManager : Node
 {
 	public static IServiceProvider Services {get; private set;}
 	public override void _EnterTree()
