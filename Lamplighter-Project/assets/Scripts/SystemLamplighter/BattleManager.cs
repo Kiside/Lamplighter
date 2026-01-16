@@ -63,6 +63,7 @@ namespace SystemLamplighter
 			
 			foreach(var g in _groups)
 			{
+				Log.PrintMessage($"searching for: {g}");
 				InitActors(GetTree().GetNodesInGroup($"{g}"));
 			}
 		}
@@ -75,6 +76,7 @@ namespace SystemLamplighter
 		{
 			foreach(var a in array)
 				{
+					Log.PrintMessage($"- {a.Name}");
 					if(a is ICombatActor combatActor)
 					{
 						_combatActors.Add(combatActor);

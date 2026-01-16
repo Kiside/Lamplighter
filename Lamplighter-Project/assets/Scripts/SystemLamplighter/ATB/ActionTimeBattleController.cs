@@ -69,7 +69,6 @@ namespace SystemLamplighter.ATB
 				while (i < _model.CharactersCount)
 				{
 					var currentCharacter = _model.Characters[i];
-					Log.PrintMessage($"status: {currentCharacter.AtbProperties.Status}");
 					if(currentCharacter.AtbProperties.Status == AtbCharacterStatus.CHARGE || currentCharacter.AtbProperties.Status == AtbCharacterStatus.CHARGE_ACTION)
 					{
 						switch(currentCharacter.AtbProperties.UpdatePosition((float)delta))

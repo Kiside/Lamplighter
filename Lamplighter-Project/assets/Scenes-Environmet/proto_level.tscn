@@ -1,11 +1,41 @@
-[gd_scene load_steps=5 format=3 uid="uid://cfmoaycvrks0i"]
+[gd_scene load_steps=25 format=3 uid="uid://cfmoaycvrks0i"]
 
 [ext_resource type="Script" uid="uid://bja0qd5k5kaa7" path="res://assets/Scripts/SystemLamplighter/GameBootstrap.cs" id="1_qcquh"]
 [ext_resource type="PackedScene" uid="uid://c5mvvlosts20h" path="res://assets/Characters/Playable/charlie.tscn" id="1_qfi3i"]
+[ext_resource type="Script" uid="uid://devy8gu6rokai" path="res://assets/Scripts/Characters/NPC/NpCharacterController.cs" id="2_aw6lp"]
 [ext_resource type="PackedScene" uid="uid://bjvqik1fmkboh" path="res://assets/Scenes-Environmet/proto_combat.tscn" id="2_mw5we"]
+[ext_resource type="Script" uid="uid://bc6bjkwcn78h6" path="res://assets/Scripts/Characters/NPC/NpCharacterModel.cs" id="3_8uc3x"]
+[ext_resource type="Script" uid="uid://b3kvxr43rq8mm" path="res://assets/Scripts/Characters/NPC/NpCharacterView.cs" id="4_66ris"]
+[ext_resource type="Image" uid="uid://cqklojhdlw85m" path="res://assets/Resources/Avatars/enemies.png" id="4_naehx"]
+[ext_resource type="Script" uid="uid://dpwp74optcgd5" path="res://assets/Scripts/SystemLamplighter/AtbCharacterProperties.cs" id="5_uidbe"]
+[ext_resource type="Script" uid="uid://dgpafgjng8e3w" path="res://assets/Scripts/Characters/NPC/LamplighterNpcCombat.cs" id="7_uvot1"]
+[ext_resource type="Script" uid="uid://cfd2sruxh3u7l" path="res://assets/Scripts/Characters/NPC/LamplighterNpcMovement.cs" id="8_7o5g0"]
+[ext_resource type="Script" uid="uid://hpv57386fhw0" path="res://assets/Scripts/Characters/CombatLoadout.cs" id="9_uvot1"]
+[ext_resource type="Script" uid="uid://53pv7v0c5gad" path="res://assets/Scripts/SystemLamplighter/DataStructure/AttackAction.cs" id="10_7o5g0"]
+[ext_resource type="Resource" uid="uid://dlftjlcuk3pr4" path="res://assets/CustomResources/Prototype/attack.tres" id="11_hp1yv"]
+[ext_resource type="Script" uid="uid://bnfdp5jkgnimd" path="res://assets/Scripts/SystemLamplighter/DataStructure/DefenseAction.cs" id="12_h0r1b"]
+[ext_resource type="Resource" uid="uid://dcd5ackoimdk6" path="res://assets/CustomResources/Prototype/defense.tres" id="13_x5dwk"]
+[ext_resource type="Script" uid="uid://cwd6nmn8t150p" path="res://assets/Scripts/SystemLamplighter/DataStructure/MagicAction.cs" id="14_chj2u"]
+[ext_resource type="Resource" uid="uid://cdqt0xaj3qxg8" path="res://assets/CustomResources/Prototype/basic magic.tres" id="15_23igw"]
+[ext_resource type="Script" uid="uid://bpc15l8suoj7p" path="res://assets/Scripts/SystemLamplighter/DataStructure/ItemAction.cs" id="16_mkya5"]
+[ext_resource type="Resource" uid="uid://bjd0r2gvapdf" path="res://assets/CustomResources/Prototype/healthItem.tres" id="17_gor4l"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mw5we"]
 albedo_color = Color(0.46229059, 0.46229059, 0.46229059, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qcquh"]
+albedo_color = Color(0.46126777, 0, 0.01909638, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ejd0h"]
+
+[sub_resource type="Resource" id="Resource_80fhm"]
+script = ExtResource("5_uidbe")
+_avatar = ExtResource("4_naehx")
+_speed = 0.1
+_characterType = 1
+metadata/_custom_type_script = "uid://dpwp74optcgd5"
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_uvot1"]
 
 [node name="ProtoLevel" type="Node3D"]
 
@@ -16,6 +46,43 @@ script = ExtResource("1_qcquh")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0358276, 0)
 material_override = SubResource("StandardMaterial3D_mw5we")
 size = Vector3(21.6799, 0.0296631, 20.2432)
+
+[node name="Enemy" type="CharacterBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.564902, 0.5407543, 0.04921341)
+script = ExtResource("2_aw6lp")
+View = NodePath("NpView")
+Model = NodePath("NpModel")
+MovementNode = NodePath("MovementNode")
+CombatNode = NodePath("CombatNode")
+
+[node name="CSGMesh3D" type="CSGMesh3D" parent="Enemy"]
+material_override = SubResource("StandardMaterial3D_qcquh")
+mesh = SubResource("BoxMesh_ejd0h")
+
+[node name="NpModel" type="Node" parent="Enemy"]
+script = ExtResource("3_8uc3x")
+_combatLoadoutNode = NodePath("../CombatLoadout")
+_atbCharacterProperties = SubResource("Resource_80fhm")
+_groups = Array[int]([1])
+
+[node name="NpView" type="Node" parent="Enemy"]
+script = ExtResource("4_66ris")
+
+[node name="CombatNode" type="Node" parent="Enemy"]
+script = ExtResource("7_uvot1")
+
+[node name="MovementNode" type="Node" parent="Enemy"]
+script = ExtResource("8_7o5g0")
+
+[node name="CombatLoadout" type="Node" parent="Enemy"]
+script = ExtResource("9_uvot1")
+_attack = Array[ExtResource("10_7o5g0")]([ExtResource("11_hp1yv")])
+_defense = Array[ExtResource("12_h0r1b")]([ExtResource("13_x5dwk")])
+_magic = Array[ExtResource("14_chj2u")]([ExtResource("15_23igw")])
+_items = Array[ExtResource("16_mkya5")]([ExtResource("17_gor4l")])
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Enemy"]
+shape = SubResource("BoxShape3D_uvot1")
 
 [node name="Charlie" parent="." instance=ExtResource("1_qfi3i")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.010365605, 0)
