@@ -10,7 +10,7 @@ namespace SystemLamplighter.Extensions
         // Extension per il Publisher
         public static void PublishEvent<T>(this Node node, T message)
         {
-            var publisher = MessagePipeManager.Services.GetRequiredService<IPublisher<T>>();
+            var publisher = GameBootstrap.Services.GetRequiredService<IPublisher<T>>();
             publisher.Publish(message);
         }
 
@@ -18,14 +18,14 @@ namespace SystemLamplighter.Extensions
         // Ritorna un IDisposable
         public static IDisposable SubscribeEvent<T>(this Node node, Action<T> action)
         {
-            var subscriber = MessagePipeManager.Services.GetRequiredService<ISubscriber<T>>();
+            var subscriber = GameBootstrap.Services.GetRequiredService<ISubscriber<T>>();
             return subscriber.Subscribe(action);
         }
 
         // Extension per il Publisher for Resource
         public static void PublishEventResource<T>(this Resource node, T message)
         {
-            var publisher = MessagePipeManager.Services.GetRequiredService<IPublisher<T>>();
+            var publisher = GameBootstrap.Services.GetRequiredService<IPublisher<T>>();
             publisher.Publish(message);
         }
 
@@ -33,7 +33,7 @@ namespace SystemLamplighter.Extensions
         // Ritorna un IDisposable
         public static IDisposable SubscribeEventResource<T>(this Resource node, Action<T> action)
         {
-            var subscriber = MessagePipeManager.Services.GetRequiredService<ISubscriber<T>>();
+            var subscriber = GameBootstrap.Services.GetRequiredService<ISubscriber<T>>();
             return subscriber.Subscribe(action);
         }
 

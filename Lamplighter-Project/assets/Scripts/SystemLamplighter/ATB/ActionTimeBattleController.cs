@@ -8,11 +8,12 @@ using SystemLamplighter.Debug;
 using SystemLamplighter.Events;
 using SystemLamplighter.Interfaces;
 using SystemLamplighter.Extensions;
+using System.Linq;
 
 
 namespace SystemLamplighter.ATB
 {
-	public partial class ActionTimeBattleController() : AbstractController<ActionTimeBattleView, ActionTimeBattleModel>, IDisposable
+	public partial class ActionTimeBattleController() : AbstractController<ActionTimeBattleView, ActionTimeBattleModel>
 	{
 		bool _inCharging = false;
 		int _currentIndex;
@@ -32,13 +33,14 @@ namespace SystemLamplighter.ATB
 		{
 			base.Init();
 
-			BattleManager.TriggerOnStartCombat += StartCombat;
+			Subscribe();
 			_currentIndex = 0;
 		}
 
-		public void StartCombat(List<ICombatActor> combatActors)
-		{			
-			AddCharacters(combatActors);
+
+		private void StartCombat(CombatStartedEvent ev)
+		{		
+			AddCharacters(ev.Actors.ToList());
 			ActivateATB(true);
 		}
 
@@ -200,12 +202,16 @@ namespace SystemLamplighter.ATB
 		{
 			base._ExitTree();
 
-			Dispose();
+			Unsubscribe();
 		}
 
-		public void Dipose()
+		private void Subscribe()
 		{
-			BattleManager.TriggerOnStartCombat -= StartCombat;
+			this.SubscribeEvent<CombatStartedEvent>(StartCombat).AddTo(_bag);
+		}
+
+		private void Unsubscribe()
+		{
 			_bag.Build().Dispose();
 		}
 	}

@@ -16,6 +16,10 @@ public partial class DebugAtb : Node
 	[Export]
 	public Godot.Collections.Array<AbstractCharacterController> _enemies;
 
+	[ExportGroup("BattleManager")]
+	[Export]
+	public NodePath BattleManager;
+
 	[ExportGroup("Atb")]
 	[Export]
 	public NodePath Atb;
@@ -45,6 +49,7 @@ public partial class DebugAtb : Node
 	private ActionTimeBattleController _atbController;
 	private BattleMenuController _battleMenuController;
 
+	private BattleManager _battleManager;
 
 
 	public override void _Ready()
@@ -67,10 +72,13 @@ public partial class DebugAtb : Node
 			Log.PrintWarning("There is no _enemiesImage");
 		if (BattleMenu is null)
 			Log.PrintWarning("There is no BattleMenu");
+		if (BattleManager is null)
+			Log.PrintMessage("There is no BattleManager");
 
 
 		_battleMenuController = GetNode<BattleMenuController>(BattleMenu);
 		_atbController = GetNode<ActionTimeBattleController>(Atb);
+		_battleManager = GetNode<BattleManager>(BattleManager);
 		_atbController.OnCommandEvent += ShowBattleMenu;
 	}
 
@@ -120,9 +128,7 @@ public partial class DebugAtb : Node
 
 	public void StartCombatClick()
 	{
-		// AutoAddCharacters();
-		// _atbController.ActivateATB(true);
-		BattleManager.StartBattle();
+		_battleManager.TriggerStartCombat();
 	}
 
 	public void StopCombatClick()

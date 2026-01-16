@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Security.Cryptography.X509Certificates;
 using Characters.Interfaces;
 using Godot;
+using Microsoft.Extensions.DependencyInjection;
 using SystemLamplighter;
 using SystemLamplighter.Debug;
 
@@ -16,42 +17,43 @@ namespace SystemLamplighter
 		[Export]
 		private bool _autoStartCombat = true;
 
+		private IBattleService _battleService;
+
 		private List<ICombatActor> _combatActors;
-
-		private static BattleManager _instance;
-
-		public static Action<List<ICombatActor>> TriggerOnStartCombat;
 
 		public override void _Ready()
 		{
 			base._Ready();
 
 			Init();
-			StartBattleHandler();
+			StartCombat();
 		}
 
 		private void Init()
 		{
-			if(_instance != null || _instance != this)
-				_instance.QueueFree();
-			
-			_instance = this;
-
 			if(_combatActors == null)
 				_combatActors = new List<ICombatActor>();
+
+			
+			_battleService = GameBootstrap.Services
+			.GetRequiredService<IBattleService>();
 
 			GetCombatActorsHandler();
 		}
 
-		public static void StartBattle() => _instance?.StartBattleHandler();
+		/// <summary>
+		/// Metodo richiamabile da fuori per avviare il combattimento
+		/// </summary>
+		public void TriggerStartCombat() => _battleService.StartCombat(_combatActors);
 
-		private void StartBattleHandler()
-		{
-			if(_autoStartCombat)
-				TriggerOnStartCombat?.Invoke(_combatActors);
-
-		}
-
+		/// <summary>
+		/// Metodo di base per avviare il combattimento
+		/// </summary>
+		private void StartCombat() => _battleService.StartCombat(_combatActors, _autoStartCombat);
+		
+		/// <summary>
+		/// Metodo per prendere tutti gli actors in combattimento
+		/// </summary>
 		private void GetCombatActorsHandler()
 		{
 			DebugLamplighter.Assert(_groups != null, "_groups is null");
@@ -65,6 +67,10 @@ namespace SystemLamplighter
 			}
 		}
 		
+		/// <summary>
+		/// Metodo per inizializzare la lista di actors in combattimento 
+		/// </summary>
+		/// <param name="array"></param>
 		private void InitActors(Godot.Collections.Array<Node> array)
 		{
 			foreach(var a in array)
@@ -75,7 +81,5 @@ namespace SystemLamplighter
 					}
 				}
 		}
-
-		private static void StaticGetCombatActors() => _instance?.GetCombatActorsHandler();
 	}
-}
+}	

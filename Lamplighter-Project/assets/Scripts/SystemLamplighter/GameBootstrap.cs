@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using MessagePipe;
 using System;
 
-public partial class MessagePipeManager : Node
+public partial class GameBootstrap : Node
 {
 	public static IServiceProvider Services {get; private set;}
 	public override void _EnterTree()
@@ -18,10 +18,12 @@ public partial class MessagePipeManager : Node
 	{
 		var services = new ServiceCollection();
 
-		services.AddMessagePipe();
+		// CORE
+		services.AddSingleton<IBattleService, BattleService>();
 
-		// Se vuoi registrare altri servizi globali, fallo qui
-        // services.AddSingleton<IMyService, MyService>();
+
+		// Message pipe
+		services.AddMessagePipe();
 
 		Services = services.BuildServiceProvider();
 	}

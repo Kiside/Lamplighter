@@ -33,6 +33,7 @@ grow_vertical = 2
 script = ExtResource("2_4px06")
 _allies = [null]
 _enemies = []
+BattleManager = NodePath("../BattleManager")
 Atb = NodePath("../ATB")
 BattleMenu = NodePath("../BattleMenuController")
 _optionButtonWhoAdd = NodePath("VBoxContainer/VBoxAdding/OptionButtonWhoAdd")

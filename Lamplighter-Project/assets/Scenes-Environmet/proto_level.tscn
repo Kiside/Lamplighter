@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://cfmoaycvrks0i"]
 
-[ext_resource type="Script" uid="uid://spaoddpe0dlv" path="res://assets/Scripts/SystemLamplighter/MessagePipeManager.cs" id="1_qcquh"]
+[ext_resource type="Script" uid="uid://bja0qd5k5kaa7" path="res://assets/Scripts/SystemLamplighter/GameBootstrap.cs" id="1_qcquh"]
 [ext_resource type="PackedScene" uid="uid://c5mvvlosts20h" path="res://assets/Characters/Playable/charlie.tscn" id="1_qfi3i"]
 [ext_resource type="PackedScene" uid="uid://bjvqik1fmkboh" path="res://assets/Scenes-Environmet/proto_combat.tscn" id="2_mw5we"]
 
@@ -9,7 +9,7 @@ albedo_color = Color(0.46229059, 0.46229059, 0.46229059, 1)
 
 [node name="ProtoLevel" type="Node3D"]
 
-[node name="MessagePipeManager" type="Node" parent="."]
+[node name="GameBootstrap" type="Node" parent="."]
 script = ExtResource("1_qcquh")
 
 [node name="CSGBox3D" type="CSGBox3D" parent="."]
