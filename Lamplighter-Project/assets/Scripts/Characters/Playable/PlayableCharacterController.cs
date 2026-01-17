@@ -180,7 +180,7 @@ namespace Characters.Playable
 					break;
 					// Il caso di default è per tutte le tipologie di attacco che hanno come selezione un singolo target
 					default:
-
+					SingleTargetAttack();
 					break;
 				}
 			}
@@ -193,6 +193,12 @@ namespace Characters.Playable
 		{}
 		private void HandleEscapeAction()
 		{}
+
+		private void SingleTargetAttack()
+		{
+			var battleService = GameBootstrap.Services.GetRequiredService<IBattleService>();
+			//var enemies = battleService.GetAllActors();
+		}
 
 		// QUESTA REGION È IMPORTANTE PER I PLAYERS E FORSE ANCHE PER I CHARACTERS IN COMBATTIMENTO
 		#region COMBATLOADOUT METHODS

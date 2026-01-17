@@ -44,12 +44,12 @@ namespace SystemLamplighter
 		/// <summary>
 		/// Metodo richiamabile da fuori per avviare il combattimento
 		/// </summary>
-		public void TriggerStartCombat() => _battleService.StartCombat(_combatActors);
+		public void TriggerStartCombat() => _battleService.StartCombat();
 
 		/// <summary>
 		/// Metodo di base per avviare il combattimento
 		/// </summary>
-		private void StartCombat() => _battleService.StartCombat(_combatActors, _autoStartCombat);
+		private void StartCombat() => _battleService.StartCombat(_autoStartCombat);
 		
 		/// <summary>
 		/// Metodo per prendere tutti gli actors in combattimento
@@ -82,6 +82,8 @@ namespace SystemLamplighter
 						_combatActors.Add(combatActor);
 					}
 				}
+			
+			_battleService.SetActors(_combatActors);
 		}
 	}
 }	

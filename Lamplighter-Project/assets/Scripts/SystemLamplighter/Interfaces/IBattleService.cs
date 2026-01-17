@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
 using Characters.Interfaces;
+using SystemLamplighter;
 
 public interface IBattleService
 {
-	public void StartCombat(IReadOnlyList<ICombatActor> actors, bool autoStartCombat);
-	public void StartCombat(IReadOnlyList<ICombatActor> actors);
+	public void SetActors(IReadOnlyList<ICombatActor> actors);
+	public void StartCombat(bool autoStartCombat);
+	public void StartCombat();
 }
