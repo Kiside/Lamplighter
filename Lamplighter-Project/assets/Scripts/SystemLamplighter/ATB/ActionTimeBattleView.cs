@@ -42,7 +42,6 @@ namespace SystemLamplighter.ATB
 		{
 			DebugLamplighter.Assert(character != null, "character is null");
 
-			Log.PrintMessage($"questo è null? {character}");
 			TextureRect textureRect = new TextureRect();
 			textureRect.SettingUp(avatarSize, avatarMinimumSize, character.AtbProperties.Avatar, avatarExpandMode);
 			textureRect.SetAnchors();

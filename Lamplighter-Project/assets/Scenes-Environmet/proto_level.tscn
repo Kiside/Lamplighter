@@ -32,6 +32,7 @@ albedo_color = Color(0.46126777, 0, 0.01909638, 1)
 script = ExtResource("5_uidbe")
 _avatar = ExtResource("4_naehx")
 _speed = 0.1
+_name = "Enemy"
 _characterType = 1
 metadata/_custom_type_script = "uid://dpwp74optcgd5"
 

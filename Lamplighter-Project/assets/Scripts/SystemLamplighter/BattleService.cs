@@ -9,28 +9,23 @@ using SystemLamplighter.Events;
 public class BattleService : IBattleService
 {
 	private readonly IPublisher<CombatStartedEvent> _publisher;
-	private List<ICombatActor> _actors;
-	private ICombatQue
+	ICombatActorRegistry _combatActorRegistry;
 
-	public BattleService(IPublisher<CombatStartedEvent> publisher)
+	public BattleService(IPublisher<CombatStartedEvent> publisher, ICombatActorRegistry combatActorRegistry)
 	{
 		_publisher = publisher;
-	}
-
-	public void SetActors(IReadOnlyList<ICombatActor> actors)
-	{
-		_actors = actors.ToList();
+		_combatActorRegistry = combatActorRegistry;
 	}
 	
 	public void StartCombat(bool autoStartCombat)
 	{
 		if(autoStartCombat)
-			_publisher.Publish(new CombatStartedEvent(_actors));
+			_publisher.Publish(new CombatStartedEvent(_combatActorRegistry.GetAllActors()));
 	}
 
 	public void StartCombat()
 	{ 
-		_publisher.Publish(new CombatStartedEvent(_actors));
+		_publisher.Publish(new CombatStartedEvent(_combatActorRegistry.GetAllActors()));
 	}
 
 	

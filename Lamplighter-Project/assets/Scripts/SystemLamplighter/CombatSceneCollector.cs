@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using Characters.Interfaces;
 using Godot;
@@ -9,7 +10,7 @@ using SystemLamplighter.Debug;
 
 namespace SystemLamplighter
 {
-	public partial class BattleManager : Node
+	public partial class CombatSceneCollector : Node
 	{
 
 		[Export]
@@ -17,9 +18,10 @@ namespace SystemLamplighter
 		[Export]
 		private bool _autoStartCombat = true;
 
-		private IBattleService _battleService;
+		
 
-		private List<ICombatActor> _combatActors;
+		private IBattleService _battleService;
+		private ICombatActorRegistry _combatActorRegistry;
 
 		public override void _Ready()
 		{
@@ -31,21 +33,16 @@ namespace SystemLamplighter
 
 		private void Init()
 		{
-			if(_combatActors == null)
-				_combatActors = new List<ICombatActor>();
 
-			
 			_battleService = GameBootstrap.Services
 			.GetRequiredService<IBattleService>();
 
+			_combatActorRegistry = GameBootstrap.Services.
+			GetRequiredService<ICombatActorRegistry>();
+			
 			GetCombatActorsHandler();
 		}
-
-		/// <summary>
-		/// Metodo richiamabile da fuori per avviare il combattimento
-		/// </summary>
-		public void TriggerStartCombat() => _battleService.StartCombat();
-
+		
 		/// <summary>
 		/// Metodo di base per avviare il combattimento
 		/// </summary>
@@ -60,12 +57,15 @@ namespace SystemLamplighter
 
 			if(_groups == null && _groups.Count <= 0)
 				return;
-			
+
+			Godot.Collections.Array<Node> array = new Godot.Collections.Array<Node>();
 			foreach(var g in _groups)
 			{
 				Log.PrintMessage($"searching for: {g}");
-				InitActors(GetTree().GetNodesInGroup($"{g}"));
+				array.AddRange(GetTree().GetNodesInGroup($"{g}"));
 			}
+
+			InitActors(array);
 		}
 		
 		/// <summary>
@@ -74,16 +74,21 @@ namespace SystemLamplighter
 		/// <param name="array"></param>
 		private void InitActors(Godot.Collections.Array<Node> array)
 		{
+			if(array.Count <= 0)
+				return;
+
+			List<ICombatActor> actors = new List<ICombatActor>();
 			foreach(var a in array)
 				{
 					Log.PrintMessage($"- {a.Name}");
 					if(a is ICombatActor combatActor)
 					{
-						_combatActors.Add(combatActor);
+						actors.Add(combatActor);
 					}
 				}
 			
-			_battleService.SetActors(_combatActors);
+			
+			_combatActorRegistry.Init(actors);
 		}
 	}
 }	

@@ -8,6 +8,7 @@ using Characters;
 using Characters.Playable;
 using System.Diagnostics;
 using Characters.Interfaces;
+using Microsoft.Extensions.DependencyInjection;
 
 public partial class DebugAtb : Node
 {
@@ -15,10 +16,6 @@ public partial class DebugAtb : Node
 	public Godot.Collections.Array<AbstractCharacterController> _allies;
 	[Export]
 	public Godot.Collections.Array<AbstractCharacterController> _enemies;
-
-	[ExportGroup("BattleManager")]
-	[Export]
-	public NodePath BattleManager;
 
 	[ExportGroup("Atb")]
 	[Export]
@@ -49,7 +46,7 @@ public partial class DebugAtb : Node
 	private ActionTimeBattleController _atbController;
 	private BattleMenuController _battleMenuController;
 
-	private BattleManager _battleManager;
+	private CombatSceneCollector _battleManager;
 
 
 	public override void _Ready()
@@ -72,13 +69,10 @@ public partial class DebugAtb : Node
 			Log.PrintWarning("There is no _enemiesImage");
 		if (BattleMenu is null)
 			Log.PrintWarning("There is no BattleMenu");
-		if (BattleManager is null)
-			Log.PrintMessage("There is no BattleManager");
 
 
 		_battleMenuController = GetNode<BattleMenuController>(BattleMenu);
 		_atbController = GetNode<ActionTimeBattleController>(Atb);
-		_battleManager = GetNode<BattleManager>(BattleManager);
 		_atbController.OnCommandEvent += ShowBattleMenu;
 	}
 
@@ -128,7 +122,7 @@ public partial class DebugAtb : Node
 
 	public void StartCombatClick()
 	{
-		_battleManager.TriggerStartCombat();
+		GameBootstrap.Services.GetRequiredService<IBattleService>().StartCombat();
 	}
 
 	public void StopCombatClick()

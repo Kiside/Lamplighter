@@ -196,8 +196,17 @@ namespace Characters.Playable
 
 		private void SingleTargetAttack()
 		{
-			var battleService = GameBootstrap.Services.GetRequiredService<IBattleService>();
-			//var enemies = battleService.GetAllActors();
+			var combatActorRegistry = GameBootstrap.Services.GetRequiredService<ICombatActorRegistry>();
+			var enemies = combatActorRegistry.GetActors(AtbCharacterType.ENEMY);
+
+			if(enemies != null)
+			{
+				foreach(var e in enemies)
+				{
+					Log.PrintMessage($"enemy: {e.AtbProperties.Name}");
+				}
+			}
+			
 		}
 
 		// QUESTA REGION È IMPORTANTE PER I PLAYERS E FORSE ANCHE PER I CHARACTERS IN COMBATTIMENTO
