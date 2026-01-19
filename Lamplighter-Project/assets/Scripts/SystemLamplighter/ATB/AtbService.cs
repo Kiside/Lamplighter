@@ -22,16 +22,16 @@ namespace SystemLamplighter.ATB
 		#region Subscription/Disposable
 		private ISubscriber<AtbCommandPhaseEndEvent> _subscriberAtbCommandPhaseEnd;
 		private ISubscriber<CombatEndEvent> _subscriberCombatEnd;
-		#nullable enable
+#nullable enable
 		private IDisposable? _subscriptionAtbCommandPhaseEnd;
-		#nullable disable
+#nullable disable
 		private IPublisher<AtbCommandPhaseStartedEvent> _publishAtbCommandPhaseStartEvent;
 		private IPublisher<AtbExecuteActionEvent> _publishAtbExecuteActionEvent;
 		private readonly DisposableBagBuilder _bag;
 		#endregion
-		
 
-		public AtbService(bool inCharging, ICombatActorRegistry combatActorRegistry, 
+
+		public AtbService(bool inCharging, ICombatActorRegistry combatActorRegistry,
 		ISubscriber<AtbCommandPhaseEndEvent> atbCommandPhaseEndSubscriber,
 		ISubscriber<CombatEndEvent> subscriberCombatEnd,
 		IPublisher<AtbCommandPhaseStartedEvent> publishAtbCommandPhaseStartEvent,
@@ -55,44 +55,54 @@ namespace SystemLamplighter.ATB
 
 		public bool ClockingAtb(double delta)
 		{
-			if(_inCharging && _actorsCount > 0)
+			if (_inCharging && _actorsCount > 0)
 			{
 				// currentIndex mantiene l'ultimo indiche che è stato controllato
 				int i = _currentIndex;
-				while(i < _actorsCount)
+				while (i < _actorsCount)
 				{
 					var currentCharacter = _combatActorRegistry.GetActor(i);
-					if(currentCharacter.AtbStatus == AtbCharacterStatus.CHARGE ||
+					if (currentCharacter.AtbStatus == AtbCharacterStatus.CHARGE ||
 					currentCharacter.AtbStatus == AtbCharacterStatus.CHARGE_ACTION)
 					{
-						switch(currentCharacter.UpdateAtbPosition((float)delta))
+						switch (currentCharacter.UpdateAtbPosition((float)delta))
 						{
 							// Se un personaggio entra in fase di Command
 							case AtbCharacterStatus.COM:
-							// Bisogna evitare il continuo del ciclo e fermare il proseguimento dell'ATB
-							_inCharging = false;
-							_currentIndex = i;
-							_currentActorInCommand = currentCharacter;
-							_subscriptionAtbCommandPhaseEnd = _subscriberAtbCommandPhaseEnd.Subscribe(OnCommandEnd);
-							_subscriptionAtbCommandPhaseEnd.AddTo(_bag);
-							_publishAtbCommandPhaseStartEvent.Publish(new AtbCommandPhaseStartedEvent(currentCharacter));
-							break;
+								CommandStatusHandler(currentCharacter, i);
+								break;
 							case AtbCharacterStatus.ACTION:
-							_publishAtbExecuteActionEvent.Publish(new AtbExecuteActionEvent(currentCharacter));
-							break;
+								ActionStatusHandler(currentCharacter);
+								break;
 						}
 					}
-					//_view.UpdatePosition(_model.Characters[i].AtbProperties.Position, i);
 					i++;
 				}
 			}
-			else if(_inCharging && _actorsCount <= 0)
+			else if (_inCharging && _actorsCount <= 0)
 			{
 				Log.PrintMessage("InCharge ma nessun personaggio");
 			}
 			return _inCharging;
 		}
 
+		private void CommandStatusHandler(ICombatActor currentCharacter, int currentIndex)
+		{
+			if (currentCharacter.AtbProperties.CharacterType == AtbCharacterType.ALLY)
+			{
+				_inCharging = false;
+				_currentIndex = currentIndex;
+				_currentActorInCommand = currentCharacter;
+				_subscriptionAtbCommandPhaseEnd = _subscriberAtbCommandPhaseEnd.Subscribe(OnCommandEnd);
+				_subscriptionAtbCommandPhaseEnd.AddTo(_bag);
+			}
+			_publishAtbCommandPhaseStartEvent.Publish(new AtbCommandPhaseStartedEvent(currentCharacter));
+		}
+
+		private void ActionStatusHandler(ICombatActor currentCharacter)
+		{
+			_publishAtbExecuteActionEvent.Publish(new AtbExecuteActionEvent(currentCharacter));
+		}
 
 		public void StartCombat(CombatStartedEvent ev)
 		{
@@ -110,7 +120,7 @@ namespace SystemLamplighter.ATB
 			_currentActorInCommand = null;
 
 			_inCharging = true;
-			
+
 		}
 
 		public void Dispose()

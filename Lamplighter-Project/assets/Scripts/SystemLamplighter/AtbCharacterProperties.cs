@@ -86,7 +86,7 @@ namespace SystemLamplighter
 		{
 			DebugLamplighter.Assert(value > 0, "speed is negative");
 
-			if (_status == AtbCharacterStatus.COM)
+			if (CharacterType == AtbCharacterType.ALLY && _status == AtbCharacterStatus.COM)
 				return _status;
 
 			_barPosition += (_speed * _speedMultiplier) * value;
@@ -101,7 +101,9 @@ namespace SystemLamplighter
 		/// <returns></returns>
 		private AtbCharacterStatus CheckPositionStatus()
 		{
-			if (_status == AtbCharacterStatus.CHARGE && _barPosition >= Common.ATB_COMAND_THRESHOLD)
+			if (CharacterType == AtbCharacterType.ALLY && 
+			_status == AtbCharacterStatus.CHARGE && 
+			_barPosition >= Common.ATB_COMAND_THRESHOLD)
 			{
 				
 				_barPosition = Common.ATB_COMAND_THRESHOLD;
@@ -111,7 +113,6 @@ namespace SystemLamplighter
 			else if(_status == AtbCharacterStatus.CHARGE_ACTION && _barPosition >= Common.ATB_END)
 			{
 				
-				Log.PrintMessage("STATO PERSONAGGIO ACTION");
 				_status = AtbCharacterStatus.ACTION;
 			}
 
@@ -131,7 +132,8 @@ namespace SystemLamplighter
 		{
 			if(ev.Actor.AtbProperties != this)
 				return;
-			Log.PrintMessage("ON END ACTION2");
+			
+			Log.PrintMessage($"ON END ACTION: {this.Name}");
 			_barPosition = 0f;
 			_speedMultiplier = 1f;
 			_status = AtbCharacterStatus.CHARGE;

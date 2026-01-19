@@ -47,8 +47,6 @@ namespace SystemLamplighter.ATB
 			this.GetPublisher<AtbCommandPhaseStartedEvent>(),
 			this.GetPublisher<AtbExecuteActionEvent>()
 			);
-
-			Log.PrintMessage($"ciao: {_atbService}");
 		}
 
 

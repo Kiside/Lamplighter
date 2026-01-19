@@ -3,6 +3,7 @@ using Characters.Inteaces;
 using Characters.Interfaces;
 using SystemLamplighter;
 using SystemLamplighter.Events;
+using SystemLamplighter.Extensions;
 
 namespace Characters.NPC
 {
@@ -67,7 +68,13 @@ namespace Characters.NPC
 
 		public void OnExecuteCombatAction(AtbExecuteActionEvent ev)
 		{
+			if(ev.Actor != this)
+				return;
 			
+			Log.PrintMessage("ESEGUO L'AZIONE");
+			// Eseguo l'azione
+			// Ad azione eseguita resetto la posizione del personaggio sull'ATB
+			this.PublishEvent(new AtbEndExecuteActionEvent(this));
 		}
 
 		#region ICombatActor

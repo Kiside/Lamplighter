@@ -61,7 +61,8 @@ namespace SystemLamplighter
 			Godot.Collections.Array<Node> array = new Godot.Collections.Array<Node>();
 			foreach(var g in _groups)
 			{
-				Log.PrintMessage($"searching for: {g}");
+				
+				Log.PrintMessage($"searching for: {g}");				
 				array.AddRange(GetTree().GetNodesInGroup($"{g}"));
 			}
 
