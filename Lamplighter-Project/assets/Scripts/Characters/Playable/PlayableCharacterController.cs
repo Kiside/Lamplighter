@@ -19,6 +19,7 @@ namespace Characters.Playable
 	{
 		#region PUBLIC
 		public AtbCharacterProperties AtbProperties => _model.AtbCharacterProperties;
+		public AtbCharacterStatus AtbStatus => _model.AtbCharacterProperties.Status;
 		public CombatLoadout CombatLoadout { get => _model.CombatLoadout; set => _model.CombatLoadout = value; }
 		public IActionData CurrentAction {get => _model.CurrentAction; set => _model.CurrentAction = value; }
 		#endregion
@@ -163,6 +164,8 @@ namespace Characters.Playable
 				HandleEscapeAction();
 				break;
 			}
+			
+			AtbProperties.EndCommandStatus(CurrentAction.ActionSpeedMultiplier);
 
 			this.PublishEvent<AtbCommandPhaseEndEvent>(new AtbCommandPhaseEndEvent(this));
 		}
@@ -243,6 +246,10 @@ namespace Characters.Playable
 			// Richiamo Combat menu
 			_battleMenuController.Show();
 		}
+		#endregion
+
+		#region ICombatActor
+		public AtbCharacterStatus UpdateAtbPosition(float value) => AtbProperties.UpdatePosition(value);
 		#endregion
 
 		public override void _ExitTree()

@@ -16,12 +16,8 @@ namespace SystemLamplighter
 		
 		public void Init(List<ICombatActor> actors) => _actors = actors;
 		public void AddActor(ICombatActor actor) => _actors.Add(actor);
-		public List<ICombatActor> GetAllActors()
-		{
-			
-
-			return _actors;
-		}
+		public ICombatActor GetActor(int index) => _actors[index];
+		public List<ICombatActor> GetActors() => _actors;
 		public List<ICombatActor> GetActors(AtbCharacterType type) =>
 		_actors.FindAll(a => a.AtbProperties.CharacterType == type);
 

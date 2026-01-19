@@ -20,12 +20,16 @@ public class BattleService : IBattleService
 	public void StartCombat(bool autoStartCombat)
 	{
 		if(autoStartCombat)
-			_publisher.Publish(new CombatStartedEvent(_combatActorRegistry.GetAllActors()));
+			_publisher.Publish(new CombatStartedEvent(_combatActorRegistry.GetActors()));
 	}
 
 	public void StartCombat()
 	{ 
-		_publisher.Publish(new CombatStartedEvent(_combatActorRegistry.GetAllActors()));
+		foreach(var a in _combatActorRegistry.GetActors())
+		{
+			Log.PrintMessage($"actors: {a.AtbProperties.Name}");
+		}
+		_publisher.Publish(new CombatStartedEvent(_combatActorRegistry.GetActors()));
 	}
 
 	

@@ -1,5 +1,6 @@
 using Characters.Interfaces;
 using Godot;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using SystemLamplighter.Debug;
@@ -21,7 +22,9 @@ namespace SystemLamplighter.ATB
 		TextureRect.ExpandModeEnum avatarExpandMode = TextureRect.ExpandModeEnum.IgnoreSize;
 
 		//private List<float> _charactersPosition;
-		private List<TextureRect> _characters;
+		//private List<TextureRect> _characters;
+
+		private Dictionary<ICombatActor, TextureRect> _actorsView;
 
 		private const float TEMP_DEFAULT_SIZE_AVATAR = 15;
 
@@ -31,7 +34,7 @@ namespace SystemLamplighter.ATB
 			DebugLamplighter.Assert(_enemyContainer != null, "_enemyContainer is null");
 			DebugLamplighter.Assert(_playerContainer != null, "_playerContainer is null");
 
-			_characters = new List<TextureRect>();
+			_actorsView = new Dictionary<ICombatActor, TextureRect>();
 		}
 
 		/// <summary>
@@ -56,7 +59,7 @@ namespace SystemLamplighter.ATB
 					break;
 			}
 
-			_characters.Add(textureRect);
+			_actorsView.Add(character, textureRect);
 		}
 
 		/// <summary>
@@ -67,40 +70,40 @@ namespace SystemLamplighter.ATB
 
 		}
 
-		public void UpdatePositions(List<float> charactersPosition)
+		public void UpdatePositions()
 		{
-			DebugLamplighter.Assert(_characters != null, "_characters is null");
+			var barWidth = _control.Size.X;
+			var charactersRegistry = GameBootstrap.Services.GetRequiredService<ICombatActorRegistry>();
 
-			var minimumSize = _control.CustomMinimumSize;
-			for (int i = 0; i < _characters.Count; i++)
+			foreach(var actor in charactersRegistry.GetActors())
 			{
-				float currentPosition = (minimumSize.X / _characters[i].Position.X + TEMP_DEFAULT_SIZE_AVATAR);
-				_characters[i].Position = new Vector2(currentPosition, _characters[i].Position.Y);
+				if(!_actorsView.TryGetValue(actor, out var view))
+					continue;
+				
+				float x = Mathf.Lerp(0, barWidth - avatarSize.X, actor.AtbProperties.Position);	
+				view.Position = new Vector2(x, view.Position.Y);
 			}
 		}
+
+		// TODO: Capire se bisogna cancellare il metodo qui sotto
 		public void UpdatePosition(float position, int index)
 		{
-			DebugLamplighter.Assert(_characters != null, "_characters is null");
-			DebugLamplighter.Assert(index < _characters.Count, "index goes overflow");
+			DebugLamplighter.Assert(_actorsView != null, "_characters is null");
+			DebugLamplighter.Assert(index < _actorsView.Count, "index goes overflow");
 
 			var barWidth = _control.Size.X;
 
 			float x = Mathf.Lerp(0, barWidth - avatarSize.X, position);
-			_characters[index].Position = new Vector2(x, _characters[index].Position.Y);
-
-			//float currentPosition = (minimumSize.X / _characters[index].Position.X + TEMP_DEFAULT_SIZE_AVATAR);
-			//_characters[index].Position = new Vector2(currentPosition, _characters[index].Position.Y);
-			//_characters[index].SetPosition(new Vector2(currentPosition, _characters[index].Position.Y));
-			//Log.PrintMessage($"{index} - {currentPosition})");
+			//_characters[index].Position = new Vector2(x, _characters[index].Position.Y);
 		}
 
 		public void ClearCharacters()
 		{
-			DebugLamplighter.Assert(_characters != null, "_characters is null");
+			DebugLamplighter.Assert(_actorsView != null, "_characters is null");
 			DebugLamplighter.Assert(_enemyContainer != null, "_enemyContainer is null");
 			DebugLamplighter.Assert(_playerContainer != null, "_playerContainer is null");
 
-			_characters.Clear();
+			_actorsView.Clear();
 			for (int i = 0; i < _enemyContainer.GetChildren().Count; i++)
 			{
 				_enemyContainer.RemoveChild(_enemyContainer.GetChildren()[i]);

@@ -14,6 +14,16 @@ namespace SystemLamplighter.Extensions
             publisher.Publish(message);
         }
 
+        public static IPublisher<T> GetPublisher<T>(this Node node)
+        {
+            return GameBootstrap.Services.GetRequiredService<IPublisher<T>>();
+        }
+
+        public static ISubscriber<T> GetSubscriber<T>(this Node node)
+        {
+            return GameBootstrap.Services.GetRequiredService<ISubscriber<T>>();
+        }
+
         // Extension per il Subscriber
         // Ritorna un IDisposable
         public static IDisposable SubscribeEvent<T>(this Node node, Action<T> action)
@@ -37,6 +47,16 @@ namespace SystemLamplighter.Extensions
             return subscriber.Subscribe(action);
         }
 
+
+        public static IPublisher<T> GetPublisher<T>(this Resource node)
+        {
+            return GameBootstrap.Services.GetRequiredService<IPublisher<T>>();
+        }
+
+        public static ISubscriber<T> GetSubscriber<T>(this Resource node)
+        {
+            return GameBootstrap.Services.GetRequiredService<ISubscriber<T>>();
+        }
         // Nelle estensioni aggiungi questo:
         // public static void AddTo(this IDisposable disposable, DisposableBagBuilder bag)
         // {

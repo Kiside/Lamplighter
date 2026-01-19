@@ -9,6 +9,8 @@ using SystemLamplighter.Events;
 using SystemLamplighter.Interfaces;
 using SystemLamplighter.Extensions;
 using System.Linq;
+using SystemLamplighter.ATB.Interfaces;
+using Microsoft.Extensions.DependencyInjection;
 
 
 namespace SystemLamplighter.ATB
@@ -17,12 +19,14 @@ namespace SystemLamplighter.ATB
 	{
 		bool _inCharging = false;
 		int _currentIndex;
+		IAtbService _atbService;
 
 		public event Action OnCommandEvent;
 
-		private readonly DisposableBagBuilder _bag = DisposableBag.CreateBuilder();
+		//private readonly DisposableBagBuilder _bag = DisposableBag.CreateBuilder();
 		#nullable enable
 		private IDisposable? _atbCommandEndSubscription;
+		private IDisposable? _subscriptionCombatStarted;
 		#nullable disable
 		private ICombatActor _currentActorInCommand;
 
@@ -34,14 +38,24 @@ namespace SystemLamplighter.ATB
 			base.Init();
 
 			Subscribe();
-			_currentIndex = 0;
+
+			_atbService = new AtbService(
+			false, 
+			GameBootstrap.Services.GetRequiredService<ICombatActorRegistry>(),
+			this.GetSubscriber<AtbCommandPhaseEndEvent>(),
+			this.GetSubscriber<CombatEndEvent>(),
+			this.GetPublisher<AtbCommandPhaseStartedEvent>(),
+			this.GetPublisher<AtbExecuteActionEvent>()
+			);
+
+			Log.PrintMessage($"ciao: {_atbService}");
 		}
 
 
 		private void StartCombat(CombatStartedEvent ev)
 		{		
 			AddCharacters(ev.Actors.ToList());
-			ActivateATB(true);
+			_atbService.ActivateATB(true);
 		}
 
 		public void ActivateATB(bool value)
@@ -51,7 +65,9 @@ namespace SystemLamplighter.ATB
 
 		public override void _PhysicsProcess(double delta)
 		{
-			ClockingAtb(delta);
+			if(_atbService != null && _atbService.ClockingAtb(delta))
+				_view.UpdatePositions();
+			//ClockingAtb(delta);
 		}
 
 		/// <summary>
@@ -80,7 +96,7 @@ namespace SystemLamplighter.ATB
 							_currentIndex = i;
 							_currentActorInCommand = currentCharacter;
 							_atbCommandEndSubscription = this.SubscribeEvent<AtbCommandPhaseEndEvent>(OnCommandEnd);
-							_atbCommandEndSubscription.AddTo(_bag);
+							//_atbCommandEndSubscription.AddTo(_bag);
 							this.PublishEvent(new AtbCommandPhaseStartedEvent(currentCharacter));
 							break;
 							// In stato Action
@@ -148,7 +164,7 @@ namespace SystemLamplighter.ATB
 			Assert();
 
 			character.AtbProperties.Subscribe();
-			_model.AddCharacter(character);
+			//_model.AddCharacter(character);
 			_view.AddCharacter(character);
 		}
 
@@ -201,17 +217,18 @@ namespace SystemLamplighter.ATB
 		{
 			base._ExitTree();
 
+			_atbService.Dispose();
 			Unsubscribe();
 		}
 
 		private void Subscribe()
 		{
-			this.SubscribeEvent<CombatStartedEvent>(StartCombat).AddTo(_bag);
+			_subscriptionCombatStarted = this.SubscribeEvent<CombatStartedEvent>(StartCombat);
 		}
 
 		private void Unsubscribe()
 		{
-			_bag.Build().Dispose();
+			_subscriptionCombatStarted.Dispose();
 		}
 	}
 }

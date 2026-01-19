@@ -13,6 +13,7 @@ namespace Characters.NPC
 		public AtbCharacterProperties AtbProperties => _model.AtbCharacterProperties;
 		public CombatLoadout CombatLoadout { get => _model.CombatLoadout; set => _model.CombatLoadout = value; }
 		public IActionData CurrentAction {get => _model.CurrentAction; set => _model.CurrentAction = value; }
+		public AtbCharacterStatus AtbStatus => _model.AtbCharacterProperties.Status;
 		#endregion
 
 
@@ -68,6 +69,10 @@ namespace Characters.NPC
 		{
 			
 		}
+
+		#region ICombatActor
+		public AtbCharacterStatus UpdateAtbPosition(float value) => AtbProperties.UpdatePosition(value);
+		#endregion
 	}
 	
 }

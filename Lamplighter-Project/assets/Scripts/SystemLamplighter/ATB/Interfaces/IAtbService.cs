@@ -1,10 +1,12 @@
+using System;
 using System.Collections.Generic;
 using Characters.Interfaces;
 
 namespace SystemLamplighter.ATB.Interfaces
 {
-	public interface IAtbService
+	public interface IAtbService : IDisposable
 	{
-		public void ClockingAtb(double delta);
+		public void ActivateATB(bool value);
+		public bool ClockingAtb(double delta);
 	}
 }
