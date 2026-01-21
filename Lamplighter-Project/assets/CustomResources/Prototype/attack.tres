@@ -9,5 +9,6 @@ _damage = 1.2
 _pushbackForce = 0.2
 _atbPositionDamage = 0.1
 _name = "attack"
+_actionSpeedMultiplier = 2.0
 _animation = ExtResource("1_dnjco")
 metadata/_custom_type_script = "uid://53pv7v0c5gad"

@@ -77,7 +77,6 @@ namespace Characters.Playable
 
 		private void TriggerOnActionClicked(IActionData actionData)
 		{
-			Log.PrintMessage($"TRIGGER ON ACTION CLICKED");
 			DebugLamplighter.Assert(actionData != null, "actionData is null");
 
 			_currentAction = actionData;

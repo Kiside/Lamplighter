@@ -1,6 +1,10 @@
+using System;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using Characters.Inteaces;
 using Characters.Interfaces;
+using Godot;
+using MessagePipe;
 using SystemLamplighter;
 using SystemLamplighter.Events;
 using SystemLamplighter.Extensions;
@@ -17,10 +21,12 @@ namespace Characters.NPC
 		public AtbCharacterStatus AtbStatus => _model.AtbCharacterProperties.Status;
 		#endregion
 
-
+		
 		protected AbstractCombat<NpCharacterController> _combat { get => _model.Combat; set => _model.Combat = value; }
 		protected AbstractMovement<NpCharacterController> _movement { get => _model.Movement; set => _model.Movement = value; }
 		protected List<string> _groups {get => _model.Groups;}
+		private readonly DisposableBagBuilder _bag = DisposableBag.CreateBuilder();
+		
 
 		public override void _Ready()
 		{
@@ -46,7 +52,6 @@ namespace Characters.NPC
 			foreach(var group in _groups)
 			{
 				AddToGroup(group);
-				
 			}
 		}
 
@@ -63,7 +68,39 @@ namespace Characters.NPC
 	
 		public void OnCommandPhaseStarted(AtbCommandPhaseStartedEvent ev)
 		{
+			if(ev.Actor != this)
+				return;
 			
+
+			// Scelta dell'azione da fare 
+			var random = new Godot.RandomNumberGenerator();
+			random.Randomize();
+			var choice = random.Randi() % 2 +1;
+
+			float speedMultiplier = 1f;
+			
+			if(choice == 1)
+			{
+				speedMultiplier = _model.CombatLoadout.GetAttacksId()[0].ActionSpeedMultiplier;	
+			}
+			else
+			{
+				speedMultiplier = _model.CombatLoadout.GetMagicsId()[0].ActionSpeedMultiplier;	
+			}
+			
+			// Fine scelta
+			AtbProperties.EndCommandStatus(speedMultiplier);
+			this.PublishEvent<AtbCommandPhaseEndEvent>(new AtbCommandPhaseEndEvent(this));
+		}
+
+		protected override void Subscribe()
+		{
+			this.SubscribeEvent<AtbExecuteActionEvent>(OnExecuteCombatAction).AddTo(_bag);
+			this.SubscribeEvent<AtbCommandPhaseStartedEvent>(OnCommandPhaseStarted).AddTo(_bag);
+		}
+		protected override void Unsubscribe()
+		{
+			_bag.Build().Dispose();
 		}
 
 		public void OnExecuteCombatAction(AtbExecuteActionEvent ev)

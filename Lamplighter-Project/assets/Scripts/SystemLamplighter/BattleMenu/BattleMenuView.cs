@@ -92,8 +92,6 @@ namespace SystemLamplighter.BattleMenu
 			if (idButton == String.Empty)
 				return;
 
-			Log.PrintMessage($"in HandleClick {idButton}");			
-
 			switch (idButton)
 			{
 				case var _ when idButton == AttackButtonId:
@@ -131,7 +129,6 @@ namespace SystemLamplighter.BattleMenu
 			else
 				actionData = actionD;
 
-			Log.PrintMessage($"string id: {id} - ActionData: {actionData.Name}");
 			DebugLamplighter.Assert(actionData != null, "actionData is null, no action finded");
 			
 			OnActionClick?.Invoke(actionData);

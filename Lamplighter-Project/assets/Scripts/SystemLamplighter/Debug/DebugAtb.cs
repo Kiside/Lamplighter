@@ -127,7 +127,9 @@ public partial class DebugAtb : Node
 
 	public void StopCombatClick()
 	{
-		_atbController.StopAtb();
+		//_atbController.StopAtb();
+		GameBootstrap.Services.GetRequiredService<IBattleService>().StopAtb();
+		// TODO: BISOGNEREBBE PULIRE ANCHE IL COMBAT REGISTRY
 	}
 
 	public void OnAddCharactersClick()

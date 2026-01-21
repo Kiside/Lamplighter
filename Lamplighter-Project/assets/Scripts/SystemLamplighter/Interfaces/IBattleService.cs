@@ -7,4 +7,5 @@ public interface IBattleService
 {
 	public void StartCombat(bool autoStartCombat);
 	public void StartCombat();
+	public void StopAtb();
 }

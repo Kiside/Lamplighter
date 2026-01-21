@@ -10,4 +10,5 @@ _pushbackForce = 2.0
 _atbPositionDamage = 2.2
 _actionType = 2
 _name = "basic magic"
+_actionSpeedMultiplier = 0.5
 metadata/_custom_type_script = "uid://cwd6nmn8t150p"

@@ -8,19 +8,21 @@ using SystemLamplighter.Events;
 
 public class BattleService : IBattleService
 {
-	private readonly IPublisher<CombatStartedEvent> _publisher;
+	private readonly IPublisher<CombatStartedEvent> _publisherCombatStarted;
+	private readonly IPublisher<CombatEndEvent> _publisherCombatEnded;
 	ICombatActorRegistry _combatActorRegistry;
 
-	public BattleService(IPublisher<CombatStartedEvent> publisher, ICombatActorRegistry combatActorRegistry)
+	public BattleService(IPublisher<CombatStartedEvent> publisherCombatStarted, IPublisher<CombatEndEvent>  publisherCombatEnded, ICombatActorRegistry combatActorRegistry)
 	{
-		_publisher = publisher;
+		_publisherCombatStarted = publisherCombatStarted;
+		_publisherCombatEnded = publisherCombatEnded;
 		_combatActorRegistry = combatActorRegistry;
 	}
 	
 	public void StartCombat(bool autoStartCombat)
 	{
 		if(autoStartCombat)
-			_publisher.Publish(new CombatStartedEvent(_combatActorRegistry.GetActors()));
+			_publisherCombatStarted.Publish(new CombatStartedEvent(_combatActorRegistry.GetActors()));
 	}
 
 	public void StartCombat()
@@ -29,7 +31,12 @@ public class BattleService : IBattleService
 		{
 			Log.PrintMessage($"actors: {a.AtbProperties.Name}");
 		}
-		_publisher.Publish(new CombatStartedEvent(_combatActorRegistry.GetActors()));
+		_publisherCombatStarted.Publish(new CombatStartedEvent(_combatActorRegistry.GetActors()));
+	}
+
+	public void StopAtb()
+	{
+		_publisherCombatEnded.Publish(new CombatEndEvent());
 	}
 
 	

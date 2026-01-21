@@ -89,6 +89,7 @@ namespace SystemLamplighter
 			if (CharacterType == AtbCharacterType.ALLY && _status == AtbCharacterStatus.COM)
 				return _status;
 
+
 			_barPosition += (_speed * _speedMultiplier) * value;
 			_barPosition = Mathf.Clamp(_barPosition, 0, 1);
 
@@ -101,21 +102,22 @@ namespace SystemLamplighter
 		/// <returns></returns>
 		private AtbCharacterStatus CheckPositionStatus()
 		{
-			if (CharacterType == AtbCharacterType.ALLY && 
-			_status == AtbCharacterStatus.CHARGE && 
+			if (_status == AtbCharacterStatus.CHARGE && 
 			_barPosition >= Common.ATB_COMAND_THRESHOLD)
 			{
-				
-				_barPosition = Common.ATB_COMAND_THRESHOLD;
+				if(_characterType == AtbCharacterType.ALLY)
+					_barPosition = Common.ATB_COMAND_THRESHOLD;
 				_status = AtbCharacterStatus.COM;
 				
 			}
-			else if(_status == AtbCharacterStatus.CHARGE_ACTION && _barPosition >= Common.ATB_END)
+
+			if(_status == AtbCharacterStatus.CHARGE_ACTION && _barPosition >= Common.ATB_END)
 			{
 				
 				_status = AtbCharacterStatus.ACTION;
 			}
 
+			
 			return _status;
 		}
 
@@ -133,7 +135,7 @@ namespace SystemLamplighter
 			if(ev.Actor.AtbProperties != this)
 				return;
 			
-			Log.PrintMessage($"ON END ACTION: {this.Name}");
+			
 			_barPosition = 0f;
 			_speedMultiplier = 1f;
 			_status = AtbCharacterStatus.CHARGE;

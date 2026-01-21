@@ -202,13 +202,13 @@ namespace Characters.Playable
 			var combatActorRegistry = GameBootstrap.Services.GetRequiredService<ICombatActorRegistry>();
 			var enemies = combatActorRegistry.GetActors(AtbCharacterType.ENEMY);
 
-			if(enemies != null)
-			{
-				foreach(var e in enemies)
-				{
-					Log.PrintMessage($"enemy: {e.AtbProperties.Name}");
-				}
-			}
+			// if(enemies != null)
+			// {
+			// 	foreach(var e in enemies)
+			// 	{
+			// 		Log.PrintMessage($"enemy: {e.AtbProperties.Name}");
+			// 	}
+			// }
 			
 		}
 
@@ -229,7 +229,6 @@ namespace Characters.Playable
 			if(ev.Actor != this)
 				return;
 			
-			Log.PrintMessage("ESEGUO L'AZIONE");
 			// Eseguo l'azione
 			// Ad azione eseguita resetto la posizione del personaggio sull'ATB
 			this.PublishEvent(new AtbEndExecuteActionEvent(this));
