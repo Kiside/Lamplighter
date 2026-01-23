@@ -31,6 +31,7 @@ namespace Characters.Playable
 		protected List<string> _groups {get => _model.Groups;}
 		private bool _lockOn = false;
 		private readonly DisposableBagBuilder _bag = DisposableBag.CreateBuilder();
+		protected IGroupsInitiator _groupsInitiator;
 		#endregion
 		
 		#region PUBLIC PROPERTIES
@@ -44,11 +45,12 @@ namespace Characters.Playable
 
 		protected override void OnInit()
 		{
+			_groupsInitiator = new GroupsInitiator(_groups, this);
+
 			_combat.Init(this);
 			_movement.Init(this);
 
 			Subscribe();
-			GroupsInit();
 		}
 
 		#region Subscribe/Unsubscribe
@@ -71,31 +73,7 @@ namespace Characters.Playable
 		}
 		#endregion
 
-		#region Groups
-		protected void GroupsInit()
-		{
-			if(_groups == null || _groups.Count <= 0)
-			{
-				Log.PrintMessage("There are no groups");
-				return;
-			}
-
-			foreach(var group in _groups)
-			{
-				AddToGroup(group);
-				
-			}
-		}
-
-		protected void RemoveFromGroups()
-		{
-			foreach(var group in _groups)
-			{
-				RemoveFromGroup(group);
-			}
-		}
-		#endregion
-
+		// TODO IL NODE CHECKING È DA CONTROLLARE BENE SE PUÒ ESSERE GENERALIZZATO ANCORA
 		protected override void NodeChecking()
 		{
 			base.NodeChecking();
@@ -119,6 +97,8 @@ namespace Characters.Playable
 		}
 
 		// QUESTA REGION È IMPORTANTE PER I PLAYERS
+		// TODO: GLI EVENTI DEL BATTLE MENU ANCHE PROBABILMENTE NON DEVONO ESSRE QUI
+		// TODO: NODO COMBAT?
 		#region BATTLE MENU EVENTS
 		public void OpenBattleSubMenuHandler(SubMenuType subMenuType)
 		{
@@ -197,6 +177,7 @@ namespace Characters.Playable
 		private void HandleEscapeAction()
 		{}
 
+		// TODO: QUESTO E MAGARI ALTRI METODI PER IL TARGETTING DEVONO ESSERE DEMANDATI
 		private void SingleTargetAttack()
 		{
 			var combatActorRegistry = GameBootstrap.Services.GetRequiredService<ICombatActorRegistry>();
@@ -213,6 +194,7 @@ namespace Characters.Playable
 		}
 
 		// QUESTA REGION È IMPORTANTE PER I PLAYERS E FORSE ANCHE PER I CHARACTERS IN COMBATTIMENTO
+		// TODO: CONTROLLARE SE POSSONO ESSERE MESSI ALTROVE QUESTI METODI, SEMPRE CLASSE/INTERFACCE
 		#region COMBATLOADOUT METHODS
 		public override List<IActionData> GetAttacksId() => CombatLoadout.GetAttacksId();
 		public override List<IActionData> GetMagicsId() => CombatLoadout.GetMagicsId();
@@ -220,6 +202,7 @@ namespace Characters.Playable
 		public override List<IActionData> GetDefenseId() => CombatLoadout.GetDefenseId();
 		#endregion
 
+		// TODO: ANCHE QUESTI METODI POSSONO ESSERE DEMANDATI?
 		// QUESTA REGION È IMPORTANTE PER I PLAYERS
 		#region ICombatActionExecutor
 		// QUESTO METODO POTREBBE ESSERE IMPORTANTE PER I CHARACTERS IN COMBATTIMENTO
