@@ -2,7 +2,9 @@ using Godot;
 using MessagePipe;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using SystemLamplighter;
+using SystemLamplighter.Debug;
 using SystemLamplighter.Events;
 
 namespace SystemLamplighter.BattleMenu
@@ -14,7 +16,9 @@ namespace SystemLamplighter.BattleMenu
 		public void Show() => _view.Visible = true;
 		public void Hide() => _view.Visible = false;
 
-		public event Action<SubMenuType> OnOpenSubMenu;
+		private List<ISubMenuDefinition> Menus => _model._menus;
+
+		public event Action<ISubMenuDefinition> OnOpenSubMenu;
 		public event Action<IActionData> OnActionClick;
 
 		// Called when the node enters the scene tree for the first time.
@@ -24,6 +28,7 @@ namespace SystemLamplighter.BattleMenu
 
 			_view.OnActionClick += Action;
 			_view.OnSubMenu += RequestOpenSubMenu;
+			_view.BuildMenu(Menus);
 
 			if(_model.startHide)
 				Hide();
@@ -35,9 +40,12 @@ namespace SystemLamplighter.BattleMenu
 
 		}
 
-		private void RequestOpenSubMenu(SubMenuType subMenuType)
+		private void RequestOpenSubMenu(string subMenuType)
 		{
-			OnOpenSubMenu?.Invoke(subMenuType);
+			DebugLamplighter.Assert(Menus != null, "There is no Menus");
+			DebugLamplighter.Assert(Menus.Count > 0, "There is no element in Menus");
+			
+			OnOpenSubMenu?.Invoke(Menus.First(m => m.Id == subMenuType));
 		}
 
 		public void OpenSubMenu(SubMenuType subMenuType, List<IActionData> subMenuButtonNames)

@@ -47,7 +47,7 @@ namespace Characters.Playable
 		public List<string> Groups {get => _groups.Select(g => g.ToString()).ToList<string>();}
 		#endregion
 
-		public event Action<SubMenuType> OnOpenBattleSubMenu;  
+		public event Action<ISubMenuDefinition> OnOpenBattleSubMenu;  
 		public event Action OnActionClicked;
 
 		public override void Init()
@@ -68,10 +68,8 @@ namespace Characters.Playable
 		}
 
 
-		private void TriggerOnOpenSubMenu(SubMenuType subMenuType)
+		private void TriggerOnOpenSubMenu(ISubMenuDefinition subMenuType)
 		{
-			DebugLamplighter.Assert(subMenuType != SubMenuType.NONE, "subMenuType is NONE");
-
 			OnOpenBattleSubMenu?.Invoke(subMenuType);
 		}
 

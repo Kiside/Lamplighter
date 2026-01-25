@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Numerics;
 using System.Reflection.Metadata.Ecma335;
 using Godot;
+using System.Linq;
 
 namespace SystemLamplighter
 {
@@ -18,6 +19,9 @@ namespace SystemLamplighter
 		{
 			return (float)value;
 		}
+
+		public static List<string> FromEnumtoList<T>() => Enum.GetNames(typeof(T)).ToList();
+
 	}
 
 	[Serializable]
@@ -92,4 +96,5 @@ namespace SystemLamplighter
 		ITEMS
 	}
 
+	
 }

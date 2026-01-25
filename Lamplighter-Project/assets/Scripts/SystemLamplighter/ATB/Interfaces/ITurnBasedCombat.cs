@@ -1,7 +1,9 @@
+using System;
+
 public interface ITurnBasedCombat
 {
 	public void ActionChoosedHandler();
-	public void OpenBattleSubMenuHandler<T>(T subMenuIds);
+	public void OpenBattleSubMenuHandler(int subMenuIds);
 	public void HandleAttackAction();
 	public void HandleGuardAction();
 	public void HandleMagicAction();

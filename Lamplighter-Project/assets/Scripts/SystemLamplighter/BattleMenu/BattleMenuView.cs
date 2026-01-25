@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection.Metadata;
 using System.Runtime.CompilerServices;
 using SystemLamplighter;
@@ -35,7 +36,7 @@ namespace SystemLamplighter.BattleMenu
 		public string GuardButtonId => _guardButton.Name;
 		public string ItemButtonId => _itemButton.Name;
 
-		public event Action<SubMenuType> OnSubMenu;
+		public event Action<string> OnSubMenu;
 		public event Action<IActionData> OnActionClick;
 
 		public List<IActionData> SubMenuButtons {get; private set;}
@@ -50,6 +51,22 @@ namespace SystemLamplighter.BattleMenu
 			GetNodes();
 			NodeChecking();
 			Subscribe();
+		}
+
+		public void BuildMenu(List<ISubMenuDefinition> _menus)
+		{
+			_attackButton.Name = _menus.First(m => m.Id == SubMenuType.ATTACK.ToString()).Id;
+			_attackButton.Text = _menus.First(m => m.Id == SubMenuType.ATTACK.ToString()).DisplayName;
+			
+			_magicButton.Name = _menus.First(m => m.Id == SubMenuType.MAGIC.ToString()).Id;
+			_magicButton.Text = _menus.First(m => m.Id == SubMenuType.MAGIC.ToString()).DisplayName;
+			
+			_guardButton.Name = _menus.First(m => m.Id == SubMenuType.DEFEND.ToString()).Id;
+			_guardButton.Text = _menus.First(m => m.Id == SubMenuType.DEFEND.ToString()).DisplayName;
+			
+			_itemButton.Name = _menus.First(m => m.Id == SubMenuType.ITEMS.ToString()).Id;
+			_itemButton.Text = _menus.First(m => m.Id == SubMenuType.ITEMS.ToString()).DisplayName;
+			
 		}
 
 		private void GetNodes()
@@ -91,6 +108,8 @@ namespace SystemLamplighter.BattleMenu
 
 			if (idButton == String.Empty)
 				return;
+
+
 
 			switch (idButton)
 			{

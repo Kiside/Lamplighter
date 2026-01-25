@@ -100,27 +100,35 @@ namespace Characters.Playable
 		// TODO: GLI EVENTI DEL BATTLE MENU ANCHE PROBABILMENTE NON DEVONO ESSRE QUI
 		// TODO: NODO COMBAT?
 		#region BATTLE MENU EVENTS
-		public void OpenBattleSubMenuHandler(SubMenuType subMenuType)
+		public void OpenBattleSubMenuHandler(ISubMenuDefinition subMenuType)
 		{
 			List <IActionData> subMenuIds = new List<IActionData>();
-			switch(subMenuType)
+			
+			if(subMenuType.IsImmediate)
 			{
-				case SubMenuType.ATTACK:
-					subMenuIds = GetAttacksId();
-				break;
-				case SubMenuType.MAGIC:
-					subMenuIds = GetMagicsId();
-				break;
-				case SubMenuType.ITEMS:
-					subMenuIds = GetItemsId();
-				break;
-				case SubMenuType.DEFEND:
-					CurrentAction = GetDefenseId().First();
-					this.PublishEvent<AtbCommandPhaseEndEvent>(new AtbCommandPhaseEndEvent(this));
-					return;
+				
 			}
+			
+			var action = subMenuType.BuildAction(this);
+			_battleMenuController.OpenSubMenu(subMenuType, action);
+			// switch(subMenuType)
+			// {
+			// 	case SubMenuType.ATTACK:
+			// 		subMenuIds = GetAttacksId();
+			// 	break;
+			// 	case SubMenuType.MAGIC:
+			// 		subMenuIds = GetMagicsId();
+			// 	break;
+			// 	case SubMenuType.ITEMS:
+			// 		subMenuIds = GetItemsId();
+			// 	break;
+			// 	case SubMenuType.DEFEND:
+			// 		CurrentAction = GetDefenseId().First();
+			// 		this.PublishEvent<AtbCommandPhaseEndEvent>(new AtbCommandPhaseEndEvent(this));
+			// 		return;
+			// }
 
-			_battleMenuController.OpenSubMenu(subMenuType, subMenuIds);
+			// _battleMenuController.OpenSubMenu(subMenuType, subMenuIds);
 		}
 
 		public void ActionChoosedHandler()
@@ -238,8 +246,7 @@ namespace Characters.Playable
 		{
 			Unsubscribe();
 			AtbProperties.Unsubscribe();
-			RemoveFromGroups();
-			
+						
 			base._ExitTree();
 		}
 	}
