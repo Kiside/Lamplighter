@@ -68,9 +68,9 @@ namespace Characters.Playable
 		}
 
 
-		private void TriggerOnOpenSubMenu(ISubMenuDefinition subMenuType)
+		private void TriggerOnOpenSubMenu(ISubMenuDefinition subMenu)
 		{
-			OnOpenBattleSubMenu?.Invoke(subMenuType);
+			OnOpenBattleSubMenu?.Invoke(subMenu);
 		}
 
 		private void TriggerOnActionClicked(IActionData actionData)

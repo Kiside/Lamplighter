@@ -17,42 +17,38 @@ namespace SystemLamplighter
 {
 	public class TurnBasedCombat : ITurnBasedCombat
 	{
-		public IActionData CurrentAction { get; set; }
-		public BattleMenuController _battleMenuController {get; set;}
-		public CombatLoadout CombatLoadout {get; set;}
-		public AtbCharacterProperties AtbProperties {get; set;}
+		public BattleMenuController _battleMenuController {get; private set;}
+		public ICombatActor Actor {get; private set;}
+		public CombatLoadout CombatLoadout {get; private set;}
+		public AtbCharacterProperties AtbProperties {get; private set;}
+		public IActionData CurrentAction { get; private set; }
+		
+		private IPublisher<AtbCommandPhaseEndEvent> _publishCommandPhaseEnd;
 
-		public void OpenBattleSubMenuHandler(int subMenuType)
+		public TurnBasedCombat(BattleMenuController battleMenuController, 
+		ICombatActor combatActor, 
+		CombatLoadout combatLoadout, 
+		AtbCharacterProperties atbProperties, 
+		IPublisher<AtbCommandPhaseEndEvent> publishCommandPhaseEnd)
 		{
-			List<IActionData> subMenuIds = new List<IActionData>();
-			SubMenuType type;
-            if (Enum.IsDefined(typeof(SubMenuType), subMenuType))
-            {
-                type = (SubMenuType)subMenuType;
+			_battleMenuController = battleMenuController;
+			Actor = combatActor;
+			CombatLoadout = combatLoadout;
+			AtbProperties = atbProperties;
+			_publishCommandPhaseEnd = publishCommandPhaseEnd;
+		}
 
-				switch (type)
-				{
-					case SubMenuType.ATTACK:
-						subMenuIds = GetAttacksId();
-					break;
-					case SubMenuType.MAGIC:
-						subMenuIds = GetMagicsId();
-					break;
-					case SubMenuType.ITEMS:
-						subMenuIds = GetItemsId();
-					break;
-					case SubMenuType.DEFEND:
-						CurrentAction = GetDefenseId().First();
-						//this.PublishEvent<AtbCommandPhaseEndEvent>(new AtbCommandPhaseEndEvent(this));
-						return;
-				}
-
-			 _battleMenuController.OpenSubMenu(type, subMenuIds);
-            }
-			else
+		public void OpenBattleSubMenuHandler(ISubMenuDefinition subMenuIds)
+		{
+			if(subMenuIds.IsImmediate)
 			{
-				Log.PrintError($"Value {subMenuType} has no enum defined in SubMenuType");
+				CurrentAction = subMenuIds.BuildAction(Actor).First();
+				_publishCommandPhaseEnd.Publish(new AtbCommandPhaseEndEvent(Actor));
+			 	return;
 			}
+			
+			var actions = subMenuIds.BuildAction(Actor);
+			_battleMenuController.OpenSubMenu(actions);
 			
 		}
 

@@ -40,17 +40,17 @@ namespace SystemLamplighter.BattleMenu
 
 		}
 
-		private void RequestOpenSubMenu(string subMenuType)
+		private void RequestOpenSubMenu(string subMenu)
 		{
 			DebugLamplighter.Assert(Menus != null, "There is no Menus");
 			DebugLamplighter.Assert(Menus.Count > 0, "There is no element in Menus");
 			
-			OnOpenSubMenu?.Invoke(Menus.First(m => m.Id == subMenuType));
+			OnOpenSubMenu?.Invoke(Menus.First(m => m.Id == subMenu));
 		}
 
-		public void OpenSubMenu(SubMenuType subMenuType, List<IActionData> subMenuButtonNames)
+		public void OpenSubMenu(IReadOnlyList<IActionData> subMenuButtonNames)
 		{
-			_view.OpenSubMenu(subMenuType, subMenuButtonNames);
+			_view.OpenSubMenu(subMenuButtonNames);
 		}
 
 		private void Action(IActionData actionData)

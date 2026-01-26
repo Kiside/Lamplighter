@@ -100,35 +100,17 @@ namespace Characters.Playable
 		// TODO: GLI EVENTI DEL BATTLE MENU ANCHE PROBABILMENTE NON DEVONO ESSRE QUI
 		// TODO: NODO COMBAT?
 		#region BATTLE MENU EVENTS
-		public void OpenBattleSubMenuHandler(ISubMenuDefinition subMenuType)
+		public void OpenBattleSubMenuHandler(ISubMenuDefinition subMenu)
 		{
-			List <IActionData> subMenuIds = new List<IActionData>();
-			
-			if(subMenuType.IsImmediate)
+			if(subMenu.IsImmediate)
 			{
-				
+				CurrentAction = subMenu.BuildAction(this).First();
+				this.PublishEvent<AtbCommandPhaseEndEvent>(new AtbCommandPhaseEndEvent(this));
+			 	return;
 			}
 			
-			var action = subMenuType.BuildAction(this);
-			_battleMenuController.OpenSubMenu(subMenuType, action);
-			// switch(subMenuType)
-			// {
-			// 	case SubMenuType.ATTACK:
-			// 		subMenuIds = GetAttacksId();
-			// 	break;
-			// 	case SubMenuType.MAGIC:
-			// 		subMenuIds = GetMagicsId();
-			// 	break;
-			// 	case SubMenuType.ITEMS:
-			// 		subMenuIds = GetItemsId();
-			// 	break;
-			// 	case SubMenuType.DEFEND:
-			// 		CurrentAction = GetDefenseId().First();
-			// 		this.PublishEvent<AtbCommandPhaseEndEvent>(new AtbCommandPhaseEndEvent(this));
-			// 		return;
-			// }
-
-			// _battleMenuController.OpenSubMenu(subMenuType, subMenuIds);
+			var actions = subMenu.BuildAction(this);
+			_battleMenuController.OpenSubMenu(actions);
 		}
 
 		public void ActionChoosedHandler()

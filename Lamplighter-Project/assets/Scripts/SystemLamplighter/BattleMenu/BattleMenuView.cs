@@ -109,32 +109,8 @@ namespace SystemLamplighter.BattleMenu
 			if (idButton == String.Empty)
 				return;
 
-
-
-			switch (idButton)
-			{
-				case var _ when idButton == AttackButtonId:
-					AttackHandle();
-					break;
-				case var _ when idButton == MagicButtonId:
-					MagicButtonHandle();
-					break;
-				case var _ when idButton == GuardButtonId:
-					GuardButtonHandle(idButton);
-					break;
-				case var _ when idButton == ItemButtonId:
-					ItemButtonHandle();
-					break;
-				default:
-					ActionButtonHandle(idButton);
-					break;
-			}
+			OnSubMenu?.Invoke(idButton);
 		}
-
-		private void AttackHandle() => OnSubMenu?.Invoke(SubMenuType.ATTACK);
-		private void MagicButtonHandle() => OnSubMenu?.Invoke(SubMenuType.MAGIC);
-		private void GuardButtonHandle(string idButton) => OnSubMenu?.Invoke(SubMenuType.DEFEND);
-		private void ItemButtonHandle() => OnSubMenu?.Invoke(SubMenuType.ITEMS);
 
 		
 		public void ActionButtonHandle(string id, IActionData actionD = null)
@@ -158,7 +134,7 @@ namespace SystemLamplighter.BattleMenu
 		/// </summary>
 		/// <param name="subMenuType"></param>
 		/// <param name="subMenuButtonsName"></param>
-		public void OpenSubMenu(SubMenuType subMenuType, List<IActionData> subMenuButtonsName)
+		public void OpenSubMenu(IReadOnlyList<IActionData> subMenuButtonsName)
 		{
 			ClearSubMenu();
 			if(SubMenuButtons.Count > 0)
