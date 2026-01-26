@@ -1,6 +1,8 @@
 using Godot;
 using System;
 using SystemLamplighter;
+using SystemLamplighter.Events;
+using SystemLamplighter.Extensions;
 
 namespace Characters.Playable
 {
@@ -12,7 +14,10 @@ namespace Characters.Playable
 		{
 			base.Init(controller);
 
-			_turnBasedCombat = new TurnBasedCombat();
+			_turnBasedCombat = new TurnBasedCombat(controller.BattleMenuController, 
+			controller.CombatActor,
+			this.GetPublisher<AtbCommandPhaseEndEvent>()
+			 );
 		}
 
 		public override void Combat()

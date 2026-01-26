@@ -12,29 +12,26 @@ using System.Linq;
 using Characters;
 using System;
 using SystemLamplighter.Debug;
+using System.Data;
 
 namespace SystemLamplighter
 {
 	public class TurnBasedCombat : ITurnBasedCombat
 	{
 		public BattleMenuController _battleMenuController {get; private set;}
-		public ICombatActor Actor {get; private set;}
-		public CombatLoadout CombatLoadout {get; private set;}
-		public AtbCharacterProperties AtbProperties {get; private set;}
-		public IActionData CurrentAction { get; private set; }
+		public ICombatActor Actor {get; set;}
+		public CombatLoadout CombatLoadout {get => Actor.CombatLoadout;}
+		public AtbCharacterProperties AtbProperties {get => Actor.AtbProperties;}
+		public IActionData CurrentAction { get => Actor.CurrentAction; set => Actor.CurrentAction = value;}
 		
 		private IPublisher<AtbCommandPhaseEndEvent> _publishCommandPhaseEnd;
 
 		public TurnBasedCombat(BattleMenuController battleMenuController, 
 		ICombatActor combatActor, 
-		CombatLoadout combatLoadout, 
-		AtbCharacterProperties atbProperties, 
 		IPublisher<AtbCommandPhaseEndEvent> publishCommandPhaseEnd)
 		{
 			_battleMenuController = battleMenuController;
 			Actor = combatActor;
-			CombatLoadout = combatLoadout;
-			AtbProperties = atbProperties;
 			_publishCommandPhaseEnd = publishCommandPhaseEnd;
 		}
 

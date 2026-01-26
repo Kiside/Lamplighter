@@ -1,3 +1,4 @@
+using Characters.Interfaces;
 using Godot;
 using System;
 using System.Collections.Generic;
@@ -32,12 +33,14 @@ namespace Characters.Playable
 
 		protected IActionData _currentAction;
 
+		protected ICombatActor _combatActor;
 		private bool _lockOn = false;
 		#endregion
 
 		#region PUBLIC PROPERTIES
 		public AbstractCombat<PlayableCharacterController> Combat { get => _combat; set => _combat = value; }
 		public AbstractMovement<PlayableCharacterController> Movement { get => _movement; set => _movement = value; }
+		public ICombatActor CombatActor => _combatActor;
 		public BattleMenuController BattleMenu {get => _battleMenu;}
 		public CombatLoadout CombatLoadout { get => _combatLoadout; set => _combatLoadout = value; }
 		public NodePath CombatLoadoutNode {get => _combatLoadoutNode;}
@@ -54,6 +57,8 @@ namespace Characters.Playable
 		{
 			NodeChecking();
 			SubscribeBattleMenu();
+
+			_combatActor = new CombatActor(_atbCharacterProperties, _combatLoadout);
 		}
 
 		private void SubscribeBattleMenu() 

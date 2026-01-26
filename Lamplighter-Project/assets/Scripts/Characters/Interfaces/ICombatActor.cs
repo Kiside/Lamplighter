@@ -5,10 +5,10 @@ namespace Characters.Interfaces
 {
     public interface ICombatActor
     {
-        AtbCharacterProperties AtbProperties { get; }
-        AtbCharacterStatus AtbStatus {get;}
-        CombatLoadout CombatLoadout { get; }
-        IActionData CurrentAction  {get; }
+        public AtbCharacterProperties AtbProperties { get; }
+        public AtbCharacterStatus AtbStatus {get;}
+        public CombatLoadout CombatLoadout { get; }
+        public IActionData CurrentAction  {get; set;}
         public AtbCharacterStatus UpdateAtbPosition(float value);
     }    
 }

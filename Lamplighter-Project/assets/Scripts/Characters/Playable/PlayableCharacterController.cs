@@ -22,6 +22,8 @@ namespace Characters.Playable
 		public AtbCharacterStatus AtbStatus => _model.AtbCharacterProperties.Status;
 		public CombatLoadout CombatLoadout { get => _model.CombatLoadout; set => _model.CombatLoadout = value; }
 		public IActionData CurrentAction {get => _model.CurrentAction; set => _model.CurrentAction = value; }
+		public ICombatActor CombatActor {get => _model.CombatActor;}
+		public BattleMenuController BattleMenuController => _battleMenuController; 
 		#endregion
 
 		#region PROTECTED/PRIVATE PROPERTIES 
