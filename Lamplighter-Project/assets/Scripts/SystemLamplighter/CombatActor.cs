@@ -16,8 +16,5 @@ public class CombatActor : ICombatActor
 		CombatLoadout = combatLoadout;
 	}
 
-	public AtbCharacterStatus UpdateAtbPosition(float value)
-	{
-		return AtbCharacterStatus.CHARGE;
-	}
+	public AtbCharacterStatus UpdateAtbPosition(float value) => AtbProperties.UpdatePosition(value);
 }

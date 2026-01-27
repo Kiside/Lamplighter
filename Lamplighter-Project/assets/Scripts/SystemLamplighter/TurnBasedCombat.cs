@@ -25,14 +25,21 @@ namespace SystemLamplighter
 		public IActionData CurrentAction { get => Actor.CurrentAction; set => Actor.CurrentAction = value;}
 		
 		private IPublisher<AtbCommandPhaseEndEvent> _publishCommandPhaseEnd;
+		private ISubscriber<AtbCommandPhaseStartedEvent> _subscriberCommandPhaseStarted;
+
+		private readonly DisposableBagBuilder _bag;
 
 		public TurnBasedCombat(BattleMenuController battleMenuController, 
 		ICombatActor combatActor, 
-		IPublisher<AtbCommandPhaseEndEvent> publishCommandPhaseEnd)
+		IPublisher<AtbCommandPhaseEndEvent> publishCommandPhaseEnd,
+		ISubscriber<AtbCommandPhaseStartedEvent> subscriberCommandPhaseStarted)
 		{
 			_battleMenuController = battleMenuController;
 			Actor = combatActor;
 			_publishCommandPhaseEnd = publishCommandPhaseEnd;
+			_subscriberCommandPhaseStarted = subscriberCommandPhaseStarted;
+
+			_subscriberCommandPhaseStarted.Subscribe(OnCommandPhaseStarted)
 		}
 
 		public void OpenBattleSubMenuHandler(ISubMenuDefinition subMenuIds)

@@ -15,13 +15,9 @@ using System.Linq;
 namespace Characters.Playable
 {
 	public partial class PlayableCharacterController : CharacterController<PlayableCharacterView,PlayableCharacterModel>, 
-	ICombatActor, ICombatCommandHandler ,ICombatActionExecutor
+	ICombatCommandHandler ,ICombatActionExecutor
 	{
 		#region PUBLIC
-		public AtbCharacterProperties AtbProperties => _model.AtbCharacterProperties;
-		public AtbCharacterStatus AtbStatus => _model.AtbCharacterProperties.Status;
-		public CombatLoadout CombatLoadout { get => _model.CombatLoadout; set => _model.CombatLoadout = value; }
-		public IActionData CurrentAction {get => _model.CurrentAction; set => _model.CurrentAction = value; }
 		public ICombatActor CombatActor {get => _model.CombatActor;}
 		public BattleMenuController BattleMenuController => _battleMenuController; 
 		#endregion
@@ -59,8 +55,8 @@ namespace Characters.Playable
 		protected override void Subscribe()
 		{
 			// QUESTI DUE METODI SONO IMPORTANTI PER I PLAYERS
-			_model.OnOpenBattleSubMenu += OpenBattleSubMenuHandler;
-			_model.OnActionClicked += ActionChoosedHandler;
+			// _model.OnOpenBattleSubMenu += OpenBattleSubMenuHandler;
+			// _model.OnActionClicked += ActionChoosedHandler;
 
 			// QUESTE DUE SOTTOSCRIZIONI POTREBBERO ESSERE IMPORTANTI PER I CHARACTERS CHE ENTRANO IN COMBATTIMENTO
 			this.SubscribeEvent<AtbExecuteActionEvent>(OnExecuteCombatAction).AddTo(_bag);
@@ -68,8 +64,8 @@ namespace Characters.Playable
 		}
 		protected override void Unsubscribe()
 		{
-			_model.OnOpenBattleSubMenu -= OpenBattleSubMenuHandler;
-			_model.OnActionClicked -= ActionChoosedHandler;
+			// _model.OnOpenBattleSubMenu -= OpenBattleSubMenuHandler;
+			// _model.OnActionClicked -= ActionChoosedHandler;
 
 			_bag.Build().Dispose();
 		}
@@ -102,97 +98,97 @@ namespace Characters.Playable
 		// TODO: GLI EVENTI DEL BATTLE MENU ANCHE PROBABILMENTE NON DEVONO ESSRE QUI
 		// TODO: NODO COMBAT?
 		#region BATTLE MENU EVENTS
-		public void OpenBattleSubMenuHandler(ISubMenuDefinition subMenu)
-		{
-			if(subMenu.IsImmediate)
-			{
-				CurrentAction = subMenu.BuildAction(this).First();
-				this.PublishEvent<AtbCommandPhaseEndEvent>(new AtbCommandPhaseEndEvent(this));
-			 	return;
-			}
+		// public void OpenBattleSubMenuHandler(ISubMenuDefinition subMenu)
+		// {
+		// 	if(subMenu.IsImmediate)
+		// 	{
+		// 		CurrentAction = subMenu.BuildAction(this).First();
+		// 		this.PublishEvent<AtbCommandPhaseEndEvent>(new AtbCommandPhaseEndEvent(this));
+		// 	 	return;
+		// 	}
 			
-			var actions = subMenu.BuildAction(this);
-			_battleMenuController.OpenSubMenu(actions);
-		}
+		// 	var actions = subMenu.BuildAction(this);
+		// 	_battleMenuController.OpenSubMenu(actions);
+		// }
 
-		public void ActionChoosedHandler()
-		{
-			// Che tipo di azione è? In base alla tipologia di azione ci saranno "cose da fare"
-			switch(CurrentAction.ActionType)
-			{
-				case ActionType.ATTACK:
-				HandleAttackAction();
-				break;
-				case ActionType.GUARD:
-				HandleGuardAction();
-				break;
-				case ActionType.MAGIC:
-				HandleMagicAction();
-				break;
-				case ActionType.ITEM:
-				HandleItemAction();
-				break;
-				case ActionType.ESCAPE:
-				HandleEscapeAction();
-				break;
-			}
+		// public void ActionChoosedHandler()
+		// {
+		// 	// Che tipo di azione è? In base alla tipologia di azione ci saranno "cose da fare"
+		// 	switch(CurrentAction.ActionType)
+		// 	{
+		// 		case ActionType.ATTACK:
+		// 		HandleAttackAction();
+		// 		break;
+		// 		case ActionType.GUARD:
+		// 		HandleGuardAction();
+		// 		break;
+		// 		case ActionType.MAGIC:
+		// 		HandleMagicAction();
+		// 		break;
+		// 		case ActionType.ITEM:
+		// 		HandleItemAction();
+		// 		break;
+		// 		case ActionType.ESCAPE:
+		// 		HandleEscapeAction();
+		// 		break;
+		// 	}
 			
-			AtbProperties.EndCommandStatus(CurrentAction.ActionSpeedMultiplier);
+		// 	AtbProperties.EndCommandStatus(CurrentAction.ActionSpeedMultiplier);
 
-			this.PublishEvent<AtbCommandPhaseEndEvent>(new AtbCommandPhaseEndEvent(this));
-		}
-		#endregion
+		// 	this.PublishEvent<AtbCommandPhaseEndEvent>(new AtbCommandPhaseEndEvent(this));
+		// }
+		// #endregion
 
-		private void HandleAttackAction()
-		{
-			if(CurrentAction is AttackAction action)
-			{
-				switch(action.AttackType)
-				{
-					case AttackType.AREA:
-					break;
-					case AttackType.PUSH:
-					break;
-					// Il caso di default è per tutte le tipologie di attacco che hanno come selezione un singolo target
-					default:
-					SingleTargetAttack();
-					break;
-				}
-			}
-		}
-		private void HandleGuardAction()
-		{}
-		private void HandleMagicAction()
-		{}
-		private void HandleItemAction()
-		{}
-		private void HandleEscapeAction()
-		{}
+		// private void HandleAttackAction()
+		// {
+		// 	if(CurrentAction is AttackAction action)
+		// 	{
+		// 		switch(action.AttackType)
+		// 		{
+		// 			case AttackType.AREA:
+		// 			break;
+		// 			case AttackType.PUSH:
+		// 			break;
+		// 			// Il caso di default è per tutte le tipologie di attacco che hanno come selezione un singolo target
+		// 			default:
+		// 			SingleTargetAttack();
+		// 			break;
+		// 		}
+		// 	}
+		// }
+		// private void HandleGuardAction()
+		// {}
+		// private void HandleMagicAction()
+		// {}
+		// private void HandleItemAction()
+		// {}
+		// private void HandleEscapeAction()
+		// {}
 
 		// TODO: QUESTO E MAGARI ALTRI METODI PER IL TARGETTING DEVONO ESSERE DEMANDATI
-		private void SingleTargetAttack()
-		{
-			var combatActorRegistry = GameBootstrap.Services.GetRequiredService<ICombatActorRegistry>();
-			var enemies = combatActorRegistry.GetActors(AtbCharacterType.ENEMY);
+		// private void SingleTargetAttack()
+		// {
+		// 	var combatActorRegistry = GameBootstrap.Services.GetRequiredService<ICombatActorRegistry>();
+		// 	var enemies = combatActorRegistry.GetActors(AtbCharacterType.ENEMY);
 
-			// if(enemies != null)
-			// {
-			// 	foreach(var e in enemies)
-			// 	{
-			// 		Log.PrintMessage($"enemy: {e.AtbProperties.Name}");
-			// 	}
-			// }
+		// 	// if(enemies != null)
+		// 	// {
+		// 	// 	foreach(var e in enemies)
+		// 	// 	{
+		// 	// 		Log.PrintMessage($"enemy: {e.AtbProperties.Name}");
+		// 	// 	}
+		// 	// }
 			
-		}
+		// }
 
 		// QUESTA REGION È IMPORTANTE PER I PLAYERS E FORSE ANCHE PER I CHARACTERS IN COMBATTIMENTO
 		// TODO: CONTROLLARE SE POSSONO ESSERE MESSI ALTROVE QUESTI METODI, SEMPRE CLASSE/INTERFACCE
-		#region COMBATLOADOUT METHODS
-		public override List<IActionData> GetAttacksId() => CombatLoadout.GetAttacksId();
-		public override List<IActionData> GetMagicsId() => CombatLoadout.GetMagicsId();
-		public override List<IActionData> GetItemsId() => CombatLoadout.GetItemsId();
-		public override List<IActionData> GetDefenseId() => CombatLoadout.GetDefenseId();
-		#endregion
+		// #region COMBATLOADOUT METHODS
+		// public override List<IActionData> GetAttacksId() => CombatLoadout.GetAttacksId();
+		// public override List<IActionData> GetMagicsId() => CombatLoadout.GetMagicsId();
+		// public override List<IActionData> GetItemsId() => CombatLoadout.GetItemsId();
+		// public override List<IActionData> GetDefenseId() => CombatLoadout.GetDefenseId();
+		// #endregion
 
 		// TODO: ANCHE QUESTI METODI POSSONO ESSERE DEMANDATI?
 		// QUESTA REGION È IMPORTANTE PER I PLAYERS
@@ -222,14 +218,14 @@ namespace Characters.Playable
 		}
 		#endregion
 
-		#region ICombatActor
-		public AtbCharacterStatus UpdateAtbPosition(float value) => AtbProperties.UpdatePosition(value);
-		#endregion
+		// #region ICombatActor
+		// // public AtbCharacterStatus UpdateAtbPosition(float value) => AtbProperties.UpdatePosition(value);
+		// #endregion
 
 		public override void _ExitTree()
 		{
 			Unsubscribe();
-			AtbProperties.Unsubscribe();
+			// AtbProperties.Unsubscribe();
 						
 			base._ExitTree();
 		}

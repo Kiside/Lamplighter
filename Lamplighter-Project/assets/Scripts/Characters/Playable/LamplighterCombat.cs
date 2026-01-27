@@ -16,7 +16,8 @@ namespace Characters.Playable
 
 			_turnBasedCombat = new TurnBasedCombat(controller.BattleMenuController, 
 			controller.CombatActor,
-			this.GetPublisher<AtbCommandPhaseEndEvent>()
+			this.GetPublisher<AtbCommandPhaseEndEvent>(),
+			this.GetSubscriber<AtbCommandPhaseStartedEvent>()
 			 );
 		}
 
