@@ -25,21 +25,46 @@ namespace SystemLamplighter
 		public IActionData CurrentAction { get => Actor.CurrentAction; set => Actor.CurrentAction = value;}
 		
 		private IPublisher<AtbCommandPhaseEndEvent> _publishCommandPhaseEnd;
+		private IPublisher<AtbEndExecuteActionEvent> _publishEndExecuteAction;
 		private ISubscriber<AtbCommandPhaseStartedEvent> _subscriberCommandPhaseStarted;
-
+		private ISubscriber<AtbExecuteActionEvent> _subscriberExecuteActionEvent;
 		private readonly DisposableBagBuilder _bag;
 
 		public TurnBasedCombat(BattleMenuController battleMenuController, 
 		ICombatActor combatActor, 
 		IPublisher<AtbCommandPhaseEndEvent> publishCommandPhaseEnd,
-		ISubscriber<AtbCommandPhaseStartedEvent> subscriberCommandPhaseStarted)
+		IPublisher<AtbEndExecuteActionEvent> publishEndExecuteAction,
+		ISubscriber<AtbCommandPhaseStartedEvent> subscriberCommandPhaseStarted,
+		ISubscriber<AtbExecuteActionEvent> subscriberExecuteAction)
 		{
 			_battleMenuController = battleMenuController;
 			Actor = combatActor;
 			_publishCommandPhaseEnd = publishCommandPhaseEnd;
+			_publishEndExecuteAction = publishEndExecuteAction;
 			_subscriberCommandPhaseStarted = subscriberCommandPhaseStarted;
+			_subscriberExecuteActionEvent = subscriberExecuteAction;
 
-			_subscriberCommandPhaseStarted.Subscribe(OnCommandPhaseStarted)
+			_subscriberCommandPhaseStarted.Subscribe(OnCommandPhaseStarted);
+			_subscriberExecuteActionEvent.Subscribe(OnExecuteCombatAction);
+		}
+
+		public void OnExecuteCombatAction(AtbExecuteActionEvent ev)
+		{
+			if(ev.Actor != null)
+				return;
+			
+			// Eseguo l'azione
+			// Ad azione eseguita resetto la posizione del personaggio sull'ATB
+			_publishEndExecuteAction.Publish(new AtbEndExecuteActionEvent(Actor));
+		}
+
+		public void OnCommandPhaseStarted(AtbCommandPhaseStartedEvent evt)
+		{
+			if(evt.Actor != this)
+				return;
+
+			// TODO: forse non deve essere qui che si gestisce tale evento
+			_battleMenuController.Show();
 		}
 
 		public void OpenBattleSubMenuHandler(ISubMenuDefinition subMenuIds)
