@@ -114,7 +114,7 @@ namespace SystemLamplighter
 
 			AtbProperties.EndCommandStatus(CurrentAction.ActionSpeedMultiplier);
 
-			//this.PublishEvent<AtbCommandPhaseEndEvent>(new AtbCommandPhaseEndEvent(this));
+			_publishCommandPhaseEnd.Publish(new AtbCommandPhaseEndEvent(Actor));
 		}
 
 		public void HandleAttackAction()
