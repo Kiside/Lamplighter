@@ -1,9 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://cbxtyv05qx4l7"]
+[gd_scene format=3 uid="uid://cbxtyv05qx4l7"]
 
 [ext_resource type="Theme" uid="uid://7my6irucoib0" path="res://assets/UI/Themes/font18px.tres" id="1_nx6hw"]
 [ext_resource type="Script" uid="uid://cf3gglm54ceea" path="res://assets/Scripts/SystemLamplighter/UI/ButtonUi.cs" id="2_gvai8"]
 
-[node name="BattleMenuUI" type="Control"]
+[node name="BattleMenuUI" type="Control" unique_id=1686315000]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -11,7 +11,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Container" type="HBoxContainer" parent="."]
+[node name="Container" type="HBoxContainer" parent="." unique_id=984894539]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -19,12 +19,12 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="MenuLeft" type="ColorRect" parent="Container"]
+[node name="MenuLeft" type="ColorRect" parent="Container" unique_id=1414785154]
 layout_mode = 2
 size_flags_horizontal = 3
 color = Color(0.13931969, 0.17963853, 0.23391119, 1)
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Container/MenuLeft"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Container/MenuLeft" unique_id=928238806]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -32,40 +32,40 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Attack" type="Button" parent="Container/MenuLeft/VBoxContainer"]
+[node name="Attack" type="Button" parent="Container/MenuLeft/VBoxContainer" unique_id=1122465573]
 layout_mode = 2
 size_flags_vertical = 3
 theme = ExtResource("1_nx6hw")
 text = "Attack"
 script = ExtResource("2_gvai8")
 
-[node name="Guard" type="Button" parent="Container/MenuLeft/VBoxContainer"]
+[node name="Guard" type="Button" parent="Container/MenuLeft/VBoxContainer" unique_id=888049577]
 layout_mode = 2
 size_flags_vertical = 3
 theme = ExtResource("1_nx6hw")
 text = "Guard"
 script = ExtResource("2_gvai8")
 
-[node name="Magic" type="Button" parent="Container/MenuLeft/VBoxContainer"]
+[node name="Magic" type="Button" parent="Container/MenuLeft/VBoxContainer" unique_id=1127710448]
 layout_mode = 2
 size_flags_vertical = 3
 theme = ExtResource("1_nx6hw")
 text = "Magic"
 script = ExtResource("2_gvai8")
 
-[node name="Items" type="Button" parent="Container/MenuLeft/VBoxContainer"]
+[node name="Items" type="Button" parent="Container/MenuLeft/VBoxContainer" unique_id=549149219]
 layout_mode = 2
 size_flags_vertical = 3
 theme = ExtResource("1_nx6hw")
 text = "Items"
 script = ExtResource("2_gvai8")
 
-[node name="MenuRight" type="ColorRect" parent="Container"]
+[node name="MenuRight" type="ColorRect" parent="Container" unique_id=1621419488]
 layout_mode = 2
 size_flags_horizontal = 3
 color = Color(0.14117648, 0.18039216, 0.23529412, 1)
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Container/MenuRight"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Container/MenuRight" unique_id=2044385137]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

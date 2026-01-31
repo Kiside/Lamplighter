@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="HealItemAction" load_steps=2 format=3 uid="uid://bjd0r2gvapdf"]
+[gd_resource type="Resource" script_class="HealItemAction" format=3 uid="uid://bjd0r2gvapdf"]
 
 [ext_resource type="Script" uid="uid://5a0tdn7lq42d" path="res://assets/Scripts/SystemLamplighter/DataStructure/HealItemAction.cs" id="1_ft723"]
 
@@ -8,5 +8,4 @@ _healAmount = 8.0
 _description = "cura"
 _actionType = 3
 _name = "heal item"
-_actionSpeed = 3.0
 metadata/_custom_type_script = "uid://5a0tdn7lq42d"

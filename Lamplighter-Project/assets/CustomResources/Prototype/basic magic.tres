@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="MagicAction" load_steps=2 format=3 uid="uid://cdqt0xaj3qxg8"]
+[gd_resource type="Resource" script_class="MagicAction" format=3 uid="uid://cdqt0xaj3qxg8"]
 
 [ext_resource type="Script" uid="uid://cwd6nmn8t150p" path="res://assets/Scripts/SystemLamplighter/DataStructure/MagicAction.cs" id="1_rplhs"]
 

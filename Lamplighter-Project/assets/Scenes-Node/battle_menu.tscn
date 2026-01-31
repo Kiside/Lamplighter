@@ -1,28 +1,15 @@
-[gd_scene load_steps=12 format=3 uid="uid://bgsjemevth5s"]
+[gd_scene format=3 uid="uid://bgsjemevth5s"]
 
 [ext_resource type="Script" uid="uid://nu5jt4rkw53g" path="res://assets/Scripts/SystemLamplighter/BattleMenu/BattleMenuController.cs" id="1_lw60u"]
 [ext_resource type="PackedScene" uid="uid://dqlc8qckuerp6" path="res://assets/UI/Scenes/BattleMenuView.tscn" id="2_ues3h"]
 [ext_resource type="Script" uid="uid://efakxwqf7t8l" path="res://assets/Scripts/SystemLamplighter/BattleMenu/BattleMenuModel.cs" id="3_8wnns"]
-[ext_resource type="Script" uid="uid://53pv7v0c5gad" path="res://assets/Scripts/SystemLamplighter/DataStructure/AttackAction.cs" id="4_ks2ia"]
-[ext_resource type="Resource" uid="uid://dlftjlcuk3pr4" path="res://assets/CustomResources/Prototype/attack.tres" id="5_64rrf"]
-[ext_resource type="Script" uid="uid://bnfdp5jkgnimd" path="res://assets/Scripts/SystemLamplighter/DataStructure/DefenseAction.cs" id="6_ues3h"]
-[ext_resource type="Resource" uid="uid://dcd5ackoimdk6" path="res://assets/CustomResources/Prototype/defense.tres" id="7_owqdi"]
-[ext_resource type="Script" uid="uid://cwd6nmn8t150p" path="res://assets/Scripts/SystemLamplighter/DataStructure/MagicAction.cs" id="8_fcl4w"]
-[ext_resource type="Resource" uid="uid://cdqt0xaj3qxg8" path="res://assets/CustomResources/Prototype/basic magic.tres" id="9_mwgcl"]
-[ext_resource type="Script" uid="uid://5a0tdn7lq42d" path="res://assets/Scripts/SystemLamplighter/DataStructure/HealItemAction.cs" id="10_541wf"]
-[ext_resource type="Resource" uid="uid://bjd0r2gvapdf" path="res://assets/CustomResources/Prototype/healthItem.tres" id="11_ej4na"]
 
-[node name="BattleMenuController" type="Node"]
+[node name="BattleMenuController" type="Node" unique_id=2104620685]
 script = ExtResource("1_lw60u")
 View = NodePath("BattleMenuView")
 Model = NodePath("BattleMenuModel")
 
-[node name="BattleMenuView" parent="." instance=ExtResource("2_ues3h")]
-visible = false
+[node name="BattleMenuView" parent="." unique_id=1440976243 instance=ExtResource("2_ues3h")]
 
-[node name="BattleMenuModel" type="Node" parent="."]
+[node name="BattleMenuModel" type="Node" parent="." unique_id=570291371]
 script = ExtResource("3_8wnns")
-_attack = Array[ExtResource("4_ks2ia")]([ExtResource("5_64rrf")])
-_defense = Array[ExtResource("6_ues3h")]([ExtResource("7_owqdi")])
-_magic = Array[ExtResource("8_fcl4w")]([ExtResource("9_mwgcl")])
-_items = Array[ExtResource("10_541wf")]([ExtResource("11_ej4na")])

@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://cfmoaycvrks0i"]
+[gd_scene format=3 uid="uid://cfmoaycvrks0i"]
 
 [ext_resource type="Script" uid="uid://bja0qd5k5kaa7" path="res://assets/Scripts/SystemLamplighter/GameBootstrap.cs" id="1_qcquh"]
 [ext_resource type="PackedScene" uid="uid://c5mvvlosts20h" path="res://assets/Characters/Playable/charlie.tscn" id="1_qfi3i"]
@@ -38,17 +38,17 @@ metadata/_custom_type_script = "uid://dpwp74optcgd5"
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_uvot1"]
 
-[node name="ProtoLevel" type="Node3D"]
+[node name="ProtoLevel" type="Node3D" unique_id=1351766654]
 
-[node name="GameBootstrap" type="Node" parent="."]
+[node name="GameBootstrap" type="Node" parent="." unique_id=1881634156]
 script = ExtResource("1_qcquh")
 
-[node name="CSGBox3D" type="CSGBox3D" parent="."]
+[node name="CSGBox3D" type="CSGBox3D" parent="." unique_id=819949778]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0358276, 0)
 material_override = SubResource("StandardMaterial3D_mw5we")
 size = Vector3(21.6799, 0.0296631, 20.2432)
 
-[node name="Enemy" type="CharacterBody3D" parent="."]
+[node name="Enemy" type="CharacterBody3D" parent="." unique_id=1970786060]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.564902, 0.5407543, 0.04921341)
 script = ExtResource("2_aw6lp")
 View = NodePath("NpView")
@@ -56,44 +56,44 @@ Model = NodePath("NpModel")
 MovementNode = NodePath("MovementNode")
 CombatNode = NodePath("CombatNode")
 
-[node name="CSGMesh3D" type="CSGMesh3D" parent="Enemy"]
+[node name="CSGMesh3D" type="CSGMesh3D" parent="Enemy" unique_id=529525893]
 material_override = SubResource("StandardMaterial3D_qcquh")
 mesh = SubResource("BoxMesh_ejd0h")
 
-[node name="NpModel" type="Node" parent="Enemy"]
+[node name="NpModel" type="Node" parent="Enemy" unique_id=1708917238]
 script = ExtResource("3_8uc3x")
 _combatLoadoutNode = NodePath("../CombatLoadout")
 _atbCharacterProperties = SubResource("Resource_80fhm")
 _groups = Array[int]([1])
 
-[node name="NpView" type="Node" parent="Enemy"]
+[node name="NpView" type="Node" parent="Enemy" unique_id=1403210870]
 script = ExtResource("4_66ris")
 
-[node name="CombatNode" type="Node" parent="Enemy"]
+[node name="CombatNode" type="Node" parent="Enemy" unique_id=287794978]
 script = ExtResource("7_uvot1")
 
-[node name="MovementNode" type="Node" parent="Enemy"]
+[node name="MovementNode" type="Node" parent="Enemy" unique_id=238625101]
 script = ExtResource("8_7o5g0")
 
-[node name="CombatLoadout" type="Node" parent="Enemy"]
+[node name="CombatLoadout" type="Node" parent="Enemy" unique_id=1511632761]
 script = ExtResource("9_uvot1")
 _attack = Array[ExtResource("10_7o5g0")]([ExtResource("11_hp1yv")])
 _defense = Array[ExtResource("12_h0r1b")]([ExtResource("13_x5dwk")])
 _magic = Array[ExtResource("14_chj2u")]([ExtResource("15_23igw")])
 _items = Array[ExtResource("16_mkya5")]([ExtResource("17_gor4l")])
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Enemy"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Enemy" unique_id=1275443056]
 shape = SubResource("BoxShape3D_uvot1")
 
-[node name="Charlie" parent="." instance=ExtResource("1_qfi3i")]
+[node name="Charlie" parent="." unique_id=1180252911 instance=ExtResource("1_qfi3i")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.010365605, 0)
 
-[node name="ProtoCombat" parent="." instance=ExtResource("2_mw5we")]
+[node name="ProtoCombat" parent="." unique_id=156637578 instance=ExtResource("2_mw5we")]
 
-[node name="DebugATB" parent="ProtoCombat" index="2" node_paths=PackedStringArray("_allies")]
+[node name="DebugATB" parent="ProtoCombat" index="2" unique_id=1392805927 node_paths=PackedStringArray("_allies")]
 _allies = [NodePath("../../Charlie")]
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=2112330929]
 transform = Transform3D(1, 0, 0, 0, 0.56336695, 0.82620686, 0, -0.82620686, 0.56336695, 0, 0.010365605, 0)
 
 [editable path="ProtoCombat"]

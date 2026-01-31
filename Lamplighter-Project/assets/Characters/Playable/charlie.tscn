@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://c5mvvlosts20h"]
+[gd_scene format=3 uid="uid://c5mvvlosts20h"]
 
 [ext_resource type="Script" uid="uid://0rkd4hh7dr53" path="res://assets/Scripts/Characters/Playable/PlayableCharacterController.cs" id="1_0iqh4"]
 [ext_resource type="Material" uid="uid://br8jrg5r6syxj" path="res://assets/Materials/Characters/proto_Charlie.tres" id="1_qebit"]
@@ -21,52 +21,52 @@
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_0bkd4"]
 
-[node name="Charlie" type="CharacterBody3D"]
+[node name="Charlie" type="CharacterBody3D" unique_id=1785233195]
 script = ExtResource("1_0iqh4")
 View = NodePath("CharlieView")
 Model = NodePath("CharlieModel")
 MovementNode = NodePath("Movement")
 CombatNode = NodePath("Combat")
 
-[node name="CharlieModel" type="Node" parent="."]
+[node name="CharlieModel" type="Node" parent="." unique_id=18616143]
 script = ExtResource("2_l8s2m")
 _combatLoadoutNode = NodePath("../CombatLoadout")
 _atbCharacterProperties = ExtResource("3_xa4mk")
 _battleMenuNode = NodePath("../BattleMenuController")
 _groups = Array[int]([0])
 
-[node name="CharlieView" type="Node" parent="."]
+[node name="CharlieView" type="Node" parent="." unique_id=774414345]
 script = ExtResource("4_wjmeh")
 
-[node name="Pivot" type="Node3D" parent="."]
+[node name="Pivot" type="Node3D" parent="." unique_id=1831366952]
 
-[node name="CSGBox3D" type="CSGBox3D" parent="Pivot"]
+[node name="CSGBox3D" type="CSGBox3D" parent="Pivot" unique_id=1606703412]
 visible = false
 material_override = ExtResource("1_qebit")
 
-[node name="Camera3D" type="Camera3D" parent="Pivot"]
+[node name="Camera3D" type="Camera3D" parent="Pivot" unique_id=1964138431]
 transform = Transform3D(-3.2543e-08, 0.66762483, -0.74449784, 2.91828e-08, 0.74449784, 0.66762483, 1, -1.5987208e-14, -4.3711356e-08, -2.1404297, 2.184058, 0.034)
 
-[node name="Main" parent="Pivot" instance=ExtResource("6_voq6j")]
+[node name="Main" parent="Pivot" unique_id=2139702938 instance=ExtResource("6_voq6j")]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1326448688]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 shape = SubResource("BoxShape3D_0bkd4")
 
-[node name="Movement" type="Node" parent="."]
+[node name="Movement" type="Node" parent="." unique_id=2083169796]
 script = ExtResource("2_momr7")
 
-[node name="Combat" type="Node" parent="."]
+[node name="Combat" type="Node" parent="." unique_id=73162908]
 script = ExtResource("4_cx7ps")
 
-[node name="CombatLoadout" type="Node" parent="."]
+[node name="CombatLoadout" type="Node" parent="." unique_id=506505467]
 script = ExtResource("5_xa4mk")
 _attack = Array[ExtResource("9_voq6j")]([ExtResource("7_uuub8")])
 _defense = Array[ExtResource("11_lox3l")]([ExtResource("9_vju8h")])
 _magic = Array[ExtResource("13_javlh")]([ExtResource("11_x47ln")])
 _items = Array[ExtResource("15_ugvtw")]([ExtResource("13_1psa7")])
 
-[node name="BattleMenuController" parent="." instance=ExtResource("17_rd6aq")]
+[node name="BattleMenuController" parent="." unique_id=387986966 instance=ExtResource("17_rd6aq")]
 
 [editable path="Pivot/Main"]

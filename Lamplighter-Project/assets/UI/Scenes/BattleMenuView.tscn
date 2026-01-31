@@ -1,9 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://dqlc8qckuerp6"]
+[gd_scene format=3 uid="uid://dqlc8qckuerp6"]
 
 [ext_resource type="Script" uid="uid://dqy6v5c1tis0j" path="res://assets/Scripts/SystemLamplighter/BattleMenu/BattleMenuView.cs" id="1_xpko1"]
 [ext_resource type="PackedScene" uid="uid://cbxtyv05qx4l7" path="res://assets/UI/Scenes/BattleMenuUI.tscn" id="2_owam7"]
 
-[node name="BattleMenuView" type="Node" node_paths=PackedStringArray("_control")]
+[node name="BattleMenuView" type="Node" unique_id=576300489 node_paths=PackedStringArray("_control")]
 script = ExtResource("1_xpko1")
 _attackButtonPath = NodePath("RootUI/BattleMenuUI/Container/MenuLeft/VBoxContainer/Attack")
 _magicButtonPath = NodePath("RootUI/BattleMenuUI/Container/MenuLeft/VBoxContainer/Magic")
@@ -12,7 +12,7 @@ _itemButtonPath = NodePath("RootUI/BattleMenuUI/Container/MenuLeft/VBoxContainer
 _subMenuContainerPath = NodePath("RootUI/BattleMenuUI/Container/MenuRight/VBoxContainer")
 _control = NodePath("RootUI")
 
-[node name="RootUI" type="Control" parent="."]
+[node name="RootUI" type="Control" parent="." unique_id=1509879754]
 layout_mode = 3
 anchors_preset = 2
 anchor_top = 1.0
@@ -22,7 +22,7 @@ offset_right = 507.0
 offset_bottom = 395.0
 grow_vertical = 0
 
-[node name="BattleMenuUI" parent="RootUI" instance=ExtResource("2_owam7")]
+[node name="BattleMenuUI" parent="RootUI" unique_id=1296967825 instance=ExtResource("2_owam7")]
 layout_mode = 1
 offset_top = -395.0
 offset_bottom = -395.0

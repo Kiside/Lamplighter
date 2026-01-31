@@ -1,8 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://bsregimn7ywha"]
+[gd_scene format=3 uid="uid://bsregimn7ywha"]
 
 [ext_resource type="Script" uid="uid://nemmvqj4xx84" path="res://assets/Scripts/SystemLamplighter/ATB/ActionTimeBattleView.cs" id="1_4n07o"]
 
-[node name="ActiveTimeBattleView" type="Node" node_paths=PackedStringArray("_playerContainer", "_enemyContainer", "_control")]
+[node name="ActiveTimeBattleView" type="Node" unique_id=433221157 node_paths=PackedStringArray("_playerContainer", "_enemyContainer", "_control")]
 script = ExtResource("1_4n07o")
 _playerContainer = NodePath("RootUI/ActiveTimeBattleBar/PlayerContainer")
 _enemyContainer = NodePath("RootUI/ActiveTimeBattleBar/EnemyContainer")
@@ -10,14 +10,14 @@ avatarSize = Vector2(15, 15)
 avatarMinimumSize = Vector2(15, 15)
 _control = NodePath("RootUI")
 
-[node name="RootUI" type="Control" parent="."]
+[node name="RootUI" type="Control" parent="." unique_id=1031020616]
 custom_minimum_size = Vector2(300, 42.25)
 layout_mode = 3
 anchors_preset = 0
 offset_right = 300.0
 offset_bottom = 42.25
 
-[node name="ActiveTimeBattleBar" type="VBoxContainer" parent="RootUI"]
+[node name="ActiveTimeBattleBar" type="VBoxContainer" parent="RootUI" unique_id=854360975]
 custom_minimum_size = Vector2(300, 42.25)
 layout_mode = 1
 anchors_preset = 15
@@ -27,20 +27,20 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 0
 
-[node name="PlayerContainer" type="Control" parent="RootUI/ActiveTimeBattleBar"]
+[node name="PlayerContainer" type="Control" parent="RootUI/ActiveTimeBattleBar" unique_id=358821825]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="TextureRect" type="TextureRect" parent="RootUI/ActiveTimeBattleBar/PlayerContainer"]
+[node name="TextureRect" type="TextureRect" parent="RootUI/ActiveTimeBattleBar/PlayerContainer" unique_id=728181725]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="BarContainer" type="Control" parent="RootUI/ActiveTimeBattleBar"]
+[node name="BarContainer" type="Control" parent="RootUI/ActiveTimeBattleBar" unique_id=609957231]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="ColorRect" type="ColorRect" parent="RootUI/ActiveTimeBattleBar/BarContainer"]
+[node name="ColorRect" type="ColorRect" parent="RootUI/ActiveTimeBattleBar/BarContainer" unique_id=459552725]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -49,6 +49,6 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.20881093, 0.420686, 0.80299157, 1)
 
-[node name="EnemyContainer" type="Control" parent="RootUI/ActiveTimeBattleBar"]
+[node name="EnemyContainer" type="Control" parent="RootUI/ActiveTimeBattleBar" unique_id=53782062]
 layout_mode = 2
 size_flags_vertical = 3

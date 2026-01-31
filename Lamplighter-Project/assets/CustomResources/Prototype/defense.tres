@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="DefenseAction" load_steps=2 format=3 uid="uid://dcd5ackoimdk6"]
+[gd_resource type="Resource" script_class="DefenseAction" format=3 uid="uid://dcd5ackoimdk6"]
 
 [ext_resource type="Script" uid="uid://bnfdp5jkgnimd" path="res://assets/Scripts/SystemLamplighter/DataStructure/DefenseAction.cs" id="1_36ri4"]
 
@@ -7,5 +7,4 @@ script = ExtResource("1_36ri4")
 _defensiveAmount = 1.0
 _actionType = 1
 _name = "Guard"
-_actionSpeed = 10.0
 metadata/_custom_type_script = "uid://bnfdp5jkgnimd"

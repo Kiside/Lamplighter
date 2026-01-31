@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="AtbCharacterProperties" load_steps=3 format=3 uid="uid://di5386yh3jgk7"]
+[gd_resource type="Resource" script_class="AtbCharacterProperties" format=3 uid="uid://di5386yh3jgk7"]
 
 [ext_resource type="Image" uid="uid://cqtat6q64v7p0" path="res://assets/Resources/Avatars/allies.png" id="1_rwar7"]
 [ext_resource type="Script" uid="uid://dpwp74optcgd5" path="res://assets/Scripts/SystemLamplighter/AtbCharacterProperties.cs" id="1_ui2r5"]
