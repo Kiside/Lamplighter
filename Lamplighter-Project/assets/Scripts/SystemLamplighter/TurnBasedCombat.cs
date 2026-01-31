@@ -16,7 +16,7 @@ using System.Data;
 
 namespace SystemLamplighter
 {
-	public class TurnBasedCombat : ITurnBasedCombat
+	public class TurnBasedCombat : ITurnBasedCombat, ICombatCommandHandler, ICombatActionExecutor
 	{
 		public BattleMenuController _battleMenuController {get; private set;}
 		public ICombatActor Actor {get; set;}
@@ -44,8 +44,8 @@ namespace SystemLamplighter
 			_subscriberCommandPhaseStarted = subscriberCommandPhaseStarted;
 			_subscriberExecuteActionEvent = subscriberExecuteAction;
 
-			_subscriberCommandPhaseStarted.Subscribe(OnCommandPhaseStarted);
-			_subscriberExecuteActionEvent.Subscribe(OnExecuteCombatAction);
+			_subscriberCommandPhaseStarted.Subscribe(OnCommandPhaseStarted).AddTo(_bag);
+			_subscriberExecuteActionEvent.Subscribe(OnExecuteCombatAction).AddTo(_bag);
 		}
 
 		public void OnExecuteCombatAction(AtbExecuteActionEvent ev)
@@ -142,5 +142,10 @@ namespace SystemLamplighter
 		{ }
 		public void HandleEscapeAction()
 		{ }
+
+		public void Dispose()
+		{
+			_bag.Build().Dispose();
+		}
 	}
 }

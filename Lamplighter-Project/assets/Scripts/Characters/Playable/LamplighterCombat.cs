@@ -37,5 +37,11 @@ namespace Characters.Playable
 		{
 
 		}
+
+		public override void _ExitTree()
+		{
+			_turnBasedCombat.Dispose();
+			base._ExitTree();
+		}
 	}
 }
