@@ -82,9 +82,9 @@ namespace SystemLamplighter
 			foreach(var a in array)
 				{
 					Log.PrintMessage($"- {a.Name}");
-					if(a is ICombatActor combatActor)
+					if(a is IHasCombatInterface<ICombatActor> combat)
 					{
-						actors.Add(combatActor);
+						actors.Add(combat.GetCombatInterface());
 					}
 				}
 			

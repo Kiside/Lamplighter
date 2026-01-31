@@ -44,13 +44,15 @@ namespace SystemLamplighter
 			_subscriberCommandPhaseStarted = subscriberCommandPhaseStarted;
 			_subscriberExecuteActionEvent = subscriberExecuteAction;
 
+			_bag = DisposableBag.CreateBuilder();
+
 			_subscriberCommandPhaseStarted.Subscribe(OnCommandPhaseStarted).AddTo(_bag);
 			_subscriberExecuteActionEvent.Subscribe(OnExecuteCombatAction).AddTo(_bag);
 		}
 
 		public void OnExecuteCombatAction(AtbExecuteActionEvent ev)
 		{
-			if(ev.Actor != null)
+			if(ev.Actor != Actor)
 				return;
 			
 			// Eseguo l'azione
@@ -60,7 +62,7 @@ namespace SystemLamplighter
 
 		public void OnCommandPhaseStarted(AtbCommandPhaseStartedEvent evt)
 		{
-			if(evt.Actor != this)
+			if(evt.Actor != Actor)
 				return;
 
 			// TODO: forse non deve essere qui che si gestisce tale evento

@@ -12,7 +12,7 @@ using SystemLamplighter.Extensions;
 namespace Characters.NPC
 {
 	public partial class NpCharacterController : CharacterController<NpCharacterView, NpCharacterModel>,
-	ICombatActor, ICombatCommandHandler, ICombatActionExecutor
+	ICombatActor, ICombatCommandHandler, ICombatActionExecutor,IHasCombatInterface<ICombatActor>
 	{
 		#region PUBLIC
 		public AtbCharacterProperties AtbProperties => _model.AtbCharacterProperties;
@@ -32,6 +32,8 @@ namespace Characters.NPC
 		{
 			base._Ready();
 		}
+
+		public ICombatActor GetCombatInterface() => this;
 
 		protected override void OnInit()
 		{

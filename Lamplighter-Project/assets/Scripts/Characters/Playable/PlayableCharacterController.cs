@@ -14,7 +14,8 @@ using System.Linq;
 
 namespace Characters.Playable
 {
-	public partial class PlayableCharacterController : CharacterController<PlayableCharacterView,PlayableCharacterModel>
+	public partial class PlayableCharacterController : CharacterController<PlayableCharacterView,PlayableCharacterModel>, 
+	IHasCombatInterface<ICombatActor>
 	{
 		#region PUBLIC
 		public ICombatActor CombatActor {get => _model.CombatActor;}
@@ -49,6 +50,8 @@ namespace Characters.Playable
 
 			Subscribe();
 		}
+
+		public ICombatActor GetCombatInterface() => CombatActor;
 
 		#region Subscribe/Unsubscribe
 		protected override void Subscribe()
