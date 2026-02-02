@@ -6,9 +6,9 @@ using MessagePipe;
 using System.Diagnostics;
 
 
-public partial class ButtonUi : Button, IButtonUi
+public partial class ButtonUi : Button, IButtonUi<ButtonUi>
 {
-	public event Action<string> OnClick;
+	public event Action<ButtonUi> OnClick;
 
 
 	public override void _Ready()
@@ -34,7 +34,7 @@ public partial class ButtonUi : Button, IButtonUi
 
 	public void Click()
 	{
-		OnClick?.Invoke(this.Name);
+		OnClick?.Invoke(this);
 	}
 
 	public override void _ExitTree()

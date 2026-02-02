@@ -39,14 +39,14 @@ namespace SystemLamplighter.BattleMenu
 		public event Action<string> OnSubMenu;
 		public event Action<IActionData> OnActionClick;
 
-		public List<IActionData> SubMenuButtons {get; private set;}
+		private Dictionary<ButtonUi, IActionData> _subMenuButtonsDictionary;
 
 		public override void Init()
 		{
 			NodeCheckingPath();
 
-			if(SubMenuButtons == null)
-				SubMenuButtons = new List<IActionData>();
+			if(_subMenuButtonsDictionary == null)
+				_subMenuButtonsDictionary = new Dictionary<ButtonUi, IActionData>();
 
 			GetNodes();
 			NodeChecking();
@@ -102,27 +102,22 @@ namespace SystemLamplighter.BattleMenu
 			_itemButton.OnClick -= HandleClick;
 		}
 
-		private void HandleClick(string idButton)
+		private void HandleClick(ButtonUi idButton)
 		{
-			DebugLamplighter.Assert(idButton != null || idButton == String.Empty, "idButton is null or empty!");
+			DebugLamplighter.Assert(idButton != null || idButton.Name == String.Empty, "idButton is null or empty!");
 
-			if (idButton == String.Empty)
+			if (idButton.Name == String.Empty)
 				return;
 
-			OnSubMenu?.Invoke(idButton);
+			OnSubMenu?.Invoke(idButton.Name);
 		}
 
 		
-		public void ActionButtonHandle(string id, IActionData actionD = null)
+		public void ActionButtonHandle(ButtonUi button)
 		{
-			DebugLamplighter.Assert(SubMenuButtons != null, "SubMenuButtons is null");
-			DebugLamplighter.Assert(id != string.Empty, "id string is empty");
+			DebugLamplighter.Assert(button != null && button.Name != string.Empty, "id string is empty or null");
 
-			IActionData actionData;
-			if(actionD == null)
-				actionData = SubMenuButtons.Find(s => s.Name == id);
-			else
-				actionData = actionD;
+			_subMenuButtonsDictionary.TryGetValue(button, out IActionData actionData);
 
 			DebugLamplighter.Assert(actionData != null, "actionData is null, no action finded");
 			
@@ -137,21 +132,21 @@ namespace SystemLamplighter.BattleMenu
 		public void OpenSubMenu(IReadOnlyList<IActionData> subMenuButtonsName)
 		{
 			ClearSubMenu();
-			if(SubMenuButtons.Count > 0)
-				SubMenuButtons.Clear();
 
-			DebugLamplighter.Assert(SubMenuButtons != null, "SubMeneuButtons is null");
+			DebugLamplighter.Assert(_subMenuButtonsDictionary != null, "SubMeneuButtons is null");
 			DebugLamplighter.Assert(subMenuButtonsName != null, "subMenuButtonsName is null");
 			DebugLamplighter.Assert(subMenuButtonsName.Count > 0, "subMenuButtonsName has 0 elements");
 
-			foreach (var button in subMenuButtonsName)
+			foreach (var actionButton in subMenuButtonsName)
 			{
-				SubMenuButtons.Add(button);
 				ButtonUi buttonToAdd = new ButtonUi();
-				buttonToAdd.Init(button.Name);
+				buttonToAdd.Init(actionButton.Name);
 				buttonToAdd.SetMinimumSize(new Vector2(251, 60));
 				_subMenuContainer.AddChild(buttonToAdd);
-				buttonToAdd.OnClick += HandleClick;
+				if(_subMenuButtonsDictionary.TryAdd(buttonToAdd, actionButton))
+					buttonToAdd.OnClick += ActionButtonHandle;
+				else
+					Log.PrintError($"Cant' add {actionButton.Name} to _subMenuButtonsDictionary");
 			}
 		}
 
@@ -164,6 +159,8 @@ namespace SystemLamplighter.BattleMenu
 
 			foreach (var child in _subMenuContainer.GetChildren())
 				_subMenuContainer.RemoveChild(child);
+
+			_subMenuButtonsDictionary.Clear();
 		}
 
 		private void NodeCheckingPath()
@@ -184,11 +181,26 @@ namespace SystemLamplighter.BattleMenu
 
 		public override void _ExitTree()
 		{
+			_subMenuButtonsDictionary.Clear();
+
 			Unsubscribe();
-			UnsubscrieSubMenu();
+
+			UnsubscrieMenu();
+			UnsubscribeSubMenu();
 		}
 
-		private void UnsubscrieSubMenu()
+		private void UnsubscribeSubMenu()
+		{
+			if(_subMenuButtonsDictionary == null || _subMenuButtonsDictionary.Count <= 0)
+				return;
+
+			foreach(var subMenuButton in _subMenuButtonsDictionary.Keys)
+			{
+				subMenuButton.OnClick -= ActionButtonHandle;
+			}
+		}
+
+		private void UnsubscrieMenu()
 		{
 			DebugLamplighter.Assert(_subMenuContainer != null, "There is no _subMenuContainer");
 

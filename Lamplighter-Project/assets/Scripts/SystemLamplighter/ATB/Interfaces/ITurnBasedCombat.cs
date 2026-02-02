@@ -2,7 +2,7 @@ using System;
 
 public interface ITurnBasedCombat : IDisposable
 {
-	public void ActionChoosedHandler();
+	public void ActionChoosedHandler(IActionData actionData);
 	public void OpenBattleSubMenuHandler(ISubMenuDefinition subMenuIds);
 	public void HandleAttackAction();
 	public void HandleGuardAction();

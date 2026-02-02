@@ -1,8 +1,10 @@
 
+using System;
+
 namespace SystemLamplighter.Interfaces
 {
-	public interface IButtonUi
+	public interface IButtonUi<T>
 	{
-		//public event Action<string> OnClick;
+		public event Action<T> OnClick;
 	}
 }

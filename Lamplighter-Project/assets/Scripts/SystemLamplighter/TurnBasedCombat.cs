@@ -48,6 +48,9 @@ namespace SystemLamplighter
 
 			_subscriberCommandPhaseStarted.Subscribe(OnCommandPhaseStarted).AddTo(_bag);
 			_subscriberExecuteActionEvent.Subscribe(OnExecuteCombatAction).AddTo(_bag);
+
+			_battleMenuController.OnActionClick += ActionChoosedHandler;
+			_battleMenuController.OnOpenSubMenu += OpenBattleSubMenuHandler;
 		}
 
 		public void OnExecuteCombatAction(AtbExecuteActionEvent ev)
@@ -83,17 +86,10 @@ namespace SystemLamplighter
 			
 		}
 
-		// QUESTA REGION È IMPORTANTE PER I PLAYERS E FORSE ANCHE PER I CHARACTERS IN COMBATTIMENTO
-		// TODO: CONTROLLARE SE POSSONO ESSERE MESSI ALTROVE QUESTI METODI, SEMPRE CLASSE/INTERFACCE
-		#region COMBATLOADOUT METHODS
-		public List<IActionData> GetAttacksId() => CombatLoadout.GetAttacksId();
-		public List<IActionData> GetMagicsId() => CombatLoadout.GetMagicsId();
-		public List<IActionData> GetItemsId() => CombatLoadout.GetItemsId();
-		public List<IActionData> GetDefenseId() => CombatLoadout.GetDefenseId();
-		#endregion
-
-		public void ActionChoosedHandler()
+		public void ActionChoosedHandler(IActionData action)
 		{
+			CurrentAction = action;
+
 			// Che tipo di azione è? In base alla tipologia di azione ci saranno "cose da fare"
 			switch (CurrentAction.ActionType)
 			{
@@ -131,6 +127,7 @@ namespace SystemLamplighter
 						break;
 					// Il caso di default è per tutte le tipologie di attacco che hanno come selezione un singolo target
 					default:
+						Log.PrintMessage("HANDLE ATTACK ACTION");
 						//SingleTargetAttack();
 						break;
 				}
@@ -148,6 +145,9 @@ namespace SystemLamplighter
 		public void Dispose()
 		{
 			_bag.Build().Dispose();
+
+			_battleMenuController.OnActionClick -= ActionChoosedHandler;
+			_battleMenuController.OnOpenSubMenu -= OpenBattleSubMenuHandler;
 		}
 	}
 }
