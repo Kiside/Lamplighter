@@ -55,6 +55,15 @@ namespace SystemLamplighter
 		ACTION
 	}
 
+	public enum TargetType
+	{
+		SINGLE,
+		CIRCLE,
+		LINE,
+		CONE,
+		GROUP
+	}
+
 	public enum ActionType
 	{
 		ATTACK,
