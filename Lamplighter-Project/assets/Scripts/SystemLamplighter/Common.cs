@@ -57,6 +57,7 @@ namespace SystemLamplighter
 
 	public enum TargetType
 	{
+		SELF,
 		SINGLE,
 		CIRCLE,
 		LINE,

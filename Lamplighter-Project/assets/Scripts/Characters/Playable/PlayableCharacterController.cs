@@ -11,6 +11,7 @@ using MessagePipe;
 using SystemLamplighter.Events;
 using SystemLamplighter.Extensions;
 using System.Linq;
+using SystemLamplighter.DataStructure;
 
 namespace Characters.Playable
 {

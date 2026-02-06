@@ -1,14 +1,28 @@
 [gd_resource type="Resource" script_class="AttackAction" format=3 uid="uid://dlftjlcuk3pr4"]
 
 [ext_resource type="Animation" uid="uid://qmk2rfydunp3" path="res://assets/Resources/Animations/Characters/Proto/Main_Attack01.res" id="1_dnjco"]
+[ext_resource type="Script" uid="uid://dj745p5lpoygr" path="res://assets/Scripts/SystemLamplighter/DataStructure/DamageData.cs" id="1_iyfde"]
 [ext_resource type="Script" uid="uid://53pv7v0c5gad" path="res://assets/Scripts/SystemLamplighter/DataStructure/AttackAction.cs" id="1_snht1"]
+[ext_resource type="Script" uid="uid://b0bguw84ovcwk" path="res://assets/Scripts/SystemLamplighter/DataStructure/TargetData.cs" id="3_bwj14"]
+
+[sub_resource type="Resource" id="Resource_bwj14"]
+script = ExtResource("1_iyfde")
+Damage = 5.0
+PushbackForce = 1.5
+AtbPositionDamage = 1.5
+metadata/_custom_type_script = "uid://dj745p5lpoygr"
+
+[sub_resource type="Resource" id="Resource_asu6r"]
+script = ExtResource("3_bwj14")
+_targeType = 1
+_numberOfTargets = 1
+metadata/_custom_type_script = "uid://b0bguw84ovcwk"
 
 [resource]
 script = ExtResource("1_snht1")
-_damage = 1.2
-_pushbackForce = 0.2
-_atbPositionDamage = 0.1
 _name = "attack"
 _actionSpeedMultiplier = 2.0
+_targetData = SubResource("Resource_asu6r")
 _animation = ExtResource("1_dnjco")
+EffectDatas = Array[Object]([SubResource("Resource_bwj14")])
 metadata/_custom_type_script = "uid://53pv7v0c5gad"
