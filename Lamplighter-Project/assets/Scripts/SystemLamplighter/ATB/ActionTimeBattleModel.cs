@@ -4,9 +4,14 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using SystemLamplighter.Debug;
+using SystemLamplighter.Abstract.MVC;
+using SystemLamplighter.Tool;
 
 namespace SystemLamplighter.ATB
 {
+	/// <summary>
+	/// Model dell'ATB
+	/// </summary>
 	public partial class ActionTimeBattleModel : AbstractModel
 	{
 		private List<ICombatActor> _charactersInCombat;

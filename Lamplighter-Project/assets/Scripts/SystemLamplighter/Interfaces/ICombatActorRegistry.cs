@@ -1,7 +1,14 @@
 using System.Collections.Generic;
 using Characters.Interfaces;
 using SystemLamplighter;
+using SystemLamplighter.Tool;
+using SystemLamplighter.Common.Enums;
 
+namespace SystemLamplighter.Interfaces;
+
+/// <summary>
+/// Interfaccia per il registro dei personaggi che combattono
+/// </summary>
 public interface ICombatActorRegistry
 {
 	public void Init(List<ICombatActor> actors);

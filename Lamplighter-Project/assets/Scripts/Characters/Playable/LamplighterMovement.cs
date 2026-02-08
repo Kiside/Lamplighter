@@ -2,9 +2,14 @@ using Godot;
 using System;
 using System.Diagnostics;
 using SystemLamplighter;
+using SystemLamplighter.Common.Input;
+using Characters.Abstract;
 
 namespace Characters.Playable
 {
+	/// <summary>
+	/// Classe per il movimento del personaggio in Lamplighter
+	/// </summary>
 	public partial class LamplighterMovement : AbstractMovement<PlayableCharacterController>
 	{
 		public override void Init(PlayableCharacterController controller)
@@ -16,19 +21,19 @@ namespace Characters.Playable
 		{
 			Vector3 direction = Vector3.Zero;
 
-			if (Input.IsActionPressed(SystemLamplighter.InputMap.Up))
+			if (Input.IsActionPressed(LamplighterInputMap.Up))
 			{
 				direction.X += 1;
 			}
-			if (Input.IsActionPressed(SystemLamplighter.InputMap.Down))
+			if (Input.IsActionPressed(LamplighterInputMap.Down))
 			{
 				direction.X -= 1;
 			}
-			if (Input.IsActionPressed(SystemLamplighter.InputMap.Left))
+			if (Input.IsActionPressed(LamplighterInputMap.Left))
 			{
 				direction.Z -= 1;
 			}
-			if (Input.IsActionPressed(SystemLamplighter.InputMap.Right))
+			if (Input.IsActionPressed(LamplighterInputMap.Right))
 			{
 				direction.Z += 1;
 			}

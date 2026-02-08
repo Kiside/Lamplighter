@@ -9,7 +9,17 @@ using Characters.Playable;
 using System.Diagnostics;
 using Characters.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
+using Characters.Abstract;
+using SystemLamplighter.Bootstrap;
+using SystemLamplighter.Tool;
+using SystemLamplighter.Interfaces;
+using SystemLamplighter.Common.Enums;
 
+namespace SystemLamplighter.Debug;
+
+/// <summary>
+/// Classe ad uso esclusivo di debug per l'action time battle
+/// </summary>
 public partial class DebugAtb : Node
 {
 	[Export]

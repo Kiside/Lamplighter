@@ -7,9 +7,19 @@ using System.Linq;
 using SystemLamplighter;
 using SystemLamplighter.BattleMenu;
 using SystemLamplighter.Debug;
+using Characters.Abstract;
+using Characters.Loadout;
+using SystemLamplighter.ATB;
+using SystemLamplighter.Abstract.MVC;
+using SystemLamplighter.Common.Enums;
+using SystemLamplighter.Interfaces;
+using SystemLamplighter.Combat.Actor;
 
 namespace Characters.Playable
 {
+	/// <summary>
+	/// Classe Model per il personaggio
+	/// </summary>
 	public partial class PlayableCharacterModel : AbstractModel
 	{
 		#region EXPORT PROPERTIES

@@ -1,9 +1,7 @@
 using Characters.Interfaces;
-using Godot;
 using MessagePipe;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using SystemLamplighter.Debug;
 using SystemLamplighter.Events;
 using SystemLamplighter.Interfaces;
@@ -11,10 +9,15 @@ using SystemLamplighter.Extensions;
 using System.Linq;
 using SystemLamplighter.ATB.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
+using SystemLamplighter.Abstract.MVC;
+using SystemLamplighter.Bootstrap;
 
 
 namespace SystemLamplighter.ATB
 {
+	/// <summary>
+	/// Controller dell'ATB
+	/// </summary>
 	public partial class ActionTimeBattleController() : AbstractController<ActionTimeBattleView, ActionTimeBattleModel>
 	{
 		bool _inCharging = false;

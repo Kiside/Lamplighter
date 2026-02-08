@@ -2,6 +2,9 @@ using System.Diagnostics;
 
 namespace SystemLamplighter.Debug
 {
+	/// <summary>
+	/// Classe per il debug di Lamplighter
+	/// </summary>
 	public static class DebugLamplighter
 	{
 		public static void Assert(bool condition, string message)

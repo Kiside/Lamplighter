@@ -1,6 +1,11 @@
 using Godot;
-using SystemLamplighter;
+using SystemLamplighter.Common.Enums;
 
+namespace SystemLamplighter.Interfaces;
+
+/// <summary>
+/// Interfaccia IActionData
+/// </summary>
 public interface IActionData
 {
 	public string Name {get;}

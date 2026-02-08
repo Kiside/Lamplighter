@@ -2,9 +2,13 @@ using Godot;
 using MessagePipe;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using SystemLamplighter.Bootstrap;
 
 namespace SystemLamplighter.Extensions
 {
+    /// <summary>
+    /// Estensioni per il MessagePipe
+    /// </summary>
     public static class MessagePipeExtensions
     {
         // Extension per il Publisher
@@ -57,13 +61,5 @@ namespace SystemLamplighter.Extensions
         {
             return GameBootstrap.Services.GetRequiredService<ISubscriber<T>>();
         }
-        // Nelle estensioni aggiungi questo:
-        // public static void AddTo(this IDisposable disposable, DisposableBagBuilder bag)
-        // {
-        //     if (disposable == null) return;
-            
-        //     // Il metodo corretto del builder è .Add()
-        //     bag.Add(disposable);
-        // }
     }
 }

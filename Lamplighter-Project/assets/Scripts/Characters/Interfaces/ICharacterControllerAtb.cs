@@ -1,6 +1,8 @@
 using System;
 using SystemLamplighter;
+using SystemLamplighter.ATB;
 
+namespace Characters.Interfaces;
 /// <summary>
 /// Intefaccia per i personaggi che hanno l'ATB
 /// Ogni metodo di questa interfaccia deve avere l'inizio del nome che inizia con "ATB_..."

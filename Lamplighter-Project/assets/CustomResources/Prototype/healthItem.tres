@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="HealItemAction" format=3 uid="uid://bjd0r2gvapdf"]
 
-[ext_resource type="Script" uid="uid://5a0tdn7lq42d" path="res://assets/Scripts/SystemLamplighter/DataStructure/HealItemAction.cs" id="1_ft723"]
+[ext_resource type="Script" uid="uid://5a0tdn7lq42d" path="res://assets/Scripts/SystemLamplighter/DataStructure/ActionData/HealItemAction.cs" id="1_ft723"]
 
 [resource]
 script = ExtResource("1_ft723")

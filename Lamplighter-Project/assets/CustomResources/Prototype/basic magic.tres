@@ -1,8 +1,8 @@
-[gd_resource type="Resource" script_class="MagicAction" format=3 uid="uid://cdqt0xaj3qxg8"]
+[gd_resource type="Resource" format=3 uid="uid://cdqt0xaj3qxg8"]
 
-[ext_resource type="Script" uid="uid://cwd6nmn8t150p" path="res://assets/Scripts/SystemLamplighter/DataStructure/MagicAction.cs" id="1_rplhs"]
-[ext_resource type="Script" uid="uid://dj745p5lpoygr" path="res://assets/Scripts/SystemLamplighter/DataStructure/DamageData.cs" id="1_x16ga"]
-[ext_resource type="Script" uid="uid://b0bguw84ovcwk" path="res://assets/Scripts/SystemLamplighter/DataStructure/TargetData.cs" id="2_u3da5"]
+[ext_resource type="Script" uid="uid://cwd6nmn8t150p" path="res://assets/Scripts/SystemLamplighter/DataStructure/ActionData/MagicAction.cs" id="1_rplhs"]
+[ext_resource type="Script" uid="uid://bpbc03hvyphga" path="res://assets/Scripts/SystemLamplighter/DataStructure/EffectData/DamageData.cs" id="1_x16ga"]
+[ext_resource type="Script" uid="uid://ctl8s5v2fkwwc" path="res://assets/Scripts/SystemLamplighter/DataStructure/GeneralData/TargetData.cs" id="2_u3da5"]
 
 [sub_resource type="Resource" id="Resource_oy3eh"]
 script = ExtResource("1_x16ga")

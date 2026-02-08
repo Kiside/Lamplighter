@@ -5,16 +5,20 @@ using System.Diagnostics;
 using SystemLamplighter;
 using SystemLamplighter.BattleMenu;
 using Characters.Interfaces;
-using Characters.Inteaces;
 using Microsoft.Extensions.DependencyInjection;
 using MessagePipe;
 using SystemLamplighter.Events;
 using SystemLamplighter.Extensions;
 using System.Linq;
 using SystemLamplighter.DataStructure;
+using Characters.Abstract;
+using SystemLamplighter.Interfaces;
 
 namespace Characters.Playable
 {
+	/// <summary>
+	/// Classe per il controller del personaggio
+	/// </summary>
 	public partial class PlayableCharacterController : CharacterController<PlayableCharacterView,PlayableCharacterModel>, 
 	IHasCombatInterface<ICombatActor>
 	{

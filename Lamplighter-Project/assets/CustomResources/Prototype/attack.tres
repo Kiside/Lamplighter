@@ -1,12 +1,12 @@
-[gd_resource type="Resource" script_class="AttackAction" format=3 uid="uid://dlftjlcuk3pr4"]
+[gd_resource type="Resource" format=3 uid="uid://dlftjlcuk3pr4"]
 
+[ext_resource type="Script" uid="uid://bpbc03hvyphga" path="res://assets/Scripts/SystemLamplighter/DataStructure/EffectData/DamageData.cs" id="1_bwj14"]
 [ext_resource type="Animation" uid="uid://qmk2rfydunp3" path="res://assets/Resources/Animations/Characters/Proto/Main_Attack01.res" id="1_dnjco"]
-[ext_resource type="Script" uid="uid://dj745p5lpoygr" path="res://assets/Scripts/SystemLamplighter/DataStructure/DamageData.cs" id="1_iyfde"]
-[ext_resource type="Script" uid="uid://53pv7v0c5gad" path="res://assets/Scripts/SystemLamplighter/DataStructure/AttackAction.cs" id="1_snht1"]
-[ext_resource type="Script" uid="uid://b0bguw84ovcwk" path="res://assets/Scripts/SystemLamplighter/DataStructure/TargetData.cs" id="3_bwj14"]
+[ext_resource type="Script" uid="uid://53pv7v0c5gad" path="res://assets/Scripts/SystemLamplighter/DataStructure/ActionData/AttackAction.cs" id="1_snht1"]
+[ext_resource type="Script" uid="uid://ctl8s5v2fkwwc" path="res://assets/Scripts/SystemLamplighter/DataStructure/GeneralData/TargetData.cs" id="3_bwj14"]
 
 [sub_resource type="Resource" id="Resource_bwj14"]
-script = ExtResource("1_iyfde")
+script = ExtResource("1_bwj14")
 Damage = 5.0
 PushbackForce = 1.5
 AtbPositionDamage = 1.5

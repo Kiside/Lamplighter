@@ -6,10 +6,15 @@ using System.Linq;
 using SystemLamplighter;
 using SystemLamplighter.Debug;
 using SystemLamplighter.Events;
+using SystemLamplighter.Interfaces;
+using SystemLamplighter.Abstract.MVC;
+
 
 namespace SystemLamplighter.BattleMenu
 {
-
+	/// <summary>
+	/// Controller del menu di battaglia
+	/// </summary>
 	public partial class BattleMenuController : AbstractController<BattleMenuView, BattleMenuModel>
 	{
 		public bool Visible => _view.Visible;

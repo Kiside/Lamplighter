@@ -3,6 +3,9 @@ using Characters.Interfaces;
 
 namespace SystemLamplighter.Events
 {
+	/// <summary>
+	/// Evento di inizio combattimento
+	/// </summary>
 	public sealed class CombatStartedEvent
 	{
 		public readonly IReadOnlyList<ICombatActor> Actors;

@@ -6,9 +6,15 @@ using Microsoft.Extensions.DependencyInjection;
 using SystemLamplighter.ATB.Interfaces;
 using SystemLamplighter.Debug;
 using SystemLamplighter.Events;
+using SystemLamplighter.Interfaces;
+using SystemLamplighter.Common.Enums;
+using SystemLamplighter.Tool;
 
 namespace SystemLamplighter.ATB
 {
+	/// <summary>
+	/// Servizio dell'ATB che gestisce la logica di business
+	/// </summary>
 	public class AtbService : IAtbService
 	{
 		#region ICombatActorRegistry

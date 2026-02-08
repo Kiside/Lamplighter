@@ -7,9 +7,16 @@ using System.Runtime.CompilerServices;
 using SystemLamplighter;
 using SystemLamplighter.DataStructure;
 using SystemLamplighter.Debug;
+using SystemLamplighter.Interfaces;
+using SystemLamplighter.MVC;
+using SystemLamplighter.Common.Enums;
+using SystemLamplighter.Tool;
 
 namespace SystemLamplighter.BattleMenu
 {
+	/// <summary>
+	/// View del menu di battaglia
+	/// </summary>
 	public partial class BattleMenuView : ControlView
 	{
 		[Export]

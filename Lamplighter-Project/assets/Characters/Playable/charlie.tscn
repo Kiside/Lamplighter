@@ -7,16 +7,11 @@
 [ext_resource type="Resource" uid="uid://di5386yh3jgk7" path="res://assets/CustomResources/Prototype/ATB Character Properties/Charlie.tres" id="3_xa4mk"]
 [ext_resource type="Script" uid="uid://43moiapfoih4" path="res://assets/Scripts/Characters/Playable/LamplighterCombat.cs" id="4_cx7ps"]
 [ext_resource type="Script" uid="uid://i2ivjf6e807r" path="res://assets/Scripts/Characters/Playable/PlayableCharacterView.cs" id="4_wjmeh"]
-[ext_resource type="Script" uid="uid://hpv57386fhw0" path="res://assets/Scripts/Characters/CombatLoadout.cs" id="5_xa4mk"]
+[ext_resource type="Script" uid="uid://hpv57386fhw0" path="res://assets/Scripts/Characters/Loadout/CombatLoadout.cs" id="5_xa4mk"]
 [ext_resource type="PackedScene" uid="uid://bvygo0ty7e5kj" path="res://assets/Resources/Models/Characters/Proto/main.tscn" id="6_voq6j"]
 [ext_resource type="Resource" uid="uid://dlftjlcuk3pr4" path="res://assets/CustomResources/Prototype/attack.tres" id="7_uuub8"]
 [ext_resource type="Resource" uid="uid://dcd5ackoimdk6" path="res://assets/CustomResources/Prototype/defense.tres" id="9_vju8h"]
-[ext_resource type="Script" uid="uid://53pv7v0c5gad" path="res://assets/Scripts/SystemLamplighter/DataStructure/AttackAction.cs" id="9_voq6j"]
-[ext_resource type="Script" uid="uid://bnfdp5jkgnimd" path="res://assets/Scripts/SystemLamplighter/DataStructure/DefenseAction.cs" id="11_lox3l"]
 [ext_resource type="Resource" uid="uid://cdqt0xaj3qxg8" path="res://assets/CustomResources/Prototype/basic magic.tres" id="11_x47ln"]
-[ext_resource type="Resource" uid="uid://bjd0r2gvapdf" path="res://assets/CustomResources/Prototype/healthItem.tres" id="13_1psa7"]
-[ext_resource type="Script" uid="uid://cwd6nmn8t150p" path="res://assets/Scripts/SystemLamplighter/DataStructure/MagicAction.cs" id="13_javlh"]
-[ext_resource type="Script" uid="uid://bpc15l8suoj7p" path="res://assets/Scripts/SystemLamplighter/DataStructure/ItemAction.cs" id="15_ugvtw"]
 [ext_resource type="PackedScene" uid="uid://bgsjemevth5s" path="res://assets/Scenes-Node/battle_menu.tscn" id="17_rd6aq"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_0bkd4"]
@@ -62,10 +57,9 @@ script = ExtResource("4_cx7ps")
 
 [node name="CombatLoadout" type="Node" parent="." unique_id=506505467]
 script = ExtResource("5_xa4mk")
-_attack = Array[ExtResource("9_voq6j")]([ExtResource("7_uuub8")])
-_defense = Array[ExtResource("11_lox3l")]([ExtResource("9_vju8h")])
-_magic = Array[ExtResource("13_javlh")]([ExtResource("11_x47ln")])
-_items = Array[ExtResource("15_ugvtw")]([ExtResource("13_1psa7")])
+_attack = [ExtResource("7_uuub8")]
+_defense = [ExtResource("9_vju8h")]
+_magic = [ExtResource("11_x47ln")]
 
 [node name="BattleMenuController" parent="." unique_id=387986966 instance=ExtResource("17_rd6aq")]
 

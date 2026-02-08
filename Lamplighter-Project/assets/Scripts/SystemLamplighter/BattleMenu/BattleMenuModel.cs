@@ -7,9 +7,15 @@ using System.Linq;
 using SystemLamplighter;
 using SystemLamplighter.DataStructure;
 using SystemLamplighter.Debug;
+using SystemLamplighter.Abstract.MVC;
+using SystemLamplighter.Interfaces;
+using SystemLamplighter.SubMenuDefinition;
 
 namespace SystemLamplighter.BattleMenu
 {
+	/// <summary>
+	/// Model del menu di battaglia
+	/// </summary>
 	public partial class BattleMenuModel : AbstractModel
 	{
 		[Export]

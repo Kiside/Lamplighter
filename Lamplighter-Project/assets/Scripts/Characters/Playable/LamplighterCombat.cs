@@ -3,9 +3,14 @@ using System;
 using SystemLamplighter;
 using SystemLamplighter.Events;
 using SystemLamplighter.Extensions;
+using Characters.Abstract;
+using SystemLamplighter.Interfaces;
+using SystemLamplighter.Combat.Core;
 
-namespace Characters.Playable
-{
+namespace Characters.Playable;
+/// <summary>
+/// Classer per il combattimento in Lamplighter
+/// </summary>
 	public partial class LamplighterCombat : AbstractCombat<PlayableCharacterController>
 	{
 		ITurnBasedCombat _turnBasedCombat;
@@ -44,4 +49,3 @@ namespace Characters.Playable
 			base._ExitTree();
 		}
 	}
-}

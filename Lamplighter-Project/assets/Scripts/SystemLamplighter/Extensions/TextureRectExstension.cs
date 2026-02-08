@@ -1,6 +1,12 @@
 using System.Diagnostics;
 using Godot;
+using SystemLamplighter.Debug;
 
+namespace SystemLamplighter.Extensions;
+
+/// <summary>
+/// Estensioni per TextureRect
+/// </summary>
 public static class TextureRectExstension
 {
 	public static TextureRect
@@ -9,7 +15,7 @@ public static class TextureRectExstension
 	TextureRect.ExpandModeEnum expandModeEnum =
 	TextureRect.ExpandModeEnum.KeepSize)
 	{
-		Debug.Assert(image != null, "image is null");
+		DebugLamplighter.Assert(image != null, "image is null");
 
 		textureRect.Texture = ImageTexture.CreateFromImage(image);
 		textureRect.ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize;

@@ -1,12 +1,20 @@
 using Characters.Interfaces;
 using Godot;
 using Microsoft.Extensions.DependencyInjection;
-using System;
 using System.Collections.Generic;
 using SystemLamplighter.Debug;
+using SystemLamplighter.MVC;
+using SystemLamplighter.Extensions;
+using SystemLamplighter.Tool;
+using SystemLamplighter.Bootstrap;
+using SystemLamplighter.Interfaces;
+using SystemLamplighter.Common.Enums;
 
 namespace SystemLamplighter.ATB
 {
+	/// <summary>
+	/// View dell'ATB
+	/// </summary>
 	public partial class ActionTimeBattleView : ControlView
 	{
 		[Export]
