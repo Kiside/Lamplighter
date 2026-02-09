@@ -5,6 +5,8 @@ using SystemLamplighter.Common.Enums;
 using SystemLamplighter.DataStructure.GeneralData;
 using SystemLamplighter.Interfaces;
 using SystemLamplighter.DataStructure.EffectsData;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace SystemLamplighter.DataStructure.ActionsData
 {
@@ -32,22 +34,31 @@ namespace SystemLamplighter.DataStructure.ActionsData
 		protected Animation _animation;
 		// Effetti dell'azione
 		[Export]
-		protected Godot.Collections.Array<EffectData> EffectDatas;
+		protected Godot.Collections.Array<EffectData> _effects;
 
 		public ActionType ActionType => _actionType;
 		public string Name => _name;
 		public float ActionSpeedMultiplier => _actionSpeedMultiplier;
-		public TargetData TargetData => _targetData;
+		public ITargetData TargetData => _targetData;
 		public Animation Animation => _animation;
+		public IEnumerable<IEffectData> Effects => _effects;
 
-		public ActionData() : this(ActionType.ATTACK, "", 1f, new TargetData() ) { }
+		public ActionData() : 
+		this(ActionType.ATTACK, "", 1f, new TargetData(), null, new Godot.Collections.Array<EffectData>() ) { }
 
-		public ActionData(ActionType actionType, string name, float actionSpeedMultiplier, TargetData targetData)
+		public ActionData(ActionType actionType, 
+		string name, 
+		float actionSpeedMultiplier, 
+		TargetData targetData,
+		Animation animation,
+		Godot.Collections.Array<EffectData> effects)
 		{
 			_actionType = actionType;
 			_name = name;
 			_actionSpeedMultiplier = actionSpeedMultiplier;
 			_targetData = targetData;
+			_animation = animation;
+			_effects = effects;
 		}
 	}
 }

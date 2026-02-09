@@ -4,6 +4,8 @@ using Godot;
 using SystemLamplighter;
 using SystemLamplighter.DataStructure;
 using SystemLamplighter.Common.Enums;
+using SystemLamplighter.DataStructure.GeneralData;
+using SystemLamplighter.DataStructure.EffectsData;
 
 namespace SystemLamplighter.DataStructure.ActionsData;
 
@@ -19,14 +21,19 @@ public partial class AttackAction : EquipableActionData
 	private AttackType _attackType;
 	public AttackType AttackType => _attackType;
 
-	public AttackAction() : this("", AttackType.LIGHT, 1f, false) { }
+	public AttackAction() : 
+	this(ActionType.ATTACK, "", 1f, new TargetData(), null, new Godot.Collections.Array<EffectData>(), false, AttackType.LIGHT) { }
 
-	public AttackAction(string name, AttackType attackType, float actionSpeed, bool isEquipped)
+	public AttackAction(ActionType actionType, 
+		string name, 
+		float actionSpeedMultiplier, 
+		TargetData targetData,
+		Animation animation,
+		Godot.Collections.Array<EffectData> effects,
+		bool isEquipped,
+		AttackType attackType) 
+		: base(actionType, name, actionSpeedMultiplier, targetData, animation, effects, false)
 	{
 		_actionType = ActionType.ATTACK;
-		_name = name;
-		_attackType = attackType;
-		_actionSpeedMultiplier = actionSpeed;
-		_isEquipped = isEquipped;
 	}
 }

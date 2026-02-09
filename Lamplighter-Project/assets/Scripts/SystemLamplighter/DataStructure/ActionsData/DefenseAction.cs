@@ -2,6 +2,8 @@ using System;
 using System.Diagnostics;
 using Godot;
 using SystemLamplighter.Common.Enums;
+using SystemLamplighter.DataStructure.EffectsData;
+using SystemLamplighter.DataStructure.GeneralData;
 
 namespace SystemLamplighter.DataStructure.ActionsData
 {
@@ -16,13 +18,19 @@ namespace SystemLamplighter.DataStructure.ActionsData
 
 		public float DefensiveAmount => _defensiveAmount;
 
-		public DefenseAction() : this(0f, 10f) { }
+		public DefenseAction() : 
+		this(ActionType.GUARD, "", 1f, new TargetData(), null, new Godot.Collections.Array<EffectData>(), 0f) { }
 
-		public DefenseAction(float defensiveAmount, float speed)
+		public DefenseAction(ActionType actionType, 
+		string name, 
+		float actionSpeedMultiplier, 
+		TargetData targetData,
+		Animation animation,
+		Godot.Collections.Array<EffectData> effects,
+		float defensiveAmount) 
+		: base(ActionType.GUARD, "", 1f, new TargetData(), null, new Godot.Collections.Array<EffectData>())
 		{
-			_actionType = ActionType.GUARD;
 			_defensiveAmount = defensiveAmount;
-			_actionSpeedMultiplier = speed;
 		}
 	}
 }

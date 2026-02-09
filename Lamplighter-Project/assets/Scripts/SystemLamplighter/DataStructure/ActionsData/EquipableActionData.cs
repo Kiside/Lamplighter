@@ -1,6 +1,9 @@
 using System;
 using System.Diagnostics;
 using Godot;
+using SystemLamplighter.Common.Enums;
+using SystemLamplighter.DataStructure.EffectsData;
+using SystemLamplighter.DataStructure.GeneralData;
 
 namespace SystemLamplighter.DataStructure.ActionsData
 {
@@ -15,9 +18,17 @@ namespace SystemLamplighter.DataStructure.ActionsData
 
 		public bool IsEquipped;
 
-		public EquipableActionData() : this(false) { }
+		public EquipableActionData() : 
+		this(ActionType.ATTACK, "", 1f, new TargetData(), null, new Godot.Collections.Array<EffectData>(), false) { }
 
-		public EquipableActionData(bool isEquipped)
+		public EquipableActionData(ActionType actionType, 
+		string name, 
+		float actionSpeedMultiplier, 
+		TargetData targetData,
+		Animation animation,
+		Godot.Collections.Array<EffectData> effects,
+		bool isEquipped)
+		: base(actionType, name, actionSpeedMultiplier, targetData, animation, effects)
 		{
 			_isEquipped = isEquipped;
 		}

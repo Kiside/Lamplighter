@@ -3,6 +3,7 @@ using Godot;
 using SystemLamplighter.Tool;
 using SystemLamplighter.Interfaces;
 
+namespace SystemLamplighter.Setup;
 /// <summary>
 /// Classe per l'inizializzazione dei gruppi
 /// </summary>

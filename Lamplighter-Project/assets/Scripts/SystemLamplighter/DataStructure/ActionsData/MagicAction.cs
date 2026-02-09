@@ -2,6 +2,8 @@ using System;
 using System.Diagnostics;
 using Godot;
 using SystemLamplighter.Common.Enums;
+using SystemLamplighter.DataStructure.EffectsData;
+using SystemLamplighter.DataStructure.GeneralData;
 
 namespace SystemLamplighter.DataStructure.ActionsData
 {
@@ -17,9 +19,18 @@ namespace SystemLamplighter.DataStructure.ActionsData
 
 		public int ManaCost => _manaCost;
 
-		public MagicAction() : this(0, ActionType.MAGIC, false) { }
+		public MagicAction() : 
+		this(ActionType.MAGIC, "", 1f, new TargetData(), null, new Godot.Collections.Array<EffectData>(), false, 0) { }
 
-		public MagicAction(int manaCost, ActionType actionType, bool isEquipped)
+		public MagicAction(ActionType actionType, 
+		string name, 
+		float actionSpeedMultiplier, 
+		TargetData targetData,
+		Animation animation,
+		Godot.Collections.Array<EffectData> effects,
+		bool isEquipped
+		,int manaCost)
+		: base(actionType, name, actionSpeedMultiplier, targetData, animation, effects, isEquipped)
 		{
 			_actionType = actionType;
 			_manaCost = manaCost;

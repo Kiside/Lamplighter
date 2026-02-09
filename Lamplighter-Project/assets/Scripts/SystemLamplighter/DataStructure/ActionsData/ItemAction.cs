@@ -1,6 +1,8 @@
 using System;
 using Godot;
 using SystemLamplighter.Common.Enums;
+using SystemLamplighter.DataStructure.EffectsData;
+using SystemLamplighter.DataStructure.GeneralData;
 
 namespace SystemLamplighter.DataStructure.ActionsData
 {
@@ -11,17 +13,21 @@ namespace SystemLamplighter.DataStructure.ActionsData
 	public partial class ItemAction : ActionData
 	{
 		[Export]
-		protected ItemType _itemType;
-		[Export]
 		protected string _description;
-		public ItemType ItemType => _itemType;
 		public string Description => _description;
 
-		public ItemAction() : this(ItemType.RESTORE, "") { }
+		public ItemAction() : this
+		(ActionType.ITEM, "", 1f, new TargetData(), null, new Godot.Collections.Array<EffectData>(), "") { }
 
-		public ItemAction(ItemType itemType, string description)
+		public ItemAction(ActionType actionType, 
+		string name, 
+		float actionSpeedMultiplier, 
+		TargetData targetData,
+		Animation animation,
+		Godot.Collections.Array<EffectData> effects,
+		string description) 
+		: base(actionType, name, actionSpeedMultiplier, targetData, animation, effects)
 		{
-			_itemType = itemType;
 			_description = description;
 		}
 	}
