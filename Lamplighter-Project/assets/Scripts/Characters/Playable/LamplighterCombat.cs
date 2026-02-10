@@ -23,9 +23,11 @@ namespace Characters.Playable;
 			controller.CombatActor,
 			this.GetPublisher<AtbCommandPhaseEndEvent>(),
 			this.GetPublisher<AtbEndExecuteActionEvent>(),
+			this.GetPublisher<StartTargetEvent>(),
 			this.GetSubscriber<AtbCommandPhaseStartedEvent>(),
-			this.GetSubscriber<AtbExecuteActionEvent>()
-			 );
+			this.GetSubscriber<AtbExecuteActionEvent>(),
+			this.GetSubscriber<EndTargetEvent>()
+			);
 		}
 
 		public override void Combat()

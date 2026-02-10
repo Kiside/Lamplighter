@@ -16,4 +16,6 @@ public interface IActionData
 	public Animation Animation {get;}
 	public ITargetData TargetData {get;}
 	public IEnumerable<IEffectData> Effects {get;}
+
+	
 }

@@ -9,6 +9,8 @@ using SystemLamplighter.Tool;
 using SystemLamplighter.ATB;
 using SystemLamplighter.Interfaces;
 using Characters.Loadout;
+using System.Runtime.InteropServices;
+using System;
 
 
 namespace SystemLamplighter.Combat.Core
@@ -23,23 +25,30 @@ namespace SystemLamplighter.Combat.Core
 		
 		private IPublisher<AtbCommandPhaseEndEvent> _publishCommandPhaseEnd;
 		private IPublisher<AtbEndExecuteActionEvent> _publishEndExecuteAction;
+		private IPublisher<StartTargetEvent> _publisherStartTarget;
 		private ISubscriber<AtbCommandPhaseStartedEvent> _subscriberCommandPhaseStarted;
 		private ISubscriber<AtbExecuteActionEvent> _subscriberExecuteActionEvent;
+		private ISubscriber<EndTargetEvent> _subscriberEndTarget;
+		private IDisposable _disposeEndTargetEvent;
 		private readonly DisposableBagBuilder _bag;
 
 		public TurnBasedCombat(BattleMenuController battleMenuController, 
 		ICombatActor combatActor, 
 		IPublisher<AtbCommandPhaseEndEvent> publishCommandPhaseEnd,
 		IPublisher<AtbEndExecuteActionEvent> publishEndExecuteAction,
+		IPublisher<StartTargetEvent> publisherStartTarget,
 		ISubscriber<AtbCommandPhaseStartedEvent> subscriberCommandPhaseStarted,
-		ISubscriber<AtbExecuteActionEvent> subscriberExecuteAction)
+		ISubscriber<AtbExecuteActionEvent> subscriberExecuteAction,
+		ISubscriber<EndTargetEvent> subscriberEndTarget)
 		{
 			_battleMenuController = battleMenuController;
 			Actor = combatActor;
 			_publishCommandPhaseEnd = publishCommandPhaseEnd;
 			_publishEndExecuteAction = publishEndExecuteAction;
+			_publisherStartTarget = publisherStartTarget;
 			_subscriberCommandPhaseStarted = subscriberCommandPhaseStarted;
 			_subscriberExecuteActionEvent = subscriberExecuteAction;
+			_subscriberEndTarget = subscriberEndTarget;
 
 			_bag = DisposableBag.CreateBuilder();
 
@@ -87,6 +96,9 @@ namespace SystemLamplighter.Combat.Core
 		{
 			CurrentAction = action;
 
+			_disposeEndTargetEvent =_subscriberEndTarget.Subscribe(OnEndTarget);
+			_publisherStartTarget.Publish(new StartTargetEvent(Actor, CurrentAction));
+
 			// Che tipo di azione è? In base alla tipologia di azione ci saranno "cose da fare"
 			switch (CurrentAction.ActionType)
 			{
@@ -107,8 +119,19 @@ namespace SystemLamplighter.Combat.Core
 					break;
 			}
 
-			AtbProperties.EndCommandStatus(CurrentAction.ActionSpeedMultiplier);
+			
 
+			_publishCommandPhaseEnd.Publish(new AtbCommandPhaseEndEvent(Actor));
+		}
+
+		public void OnEndTarget(EndTargetEvent ev)
+		{
+			if(ev.Actor != Actor)
+				return;
+			
+			_disposeEndTargetEvent?.Dispose();
+			// Eseguzione dell'attacco 
+			AtbProperties.EndCommandStatus(CurrentAction.ActionSpeedMultiplier);
 			_publishCommandPhaseEnd.Publish(new AtbCommandPhaseEndEvent(Actor));
 		}
 
@@ -142,6 +165,8 @@ namespace SystemLamplighter.Combat.Core
 		public void Dispose()
 		{
 			_bag.Build().Dispose();
+
+			_disposeEndTargetEvent?.Dispose();
 
 			_battleMenuController.OnActionClick -= ActionChoosedHandler;
 			_battleMenuController.OnOpenSubMenu -= OpenBattleSubMenuHandler;

@@ -10,14 +10,14 @@ namespace SystemLamplighter.DataStructure.ActionsData
 	/// Classe per l'azione di un item
 	/// </summary>
 	[GlobalClass]
-	public partial class ItemAction : ActionData
+	public partial class ItemAction : EquipableActionData
 	{
 		[Export]
 		protected string _description;
 		public string Description => _description;
 
-		public ItemAction() : this
-		(ActionType.ITEM, "", 1f, new TargetData(), null, new Godot.Collections.Array<EffectData>(), "") { }
+		public ItemAction() : 
+		this(ActionType.ITEM, "", 1f, new TargetData(), null, new Godot.Collections.Array<EffectData>(), false ,"") { }
 
 		public ItemAction(ActionType actionType, 
 		string name, 
@@ -25,8 +25,9 @@ namespace SystemLamplighter.DataStructure.ActionsData
 		TargetData targetData,
 		Animation animation,
 		Godot.Collections.Array<EffectData> effects,
+		bool isEquipped,
 		string description) 
-		: base(actionType, name, actionSpeedMultiplier, targetData, animation, effects)
+		: base(actionType, name, actionSpeedMultiplier, targetData, animation, effects, isEquipped)
 		{
 			_description = description;
 		}
