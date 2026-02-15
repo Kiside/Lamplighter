@@ -13,6 +13,7 @@ using System.Linq;
 using SystemLamplighter.DataStructure;
 using Characters.Abstract;
 using SystemLamplighter.Interfaces;
+using SystemLamplighter.Setup;
 
 namespace Characters.Playable
 {

@@ -26,6 +26,7 @@ public partial class GameBootstrap : Node
 		// CORE
 		services.AddSingleton<IBattleService, BattleService>();
 		services.AddSingleton<ICombatActorRegistry, CombatActorRegistry>();
+		services.AddSingleton<ICombatActorPositionProvider<Node3D>, CombatActorPosition3DProvider>();
 
 
 		// Message pipe

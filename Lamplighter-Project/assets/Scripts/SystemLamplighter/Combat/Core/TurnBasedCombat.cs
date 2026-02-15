@@ -59,11 +59,13 @@ namespace SystemLamplighter.Combat.Core
 			_battleMenuController.OnOpenSubMenu += OpenBattleSubMenuHandler;
 		}
 
+		#region EVENTS HANDLER
+
 		public void OnExecuteCombatAction(AtbExecuteActionEvent ev)
 		{
-			if(ev.Actor != Actor)
+			if (ev.Actor != Actor)
 				return;
-			
+
 			// Eseguo l'azione
 			// Ad azione eseguita resetto la posizione del personaggio sull'ATB
 			_publishEndExecuteAction.Publish(new AtbEndExecuteActionEvent(Actor));
@@ -71,25 +73,36 @@ namespace SystemLamplighter.Combat.Core
 
 		public void OnCommandPhaseStarted(AtbCommandPhaseStartedEvent evt)
 		{
-			if(evt.Actor != Actor)
+			if (evt.Actor != Actor)
 				return;
 
 			// TODO: forse non deve essere qui che si gestisce tale evento
 			_battleMenuController.Show();
 		}
 
+		public void OnEndTarget(EndTargetEvent ev)
+		{
+			if (ev.TargetsPosition != Actor)
+				return;
+
+			_disposeEndTargetEvent?.Dispose();
+			// Eseguzione dell'attacco 
+			AtbProperties.EndCommandStatus(CurrentAction.ActionSpeedMultiplier);
+			_publishCommandPhaseEnd.Publish(new AtbCommandPhaseEndEvent(Actor));
+		}
+
 		public void OpenBattleSubMenuHandler(ISubMenuDefinition subMenuIds)
 		{
-			if(subMenuIds.IsImmediate)
+			if (subMenuIds.IsImmediate)
 			{
 				CurrentAction = subMenuIds.BuildAction(Actor).First();
 				_publishCommandPhaseEnd.Publish(new AtbCommandPhaseEndEvent(Actor));
-			 	return;
+				return;
 			}
-			
+
 			var actions = subMenuIds.BuildAction(Actor);
 			_battleMenuController.OpenSubMenu(actions);
-			
+
 		}
 
 		public void ActionChoosedHandler(IActionData action)
@@ -124,16 +137,8 @@ namespace SystemLamplighter.Combat.Core
 			_publishCommandPhaseEnd.Publish(new AtbCommandPhaseEndEvent(Actor));
 		}
 
-		public void OnEndTarget(EndTargetEvent ev)
-		{
-			if(ev.Actor != Actor)
-				return;
-			
-			_disposeEndTargetEvent?.Dispose();
-			// Eseguzione dell'attacco 
-			AtbProperties.EndCommandStatus(CurrentAction.ActionSpeedMultiplier);
-			_publishCommandPhaseEnd.Publish(new AtbCommandPhaseEndEvent(Actor));
-		}
+		#endregion
+		
 
 		public void HandleAttackAction()
 		{

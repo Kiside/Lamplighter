@@ -18,4 +18,7 @@ public interface ICombatActorRegistry
 	public List<ICombatActor> GetActors();
 	public List<ICombatActor> GetActors(AtbCharacterType type);
 	public ICombatActor GetActor(int index);
+	public ICombatActor GetActor(ICombatActor actor);
+	public int GetIndex(ICombatActor actor);
+	public int Count {get;}
 }

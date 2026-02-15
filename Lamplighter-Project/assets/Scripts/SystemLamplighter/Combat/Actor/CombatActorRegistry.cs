@@ -23,6 +23,9 @@ namespace SystemLamplighter.Combat.Actor
 		public List<ICombatActor> GetActors() => _actors;
 		public List<ICombatActor> GetActors(AtbCharacterType type) =>
 		_actors.FindAll(a => a.AtbProperties.CharacterType == type);
+		public ICombatActor GetActor(ICombatActor actor) => _actors.Find(a => a == actor);
+		public int GetIndex(ICombatActor actor) => _actors.IndexOf(actor);
+		public int Count => _actors.Count;
 
 		public void RemoveActor(ICombatActor actor) => _actors.Remove(actor);
 		public void Clear() => _actors.Clear();

@@ -98,10 +98,10 @@ namespace SystemLamplighter.ATB
 
 		public override void _ExitTree()
 		{
-			base._ExitTree();
-
 			_atbService.Dispose();
 			Unsubscribe();
+
+			base._ExitTree();
 		}
 
 		private void Subscribe()

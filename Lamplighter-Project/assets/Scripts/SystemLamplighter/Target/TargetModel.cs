@@ -1,4 +1,10 @@
+using System.Collections.Generic;
+using System.Linq;
+using Godot;
+using MessagePipe;
 using SystemLamplighter.Abstract.MVC;
+using SystemLamplighter.Debug;
+using SystemLamplighter.Extensions;
 using SystemLamplighter.Interfaces;
 
 namespace SystemLamplighter.Target;
@@ -8,10 +14,33 @@ namespace SystemLamplighter.Target;
 /// </summary>
 public partial class TargetModel : AbstractModel
 {
-	public ITargetService _targetService;
+	[Export]
+	private NodePath _cameraPath;
+	[Export]
+	private Godot.Collections.Array<TargetResolver> _targetResolvers;
+
+	public List<TargetResolver> TargetResolvers => _targetResolvers.ToList();
+
+	private TargetResolver _currentTargetResolver;
+	public TargetResolver CurrentTargetResolver {get => _currentTargetResolver; set => _currentTargetResolver = value; }
+
+	private Camera3D _camera;
+	public Camera3D Camera => _camera;
 
 	public override void Init()
 	{
-		
+		NodeChecking();	
+	}
+
+	private void NodeChecking()
+	{
+		DebugLamplighter.Assert(_cameraPath != null, "camera path is null");
+
+		_camera = GetNode<Camera3D>(_cameraPath);
+	}
+
+	public override void _ExitTree()
+	{
+		base._ExitTree();
 	}
 }

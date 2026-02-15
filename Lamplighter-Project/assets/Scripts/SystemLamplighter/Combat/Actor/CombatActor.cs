@@ -5,6 +5,8 @@ using Characters.Loadout;
 using SystemLamplighter.ATB;
 using SystemLamplighter.Interfaces;
 using SystemLamplighter.Common.Enums;
+using System.Numerics;
+using System;
 
 namespace SystemLamplighter.Combat.Actor;
 

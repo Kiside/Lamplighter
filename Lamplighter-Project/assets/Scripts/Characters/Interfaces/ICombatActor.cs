@@ -4,6 +4,7 @@ using Characters.Loadout;
 using SystemLamplighter.ATB;
 using SystemLamplighter.Common.Enums;
 using SystemLamplighter.Interfaces;
+using System.Numerics;
 
 namespace Characters.Interfaces;
 
