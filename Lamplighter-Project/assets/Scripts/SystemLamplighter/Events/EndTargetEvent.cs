@@ -4,11 +4,9 @@ using Characters.Interfaces;
 
 public partial class EndTargetEvent
 {
-	public List<Vector3> TargetsPosition { get; private set;}
-	public ICombatActor Actor { get; private set; }
-	public EndTargetEvent(List<Vector3> targetsPosition, ICombatActor actor)
+	public TargetResolutionContext TargetResolutionContext { get; private set; }
+	public EndTargetEvent(TargetResolutionContext targetResolutionContext)
 	{
-		 TargetsPosition = targetsPosition;
-		 Actor = actor;
+		TargetResolutionContext = targetResolutionContext;
 	}
 }

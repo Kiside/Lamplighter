@@ -1,15 +1,7 @@
-[gd_resource type="Resource" format=3 uid="uid://cdqt0xaj3qxg8"]
+[gd_resource type="Resource" script_class="MagicAction" format=3 uid="uid://cdqt0xaj3qxg8"]
 
-[ext_resource type="Script" uid="uid://cwd6nmn8t150p" path="res://assets/Scripts/SystemLamplighter/DataStructure/ActionData/MagicAction.cs" id="1_rplhs"]
-[ext_resource type="Script" uid="uid://bpbc03hvyphga" path="res://assets/Scripts/SystemLamplighter/DataStructure/EffectData/DamageData.cs" id="1_x16ga"]
+[ext_resource type="Script" uid="uid://cwd6nmn8t150p" path="res://assets/Scripts/SystemLamplighter/DataStructure/ActionsData/MagicAction.cs" id="1_rplhs"]
 [ext_resource type="Script" uid="uid://ctl8s5v2fkwwc" path="res://assets/Scripts/SystemLamplighter/DataStructure/GeneralData/TargetData.cs" id="2_u3da5"]
-
-[sub_resource type="Resource" id="Resource_oy3eh"]
-script = ExtResource("1_x16ga")
-Damage = 10.0
-PushbackForce = 1.5
-AtbPositionDamage = 5.0
-metadata/_custom_type_script = "uid://dj745p5lpoygr"
 
 [sub_resource type="Resource" id="Resource_ornpy"]
 script = ExtResource("2_u3da5")
@@ -24,5 +16,5 @@ _actionType = 2
 _name = "basic magic"
 _actionSpeedMultiplier = 0.2
 _targetData = SubResource("Resource_ornpy")
-EffectDatas = Array[Object]([SubResource("Resource_oy3eh")])
+_effects = null
 metadata/_custom_type_script = "uid://cwd6nmn8t150p"
