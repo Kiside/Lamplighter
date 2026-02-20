@@ -2,6 +2,7 @@ using Characters.Interfaces;
 using Godot;
 using SystemLamplighter.Interfaces;
 using SystemLamplighter.Target.Interfaces;
+using SystemLamplighter.DataStructure.GeneralData;
 
 namespace SystemLamplighter.Target;
 
@@ -18,4 +19,8 @@ public abstract partial class TargetResolver : Resource, ITargetResolver
 	{
 		IsActive = isActive;
 	}
+
+	public abstract TargetResolutionData Select();
+	public abstract TargetResolutionData Cancel();
+	public abstract TargetCursorState MoveTarget(Vector2 direction);
 }

@@ -27,6 +27,11 @@ public partial class TargetModel : AbstractModel
 	private Camera3D _camera;
 	public Camera3D Camera => _camera;
 
+	public TargetResolver FindTargetResolver<T>() where T : TargetResolver
+	{
+		return TargetResolvers.Find(r => r is T);
+	}
+
 	public override void Init()
 	{
 		NodeChecking();	

@@ -10,9 +10,14 @@
 [ext_resource type="Script" uid="uid://2mwkrrk6l48d" path="res://assets/Scripts/SystemLamplighter/Target/TargetController.cs" id="8_x12ig"]
 [ext_resource type="Script" uid="uid://eiqlxuh54ofb" path="res://assets/Scripts/SystemLamplighter/Target/TargetModel.cs" id="9_vvneb"]
 [ext_resource type="Script" uid="uid://dbqvaxg514g2a" path="res://assets/Scripts/SystemLamplighter/Target/TargetView.cs" id="10_lc0uq"]
+[ext_resource type="Script" uid="uid://b05d2vn03bqao" path="res://assets/Scripts/SystemLamplighter/Target/SelectionTargetResolver.cs" id="10_vvneb"]
 
 [sub_resource type="Theme" id="Theme_syokn"]
 default_font_size = 10
+
+[sub_resource type="Resource" id="Resource_lc0uq"]
+script = ExtResource("10_vvneb")
+metadata/_custom_type_script = "uid://b05d2vn03bqao"
 
 [node name="ProtoCombat" type="Node" unique_id=4540119]
 
@@ -167,7 +172,7 @@ Model = NodePath("TargetModel")
 
 [node name="TargetModel" type="Node" parent="TargetController" unique_id=718835974]
 script = ExtResource("9_vvneb")
-_targetResolvers = []
+_targetResolvers = [SubResource("Resource_lc0uq")]
 
 [node name="TargetView" type="Node" parent="TargetController" unique_id=1573581715]
 script = ExtResource("10_lc0uq")

@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using Characters.Interfaces;
 using Godot;
+using SystemLamplighter.DataStructure.GeneralData;
 using SystemLamplighter.Debug;
 using SystemLamplighter.Extensions;
 using SystemLamplighter.Interfaces;
@@ -10,21 +12,21 @@ namespace SystemLamplighter.Target;
 [GlobalClass]
 public partial class SelectionTargetResolver : TargetResolver
 {
-	private Camera3D _camera;
 	private readonly ICombatActorRegistry _combatActors;
 	private readonly ICombatActorPositionProvider<Node3D> _combatActorPosition;
+
+	private ICombatActor _casterActor;
 	private ICombatActor _currentActorHighlighted;
 	private ITargetData _currentTargetData;
 	private int currentTargetSelected;
 	private List<ICombatActor> _combatActorsSelected;
 
+	
 
+	public SelectionTargetResolver() : this(null, null) {}
 
-	public SelectionTargetResolver() : this(null, null, null) {}
-
-	public SelectionTargetResolver(Camera3D camera, ICombatActorRegistry combatActors, ICombatActorPositionProvider<Node3D> combatActorPosition)
+	public SelectionTargetResolver(ICombatActorRegistry combatActors, ICombatActorPositionProvider<Node3D> combatActorPosition)
 	{
-		_camera = camera;
 		_combatActors = combatActors;
 		_combatActorPosition = combatActorPosition;
 	}
@@ -36,6 +38,7 @@ public partial class SelectionTargetResolver : TargetResolver
 
 		IsActive = true;
 		_currentTargetData = action.TargetData;
+		_casterActor = casterActor;
 		_currentActorHighlighted = _combatActors.GetActor(0);
 		currentTargetSelected = 0;
 
@@ -43,45 +46,41 @@ public partial class SelectionTargetResolver : TargetResolver
 			_combatActorsSelected.Clear();
 	}
 
-	public void HandleInput(bool leftInput, bool rightInput, bool selectInput, bool cancelInput)
+	public override TargetCursorState MoveTarget(Vector2 direction)
 	{
-		if(leftInput)
-			MoveSelection(-1);
-		if(rightInput)
-			MoveSelection(1);
-		if(selectInput)
-			Select();
-		if(cancelInput)
-			Cancel();
-	}
-
-
-	private void MoveSelection(int direction)
-	{
-		var index = (_combatActors.GetIndex(_currentActorHighlighted) + direction) % _combatActors.Count;
+		var index = (_combatActors.GetIndex(_currentActorHighlighted) + (int)Math.Round(direction.Y)) % _combatActors.Count;
 
 		_currentActorHighlighted = _combatActors.GetActor(index);
 
-		_camera.LookAt(_combatActorPosition.GetPosition(_combatActors.GetActor(index)));
+		return new ActorCursorState(_currentActorHighlighted);
 	}
 
-	private void Select()
+	public override TargetResolutionData Select()
 	{
 		currentTargetSelected++;
 		_combatActorsSelected.Add(_currentActorHighlighted);
 
 		if(currentTargetSelected >= _currentTargetData.NumberOfTargets)
 		{
-			
+			return new TargetResolutionData(
+				new TargetResolutionContext(_combatActorPosition.GetPositionsFromActors(_combatActorsSelected), _casterActor),
+				TargetResolutionStatus.RESOLVED
+			);
 		}
 		else
 		{
-			
+			return new TargetResolutionData(
+				new TargetResolutionContext(),
+				TargetResolutionStatus.ON_GOING
+			);
 		}
 	}
 
-	private void Cancel()
+	public override TargetResolutionData Cancel()
 	{
-		
+		return new TargetResolutionData(
+				new TargetResolutionContext(),
+				TargetResolutionStatus.CANCELED
+			);
 	}
 }

@@ -5,11 +5,16 @@ using Godot;
 public class TargetResolutionContext
 {
 	private List<Vector3> _targetsPosition;
-	private ICombatActor casterActor;
+	private ICombatActor _casterActor;
 
-	public TargetResolutionContext(List<Vector3> targetsPosition, ICombatActor actor)
+	public TargetResolutionContext(List<Vector3> targetsPosition, ICombatActor casterActor)
 	{
 		_targetsPosition = targetsPosition;
-		casterActor = actor;
+		_casterActor = casterActor;
+	}
+
+	public TargetResolutionContext()
+	{
+		
 	}
 }

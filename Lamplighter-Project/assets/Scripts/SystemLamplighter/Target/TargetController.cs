@@ -2,6 +2,8 @@ using SystemLamplighter.Abstract.MVC;
 using SystemLamplighter.Interfaces;
 using SystemLamplighter.Extensions;
 using SystemLamplighter.Debug;
+using Godot;
+using SystemLamplighter.Common.Input;
 
 namespace SystemLamplighter.Target;
 
@@ -10,7 +12,7 @@ namespace SystemLamplighter.Target;
 /// </summary>
 public partial class TargetController : AbstractController<TargetView, TargetModel>
 {
-	
+	TargetResolver CurrentTargetResolver { get => _model.CurrentTargetResolver; set => _model.CurrentTargetResolver = value; } 
 	
 
 	public override void _Ready()
@@ -35,14 +37,44 @@ public partial class TargetController : AbstractController<TargetView, TargetMod
 
 		if(targetType == Common.Enums.TargetType.SINGLE || targetType == Common.Enums.TargetType.GROUP)
 		{
-			_model.CurrentTargetResolver = _model.TargetResolvers.Find(r => r is SelectionTargetResolver);
+			CurrentTargetResolver = _model.FindTargetResolver<SelectionTargetResolver>();
 		}
 		else
 		{
-			_model.CurrentTargetResolver = _model.TargetResolvers.Find(r => r is ShapeTargetResolver);
+			CurrentTargetResolver = _model.FindTargetResolver<ShapeTargetResolver>();
 		}
 
-		_model.CurrentTargetResolver.ResolveTargets(ev.Action, ev.Actor);
+		CurrentTargetResolver.ResolveTargets(ev.Action, ev.Actor);
+	}
+
+	public override void _PhysicsProcess(double delta)
+	{
+		base._PhysicsProcess(delta);
+
+		TargetMovement();
+		TargetInputHandler();
+	}
+
+	private void TargetMovement()
+	{
+		var cursorState = CurrentTargetResolver?.MoveTarget
+		(
+			Input.GetVector(LamplighterInputMap.Left, 
+			LamplighterInputMap.Right, 
+			LamplighterInputMap.Down, 
+			LamplighterInputMap.Up)
+		);
+
+		if(cursorState != null)
+			_view.Render(cursorState);
+	}
+
+	private void TargetInputHandler()
+	{
+		if(Input.IsActionJustPressed(LamplighterInputMap.Select))
+			CurrentTargetResolver?.Select();
+		if(Input.IsActionJustPressed(LamplighterInputMap.Back))
+			CurrentTargetResolver?.Cancel();
 	}
 
 	public override void _ExitTree()

@@ -23,4 +23,11 @@ public class CombatActorPosition3DProvider : ICombatActorPositionProvider<Node3D
 	}
 
 	public Vector3 GetPosition(ICombatActor actor) => _actorPositions[actor].GlobalPosition;
+	public List<Vector3> GetPositionsFromActors(List<ICombatActor> actors)
+	{
+		List<Vector3> positions = new List<Vector3>();
+		foreach(var a in actors)
+			positions.Add(_actorPositions[a].GlobalPosition);
+		return positions;
+	}
 }

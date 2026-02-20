@@ -6,4 +6,6 @@ public interface ICombatActorPositionProvider<TNodeType>
 {
 	public void Init(Dictionary<ICombatActor, TNodeType> actors);
 	Vector3 GetPosition(ICombatActor actor);
+
+	List<Vector3> GetPositionsFromActors(List<ICombatActor> actors);
 }

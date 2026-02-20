@@ -7,4 +7,7 @@ public static class LamplighterInputMap
 	public const string Left = "move_left";
 	public const string Right = "move_right";
 
+	public const string Select = "select";
+	public const string Back = "back";
+
 }

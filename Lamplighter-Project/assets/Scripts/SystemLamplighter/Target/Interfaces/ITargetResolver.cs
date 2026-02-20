@@ -1,6 +1,8 @@
 using System;
 using Characters.Interfaces;
 using SystemLamplighter.Interfaces;
+using SystemLamplighter.DataStructure.GeneralData;
+
 
 namespace SystemLamplighter.Target.Interfaces;
 
@@ -10,4 +12,7 @@ namespace SystemLamplighter.Target.Interfaces;
 public interface ITargetResolver : IDisposable
 {
 	public void ResolveTargets(IActionData action, ICombatActor mainActor);
+
+	public TargetResolutionData Select();
+	public TargetResolutionData Cancel();
 }
