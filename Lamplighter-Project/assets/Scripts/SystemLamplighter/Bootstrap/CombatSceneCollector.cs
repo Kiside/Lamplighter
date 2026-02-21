@@ -13,11 +13,13 @@ using SystemLamplighter.Tool;
 
 namespace SystemLamplighter.Bootstrap
 {
-	public partial class CombatSceneCollector : Node
+	/// <summary>
+	/// Classe per la gestione del combattimento di tipo Node.
+	/// Lo scopo della classe è quello di generare e mantenere le istanze che serviranno
+	/// per l'inizio e la gestione del combattimento
+	/// </summary>
+	public partial class CombatSceneCollector : BaseCollector
 	{
-
-		[Export]
-		private Godot.Collections.Array<GroupsName> _groups;
 		[Export]
 		private bool _autoStartCombat = true;
 
@@ -60,19 +62,9 @@ namespace SystemLamplighter.Bootstrap
 		/// </summary>
 		private void GetCombatActorsHandler()
 		{
-			DebugLamplighter.Assert(_groups != null, "_groups is null");
-
-			if(_groups == null && _groups.Count <= 0)
-				return;
-
-			Godot.Collections.Array<Node> array = new Godot.Collections.Array<Node>();
-			foreach(var g in _groups)
-			{
-				Log.PrintMessage($"searching for: {g}");				
-				array.AddRange(GetTree().GetNodesInGroup($"{g}"));
-			}
-
-			InitActors(array);
+			Godot.Collections.Array<Node> array = GetNodesOfGroups();
+			if(array != null)
+				InitActors(array);
 		}
 		
 		/// <summary>

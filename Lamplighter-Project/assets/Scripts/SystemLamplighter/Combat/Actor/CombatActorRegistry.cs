@@ -8,6 +8,9 @@ using SystemLamplighter.Common.Enums;
 
 namespace SystemLamplighter.Combat.Actor
 {
+	/// <summary>
+	/// Classe per gestire CHI sta combattendo
+	/// </summary>
 	public class CombatActorRegistry : ICombatActorRegistry
 	{
 		private List<ICombatActor> _actors;

@@ -11,7 +11,7 @@ public abstract partial class TargetResolver : Resource, ITargetResolver
 {
 	public bool IsActive { get; set; }
 	
-	public abstract void ResolveTargets(IActionData action, ICombatActor mainActor);
+	public abstract TargetCursorState ResolveTargets(IActionData action, ICombatActor mainActor);
 
 	public TargetResolver() : this(false) {}
 

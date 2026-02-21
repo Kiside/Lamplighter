@@ -25,4 +25,9 @@ public class CombatActor : ICombatActor
 	}
 
 	public AtbCharacterStatus UpdateAtbPosition(float value) => AtbProperties.UpdatePosition(value);
+
+	public void HighlightActor()
+	{
+		
+	}
 }

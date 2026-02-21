@@ -11,7 +11,7 @@ namespace SystemLamplighter.Target.Interfaces;
 /// </summary>
 public interface ITargetResolver : IDisposable
 {
-	public void ResolveTargets(IActionData action, ICombatActor mainActor);
+	public TargetCursorState ResolveTargets(IActionData action, ICombatActor mainActor);
 
 	public TargetResolutionData Select();
 	public TargetResolutionData Cancel();

@@ -31,7 +31,7 @@ public partial class SelectionTargetResolver : TargetResolver
 		_combatActorPosition = combatActorPosition;
 	}
 
-	public override void ResolveTargets(IActionData action, ICombatActor casterActor)
+	public override TargetCursorState ResolveTargets(IActionData action, ICombatActor casterActor)
 	{
 		DebugLamplighter.Assert(action != null, "action is null");
 		DebugLamplighter.Assert(casterActor != null, "caster actor is null");
@@ -44,6 +44,8 @@ public partial class SelectionTargetResolver : TargetResolver
 
 		if(_combatActorsSelected.Count > 0)
 			_combatActorsSelected.Clear();
+
+		return new ActorCursorState(_currentActorHighlighted);
 	}
 
 	public override TargetCursorState MoveTarget(Vector2 direction)

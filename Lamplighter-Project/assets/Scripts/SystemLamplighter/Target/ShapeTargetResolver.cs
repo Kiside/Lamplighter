@@ -9,9 +9,9 @@ namespace SystemLamplighter.Target;
 [GlobalClass]
 public partial class ShapeTargetResolver : TargetResolver
 {
-	public override void ResolveTargets(IActionData action, ICombatActor mainActor)
+	public override TargetCursorState ResolveTargets(IActionData action, ICombatActor mainActor)
 	{
-		
+		return new PositionCursorState(new Vector3(0,0,0)); 
 	}
 
 	public override TargetCursorState MoveTarget(Vector2 direction)

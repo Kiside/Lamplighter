@@ -3,6 +3,11 @@ using Characters.Interfaces;
 using Godot;
 using SystemLamplighter.Debug;
 
+namespace SystemLamplighter.Combat.Actor;
+
+/// <summary>
+/// Classe per gestire le posizioni dei personaggi in battaglia
+/// </summary>
 public class CombatActorPosition3DProvider : ICombatActorPositionProvider<Node3D>
 {
 	private Dictionary<ICombatActor, Node3D> _actorPositions;

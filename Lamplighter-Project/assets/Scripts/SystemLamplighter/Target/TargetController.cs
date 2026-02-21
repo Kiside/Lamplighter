@@ -4,6 +4,7 @@ using SystemLamplighter.Extensions;
 using SystemLamplighter.Debug;
 using Godot;
 using SystemLamplighter.Common.Input;
+using SystemLamplighter.DataStructure.GeneralData;
 
 namespace SystemLamplighter.Target;
 
@@ -44,7 +45,7 @@ public partial class TargetController : AbstractController<TargetView, TargetMod
 			CurrentTargetResolver = _model.FindTargetResolver<ShapeTargetResolver>();
 		}
 
-		CurrentTargetResolver.ResolveTargets(ev.Action, ev.Actor);
+		RenderIfAny(CurrentTargetResolver.ResolveTargets(ev.Action, ev.Actor));
 	}
 
 	public override void _PhysicsProcess(double delta)
@@ -57,16 +58,14 @@ public partial class TargetController : AbstractController<TargetView, TargetMod
 
 	private void TargetMovement()
 	{
-		var cursorState = CurrentTargetResolver?.MoveTarget
+		RenderIfAny(CurrentTargetResolver?.MoveTarget
 		(
 			Input.GetVector(LamplighterInputMap.Left, 
 			LamplighterInputMap.Right, 
 			LamplighterInputMap.Down, 
 			LamplighterInputMap.Up)
-		);
-
-		if(cursorState != null)
-			_view.Render(cursorState);
+		));
+		
 	}
 
 	private void TargetInputHandler()
@@ -75,6 +74,12 @@ public partial class TargetController : AbstractController<TargetView, TargetMod
 			CurrentTargetResolver?.Select();
 		if(Input.IsActionJustPressed(LamplighterInputMap.Back))
 			CurrentTargetResolver?.Cancel();
+	}
+
+	private void RenderIfAny(TargetCursorState cursorState)
+	{
+		if(cursorState != null)
+			_view.Render(cursorState);
 	}
 
 	public override void _ExitTree()

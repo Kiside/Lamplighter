@@ -5,7 +5,7 @@ using SystemLamplighter.Interfaces;
 
 namespace SystemLamplighter.Setup;
 /// <summary>
-/// Classe per l'inizializzazione dei gruppi
+/// Classe per aggiungere il nodo in un gruppo in modo automatico
 /// </summary>
 public class GroupsInitiator : IGroupsInitiator
 {
