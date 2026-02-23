@@ -11,6 +11,7 @@
 [ext_resource type="Script" uid="uid://eiqlxuh54ofb" path="res://assets/Scripts/SystemLamplighter/Target/TargetModel.cs" id="9_vvneb"]
 [ext_resource type="Script" uid="uid://dbqvaxg514g2a" path="res://assets/Scripts/SystemLamplighter/Target/TargetView.cs" id="10_lc0uq"]
 [ext_resource type="Script" uid="uid://b05d2vn03bqao" path="res://assets/Scripts/SystemLamplighter/Target/SelectionTargetResolver.cs" id="10_vvneb"]
+[ext_resource type="Script" uid="uid://bhxtutkxsl8ll" path="res://assets/Scripts/SystemLamplighter/Bootstrap/HighlightSceneCollector.cs" id="12_lc0uq"]
 
 [sub_resource type="Theme" id="Theme_syokn"]
 default_font_size = 10
@@ -23,8 +24,8 @@ metadata/_custom_type_script = "uid://b05d2vn03bqao"
 
 [node name="CombatSceneCollector" type="Node" parent="." unique_id=248073592]
 script = ExtResource("2_4t55p")
-_groups = Array[int]([0, 1])
 _autoStartCombat = false
+_groups = Array[int]([0, 1])
 
 [node name="ATB" parent="." unique_id=922059732 instance=ExtResource("1_7okkr")]
 
@@ -176,6 +177,12 @@ _targetResolvers = [SubResource("Resource_lc0uq")]
 
 [node name="TargetView" type="Node" parent="TargetController" unique_id=1573581715]
 script = ExtResource("10_lc0uq")
+
+[node name="VisualSceneCollector" type="Node" parent="." unique_id=147890580]
+
+[node name="HighlightSceneCollector" type="Node" parent="." unique_id=1300145996]
+script = ExtResource("12_lc0uq")
+_groups = Array[int]([3, 4])
 
 [connection signal="button_down" from="DebugATB/VBoxContainer/Start Combat" to="DebugATB" method="StartCombatClick"]
 [connection signal="button_down" from="DebugATB/VBoxContainer/Stop Combat" to="DebugATB" method="StopCombatClick"]

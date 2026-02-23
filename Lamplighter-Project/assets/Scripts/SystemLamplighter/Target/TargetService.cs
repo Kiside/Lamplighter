@@ -12,7 +12,7 @@ namespace SystemLamplighter.Target;
 /// <summary>
 /// Servizio per la targetizzazione, contiene la logica per risolvere i target
 /// </summary>
-public class TargetService : ITargetResolver
+public class TargetService
 {
 	private Camera3D _camera;
 

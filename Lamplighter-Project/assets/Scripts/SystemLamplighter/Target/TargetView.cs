@@ -1,9 +1,12 @@
+using System.Linq;
 using Godot;
 using SystemLamplighter.Abstract.MVC;
+using SystemLamplighter.Common.Enums;
 using SystemLamplighter.DataStructure.GeneralData;
 using SystemLamplighter.Debug;
 using SystemLamplighter.Interfaces;
 using SystemLamplighter.MVC;
+using SystemLamplighter.Setup;
 
 namespace SystemLamplighter.Target;
 
@@ -14,6 +17,10 @@ public partial class TargetView : ControlView, ITargetView, IHighlighter
 {
 	[Export]
 	private NodePath _selectionTargetUiPath;
+	[Export]
+	protected Godot.Collections.Array<GroupsName> _groups;
+
+	private IGroupsInitiator _groupsInitiator;
 
 	private Control _selectionTargetUi;
 	private IHighlightSystem _highlightSystem;
@@ -21,6 +28,8 @@ public partial class TargetView : ControlView, ITargetView, IHighlighter
 	public override void Init()
 	{
 		CheckNodes();
+	
+		_groupsInitiator = new GroupsInitiator(_groups.Select(g => g.ToString()).ToList<string>(), this);
 	}
 
 	public void InitHighlighterSystem(IHighlightSystem highlightSystem)

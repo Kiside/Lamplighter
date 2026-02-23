@@ -18,5 +18,4 @@ public interface ICombatActor
     public CombatLoadout CombatLoadout { get; }
     public IActionData CurrentAction { get; set; }
     public AtbCharacterStatus UpdateAtbPosition(float value);
-    public void HighlightActor();
 }

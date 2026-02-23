@@ -28,6 +28,8 @@ enabled=PackedStringArray("res://addons/LamplighterPlugins/plugin.cfg")
 enemy="gruppo generico per nemici"
 ally="gruppo generico per gli alleati"
 neutral_npc="gruppo generico per gli npc neutrali"
+highlighter=""
+highlightable=""
 
 [input]
 

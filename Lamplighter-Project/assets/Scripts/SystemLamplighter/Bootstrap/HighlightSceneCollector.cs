@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.Security.Cryptography.X509Certificates;
+using Characters.Interfaces;
 using Godot;
 using Microsoft.Extensions.DependencyInjection;
 using SystemLamplighter.Common.Enums;
@@ -9,6 +11,7 @@ namespace SystemLamplighter.Bootstrap;
 public partial class HighlightSceneCollector : BaseCollector
 {
 	private IHighlightSystem _highlightSystem;
+	private CombatActorHighlightableProvider _highlightableProvider;
 
 	public override void _Ready()
 	{
@@ -20,6 +23,9 @@ public partial class HighlightSceneCollector : BaseCollector
 	{
 		_highlightSystem = GameBootstrap.Services
 		.GetRequiredService<IHighlightSystem>();
+
+		_highlightableProvider = GameBootstrap.Services
+		.GetRequiredService<CombatActorHighlightableProvider>();
 
 		GetHighlightHandler();
 	}
@@ -36,10 +42,19 @@ public partial class HighlightSceneCollector : BaseCollector
 		if(array.Count <= 0)
 			return;
 
+		Dictionary<ICombatActor, IHighlightable> highlightables = new Dictionary<ICombatActor, IHighlightable>();
+
 		foreach(var a in array)
 		{
 			if(a is IHighlighter highlightable)
 				highlightable.InitHighlighterSystem(_highlightSystem);
+
+			if(a is ICombatActor c && a is IHighlightable h)
+			{
+				highlightables.Add(c, h);
+			}
 		}
+
+		_highlightableProvider.Init(highlightables);
 	}
 }

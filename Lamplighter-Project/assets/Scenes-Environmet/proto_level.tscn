@@ -11,13 +11,13 @@
 [ext_resource type="Script" uid="uid://dgpafgjng8e3w" path="res://assets/Scripts/Characters/NPC/LamplighterNpcCombat.cs" id="7_uvot1"]
 [ext_resource type="Script" uid="uid://cfd2sruxh3u7l" path="res://assets/Scripts/Characters/NPC/LamplighterNpcMovement.cs" id="8_7o5g0"]
 [ext_resource type="Script" uid="uid://hpv57386fhw0" path="res://assets/Scripts/Characters/Loadout/CombatLoadout.cs" id="9_uvot1"]
-[ext_resource type="Script" uid="uid://53pv7v0c5gad" path="res://assets/Scripts/SystemLamplighter/DataStructure/ActionData/AttackAction.cs" id="10_7o5g0"]
+[ext_resource type="Script" uid="uid://53pv7v0c5gad" path="res://assets/Scripts/SystemLamplighter/DataStructure/ActionsData/AttackAction.cs" id="10_7o5g0"]
 [ext_resource type="Resource" uid="uid://dlftjlcuk3pr4" path="res://assets/CustomResources/Prototype/attack.tres" id="11_hp1yv"]
-[ext_resource type="Script" uid="uid://bnfdp5jkgnimd" path="res://assets/Scripts/SystemLamplighter/DataStructure/ActionData/DefenseAction.cs" id="12_h0r1b"]
+[ext_resource type="Script" uid="uid://bnfdp5jkgnimd" path="res://assets/Scripts/SystemLamplighter/DataStructure/ActionsData/DefenseAction.cs" id="12_h0r1b"]
 [ext_resource type="Resource" uid="uid://dcd5ackoimdk6" path="res://assets/CustomResources/Prototype/defense.tres" id="13_x5dwk"]
-[ext_resource type="Script" uid="uid://cwd6nmn8t150p" path="res://assets/Scripts/SystemLamplighter/DataStructure/ActionData/MagicAction.cs" id="14_chj2u"]
+[ext_resource type="Script" uid="uid://cwd6nmn8t150p" path="res://assets/Scripts/SystemLamplighter/DataStructure/ActionsData/MagicAction.cs" id="14_chj2u"]
 [ext_resource type="Resource" uid="uid://cdqt0xaj3qxg8" path="res://assets/CustomResources/Prototype/basic magic.tres" id="15_23igw"]
-[ext_resource type="Script" uid="uid://bpc15l8suoj7p" path="res://assets/Scripts/SystemLamplighter/DataStructure/ActionData/ItemAction.cs" id="16_mkya5"]
+[ext_resource type="Script" uid="uid://bpc15l8suoj7p" path="res://assets/Scripts/SystemLamplighter/DataStructure/ActionsData/ItemAction.cs" id="16_mkya5"]
 [ext_resource type="Resource" uid="uid://bjd0r2gvapdf" path="res://assets/CustomResources/Prototype/healthItem.tres" id="17_gor4l"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mw5we"]
@@ -48,7 +48,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0358276, 0)
 material_override = SubResource("StandardMaterial3D_mw5we")
 size = Vector3(21.6799, 0.0296631, 20.2432)
 
-[node name="Enemy" type="CharacterBody3D" parent="." unique_id=1970786060]
+[node name="Enemy" type="CharacterBody3D" parent="." unique_id=1970786060 groups=["enemy", "highlightable"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.564902, 0.5407543, 0.04921341)
 script = ExtResource("2_aw6lp")
 View = NodePath("NpView")
@@ -64,7 +64,7 @@ mesh = SubResource("BoxMesh_ejd0h")
 script = ExtResource("3_8uc3x")
 _combatLoadoutNode = NodePath("../CombatLoadout")
 _atbCharacterProperties = SubResource("Resource_80fhm")
-_groups = Array[int]([1])
+_groups = Array[int]([1, 3])
 
 [node name="NpView" type="Node" parent="Enemy" unique_id=1403210870]
 script = ExtResource("4_66ris")

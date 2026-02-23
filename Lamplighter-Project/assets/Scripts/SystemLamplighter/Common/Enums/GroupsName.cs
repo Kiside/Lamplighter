@@ -6,5 +6,7 @@ public enum GroupsName
 {
 	ally,
 	enemy,
-	neutral_npc
+	neutral_npc,
+	highlightable,
+	highlighter
 }

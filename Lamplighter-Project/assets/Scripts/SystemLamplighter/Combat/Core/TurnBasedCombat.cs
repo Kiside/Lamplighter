@@ -82,7 +82,7 @@ namespace SystemLamplighter.Combat.Core
 
 		public void OnEndTarget(EndTargetEvent ev)
 		{
-			if (ev.TargetsPosition != Actor)
+			if (ev.TargetResolutionContext.CasterActor != Actor)
 				return;
 
 			_disposeEndTargetEvent?.Dispose();
