@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using Characters.Interfaces;
 using SystemLamplighter.Interfaces;
 
-public class CombatActorHighlightableProvider
+public class CombatActorHighlightableProvider : ICombatActorHighlightableProvider
 {
 	Dictionary<ICombatActor, IHighlightable> _highlightables;
 	public CombatActorHighlightableProvider()

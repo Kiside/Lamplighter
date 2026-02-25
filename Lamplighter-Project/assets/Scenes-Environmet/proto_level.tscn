@@ -11,13 +11,13 @@
 [ext_resource type="Script" uid="uid://dgpafgjng8e3w" path="res://assets/Scripts/Characters/NPC/LamplighterNpcCombat.cs" id="7_uvot1"]
 [ext_resource type="Script" uid="uid://cfd2sruxh3u7l" path="res://assets/Scripts/Characters/NPC/LamplighterNpcMovement.cs" id="8_7o5g0"]
 [ext_resource type="Script" uid="uid://hpv57386fhw0" path="res://assets/Scripts/Characters/Loadout/CombatLoadout.cs" id="9_uvot1"]
-[ext_resource type="Script" uid="uid://53pv7v0c5gad" path="res://assets/Scripts/SystemLamplighter/DataStructure/ActionsData/AttackAction.cs" id="10_7o5g0"]
+[ext_resource type="Script" uid="uid://53pv7v0c5gad" path="res://assets/Scripts/SystemLamplighter/DataStructure/ActionsData/AttackAction.cs" id="10_uvot1"]
 [ext_resource type="Resource" uid="uid://dlftjlcuk3pr4" path="res://assets/CustomResources/Prototype/attack.tres" id="11_hp1yv"]
-[ext_resource type="Script" uid="uid://bnfdp5jkgnimd" path="res://assets/Scripts/SystemLamplighter/DataStructure/ActionsData/DefenseAction.cs" id="12_h0r1b"]
+[ext_resource type="Script" uid="uid://bnfdp5jkgnimd" path="res://assets/Scripts/SystemLamplighter/DataStructure/ActionsData/DefenseAction.cs" id="12_7o5g0"]
 [ext_resource type="Resource" uid="uid://dcd5ackoimdk6" path="res://assets/CustomResources/Prototype/defense.tres" id="13_x5dwk"]
-[ext_resource type="Script" uid="uid://cwd6nmn8t150p" path="res://assets/Scripts/SystemLamplighter/DataStructure/ActionsData/MagicAction.cs" id="14_chj2u"]
+[ext_resource type="Script" uid="uid://cwd6nmn8t150p" path="res://assets/Scripts/SystemLamplighter/DataStructure/ActionsData/MagicAction.cs" id="14_hp1yv"]
 [ext_resource type="Resource" uid="uid://cdqt0xaj3qxg8" path="res://assets/CustomResources/Prototype/basic magic.tres" id="15_23igw"]
-[ext_resource type="Script" uid="uid://bpc15l8suoj7p" path="res://assets/Scripts/SystemLamplighter/DataStructure/ActionsData/ItemAction.cs" id="16_mkya5"]
+[ext_resource type="Script" uid="uid://bpc15l8suoj7p" path="res://assets/Scripts/SystemLamplighter/DataStructure/ActionsData/ItemAction.cs" id="16_h0r1b"]
 [ext_resource type="Resource" uid="uid://bjd0r2gvapdf" path="res://assets/CustomResources/Prototype/healthItem.tres" id="17_gor4l"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mw5we"]
@@ -77,10 +77,10 @@ script = ExtResource("8_7o5g0")
 
 [node name="CombatLoadout" type="Node" parent="Enemy" unique_id=1511632761]
 script = ExtResource("9_uvot1")
-_attack = Array[ExtResource("10_7o5g0")]([ExtResource("11_hp1yv")])
-_defense = Array[ExtResource("12_h0r1b")]([ExtResource("13_x5dwk")])
-_magic = Array[ExtResource("14_chj2u")]([ExtResource("15_23igw")])
-_items = Array[ExtResource("16_mkya5")]([ExtResource("17_gor4l")])
+_attack = Array[ExtResource("10_uvot1")]([ExtResource("11_hp1yv")])
+_defense = Array[ExtResource("12_7o5g0")]([ExtResource("13_x5dwk")])
+_magic = Array[ExtResource("14_hp1yv")]([ExtResource("15_23igw")])
+_items = Array[ExtResource("16_h0r1b")]([ExtResource("17_gor4l")])
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Enemy" unique_id=1275443056]
 shape = SubResource("BoxShape3D_uvot1")
@@ -89,9 +89,6 @@ shape = SubResource("BoxShape3D_uvot1")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.010365605, 0)
 
 [node name="ProtoCombat" parent="." unique_id=156637578 instance=ExtResource("2_mw5we")]
-
-[node name="DebugATB" parent="ProtoCombat" index="2" unique_id=1392805927 node_paths=PackedStringArray("_allies")]
-_allies = [NodePath("../../Charlie")]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=2112330929]
 transform = Transform3D(1, 0, 0, 0, 0.56336695, 0.82620686, 0, -0.82620686, 0.56336695, 0, 0.010365605, 0)

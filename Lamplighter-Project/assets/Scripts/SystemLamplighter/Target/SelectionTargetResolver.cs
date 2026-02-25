@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using Characters.Interfaces;
 using Godot;
+using Microsoft.Extensions.DependencyInjection;
+using SystemLamplighter.Bootstrap;
 using SystemLamplighter.DataStructure.GeneralData;
 using SystemLamplighter.Debug;
 using SystemLamplighter.Extensions;
@@ -12,8 +14,8 @@ namespace SystemLamplighter.Target;
 [GlobalClass]
 public partial class SelectionTargetResolver : TargetResolver
 {
-	private readonly ICombatActorRegistry _combatActors;
-	private readonly ICombatActorPositionProvider<Node3D> _combatActorPosition;
+	private  ICombatActorRegistry _combatActors;
+	private ICombatActorPositionProvider<Node3D> _combatActorPosition;
 
 	private ICombatActor _casterActor;
 	private ICombatActor _currentActorHighlighted;
@@ -23,24 +25,28 @@ public partial class SelectionTargetResolver : TargetResolver
 
 	
 
-	public SelectionTargetResolver() : this(null, null) {}
-
-	public SelectionTargetResolver(ICombatActorRegistry combatActors, ICombatActorPositionProvider<Node3D> combatActorPosition)
+	public SelectionTargetResolver()
 	{
-		_combatActors = combatActors;
-		_combatActorPosition = combatActorPosition;
+		
 	}
+
 
 	public override TargetCursorState ResolveTargets(IActionData action, ICombatActor casterActor)
 	{
 		DebugLamplighter.Assert(action != null, "action is null");
 		DebugLamplighter.Assert(casterActor != null, "caster actor is null");
 
+		_combatActors = GameBootstrap.Services.GetRequiredService<ICombatActorRegistry>();
+		_combatActorPosition = GameBootstrap.Services.GetRequiredService<ICombatActorPositionProvider<Node3D>>();
+
 		IsActive = true;
 		_currentTargetData = action.TargetData;
 		_casterActor = casterActor;
 		_currentActorHighlighted = _combatActors.GetActor(0);
 		currentTargetSelected = 0;
+		
+		if(_combatActorsSelected == null)
+			_combatActorsSelected = new List<ICombatActor>();
 
 		if(_combatActorsSelected.Count > 0)
 			_combatActorsSelected.Clear();

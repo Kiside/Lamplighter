@@ -13,8 +13,9 @@ namespace SystemLamplighter.Target;
 /// </summary>
 public partial class TargetController : AbstractController<TargetView, TargetModel>
 {
-	TargetResolver CurrentTargetResolver { get => _model.CurrentTargetResolver; set => _model.CurrentTargetResolver = value; } 
-	
+	#nullable enable
+	TargetResolver? CurrentTargetResolver { get => _model.CurrentTargetResolver; set => _model.CurrentTargetResolver = value; } 
+	#nullable disable
 
 	public override void _Ready()
 	{

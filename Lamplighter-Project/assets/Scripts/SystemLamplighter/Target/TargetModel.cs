@@ -20,9 +20,11 @@ public partial class TargetModel : AbstractModel
 	private Godot.Collections.Array<TargetResolver> _targetResolvers;
 
 	public List<TargetResolver> TargetResolvers => _targetResolvers.ToList();
-
-	private TargetResolver _currentTargetResolver;
-	public TargetResolver CurrentTargetResolver {get => _currentTargetResolver; set => _currentTargetResolver = value; }
+	
+	#nullable enable
+	private  TargetResolver? _currentTargetResolver;
+	public TargetResolver? CurrentTargetResolver {get => _currentTargetResolver; set => _currentTargetResolver = value; }
+	#nullable disable
 
 	private Camera3D _camera;
 	public Camera3D Camera => _camera;
@@ -39,9 +41,9 @@ public partial class TargetModel : AbstractModel
 
 	private void NodeChecking()
 	{
-		DebugLamplighter.Assert(_cameraPath != null, "camera path is null");
+		//DebugLamplighter.Assert(_cameraPath != null, "camera path is null");
 
-		_camera = GetNode<Camera3D>(_cameraPath);
+		//_camera = GetNode<Camera3D>(_cameraPath);
 	}
 
 	public override void _ExitTree()

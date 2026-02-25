@@ -11,7 +11,7 @@ namespace SystemLamplighter.Bootstrap;
 public partial class HighlightSceneCollector : BaseCollector
 {
 	private IHighlightSystem _highlightSystem;
-	private CombatActorHighlightableProvider _highlightableProvider;
+	private ICombatActorHighlightableProvider _highlightableProvider;
 
 	public override void _Ready()
 	{
@@ -25,7 +25,7 @@ public partial class HighlightSceneCollector : BaseCollector
 		.GetRequiredService<IHighlightSystem>();
 
 		_highlightableProvider = GameBootstrap.Services
-		.GetRequiredService<CombatActorHighlightableProvider>();
+		.GetRequiredService<ICombatActorHighlightableProvider>();
 
 		GetHighlightHandler();
 	}

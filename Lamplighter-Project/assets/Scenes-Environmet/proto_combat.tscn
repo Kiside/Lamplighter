@@ -1,20 +1,14 @@
 [gd_scene format=3 uid="uid://bjvqik1fmkboh"]
 
 [ext_resource type="PackedScene" uid="uid://dbtex6mgn3dnh" path="res://assets/Scenes-Node/Atb.tscn" id="1_7okkr"]
-[ext_resource type="Script" uid="uid://diat8x8rgg5om" path="res://assets/Scripts/SystemLamplighter/Debug/DebugAtb.cs" id="2_4px06"]
 [ext_resource type="Script" uid="uid://h8n6pktfyb53" path="res://assets/Scripts/SystemLamplighter/Bootstrap/CombatSceneCollector.cs" id="2_4t55p"]
-[ext_resource type="Script" uid="uid://h6nntw8ksb10" path="res://assets/Scripts/SystemLamplighter/Debug/DebugButton.cs" id="3_hlmel"]
-[ext_resource type="Image" uid="uid://cqtat6q64v7p0" path="res://assets/Resources/Avatars/allies.png" id="3_khyje"]
-[ext_resource type="Image" uid="uid://cqklojhdlw85m" path="res://assets/Resources/Avatars/enemies.png" id="4_syokn"]
+[ext_resource type="PackedScene" uid="uid://uxdwgwv3uyrn" path="res://assets/Scenes-Environmet/debug_atb.tscn" id="4_4ay5c"]
 [ext_resource type="PackedScene" uid="uid://bgsjemevth5s" path="res://assets/Scenes-Node/battle_menu.tscn" id="7_5f4u0"]
 [ext_resource type="Script" uid="uid://2mwkrrk6l48d" path="res://assets/Scripts/SystemLamplighter/Target/TargetController.cs" id="8_x12ig"]
 [ext_resource type="Script" uid="uid://eiqlxuh54ofb" path="res://assets/Scripts/SystemLamplighter/Target/TargetModel.cs" id="9_vvneb"]
 [ext_resource type="Script" uid="uid://dbqvaxg514g2a" path="res://assets/Scripts/SystemLamplighter/Target/TargetView.cs" id="10_lc0uq"]
 [ext_resource type="Script" uid="uid://b05d2vn03bqao" path="res://assets/Scripts/SystemLamplighter/Target/SelectionTargetResolver.cs" id="10_vvneb"]
 [ext_resource type="Script" uid="uid://bhxtutkxsl8ll" path="res://assets/Scripts/SystemLamplighter/Bootstrap/HighlightSceneCollector.cs" id="12_lc0uq"]
-
-[sub_resource type="Theme" id="Theme_syokn"]
-default_font_size = 10
 
 [sub_resource type="Resource" id="Resource_lc0uq"]
 script = ExtResource("10_vvneb")
@@ -29,142 +23,10 @@ _groups = Array[int]([0, 1])
 
 [node name="ATB" parent="." unique_id=922059732 instance=ExtResource("1_7okkr")]
 
-[node name="DebugATB" type="Control" parent="." unique_id=1392805927 node_paths=PackedStringArray("_allies", "_enemies", "_optionButtonWhoAdd", "maxNumberToAdd", "allyNumberIndex", "sliderAlly")]
-custom_minimum_size = Vector2(172.83, 0)
-layout_mode = 3
-anchors_preset = 11
-anchor_left = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -258.00006
-grow_horizontal = 0
-grow_vertical = 2
-script = ExtResource("2_4px06")
-_allies = [null]
-_enemies = []
-Atb = NodePath("../ATB")
-BattleMenu = NodePath("../BattleMenuController")
-_optionButtonWhoAdd = NodePath("VBoxContainer/VBoxAdding/OptionButtonWhoAdd")
-maxNumberToAdd = NodePath("VBoxContainer/VBoxAdding/HBoxContainer/VBoxContainer/MaxNumberToAdd")
-allyNumberIndex = NodePath("VBoxContainer/Ally Slider/AllyNumberIndex")
-sliderAlly = NodePath("VBoxContainer/Ally Slider/HSlider")
-_alliesImage = ExtResource("3_khyje")
-_enemiesImage = ExtResource("4_syokn")
-
-[node name="VBoxContainer" type="VBoxContainer" parent="DebugATB" unique_id=1681203818]
-custom_minimum_size = Vector2(84.785, 0)
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Start Combat" type="Button" parent="DebugATB/VBoxContainer" unique_id=1513491146]
-custom_minimum_size = Vector2(0, 90)
-layout_mode = 2
-text = "Start Combat"
-script = ExtResource("3_hlmel")
-metadata/_custom_type_script = "uid://h6nntw8ksb10"
-
-[node name="Stop Combat" type="Button" parent="DebugATB/VBoxContainer" unique_id=1044132740]
-custom_minimum_size = Vector2(0, 90)
-layout_mode = 2
-text = "Stop Combat"
-script = ExtResource("3_hlmel")
-metadata/_custom_type_script = "uid://h6nntw8ksb10"
-
-[node name="Remove All" type="Button" parent="DebugATB/VBoxContainer" unique_id=886857859]
-custom_minimum_size = Vector2(0, 25.635)
-layout_mode = 2
-text = "Remove All"
-script = ExtResource("3_hlmel")
-metadata/_custom_type_script = "uid://h6nntw8ksb10"
-
-[node name="VBoxAdding" type="VBoxContainer" parent="DebugATB/VBoxContainer" unique_id=218821582]
-layout_mode = 2
-
-[node name="HSeparator" type="HSeparator" parent="DebugATB/VBoxContainer/VBoxAdding" unique_id=1459740133]
-custom_minimum_size = Vector2(0, 13.98)
-layout_mode = 2
-
-[node name="Label" type="Label" parent="DebugATB/VBoxContainer/VBoxAdding" unique_id=1318368271]
-layout_mode = 2
-text = "Adding/Remove"
-horizontal_alignment = 1
-
-[node name="OptionButtonWhoAdd" type="OptionButton" parent="DebugATB/VBoxContainer/VBoxAdding" unique_id=312615542]
-layout_mode = 2
-selected = 0
-item_count = 3
-popup/item_0/text = "Ally"
-popup/item_0/id = 0
-popup/item_1/text = "Enemy"
-popup/item_1/id = 1
-popup/item_2/text = "Ally&Enemy"
-popup/item_2/id = 2
-
-[node name="HBoxContainer" type="HBoxContainer" parent="DebugATB/VBoxContainer/VBoxAdding" unique_id=398270830]
-layout_mode = 2
-alignment = 1
-
-[node name="Add Characters" type="Button" parent="DebugATB/VBoxContainer/VBoxAdding/HBoxContainer" unique_id=1822562498]
-custom_minimum_size = Vector2(0, 90)
-layout_mode = 2
-text = "Add Characters"
-script = ExtResource("3_hlmel")
-metadata/_custom_type_script = "uid://h6nntw8ksb10"
-
-[node name="VBoxContainer" type="VBoxContainer" parent="DebugATB/VBoxContainer/VBoxAdding/HBoxContainer" unique_id=1352125562]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="DebugATB/VBoxContainer/VBoxAdding/HBoxContainer/VBoxContainer" unique_id=825801623]
-layout_mode = 2
-size_flags_vertical = 1
-theme = SubResource("Theme_syokn")
-text = "Number of characters"
-
-[node name="MaxNumberToAdd" type="SpinBox" parent="DebugATB/VBoxContainer/VBoxAdding/HBoxContainer/VBoxContainer" unique_id=1075832287]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="Remove Character" type="Button" parent="DebugATB/VBoxContainer" unique_id=1732588731]
-custom_minimum_size = Vector2(0, 90)
-layout_mode = 2
-text = "Remove Character"
-script = ExtResource("3_hlmel")
-metadata/_custom_type_script = "uid://h6nntw8ksb10"
-
-[node name="Ally Slider" type="VBoxContainer" parent="DebugATB/VBoxContainer" unique_id=729836837]
-layout_mode = 2
-
-[node name="HSeparator" type="HSeparator" parent="DebugATB/VBoxContainer/Ally Slider" unique_id=1080845026]
-custom_minimum_size = Vector2(0, 13.98)
-layout_mode = 2
-
-[node name="Move Title" type="Label" parent="DebugATB/VBoxContainer/Ally Slider" unique_id=717377177]
-layout_mode = 2
-text = "Move Ally"
-horizontal_alignment = 1
-
-[node name="LabelIndexCharacter" type="Label" parent="DebugATB/VBoxContainer/Ally Slider" unique_id=698935492]
-layout_mode = 2
-text = "Index Character"
-
-[node name="AllyNumberIndex" type="SpinBox" parent="DebugATB/VBoxContainer/Ally Slider" unique_id=1791323705]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="Label" type="Label" parent="DebugATB/VBoxContainer/Ally Slider" unique_id=682601871]
-layout_mode = 2
-text = "Ally position"
-
-[node name="HSlider" type="HSlider" parent="DebugATB/VBoxContainer/Ally Slider" unique_id=963036510]
-layout_mode = 2
-max_value = 1.0
-step = 0.05
-
 [node name="BattleMenuController" parent="." unique_id=618118549 instance=ExtResource("7_5f4u0")]
+
+[node name="DebugATB" parent="." unique_id=630826399 node_paths=PackedStringArray("_allies") instance=ExtResource("4_4ay5c")]
+_allies = []
 
 [node name="TargetController" type="Node" parent="." unique_id=1026600042]
 script = ExtResource("8_x12ig")
@@ -177,16 +39,17 @@ _targetResolvers = [SubResource("Resource_lc0uq")]
 
 [node name="TargetView" type="Node" parent="TargetController" unique_id=1573581715]
 script = ExtResource("10_lc0uq")
+_selectionTargetUiPath = NodePath("Control")
+_groups = Array[int]([4])
+
+[node name="Control" type="Control" parent="TargetController/TargetView" unique_id=1466548808]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
 
 [node name="VisualSceneCollector" type="Node" parent="." unique_id=147890580]
 
 [node name="HighlightSceneCollector" type="Node" parent="." unique_id=1300145996]
 script = ExtResource("12_lc0uq")
 _groups = Array[int]([3, 4])
-
-[connection signal="button_down" from="DebugATB/VBoxContainer/Start Combat" to="DebugATB" method="StartCombatClick"]
-[connection signal="button_down" from="DebugATB/VBoxContainer/Stop Combat" to="DebugATB" method="StopCombatClick"]
-[connection signal="button_down" from="DebugATB/VBoxContainer/Remove All" to="DebugATB" method="OnRemoveAllClicked"]
-[connection signal="button_down" from="DebugATB/VBoxContainer/VBoxAdding/HBoxContainer/Add Characters" to="DebugATB" method="OnAddCharactersClick"]
-[connection signal="button_down" from="DebugATB/VBoxContainer/Remove Character" to="DebugATB" method="OnRemoveCharacterClick"]
-[connection signal="value_changed" from="DebugATB/VBoxContainer/Ally Slider/HSlider" to="DebugATB" method="OnAllySliderChange"]

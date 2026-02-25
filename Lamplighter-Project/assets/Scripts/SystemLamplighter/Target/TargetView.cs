@@ -18,6 +18,9 @@ public partial class TargetView : ControlView, ITargetView, IHighlighter
 	[Export]
 	private NodePath _selectionTargetUiPath;
 	[Export]
+	/// <summary>
+	/// - highlighter 
+	/// </summary>
 	protected Godot.Collections.Array<GroupsName> _groups;
 
 	private IGroupsInitiator _groupsInitiator;
