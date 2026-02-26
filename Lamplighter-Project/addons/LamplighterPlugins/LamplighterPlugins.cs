@@ -10,6 +10,10 @@ public partial class LamplighterPlugins : EditorPlugin
 		var script = GD.Load<Script>("res://assets/Scripts/SystemLamplighter/Debug/DebugButton.cs");
 		var texture = GD.Load<Texture2D>("res://assets/icon.svg");
 		AddCustomType("DebugButton", "Button", script, texture);
+
+		script = GD.Load<Script>("res://assets/Scripts/SystemLamplighter/Debug/DebugButton.cs");
+		texture = GD.Load<Texture2D>("res://assets/icon.svg");
+		AddCustomType("SelectionLabel", "HBoxContainer", script, texture);
 		// Initialization of the plugin goes here.
 	}
 
@@ -17,6 +21,7 @@ public partial class LamplighterPlugins : EditorPlugin
 	{
 		// Clean-up of the plugin goes here.
 		RemoveCustomType("DebugButton");
+		RemoveCustomType("SelectionLabel");
 	}
 }
 #endif

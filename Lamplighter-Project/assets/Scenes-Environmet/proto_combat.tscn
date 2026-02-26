@@ -3,16 +3,9 @@
 [ext_resource type="PackedScene" uid="uid://dbtex6mgn3dnh" path="res://assets/Scenes-Node/Atb.tscn" id="1_7okkr"]
 [ext_resource type="Script" uid="uid://h8n6pktfyb53" path="res://assets/Scripts/SystemLamplighter/Bootstrap/CombatSceneCollector.cs" id="2_4t55p"]
 [ext_resource type="PackedScene" uid="uid://uxdwgwv3uyrn" path="res://assets/Scenes-Environmet/debug_atb.tscn" id="4_4ay5c"]
+[ext_resource type="PackedScene" uid="uid://4qo76msb1gq4" path="res://assets/Scenes-Node/target_controller.tscn" id="5_syokn"]
 [ext_resource type="PackedScene" uid="uid://bgsjemevth5s" path="res://assets/Scenes-Node/battle_menu.tscn" id="7_5f4u0"]
-[ext_resource type="Script" uid="uid://2mwkrrk6l48d" path="res://assets/Scripts/SystemLamplighter/Target/TargetController.cs" id="8_x12ig"]
-[ext_resource type="Script" uid="uid://eiqlxuh54ofb" path="res://assets/Scripts/SystemLamplighter/Target/TargetModel.cs" id="9_vvneb"]
-[ext_resource type="Script" uid="uid://dbqvaxg514g2a" path="res://assets/Scripts/SystemLamplighter/Target/TargetView.cs" id="10_lc0uq"]
-[ext_resource type="Script" uid="uid://b05d2vn03bqao" path="res://assets/Scripts/SystemLamplighter/Target/SelectionTargetResolver.cs" id="10_vvneb"]
 [ext_resource type="Script" uid="uid://bhxtutkxsl8ll" path="res://assets/Scripts/SystemLamplighter/Bootstrap/HighlightSceneCollector.cs" id="12_lc0uq"]
-
-[sub_resource type="Resource" id="Resource_lc0uq"]
-script = ExtResource("10_vvneb")
-metadata/_custom_type_script = "uid://b05d2vn03bqao"
 
 [node name="ProtoCombat" type="Node" unique_id=4540119]
 
@@ -28,25 +21,7 @@ _groups = Array[int]([0, 1])
 [node name="DebugATB" parent="." unique_id=630826399 node_paths=PackedStringArray("_allies") instance=ExtResource("4_4ay5c")]
 _allies = []
 
-[node name="TargetController" type="Node" parent="." unique_id=1026600042]
-script = ExtResource("8_x12ig")
-View = NodePath("TargetView")
-Model = NodePath("TargetModel")
-
-[node name="TargetModel" type="Node" parent="TargetController" unique_id=718835974]
-script = ExtResource("9_vvneb")
-_targetResolvers = [SubResource("Resource_lc0uq")]
-
-[node name="TargetView" type="Node" parent="TargetController" unique_id=1573581715]
-script = ExtResource("10_lc0uq")
-_selectionTargetUiPath = NodePath("Control")
-_groups = Array[int]([4])
-
-[node name="Control" type="Control" parent="TargetController/TargetView" unique_id=1466548808]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+[node name="TargetController" parent="." unique_id=536833510 instance=ExtResource("5_syokn")]
 
 [node name="VisualSceneCollector" type="Node" parent="." unique_id=147890580]
 
