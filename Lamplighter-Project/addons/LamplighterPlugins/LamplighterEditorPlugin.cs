@@ -3,18 +3,13 @@ using Godot;
 using System;
 
 [Tool]
-public partial class LamplighterPlugins : EditorPlugin
+public partial class LamplighterEditorPlugin : EditorPlugin
 {
 	public override void _EnterTree()
 	{
 		var script = GD.Load<Script>("res://assets/Scripts/SystemLamplighter/Debug/DebugButton.cs");
 		var texture = GD.Load<Texture2D>("res://assets/icon.svg");
 		AddCustomType("DebugButton", "Button", script, texture);
-
-		script = GD.Load<Script>("res://assets/Scripts/SystemLamplighter/Debug/DebugButton.cs");
-		texture = GD.Load<Texture2D>("res://assets/icon.svg");
-		AddCustomType("SelectionLabel", "HBoxContainer", script, texture);
-		// Initialization of the plugin goes here.
 	}
 
 	public override void _ExitTree()

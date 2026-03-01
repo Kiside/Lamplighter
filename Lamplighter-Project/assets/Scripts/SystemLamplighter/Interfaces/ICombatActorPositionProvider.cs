@@ -5,7 +5,10 @@ using Godot;
 public interface ICombatActorPositionProvider<TNodeType>
 {
 	public void Init(Dictionary<ICombatActor, TNodeType> actors);
-	Vector3 GetPosition(ICombatActor actor);
-
-	List<Vector3> GetPositionsFromActors(List<ICombatActor> actors);
+	public Vector3 GetPosition(ICombatActor actor);
+	public List<Vector3> GetPositionsFromActors(List<ICombatActor> actors);
+	public ICombatActor GetFirstActor();
+	public List<ICombatActor> GetActors();
+	public ICombatActor GetActor(int index);
+	public int Count { get; }
 }

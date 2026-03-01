@@ -79,8 +79,18 @@ public partial class TargetController : AbstractController<TargetView, TargetMod
 
 	private void RenderIfAny(TargetCursorState cursorState)
 	{
-		if(cursorState != null)
-			_view.Render(cursorState);
+		if (cursorState == null)
+			return;
+
+		switch (cursorState)
+		{
+			case PositionCursorState positionCursorState:
+				_view.ShapeTargetRender(positionCursorState);
+				break;
+			case ActorCursorState actorCursorState:
+				_view.SelectionTargetRender(actorCursorState);
+				break;
+		}
 	}
 
 	public override void _ExitTree()

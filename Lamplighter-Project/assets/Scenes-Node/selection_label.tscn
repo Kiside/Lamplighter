@@ -1,0 +1,30 @@
+[gd_scene format=3 uid="uid://cpw1bdgq0c1y2"]
+
+[ext_resource type="Script" uid="uid://gj12yorna84w" path="res://assets/Scripts/SystemLamplighter/UI/SelectionLabel.cs" id="1_6rmwg"]
+[ext_resource type="Texture2D" uid="uid://cl67qsn3ml1v3" path="res://assets/icon.svg" id="2_rkpkw"]
+
+[node name="SelectionLabel" type="HBoxContainer" unique_id=1889605235]
+script = ExtResource("1_6rmwg")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1329530670]
+custom_minimum_size = Vector2(16, 0)
+layout_mode = 2
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 10
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer" unique_id=936584100]
+layout_mode = 2
+texture = ExtResource("2_rkpkw")
+expand_mode = 2
+
+[node name="MarginContainer2" type="MarginContainer" parent="." unique_id=282412402]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="Label" type="Label" parent="MarginContainer2" unique_id=604438841]
+layout_mode = 2
+text = "Test"

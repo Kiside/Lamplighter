@@ -6,8 +6,7 @@ using SystemLamplighter.DataStructure.GeneralData;
 
 namespace SystemLamplighter.Target;
 
-[GlobalClass]
-public partial class ShapeTargetResolver : TargetResolver
+public class ShapeTargetResolver : TargetResolver
 {
 	public override TargetCursorState ResolveTargets(IActionData action, ICombatActor mainActor)
 	{

@@ -11,8 +11,8 @@ using SystemLamplighter.Interfaces;
 
 namespace SystemLamplighter.Target;
 
-[GlobalClass]
-public partial class SelectionTargetResolver : TargetResolver
+
+public class SelectionTargetResolver : TargetResolver
 {
 	private  ICombatActorRegistry _combatActors;
 	private ICombatActorPositionProvider<Node3D> _combatActorPosition;
@@ -30,14 +30,16 @@ public partial class SelectionTargetResolver : TargetResolver
 		
 	}
 
+	public void Init(ICombatActorPositionProvider<Node3D> combatActorPosition)
+	{
+		_combatActorPosition = combatActorPosition;		
+	}
 
 	public override TargetCursorState ResolveTargets(IActionData action, ICombatActor casterActor)
 	{
 		DebugLamplighter.Assert(action != null, "action is null");
 		DebugLamplighter.Assert(casterActor != null, "caster actor is null");
-
-		_combatActors = GameBootstrap.Services.GetRequiredService<ICombatActorRegistry>();
-		_combatActorPosition = GameBootstrap.Services.GetRequiredService<ICombatActorPositionProvider<Node3D>>();
+		DebugLamplighter.Assert(_combatActorPosition != null || _combatActorPosition.Count > 0, "_combatActorPosition is null or empty");
 
 		IsActive = true;
 		_currentTargetData = action.TargetData;

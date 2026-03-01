@@ -6,8 +6,7 @@ using SystemLamplighter.DataStructure.GeneralData;
 
 namespace SystemLamplighter.Target;
 
-[GlobalClass]
-public abstract partial class TargetResolver : Resource, ITargetResolver
+public abstract class TargetResolver : ITargetResolver
 {
 	public bool IsActive { get; set; }
 	
@@ -23,4 +22,6 @@ public abstract partial class TargetResolver : Resource, ITargetResolver
 	public abstract TargetResolutionData Select();
 	public abstract TargetResolutionData Cancel();
 	public abstract TargetCursorState MoveTarget(Vector2 direction);
+
+	public abstract void Dispose();
 }

@@ -1,7 +1,9 @@
 using System.Collections.Generic;
+using System.Linq;
 using Characters.Interfaces;
 using Godot;
 using SystemLamplighter.Debug;
+
 
 namespace SystemLamplighter.Combat.Actor;
 
@@ -11,6 +13,8 @@ namespace SystemLamplighter.Combat.Actor;
 public class CombatActorPosition3DProvider : ICombatActorPositionProvider<Node3D>
 {
 	private Dictionary<ICombatActor, Node3D> _actorPositions;
+
+	public int Count => _actorPositions.Count;
 
 	public CombatActorPosition3DProvider()
 	{
@@ -35,4 +39,7 @@ public class CombatActorPosition3DProvider : ICombatActorPositionProvider<Node3D
 			positions.Add(_actorPositions[a].GlobalPosition);
 		return positions;
 	}
+	public ICombatActor GetActor(int index) => _actorPositions.Keys.ToList()[index];
+	public List<ICombatActor> GetActors() => _actorPositions.Keys.ToList();
+	public ICombatActor GetFirstActor() => _actorPositions.First().Key;
 }

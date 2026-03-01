@@ -1,6 +1,8 @@
 using System.Linq;
 using Godot;
+using Microsoft.Extensions.DependencyInjection;
 using SystemLamplighter.Abstract.MVC;
+using SystemLamplighter.Bootstrap;
 using SystemLamplighter.Common.Enums;
 using SystemLamplighter.DataStructure.GeneralData;
 using SystemLamplighter.Debug;
@@ -13,7 +15,7 @@ namespace SystemLamplighter.Target;
 /// <summary>
 /// View per la gestione dei Target
 /// </summary>
-public partial class TargetView : ControlView, ITargetView, IHighlighter
+public partial class TargetView : ControlView, IHighlighter
 {
 	[Export]
 	private NodePath _selectionTargetUiPath;
@@ -25,7 +27,7 @@ public partial class TargetView : ControlView, ITargetView, IHighlighter
 
 	private IGroupsInitiator _groupsInitiator;
 
-	private Control _selectionTargetUi;
+	private SelectionTargetRenderer _selectionTargetUi;
 	private IHighlightSystem _highlightSystem;
 
 	public override void Init()
@@ -44,29 +46,22 @@ public partial class TargetView : ControlView, ITargetView, IHighlighter
 	{
 		DebugLamplighter.Assert(_selectionTargetUiPath != null, "_selectionTargetUiPath is null");
 
-		_selectionTargetUi = GetNode<Control>(_selectionTargetUiPath);
+		_selectionTargetUi = GetNode<SelectionTargetRenderer>(_selectionTargetUiPath);
 	}
 
-	public void Render(TargetCursorState cursorState)
+	public void ShapeTargetRender(PositionCursorState positionCursorState)
 	{
-		switch(cursorState)
-		{
-			case PositionCursorState positionCursorState:
-				DrawShape(positionCursorState);
-				break;
-			case ActorCursorState actorCursorState:
-				HighlightActor(actorCursorState);
-				break;
-		}
+		
 	}
-
-	private void DrawShape(PositionCursorState positionCursorState) { }
-	private void HighlightActor(ActorCursorState actorCursorState)
+	public void SelectionTargetRender(ActorCursorState actorCursorState)
 	{
 		if(!_selectionTargetUi.Visible)
 			_selectionTargetUi.Visible = true;
 		
-		
-		
+		if(!_selectionTargetUi.IsInitialized)
+		{
+			var actors = GameBootstrap.Services.GetRequiredService<ICombatActorRegistry>().GetActors();
+			_selectionTargetUi.InitMenu(actors);
+		}
 	}
 }
