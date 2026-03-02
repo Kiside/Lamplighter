@@ -32,4 +32,9 @@ public class ShapeTargetResolver : TargetResolver
 				TargetResolutionStatus.CANCELED
 			);
 	}
+
+	public override void Dispose()
+	{
+		
+	}
 }

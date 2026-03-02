@@ -10,5 +10,6 @@ public interface ICombatActorPositionProvider<TNodeType>
 	public ICombatActor GetFirstActor();
 	public List<ICombatActor> GetActors();
 	public ICombatActor GetActor(int index);
+	public int GetIndex(ICombatActor actor);
 	public int Count { get; }
 }

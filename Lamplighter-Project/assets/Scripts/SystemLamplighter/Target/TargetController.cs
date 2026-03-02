@@ -17,6 +17,8 @@ public partial class TargetController : AbstractController<TargetView, TargetMod
 	TargetResolver? CurrentTargetResolver { get => _model.CurrentTargetResolver; set => _model.CurrentTargetResolver = value; } 
 	#nullable disable
 
+	
+
 	public override void _Ready()
 	{
 		base._Ready();

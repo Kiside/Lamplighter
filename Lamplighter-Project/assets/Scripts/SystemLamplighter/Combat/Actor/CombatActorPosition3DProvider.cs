@@ -42,4 +42,5 @@ public class CombatActorPosition3DProvider : ICombatActorPositionProvider<Node3D
 	public ICombatActor GetActor(int index) => _actorPositions.Keys.ToList()[index];
 	public List<ICombatActor> GetActors() => _actorPositions.Keys.ToList();
 	public ICombatActor GetFirstActor() => _actorPositions.First().Key;
+	public int GetIndex(ICombatActor actor) => _actorPositions.Keys.ToList().IndexOf(actor);
 }

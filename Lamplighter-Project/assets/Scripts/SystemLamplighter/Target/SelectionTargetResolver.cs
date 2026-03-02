@@ -14,7 +14,6 @@ namespace SystemLamplighter.Target;
 
 public class SelectionTargetResolver : TargetResolver
 {
-	private  ICombatActorRegistry _combatActors;
 	private ICombatActorPositionProvider<Node3D> _combatActorPosition;
 
 	private ICombatActor _casterActor;
@@ -32,7 +31,7 @@ public class SelectionTargetResolver : TargetResolver
 
 	public void Init(ICombatActorPositionProvider<Node3D> combatActorPosition)
 	{
-		_combatActorPosition = combatActorPosition;		
+		_combatActorPosition = combatActorPosition;
 	}
 
 	public override TargetCursorState ResolveTargets(IActionData action, ICombatActor casterActor)
@@ -44,7 +43,7 @@ public class SelectionTargetResolver : TargetResolver
 		IsActive = true;
 		_currentTargetData = action.TargetData;
 		_casterActor = casterActor;
-		_currentActorHighlighted = _combatActors.GetActor(0);
+		_currentActorHighlighted = _combatActorPosition.GetActor(0);
 		currentTargetSelected = 0;
 		
 		if(_combatActorsSelected == null)
@@ -58,9 +57,9 @@ public class SelectionTargetResolver : TargetResolver
 
 	public override TargetCursorState MoveTarget(Vector2 direction)
 	{
-		var index = (_combatActors.GetIndex(_currentActorHighlighted) + (int)Math.Round(direction.Y)) % _combatActors.Count;
+		var index = (_combatActorPosition.GetIndex(_currentActorHighlighted) + (int)Math.Round(direction.Y)) % _combatActorPosition.Count;
 
-		_currentActorHighlighted = _combatActors.GetActor(index);
+		_currentActorHighlighted = _combatActorPosition.GetActor(index);
 
 		return new ActorCursorState(_currentActorHighlighted);
 	}
@@ -92,5 +91,10 @@ public class SelectionTargetResolver : TargetResolver
 				new TargetResolutionContext(),
 				TargetResolutionStatus.CANCELED
 			);
+	}
+
+	public override void Dispose()
+	{
+		
 	}
 }
