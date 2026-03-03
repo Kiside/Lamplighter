@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using Godot;
 using SystemLamplighter.Tool;
 using SystemLamplighter.Interfaces;
+using SystemLamplighter.Common.Enums;
+using System.Linq;
 
 namespace SystemLamplighter.Setup;
 /// <summary>
@@ -14,6 +16,11 @@ public class GroupsInitiator : IGroupsInitiator
 	public GroupsInitiator(List<string> groups, Node node)
 	{
 		_groups = groups;
+		GroupsInit(node);
+	}
+	public GroupsInitiator(Godot.Collections.Array<GroupsName> groups, Node node)
+	{
+		_groups = groups.Select(g => g.ToString()).ToList();
 		GroupsInit(node);
 	}
 

@@ -3,7 +3,7 @@ using Godot;
 namespace SystemLamplighter.Interfaces;
 
 /// <summary>
-/// Interfaccia per l'inizializzazione dei gruppi
+/// Interfaccia per aggiungere il nodo in un gruppo in modo automatico
 /// </summary>
 public interface IGroupsInitiator
 {

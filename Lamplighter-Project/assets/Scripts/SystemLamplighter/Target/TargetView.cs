@@ -15,7 +15,7 @@ namespace SystemLamplighter.Target;
 /// <summary>
 /// View per la gestione dei Target
 /// </summary>
-public partial class TargetView : ControlView, IHighlighter
+public partial class TargetView : ControlView, IHighlighter, INodeOfGroup
 {
 	[Export]
 	private NodePath _selectionTargetUiPath;
@@ -24,9 +24,7 @@ public partial class TargetView : ControlView, IHighlighter
 	/// - highlighter 
 	/// </summary>
 	protected Godot.Collections.Array<GroupsName> _groups;
-
 	private IGroupsInitiator _groupsInitiator;
-
 	private SelectionTargetRenderer _selectionTargetUi;
 	private IHighlightSystem _highlightSystem;
 
@@ -34,6 +32,11 @@ public partial class TargetView : ControlView, IHighlighter
 	{
 		CheckNodes();
 	
+		InitiateGroups();
+	}
+
+	public void InitiateGroups()
+	{
 		_groupsInitiator = new GroupsInitiator(_groups.Select(g => g.ToString()).ToList<string>(), this);
 	}
 

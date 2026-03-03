@@ -30,6 +30,7 @@ ally="gruppo generico per gli alleati"
 neutral_npc="gruppo generico per gli npc neutrali"
 highlighter="gruppo per elementi che evidenziano"
 highlightable="gruppo per elementi evidenziabili"
+controllers="gruppo generico per tutti i controller che possono servire "
 
 [input]
 

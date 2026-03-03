@@ -14,7 +14,7 @@ namespace SystemLamplighter.Target;
 
 public class SelectionTargetResolver : TargetResolver
 {
-	private ICombatActorPositionProvider<Node3D> _combatActorPosition;
+	private readonly ICombatActorPositionProvider<Node3D> _combatActorPosition;
 
 	private ICombatActor _casterActor;
 	private ICombatActor _currentActorHighlighted;
@@ -24,12 +24,7 @@ public class SelectionTargetResolver : TargetResolver
 
 	
 
-	public SelectionTargetResolver()
-	{
-		
-	}
-
-	public void Init(ICombatActorPositionProvider<Node3D> combatActorPosition)
+	public SelectionTargetResolver(ICombatActorPositionProvider<Node3D> combatActorPosition)
 	{
 		_combatActorPosition = combatActorPosition;
 	}

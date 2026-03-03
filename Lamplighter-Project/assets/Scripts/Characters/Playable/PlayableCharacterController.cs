@@ -21,7 +21,7 @@ namespace Characters.Playable
 	/// Classe per il controller del personaggio
 	/// </summary>
 	public partial class PlayableCharacterController : CharacterController<PlayableCharacterView,PlayableCharacterModel>, 
-	IHasCombatInterface<ICombatActor>
+	IHasCombatInterface<ICombatActor>, INodeOfGroup
 	{
 		#region PUBLIC
 		public ICombatActor CombatActor {get => _model.CombatActor;}
@@ -35,7 +35,7 @@ namespace Characters.Playable
 		protected List<string> _groups {get => _model.Groups;}
 		private bool _lockOn = false;
 		private readonly DisposableBagBuilder _bag = DisposableBag.CreateBuilder();
-		protected IGroupsInitiator _groupsInitiator;
+		public IGroupsInitiator _groupsInitiator;
 		#endregion
 		
 		#region PUBLIC PROPERTIES
@@ -49,12 +49,17 @@ namespace Characters.Playable
 
 		protected override void OnInit()
 		{
-			_groupsInitiator = new GroupsInitiator(_groups, this);
+			InitiateGroups();
 
 			_combat.Init(this);
 			_movement.Init(this);
 
 			Subscribe();
+		}
+
+		public void InitiateGroups()
+		{
+			_groupsInitiator = new GroupsInitiator(_groups, this);
 		}
 
 		public ICombatActor GetCombatInterface() => CombatActor;

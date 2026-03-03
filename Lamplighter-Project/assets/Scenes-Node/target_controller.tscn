@@ -2,14 +2,9 @@
 
 [ext_resource type="Script" uid="uid://2mwkrrk6l48d" path="res://assets/Scripts/SystemLamplighter/Target/TargetController.cs" id="1_w6ugs"]
 [ext_resource type="Script" uid="uid://eiqlxuh54ofb" path="res://assets/Scripts/SystemLamplighter/Target/TargetModel.cs" id="2_m4xlp"]
-[ext_resource type="Script" uid="uid://b05d2vn03bqao" path="res://assets/Scripts/SystemLamplighter/Target/SelectionTargetResolver.cs" id="3_102yp"]
 [ext_resource type="Script" uid="uid://dbqvaxg514g2a" path="res://assets/Scripts/SystemLamplighter/Target/TargetView.cs" id="4_tilgp"]
 [ext_resource type="Script" uid="uid://cmi2dntowgqn5" path="res://assets/Scripts/SystemLamplighter/Target/SelectionTargetRenderer.cs" id="5_m4xlp"]
 [ext_resource type="PackedScene" uid="uid://cpw1bdgq0c1y2" path="res://assets/Scenes-Node/selection_label.tscn" id="6_102yp"]
-
-[sub_resource type="Resource" id="Resource_lc0uq"]
-script = ExtResource("3_102yp")
-metadata/_custom_type_script = "uid://b05d2vn03bqao"
 
 [sub_resource type="LabelSettings" id="LabelSettings_w6ugs"]
 
@@ -20,11 +15,11 @@ Model = NodePath("TargetModel")
 
 [node name="TargetModel" type="Node" parent="." unique_id=577065232]
 script = ExtResource("2_m4xlp")
-_targetResolvers = [SubResource("Resource_lc0uq")]
 
 [node name="TargetView" type="Node" parent="." unique_id=1047881918]
 script = ExtResource("4_tilgp")
 _selectionTargetUiPath = NodePath("SelectionTagetUi")
+_groups = Array[int]([4])
 
 [node name="TargetViewUi" type="Control" parent="TargetView" unique_id=1971265428]
 layout_mode = 3
@@ -61,7 +56,7 @@ label_settings = SubResource("LabelSettings_w6ugs")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="SelectionTagetUi" type="Control" parent="TargetView" unique_id=672313700]
+[node name="SelectionTagetUi" type="Control" parent="TargetView" unique_id=672313700 node_paths=PackedStringArray("_menuContainer")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -69,12 +64,15 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("5_m4xlp")
+_menuContainer = NodePath("MenuSelection/MarginContainer/TargetLabelContainer")
+_selectionButton = ExtResource("6_102yp")
 
 [node name="MenuSelection" type="ColorRect" parent="TargetView/SelectionTagetUi" unique_id=242064225]
 custom_minimum_size = Vector2(230, 250)
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_top = 147.93
+offset_right = 230.0
+offset_bottom = 397.93024
 color = Color(0.04264705, 0.083107494, 0.1341039, 1)
 
 [node name="MarginContainer" type="MarginContainer" parent="TargetView/SelectionTagetUi/MenuSelection" unique_id=48607182]
@@ -92,78 +90,3 @@ theme_override_constants/margin_bottom = 15
 [node name="TargetLabelContainer" type="VBoxContainer" parent="TargetView/SelectionTagetUi/MenuSelection/MarginContainer" unique_id=775363900]
 layout_mode = 2
 theme_override_constants/separation = -8
-
-[node name="SelectionLabel" parent="TargetView/SelectionTagetUi/MenuSelection/MarginContainer/TargetLabelContainer" unique_id=1889605235 instance=ExtResource("6_102yp")]
-layout_mode = 2
-
-[node name="HBoxContainer2" type="HBoxContainer" parent="TargetView/SelectionTagetUi/MenuSelection/MarginContainer/TargetLabelContainer" unique_id=1762739718]
-layout_mode = 2
-
-[node name="MarginContainer" type="MarginContainer" parent="TargetView/SelectionTagetUi/MenuSelection/MarginContainer/TargetLabelContainer/HBoxContainer2" unique_id=64075991]
-custom_minimum_size = Vector2(16, 0)
-layout_mode = 2
-theme_override_constants/margin_left = 2
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 2
-theme_override_constants/margin_bottom = 10
-
-[node name="ColorRect" type="ColorRect" parent="TargetView/SelectionTagetUi/MenuSelection/MarginContainer/TargetLabelContainer/HBoxContainer2/MarginContainer" unique_id=2023639536]
-layout_mode = 2
-
-[node name="MarginContainer2" type="MarginContainer" parent="TargetView/SelectionTagetUi/MenuSelection/MarginContainer/TargetLabelContainer/HBoxContainer2" unique_id=1509985750]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_constants/margin_top = 5
-theme_override_constants/margin_bottom = 5
-
-[node name="Label" type="Label" parent="TargetView/SelectionTagetUi/MenuSelection/MarginContainer/TargetLabelContainer/HBoxContainer2/MarginContainer2" unique_id=178283226]
-layout_mode = 2
-text = "Test"
-
-[node name="HBoxContainer3" type="HBoxContainer" parent="TargetView/SelectionTagetUi/MenuSelection/MarginContainer/TargetLabelContainer" unique_id=1672304462]
-layout_mode = 2
-
-[node name="MarginContainer" type="MarginContainer" parent="TargetView/SelectionTagetUi/MenuSelection/MarginContainer/TargetLabelContainer/HBoxContainer3" unique_id=586523500]
-custom_minimum_size = Vector2(16, 0)
-layout_mode = 2
-theme_override_constants/margin_left = 2
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 2
-theme_override_constants/margin_bottom = 10
-
-[node name="ColorRect" type="ColorRect" parent="TargetView/SelectionTagetUi/MenuSelection/MarginContainer/TargetLabelContainer/HBoxContainer3/MarginContainer" unique_id=225329516]
-layout_mode = 2
-
-[node name="MarginContainer2" type="MarginContainer" parent="TargetView/SelectionTagetUi/MenuSelection/MarginContainer/TargetLabelContainer/HBoxContainer3" unique_id=1491897891]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_constants/margin_top = 5
-theme_override_constants/margin_bottom = 5
-
-[node name="Label" type="Label" parent="TargetView/SelectionTagetUi/MenuSelection/MarginContainer/TargetLabelContainer/HBoxContainer3/MarginContainer2" unique_id=440804566]
-layout_mode = 2
-text = "Test"
-
-[node name="HBoxContainer4" type="HBoxContainer" parent="TargetView/SelectionTagetUi/MenuSelection/MarginContainer/TargetLabelContainer" unique_id=151333372]
-layout_mode = 2
-
-[node name="MarginContainer" type="MarginContainer" parent="TargetView/SelectionTagetUi/MenuSelection/MarginContainer/TargetLabelContainer/HBoxContainer4" unique_id=1794909602]
-custom_minimum_size = Vector2(16, 0)
-layout_mode = 2
-theme_override_constants/margin_left = 2
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 2
-theme_override_constants/margin_bottom = 10
-
-[node name="ColorRect" type="ColorRect" parent="TargetView/SelectionTagetUi/MenuSelection/MarginContainer/TargetLabelContainer/HBoxContainer4/MarginContainer" unique_id=784621290]
-layout_mode = 2
-
-[node name="MarginContainer2" type="MarginContainer" parent="TargetView/SelectionTagetUi/MenuSelection/MarginContainer/TargetLabelContainer/HBoxContainer4" unique_id=268724351]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_constants/margin_top = 5
-theme_override_constants/margin_bottom = 5
-
-[node name="Label" type="Label" parent="TargetView/SelectionTagetUi/MenuSelection/MarginContainer/TargetLabelContainer/HBoxContainer4/MarginContainer2" unique_id=894746426]
-layout_mode = 2
-text = "Test"

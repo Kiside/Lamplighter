@@ -42,6 +42,7 @@ metadata/_custom_type_script = "uid://dpwp74optcgd5"
 
 [node name="GameBootstrap" type="Node" parent="." unique_id=1881634156]
 script = ExtResource("1_qcquh")
+_groups = Array[int]([5])
 
 [node name="CSGBox3D" type="CSGBox3D" parent="." unique_id=819949778]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0358276, 0)

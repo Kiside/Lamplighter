@@ -5,30 +5,43 @@ using SystemLamplighter.Debug;
 using Godot;
 using SystemLamplighter.Common.Input;
 using SystemLamplighter.DataStructure.GeneralData;
+using SystemLamplighter.Target.Interfaces;
+using SystemLamplighter.Tool;
+using System.Collections.Generic;
+using SystemLamplighter.Setup;
 
 namespace SystemLamplighter.Target;
 
 /// <summary>
 /// Controller per la classe che si occupa della logica della targetizzazione
 /// </summary>
-public partial class TargetController : AbstractController<TargetView, TargetModel>
+public partial class TargetController : AbstractController<TargetView, TargetModel>, INodeOfGroup
 {
 	#nullable enable
-	TargetResolver? CurrentTargetResolver { get => _model.CurrentTargetResolver; set => _model.CurrentTargetResolver = value; } 
+	ITargetResolver? CurrentTargetResolver { get => _model.CurrentTargetResolver; set => _model.CurrentTargetResolver = value; } 
 	#nullable disable
 
+	private List<string> _groups => _model.Groups;
+
+	GroupsInitiator _groupsInitiator;
+
+	private ITargetResolverFactory _targetResolverFactory;
 	
-
-	public override void _Ready()
-	{
-		base._Ready();
-	}
-
 	public override void Init()
 	{
 		base.Init();
-
+		InitiateGroups();
 		this.SubscribeEvent<StartTargetEvent>(OnStartTarget);
+	}
+
+	public void SetTargetFactory(ITargetResolverFactory targetResolverFactory)
+	{
+		_targetResolverFactory = targetResolverFactory;
+	}
+
+	public void InitiateGroups()
+	{
+		_groupsInitiator = new GroupsInitiator(_groups, this);
 	}
 
 	private void OnStartTarget(StartTargetEvent ev)
@@ -39,14 +52,7 @@ public partial class TargetController : AbstractController<TargetView, TargetMod
 
 		var targetType = ev.Action.TargetData.TargetType;
 
-		if(targetType == Common.Enums.TargetType.SINGLE || targetType == Common.Enums.TargetType.GROUP)
-		{
-			CurrentTargetResolver = _model.FindTargetResolver<SelectionTargetResolver>();
-		}
-		else
-		{
-			CurrentTargetResolver = _model.FindTargetResolver<ShapeTargetResolver>();
-		}
+		CurrentTargetResolver = _targetResolverFactory.Create(targetType);
 
 		RenderIfAny(CurrentTargetResolver.ResolveTargets(ev.Action, ev.Actor));
 	}
