@@ -34,7 +34,7 @@ public partial class TargetController : AbstractController<TargetView, TargetMod
 		this.SubscribeEvent<StartTargetEvent>(OnStartTarget);
 	}
 
-	public void SetTargetFactory(ITargetResolverFactory targetResolverFactory)
+	public void BootstrapInit(ITargetResolverFactory targetResolverFactory)
 	{
 		_targetResolverFactory = targetResolverFactory;
 	}

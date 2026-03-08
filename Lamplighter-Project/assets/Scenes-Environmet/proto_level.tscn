@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bja0qd5k5kaa7" path="res://assets/Scripts/SystemLamplighter/Bootstrap/GameBootstrap.cs" id="1_qcquh"]
 [ext_resource type="PackedScene" uid="uid://c5mvvlosts20h" path="res://assets/Characters/Playable/charlie.tscn" id="1_qfi3i"]
+[ext_resource type="Script" uid="uid://bhx2qfjoh624h" path="res://assets/Scripts/SystemLamplighter/DataStructure/GeneralData/LamplighterGroup.cs" id="2_7o5g0"]
 [ext_resource type="Script" uid="uid://devy8gu6rokai" path="res://assets/Scripts/Characters/NPC/NpCharacterController.cs" id="2_aw6lp"]
 [ext_resource type="PackedScene" uid="uid://bjvqik1fmkboh" path="res://assets/Scenes-Environmet/proto_combat.tscn" id="2_mw5we"]
 [ext_resource type="Script" uid="uid://bc6bjkwcn78h6" path="res://assets/Scripts/Characters/NPC/NpCharacterModel.cs" id="3_8uc3x"]
@@ -19,6 +20,11 @@
 [ext_resource type="Resource" uid="uid://cdqt0xaj3qxg8" path="res://assets/CustomResources/Prototype/basic magic.tres" id="15_23igw"]
 [ext_resource type="Script" uid="uid://bpc15l8suoj7p" path="res://assets/Scripts/SystemLamplighter/DataStructure/ActionsData/ItemAction.cs" id="16_h0r1b"]
 [ext_resource type="Resource" uid="uid://bjd0r2gvapdf" path="res://assets/CustomResources/Prototype/healthItem.tres" id="17_gor4l"]
+
+[sub_resource type="Resource" id="Resource_hp1yv"]
+script = ExtResource("2_7o5g0")
+GroupNames = Array[int]([5])
+metadata/_custom_type_script = "uid://bhx2qfjoh624h"
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mw5we"]
 albedo_color = Color(0.46229059, 0.46229059, 0.46229059, 1)
@@ -42,7 +48,8 @@ metadata/_custom_type_script = "uid://dpwp74optcgd5"
 
 [node name="GameBootstrap" type="Node" parent="." unique_id=1881634156]
 script = ExtResource("1_qcquh")
-_groups = Array[int]([5])
+_getNodesOfGroups = Array[int]([5])
+_lamplighterGroup = SubResource("Resource_hp1yv")
 
 [node name="CSGBox3D" type="CSGBox3D" parent="." unique_id=819949778]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0358276, 0)

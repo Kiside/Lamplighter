@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.Linq;
 using SystemLamplighter.Debug;
 using SystemLamplighter.Extensions;
+using SystemLamplighter.DataStructure.GeneralData;
 
 namespace SystemLamplighter.Bootstrap;
 
@@ -30,8 +31,6 @@ public partial class GameBootstrap : Node
 	{
 		base._EnterTree();
 
-		
-
 		BuildServices();
 	}
 
@@ -39,15 +38,35 @@ public partial class GameBootstrap : Node
     {
         base._Ready();
 
+        InitTargetController();
+		InitSelectionTargetRender();
+    }
 
-        // Ottieni il nodo TargetController dalla scena
+	private void InitSelectionTargetRender()
+	{
+		var selectionTargetRender = this.GetNodesOfGroup(GroupsName.controllers)
+		.FirstOrDefault(n => n is SelectionTargetRenderer) as SelectionTargetRenderer;
+
+		var context = new SelectionTargetRendererContext
+		{
+			combatActorPositionProvider = Services.GetRequiredService<ICombatActorPositionProvider<Node3D>>(),
+			highlightableProvider = Services.GetRequiredService<ICombatActorHighlightableProvider>(),
+			highlightSystem = Services.GetRequiredService<IHighlightSystem>()
+		};
+
+		selectionTargetRender.BootstrapInit(context);
+	}
+
+	private void InitTargetController()
+	{
+		// Ottieni il nodo TargetController dalla scena
         var targetController = this.GetNodesOfGroups(_getNodesOfGroups)
 			.FirstOrDefault(n => n is TargetController) as TargetController;
         // Risolvi la factory dal container DI
         var factory = Services.GetRequiredService<ITargetResolverFactory>();
         // Iniettala nel TargetController
-        targetController.SetTargetFactory(factory);
-    }
+        targetController.BootstrapInit(factory);
+	}
 
 	private void BuildServices()
 	{

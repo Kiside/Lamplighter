@@ -1,13 +1,14 @@
+using System.Collections.Generic;
 using Characters.Interfaces;
 
 namespace SystemLamplighter.DataStructure.GeneralData;
 
 public class ActorCursorState : TargetCursorState
 {
-	public ICombatActor Actor { get; private set; }
+	public ICombatActor ActorSelected { get; private set; }
 
-	public ActorCursorState(ICombatActor actor)
+	public ActorCursorState(ICombatActor actor, List<ICombatActor> actors)
 	{
-		Actor = actor;
+		ActorSelected = actor;
 	}
 }

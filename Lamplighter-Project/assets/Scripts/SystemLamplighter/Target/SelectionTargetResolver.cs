@@ -47,7 +47,7 @@ public class SelectionTargetResolver : TargetResolver
 		if(_combatActorsSelected.Count > 0)
 			_combatActorsSelected.Clear();
 
-		return new ActorCursorState(_currentActorHighlighted);
+		return new ActorCursorState(_currentActorHighlighted, _combatActorPosition.GetActors());
 	}
 
 	public override TargetCursorState MoveTarget(Vector2 direction)
@@ -56,7 +56,7 @@ public class SelectionTargetResolver : TargetResolver
 
 		_currentActorHighlighted = _combatActorPosition.GetActor(index);
 
-		return new ActorCursorState(_currentActorHighlighted);
+		return new ActorCursorState(_currentActorHighlighted, _combatActorPosition.GetActors());
 	}
 
 	public override TargetResolutionData Select()

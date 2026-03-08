@@ -52,6 +52,8 @@ public partial class TargetView : ControlView, IHighlighter, INodeOfGroup
 		_selectionTargetUi = GetNode<SelectionTargetRenderer>(_selectionTargetUiPath);
 	}
 
+
+
 	public void ShapeTargetRender(PositionCursorState positionCursorState)
 	{
 		
@@ -61,10 +63,7 @@ public partial class TargetView : ControlView, IHighlighter, INodeOfGroup
 		if(!_selectionTargetUi.Visible)
 			_selectionTargetUi.Visible = true;
 		
-		if(!_selectionTargetUi.IsInitialized)
-		{
-			var actors = GameBootstrap.Services.GetRequiredService<ICombatActorRegistry>().GetActors();
-			_selectionTargetUi.InitMenu(actors);
-		}
+		_selectionTargetUi.Render(actorCursorState);
+		
 	}
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Godot;
 using SystemLamplighter.Common.Enums;
@@ -18,6 +19,11 @@ public static class NodeExstensions
 			}
 
 			return array;
+	}
+
+	public static Godot.Collections.Array<Node> GetNodesOfGroup(this Node node, GroupsName group)
+	{
+		return node.GetTree().GetNodesInGroup($"{group}");
 	}
 
 

@@ -10,6 +10,8 @@ public partial class SelectionLabel : HBoxContainer
 	[Export]
 	public Label Label {get; private set;}
 
+	public bool IsSelected => Texture.Visible;
+
 	public void SetLabelText(string text) => Label.Text = text;
 
 
