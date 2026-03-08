@@ -44,7 +44,7 @@ public partial class GameBootstrap : Node
 
 	private void InitSelectionTargetRender()
 	{
-		var selectionTargetRender = this.GetNodesOfGroup(GroupsName.controllers)
+		var selectionTargetRender = this.GetNodesOfGroup(GroupsName.renderer)
 		.FirstOrDefault(n => n is SelectionTargetRenderer) as SelectionTargetRenderer;
 
 		var context = new SelectionTargetRendererContext

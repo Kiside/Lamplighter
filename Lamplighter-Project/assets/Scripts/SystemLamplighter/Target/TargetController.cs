@@ -15,33 +15,23 @@ namespace SystemLamplighter.Target;
 /// <summary>
 /// Controller per la classe che si occupa della logica della targetizzazione
 /// </summary>
-public partial class TargetController : AbstractController<TargetView, TargetModel>, INodeOfGroup
+public partial class TargetController : AbstractController<TargetView, TargetModel>
 {
 	#nullable enable
 	ITargetResolver? CurrentTargetResolver { get => _model.CurrentTargetResolver; set => _model.CurrentTargetResolver = value; } 
 	#nullable disable
-
-	private List<string> _groups => _model.Groups;
-
-	GroupsInitiator _groupsInitiator;
 
 	private ITargetResolverFactory _targetResolverFactory;
 	
 	public override void Init()
 	{
 		base.Init();
-		InitiateGroups();
 		this.SubscribeEvent<StartTargetEvent>(OnStartTarget);
 	}
 
 	public void BootstrapInit(ITargetResolverFactory targetResolverFactory)
 	{
 		_targetResolverFactory = targetResolverFactory;
-	}
-
-	public void InitiateGroups()
-	{
-		_groupsInitiator = new GroupsInitiator(_groups, this);
 	}
 
 	private void OnStartTarget(StartTargetEvent ev)

@@ -24,10 +24,6 @@ public partial class TargetModel : AbstractModel
 	public ITargetResolver? CurrentTargetResolver {get => _currentTargetResolver; set => _currentTargetResolver = value; }
 	#nullable disable
 
-	[Export]
-	private Godot.Collections.Array<GroupsName> _groups;
-	public List<string> Groups => _groups.Select(g => g.ToString()).ToList();
-
 	private Camera3D _camera;
 	public Camera3D Camera => _camera;
 

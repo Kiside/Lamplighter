@@ -31,6 +31,7 @@ neutral_npc="gruppo generico per gli npc neutrali"
 highlighter="gruppo per elementi che evidenziano"
 highlightable="gruppo per elementi evidenziabili"
 controllers="gruppo generico per tutti i controller che possono servire "
+renderer="gruppo generico per i renderer"
 
 [input]
 

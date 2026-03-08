@@ -9,6 +9,7 @@ public enum GroupsName
 	neutral_npc,
 	highlightable,
 	highlighter,
-	controllers
+	controllers,
+	renderer
 
 }

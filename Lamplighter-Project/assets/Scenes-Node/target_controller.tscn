@@ -8,7 +8,7 @@
 
 [sub_resource type="LabelSettings" id="LabelSettings_w6ugs"]
 
-[node name="TargetController" type="Node" unique_id=536833510]
+[node name="TargetController" type="Node" unique_id=536833510 groups=["controllers"]]
 script = ExtResource("1_w6ugs")
 View = NodePath("TargetView")
 Model = NodePath("TargetModel")

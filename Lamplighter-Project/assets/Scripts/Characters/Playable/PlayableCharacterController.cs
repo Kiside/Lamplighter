@@ -21,7 +21,7 @@ namespace Characters.Playable
 	/// Classe per il controller del personaggio
 	/// </summary>
 	public partial class PlayableCharacterController : CharacterController<PlayableCharacterView,PlayableCharacterModel>, 
-	IHasCombatInterface<ICombatActor>, INodeOfGroup
+	IHasCombatInterface<ICombatActor>
 	{
 		#region PUBLIC
 		public ICombatActor CombatActor {get => _model.CombatActor;}
@@ -32,15 +32,18 @@ namespace Characters.Playable
 		protected AbstractCombat<PlayableCharacterController> _combat { get => _model.Combat; set => _model.Combat = value; }
 		protected AbstractMovement<PlayableCharacterController> _movement { get => _model.Movement; set => _model.Movement = value; }
 		protected BattleMenuController _battleMenuController { get => _model.BattleMenu;}
-		protected List<string> _groups {get => _model.Groups;}
 		private bool _lockOn = false;
 		private readonly DisposableBagBuilder _bag = DisposableBag.CreateBuilder();
-		public IGroupsInitiator _groupsInitiator;
 		#endregion
 		
 		#region PUBLIC PROPERTIES
 		public bool LockOn { get { return _lockOn; } set { _lockOn = value; } }
 		#endregion
+
+		public override void _EnterTree()
+		{
+			base._EnterTree();
+		}
 
 		public override void _Ready()
 		{
@@ -49,17 +52,12 @@ namespace Characters.Playable
 
 		protected override void OnInit()
 		{
-			InitiateGroups();
+			
 
 			_combat.Init(this);
 			_movement.Init(this);
 
 			Subscribe();
-		}
-
-		public void InitiateGroups()
-		{
-			_groupsInitiator = new GroupsInitiator(_groups, this);
 		}
 
 		public ICombatActor GetCombatInterface() => CombatActor;

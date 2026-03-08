@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://dyhr28frl1avx"]
+
+[ext_resource type="Script" uid="uid://lmq0yohdk624" path="res://assets/Scripts/SystemLamplighter/Visual/Highlightable.cs" id="1_wpxnp"]
+
+[node name="Highlightable" type="Node" unique_id=91866639]
+script = ExtResource("1_wpxnp")
