@@ -20,6 +20,7 @@
 [ext_resource type="Script" uid="uid://bpc15l8suoj7p" path="res://assets/Scripts/SystemLamplighter/DataStructure/ActionsData/ItemAction.cs" id="16_h0r1b"]
 [ext_resource type="Resource" uid="uid://bjd0r2gvapdf" path="res://assets/CustomResources/Prototype/healthItem.tres" id="17_gor4l"]
 [ext_resource type="PackedScene" uid="uid://dyhr28frl1avx" path="res://assets/Scenes-Node/highlightable.tscn" id="18_7o5g0"]
+[ext_resource type="PackedScene" uid="uid://cu7tp8wr5c5y6" path="res://assets/Scenes-Node/targetable.tscn" id="19_hp1yv"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mw5we"]
 albedo_color = Color(0.46229059, 0.46229059, 0.46229059, 1)
@@ -88,6 +89,10 @@ _items = Array[ExtResource("16_h0r1b")]([ExtResource("17_gor4l")])
 shape = SubResource("BoxShape3D_uvot1")
 
 [node name="Highlightable" parent="Enemy" unique_id=91866639 groups=["highlightable"] instance=ExtResource("18_7o5g0")]
+
+[node name="Targetable" parent="Enemy" unique_id=1186375305 node_paths=PackedStringArray("_position") instance=ExtResource("19_hp1yv")]
+_position = NodePath("../CSGMesh3D")
+_targetableType = 1
 
 [node name="Charlie" parent="." unique_id=1180252911 instance=ExtResource("1_qfi3i")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.010365605, 0)

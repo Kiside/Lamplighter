@@ -57,10 +57,11 @@ public partial class TargetView : ControlView, IHighlighter
 	}
 	public void SelectionTargetRender(ActorCursorState actorCursorState)
 	{
-		if(!_selectionTargetUi.Visible)
-			_selectionTargetUi.Visible = true;
+		// if(!_selectionTargetUi.Visible)
+		// 	_selectionTargetUi.Visible = true;
 		
-		_selectionTargetUi.Render(actorCursorState);
+		if(_selectionTargetUi.CanRender(actorCursorState))
+			_selectionTargetUi.Render(actorCursorState);
 		
 	}
 }

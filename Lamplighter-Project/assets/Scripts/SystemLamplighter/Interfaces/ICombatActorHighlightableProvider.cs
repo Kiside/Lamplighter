@@ -6,4 +6,6 @@ public interface ICombatActorHighlightableProvider
 	public void Init(Dictionary<ICombatActor, IHighlightable> highlightables);
 
 	public IHighlightable GetHighlightable(ICombatActor actor);
+
+	public int Count {get;}
 }

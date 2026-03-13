@@ -4,12 +4,12 @@ using Godot;
 
 public class TargetResolutionContext
 {
-	public List<Vector3> TargetsPosition { get; private set; }
+	public List<ITargetable> Targetables { get; private set; }
 	public ICombatActor CasterActor { get; private set; }
 
-	public TargetResolutionContext(List<Vector3> targetsPosition, ICombatActor casterActor)
+	public TargetResolutionContext(List<ITargetable> targetables, ICombatActor casterActor)
 	{
-		TargetsPosition = targetsPosition;
+		Targetables = targetables;
 		CasterActor = casterActor;
 	}
 

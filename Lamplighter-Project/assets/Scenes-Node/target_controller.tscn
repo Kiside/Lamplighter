@@ -23,13 +23,10 @@ _groups = Array[int]([4])
 
 [node name="TargetViewUi" type="Control" parent="TargetView" unique_id=1971265428]
 layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+anchors_preset = 0
 
 [node name="RectInfo" type="ColorRect" parent="TargetView/TargetViewUi" unique_id=342423425]
+visible = false
 custom_minimum_size = Vector2(500, 100)
 layout_mode = 1
 anchors_preset = 5
@@ -56,14 +53,11 @@ label_settings = SubResource("LabelSettings_w6ugs")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="SelectionTagetUi" type="Control" parent="TargetView" unique_id=672313700 node_paths=PackedStringArray("_menuContainer")]
+[node name="SelectionTagetUi" type="Control" parent="TargetView" unique_id=672313700 node_paths=PackedStringArray("_ui", "_menuContainer") groups=["renderer"]]
 layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+anchors_preset = 0
 script = ExtResource("5_m4xlp")
+_ui = NodePath("MenuSelection")
 _menuContainer = NodePath("MenuSelection/MarginContainer/TargetLabelContainer")
 _selectionButton = ExtResource("6_102yp")
 

@@ -20,6 +20,7 @@ public class TargetResolverFactory : ITargetResolverFactory
 		return targetType switch
 		{
 			TargetType.SINGLE or TargetType.GROUP => GameBootstrap.Services.GetRequiredService<SelectionTargetResolver>(),
+			
 			TargetType.CIRCLE or TargetType.LINE or TargetType.CONE => GameBootstrap.Services.GetRequiredService<ShapeTargetResolver>(),
 			_ => null
 		};

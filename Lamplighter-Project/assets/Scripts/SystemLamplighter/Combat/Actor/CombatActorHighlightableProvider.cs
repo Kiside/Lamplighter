@@ -19,4 +19,6 @@ public class CombatActorHighlightableProvider : ICombatActorHighlightableProvide
 	} 
 
 	public IHighlightable GetHighlightable(ICombatActor actor) => _highlightables[actor];
+
+	public int Count => _highlightables.Count;
 }

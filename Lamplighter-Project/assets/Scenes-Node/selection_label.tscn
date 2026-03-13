@@ -3,8 +3,10 @@
 [ext_resource type="Script" uid="uid://gj12yorna84w" path="res://assets/Scripts/SystemLamplighter/UI/SelectionLabel.cs" id="1_6rmwg"]
 [ext_resource type="Texture2D" uid="uid://cl67qsn3ml1v3" path="res://assets/icon.svg" id="2_rkpkw"]
 
-[node name="SelectionLabel" type="HBoxContainer" unique_id=1889605235]
+[node name="SelectionLabel" type="HBoxContainer" unique_id=1889605235 node_paths=PackedStringArray("Texture", "Label")]
 script = ExtResource("1_6rmwg")
+Texture = NodePath("MarginContainer/TextureRect")
+Label = NodePath("MarginContainer2/Label")
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=1329530670]
 custom_minimum_size = Vector2(16, 0)

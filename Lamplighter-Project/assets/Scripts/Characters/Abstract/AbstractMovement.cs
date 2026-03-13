@@ -16,6 +16,11 @@ namespace Characters.Abstract
 		public int Speed = 14;
 		[Export]
 		public int Fall_acceleration = 75;
+		[Export]
+		private bool _disable = false;
+
+		
+		public bool Disable {get => _disable; set => _disable = value;}
 
 		protected TController _controller;
 

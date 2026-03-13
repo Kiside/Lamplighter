@@ -8,66 +8,67 @@ using SystemLamplighter.DataStructure.GeneralData;
 using SystemLamplighter.Debug;
 using SystemLamplighter.Extensions;
 using SystemLamplighter.Interfaces;
+using SystemLamplighter.Tool;
 
 namespace SystemLamplighter.Target;
 
 
 public class SelectionTargetResolver : TargetResolver
 {
-	private readonly ICombatActorPositionProvider<Node3D> _combatActorPosition;
+	private readonly ITargetableProvider _targetableProvider;
 
 	private ICombatActor _casterActor;
-	private ICombatActor _currentActorHighlighted;
+	private ITargetable _currentTargetFocused;
 	private ITargetData _currentTargetData;
-	private int currentTargetSelected;
-	private List<ICombatActor> _combatActorsSelected;
+	private int _currentCountTargetsSelected;
+	private List<ITargetable> _targetablesSelected;
 
 	
 
-	public SelectionTargetResolver(ICombatActorPositionProvider<Node3D> combatActorPosition)
+	public SelectionTargetResolver(ITargetableProvider targetableProvider)
 	{
-		_combatActorPosition = combatActorPosition;
+		_targetableProvider = targetableProvider;
 	}
 
 	public override TargetCursorState ResolveTargets(IActionData action, ICombatActor casterActor)
 	{
 		DebugLamplighter.Assert(action != null, "action is null");
 		DebugLamplighter.Assert(casterActor != null, "caster actor is null");
-		DebugLamplighter.Assert(_combatActorPosition != null || _combatActorPosition.Count > 0, "_combatActorPosition is null or empty");
+		DebugLamplighter.Assert(_targetableProvider != null || _targetableProvider.Count > 0, "_targetableProvider is null or empty");
 
 		IsActive = true;
 		_currentTargetData = action.TargetData;
 		_casterActor = casterActor;
-		_currentActorHighlighted = _combatActorPosition.GetActor(0);
-		currentTargetSelected = 0;
+		_currentTargetFocused = _targetableProvider.GetTargetable(0);
+		_currentCountTargetsSelected = 0;
 		
-		if(_combatActorsSelected == null)
-			_combatActorsSelected = new List<ICombatActor>();
+		if(_targetablesSelected == null)
+			_targetablesSelected = new List<ITargetable>();
 
-		if(_combatActorsSelected.Count > 0)
-			_combatActorsSelected.Clear();
+		if(_targetablesSelected.Count > 0)
+			_targetablesSelected.Clear();
 
-		return new ActorCursorState(_currentActorHighlighted, _combatActorPosition.GetActors());
+		return new ActorCursorState(_currentTargetFocused);
 	}
 
 	public override TargetCursorState MoveTarget(Vector2 direction)
 	{
-		var index = (_combatActorPosition.GetIndex(_currentActorHighlighted) + (int)Math.Round(direction.Y)) % _combatActorPosition.Count;
+		var curIndex = _targetableProvider.GetIndex(_currentTargetFocused);
 
-		_currentActorHighlighted = _combatActorPosition.GetActor(index);
+		var index = Math.Max(0, curIndex + (int)Math.Round(direction.Y)) % _targetableProvider.Count;
 
-		return new ActorCursorState(_currentActorHighlighted, _combatActorPosition.GetActors());
+		return new ActorCursorState(_currentTargetFocused);
 	}
 
 	public override TargetResolutionData Select()
 	{
-		currentTargetSelected++;
-		_combatActorsSelected.Add(_currentActorHighlighted);
+		_currentCountTargetsSelected++;
+		_targetablesSelected.Add(_currentTargetFocused);
 
-		if(currentTargetSelected >= _currentTargetData.NumberOfTargets)
+		if(_currentCountTargetsSelected >= _currentTargetData.NumberOfTargets)
 		{
 			return new TargetResolutionData(
-				new TargetResolutionContext(_combatActorPosition.GetPositionsFromActors(_combatActorsSelected), _casterActor),
+				new TargetResolutionContext(_targetablesSelected, _casterActor),
 				TargetResolutionStatus.RESOLVED
 			);
 		}

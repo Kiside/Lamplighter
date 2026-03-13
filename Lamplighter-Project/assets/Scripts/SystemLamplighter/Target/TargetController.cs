@@ -57,13 +57,15 @@ public partial class TargetController : AbstractController<TargetView, TargetMod
 
 	private void TargetMovement()
 	{
-		RenderIfAny(CurrentTargetResolver?.MoveTarget
-		(
-			Input.GetVector(LamplighterInputMap.Left, 
-			LamplighterInputMap.Right, 
-			LamplighterInputMap.Down, 
-			LamplighterInputMap.Up)
-		));
+		int y = 0;
+		if(Input.IsActionJustReleased(LamplighterInputMap.Up))
+			y = 1;
+		else if (Input.IsActionJustReleased(LamplighterInputMap.Down))
+			y = -1;
+
+		var inputVector = new Vector2(0, y);
+		if(inputVector != Vector2.Zero)
+			RenderIfAny(CurrentTargetResolver?.MoveTarget(inputVector));
 		
 	}
 

@@ -3,7 +3,9 @@ using System.Security.Cryptography.X509Certificates;
 using Characters.Interfaces;
 using Godot;
 using Microsoft.Extensions.DependencyInjection;
+using SystemLamplighter.Combat.Actor;
 using SystemLamplighter.Common.Enums;
+using SystemLamplighter.Extensions;
 using SystemLamplighter.Interfaces;
 
 namespace SystemLamplighter.Bootstrap;
@@ -46,8 +48,8 @@ public partial class HighlightSceneCollector : BaseCollector
 
 		foreach(var a in array)
 		{
-			if(a is IHighlighter highlightable)
-				highlightable.InitHighlighterSystem(_highlightSystem);
+			// if(a is IHighlighter highlightable)
+			// 	highlightable.InitHighlighterSystem(_highlightSystem);
 
 			if(a is ICombatActor c && a is IHighlightable h)
 			{

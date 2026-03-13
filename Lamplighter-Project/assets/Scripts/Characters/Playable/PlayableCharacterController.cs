@@ -52,8 +52,6 @@ namespace Characters.Playable
 
 		protected override void OnInit()
 		{
-			
-
 			_combat.Init(this);
 			_movement.Init(this);
 
@@ -92,8 +90,12 @@ namespace Characters.Playable
 		public override void _PhysicsProcess(double delta)
 		{
 			_combat.Combat();
-			Velocity = _movement.Move(delta);
-			MoveAndSlide();
+			if(!_movement.Disable)
+			{
+				Velocity = _movement.Move(delta);
+				MoveAndSlide();
+			}
+				
 		}
 
 		public override void _ExitTree()

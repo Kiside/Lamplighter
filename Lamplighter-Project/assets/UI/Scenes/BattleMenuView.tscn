@@ -17,14 +17,11 @@ layout_mode = 3
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_top = 142.0
+offset_top = -253.0
 offset_right = 507.0
-offset_bottom = 395.0
 grow_vertical = 0
 
 [node name="BattleMenuUI" parent="RootUI" unique_id=1296967825 instance=ExtResource("2_owam7")]
 layout_mode = 1
-offset_top = -395.0
-offset_bottom = -395.0
 
 [editable path="RootUI/BattleMenuUI"]

@@ -5,10 +5,10 @@ namespace SystemLamplighter.DataStructure.GeneralData;
 
 public class ActorCursorState : TargetCursorState
 {
-	public ICombatActor ActorSelected { get; private set; }
+	public ITargetable TargetableSelected { get; private set; }
 
-	public ActorCursorState(ICombatActor actor, List<ICombatActor> actors)
+	public ActorCursorState(ITargetable targetable)
 	{
-		ActorSelected = actor;
+		TargetableSelected = targetable;
 	}
 }

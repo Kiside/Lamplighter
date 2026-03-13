@@ -7,6 +7,14 @@ namespace SystemLamplighter.Extensions;
 
 public static class NodeExstensions
 {
+	public static void CleanChildren(this Node node)
+	{
+		foreach(var child in node.GetChildren())
+		{
+			child.QueueFree();
+		}
+	}
+
 	public static Godot.Collections.Array<Node> GetNodesOfGroups(this Node node, Godot.Collections.Array<GroupsName> _groups)
 	{
 		if(_groups == null && _groups.Count <= 0)

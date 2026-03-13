@@ -47,14 +47,14 @@ public partial class GameBootstrap : Node
 		var selectionTargetRender = this.GetNodesOfGroup(GroupsName.renderer)
 		.FirstOrDefault(n => n is SelectionTargetRenderer) as SelectionTargetRenderer;
 
+		DebugLamplighter.Assert(selectionTargetRender != null, "selectionTargetRender is null");
+
 		var context = new SelectionTargetRendererContext
 		{
-			combatActorPositionProvider = Services.GetRequiredService<ICombatActorPositionProvider<Node3D>>(),
-			highlightableProvider = Services.GetRequiredService<ICombatActorHighlightableProvider>(),
-			highlightSystem = Services.GetRequiredService<IHighlightSystem>()
+			TargetableProvider = Services.GetRequiredService<ITargetableProvider>(),
 		};
 
-		selectionTargetRender.BootstrapInit(context);
+		selectionTargetRender?.BootstrapInit(context);
 	}
 
 	private void InitTargetController()
@@ -62,6 +62,9 @@ public partial class GameBootstrap : Node
 		// Ottieni il nodo TargetController dalla scena
         var targetController = this.GetNodesOfGroups(_getNodesOfGroups)
 			.FirstOrDefault(n => n is TargetController) as TargetController;
+
+		DebugLamplighter.Assert(targetController != null, "targetController is null");
+		
         // Risolvi la factory dal container DI
         var factory = Services.GetRequiredService<ITargetResolverFactory>();
         // Iniettala nel TargetController
@@ -79,6 +82,8 @@ public partial class GameBootstrap : Node
 
 		services.AddSingleton<IHighlightSystem, HighlightSystem>(); 
 		services.AddSingleton<ICombatActorHighlightableProvider, CombatActorHighlightableProvider>();
+
+		services.AddSingleton<ITargetableProvider, TargetableProvider>();
 		
 		services.AddTransient<SelectionTargetResolver>();
 		services.AddTransient<ShapeTargetResolver>();

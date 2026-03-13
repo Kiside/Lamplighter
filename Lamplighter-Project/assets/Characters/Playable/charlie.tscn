@@ -17,6 +17,7 @@
 [ext_resource type="Script" uid="uid://cwd6nmn8t150p" path="res://assets/Scripts/SystemLamplighter/DataStructure/ActionsData/MagicAction.cs" id="14_voq6j"]
 [ext_resource type="PackedScene" uid="uid://bgsjemevth5s" path="res://assets/Scenes-Node/battle_menu.tscn" id="17_rd6aq"]
 [ext_resource type="PackedScene" uid="uid://dyhr28frl1avx" path="res://assets/Scenes-Node/highlightable.tscn" id="17_vju8h"]
+[ext_resource type="PackedScene" uid="uid://cu7tp8wr5c5y6" path="res://assets/Scenes-Node/targetable.tscn" id="18_voq6j"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_0bkd4"]
 
@@ -54,6 +55,7 @@ shape = SubResource("BoxShape3D_0bkd4")
 
 [node name="Movement" type="Node" parent="." unique_id=2083169796]
 script = ExtResource("2_momr7")
+_disable = true
 
 [node name="Combat" type="Node" parent="." unique_id=73162908]
 script = ExtResource("4_cx7ps")
@@ -67,5 +69,8 @@ _magic = Array[ExtResource("14_voq6j")]([ExtResource("11_x47ln")])
 [node name="BattleMenuController" parent="." unique_id=387986966 instance=ExtResource("17_rd6aq")]
 
 [node name="Highlightable" parent="." unique_id=91866639 groups=["highlightable"] instance=ExtResource("17_vju8h")]
+
+[node name="Targetable" parent="." unique_id=1186375305 node_paths=PackedStringArray("_position") instance=ExtResource("18_voq6j")]
+_position = NodePath("../Pivot/Main")
 
 [editable path="Pivot/Main"]

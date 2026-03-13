@@ -10,6 +10,7 @@ public enum GroupsName
 	highlightable,
 	highlighter,
 	controllers,
-	renderer
+	renderer,
+	targetable
 
 }

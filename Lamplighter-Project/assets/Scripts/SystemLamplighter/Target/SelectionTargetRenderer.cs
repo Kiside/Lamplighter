@@ -3,12 +3,17 @@ using System.Linq;
 using Characters.Interfaces;
 using Godot;
 using LamplighterPlugins.CustomNodes;
+using SystemLamplighter.Common.Enums;
 using SystemLamplighter.DataStructure.GeneralData;
 using SystemLamplighter.Debug;
+using SystemLamplighter.Extensions;
 using SystemLamplighter.Interfaces;
+using SystemLamplighter.Tool;
 
 public partial class SelectionTargetRenderer : Control, ITargetRenderer
 {
+	[Export]
+	Control _ui;
 	[Export]
 	Control _menuContainer;	
 	[Export]
@@ -20,42 +25,53 @@ public partial class SelectionTargetRenderer : Control, ITargetRenderer
 
 	private ActorCursorState _lastActorCursorState;
 
-	Dictionary<ICombatActor, SelectionLabel> _selectionTargetsUi;
-	ICombatActorPositionProvider<Node3D> _combatActorPositionProvider;
-	ICombatActorHighlightableProvider _highlithableProvider;
-	IHighlightSystem _highlightSystem;
+	Dictionary<ITargetable, SelectionLabel> _selectionTargetsUi;
+	ITargetableProvider _targetableProvider;
 	Camera3D _camera;
 
 	public override void _Ready()
 	{
 		base._Ready();
 
-		_selectionTargetsUi = new Dictionary<ICombatActor, SelectionLabel>();
-		_camera = GetNode<Camera3D>(_cameraPath);
+		_selectionTargetsUi = new Dictionary<ITargetable, SelectionLabel>();
+		_ui.Visible = false;
+		//_camera = GetNode<Camera3D>(_cameraPath);
 	}
 
 	public void BootstrapInit(SelectionTargetRendererContext context)
 	{
-		_combatActorPositionProvider = context.combatActorPositionProvider;
-		_highlithableProvider = context.highlightableProvider;
-		_highlightSystem = context.highlightSystem;
+		_targetableProvider = context.TargetableProvider;
 	}
 
 	public void InitMenu()
 	{
-		DebugLamplighter.Assert(_combatActorPositionProvider != null, "_combatActorPositionProvider is null");
+		DebugLamplighter.Assert(_targetableProvider != null, "_targetableProvider is null");
 		DebugLamplighter.Assert(_selectionButton != null, "_selectionButton is null");
 		
-		foreach(var a in _combatActorPositionProvider.GetActors())
-		{
-			var button = _selectionButton.Instantiate();
-			_menuContainer.AddChild(button);
+		_ui.Visible = true;
+		var targetables =  _targetableProvider.GetTargetables();
 
-			if(button is SelectionLabel selectionLabel)
-				_selectionTargetsUi.Add(a, selectionLabel);
-			else 
-				DebugLamplighter.Assert(true, "button is not a SelectionLabel");
+		if(_menuContainer.GetChildCount() != targetables.Count)
+		{
+			_menuContainer.CleanChildren();
+			_selectionTargetsUi.Clear();
+
+			foreach(var targetable in _targetableProvider.GetTargetables())
+			{
+				var button = _selectionButton.Instantiate();
+				_menuContainer.AddChild(button);
+
+				if(button is SelectionLabel selectionLabel)
+				{
+					selectionLabel.SetLabelText(targetable.TargetableName);
+					_selectionTargetsUi.TryAdd(targetable, selectionLabel);
+				}
+				else 
+					DebugLamplighter.Assert(true, "button is not a SelectionLabel");
+			}
 		}
+
+		
 	}
 
 	public bool CanRender(TargetCursorState targetCursorState)
@@ -72,7 +88,7 @@ public partial class SelectionTargetRenderer : Control, ITargetRenderer
 		{
 			InitMenu();
 
-			if(_selectionTargetsUi.TryGetValue(state.ActorSelected, out SelectionLabel selectionLabel))
+			if(_selectionTargetsUi.TryGetValue(state.TargetableSelected, out SelectionLabel selectionLabel))
 			{
 				if(selectionLabel.IsSelected)
 					selectionLabel.Deselect();
@@ -80,11 +96,20 @@ public partial class SelectionTargetRenderer : Control, ITargetRenderer
 					selectionLabel.Select();
 			}
 
-			if(_lastActorCursorState != null && _lastActorCursorState.ActorSelected != state.ActorSelected)
-				_highlightSystem.Unhighlight(_highlithableProvider.GetHighlightable(_lastActorCursorState.ActorSelected));	
+			//Log.PrintMessage($"LAST CURSOR:{_lastActorCursorState.TargetableSelected.TargetableName} - CURRENT CURSOR: {state.TargetableSelected.TargetableName}");
+			if(_lastActorCursorState != null && _lastActorCursorState.TargetableSelected != state.TargetableSelected)
+			{
+				
+				_lastActorCursorState.TargetableSelected.Deselect();
+				_selectionTargetsUi.TryGetValue(_lastActorCursorState.TargetableSelected, out SelectionLabel lastSelectionLabel);
+				Log.PrintMessage($"LAST SELECTION LABEL:{lastSelectionLabel.Label}");
+				lastSelectionLabel?.Deselect();
+			}
 
-			_camera.LookAt(_combatActorPositionProvider.GetPosition(state.ActorSelected));
-			_highlightSystem.Highlight(_highlithableProvider.GetHighlightable(state.ActorSelected));
+
+			//_camera.LookAt(_combatActorPositionProvider.GetPosition(state.ActorSelected));
+			state.TargetableSelected.Select();
+
 			_lastActorCursorState = state;
 		}
 	}

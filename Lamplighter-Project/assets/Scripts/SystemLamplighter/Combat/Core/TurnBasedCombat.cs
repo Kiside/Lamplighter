@@ -134,7 +134,7 @@ namespace SystemLamplighter.Combat.Core
 
 			
 
-			_publishCommandPhaseEnd.Publish(new AtbCommandPhaseEndEvent(Actor));
+			//_publishCommandPhaseEnd.Publish(new AtbCommandPhaseEndEvent(Actor));
 		}
 
 		#endregion

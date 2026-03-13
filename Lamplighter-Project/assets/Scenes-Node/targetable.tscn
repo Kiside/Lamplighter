@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://cu7tp8wr5c5y6"]
+
+[ext_resource type="Script" uid="uid://ykhkulwjyfc6" path="res://assets/Scripts/SystemLamplighter/Target/Targetable.cs" id="1_d2tpd"]
+
+[node name="Targetable" type="Node" unique_id=1186375305 groups=["targetable"]]
+script = ExtResource("1_d2tpd")
