@@ -9,6 +9,7 @@ using SystemLamplighter.Target.Interfaces;
 using SystemLamplighter.Tool;
 using System.Collections.Generic;
 using SystemLamplighter.Setup;
+using Characters.Interfaces;
 
 namespace SystemLamplighter.Target;
 
@@ -20,6 +21,11 @@ public partial class TargetController : AbstractController<TargetView, TargetMod
 	#nullable enable
 	ITargetResolver? CurrentTargetResolver { get => _model.CurrentTargetResolver; set => _model.CurrentTargetResolver = value; } 
 	#nullable disable
+
+	/// <summary>
+	/// Salvo il target che è in questo momento il caster
+	/// </summary>
+	private ICombatActor _currentActorCaster;
 
 	private ITargetResolverFactory _targetResolverFactory;
 	
@@ -41,7 +47,8 @@ public partial class TargetController : AbstractController<TargetView, TargetMod
 		DebugLamplighter.Assert(ev.Actor != null, "actor is null");
 
 		var targetType = ev.Action.TargetData.TargetType;
-
+		
+		_currentActorCaster = ev.Actor;
 		CurrentTargetResolver = _targetResolverFactory.Create(targetType);
 
 		RenderIfAny(CurrentTargetResolver.ResolveTargets(ev.Action, ev.Actor));
@@ -71,10 +78,58 @@ public partial class TargetController : AbstractController<TargetView, TargetMod
 
 	private void TargetInputHandler()
 	{
+		TargetInputSelect();
+		TargetInputCancel();
+	}
+
+	private void TargetInputSelect()
+	{
 		if(Input.IsActionJustPressed(LamplighterInputMap.Select))
-			CurrentTargetResolver?.Select();
+		{
+			var state = CurrentTargetResolver?.Select();
+
+			DebugLamplighter.Assert(state != null, "resolutionData is null");
+			DebugLamplighter.Assert(state.TargetResolutionStatus != TargetResolutionStatus.CANCELED, "resolutionData.TargetResolutionStatus is CANCELED WHEN IT CAN'T BE");
+
+			switch(state.TargetResolutionStatus)
+			{
+				case TargetResolutionStatus.RESOLVED:
+					switch(state)
+					{
+						case PositionCursorState positionCursorState:
+						break;
+						case ActorCursorState actorCursorState:
+						// TODO: Probabilmente in ResolutionContext dovrà andare un TargetCursorState
+						var resolutionData = new TargetResolutionContext(actorCursorState.TargetablesSelected, _currentActorCaster);
+						Log.PrintMessage("Target risolto, chiamare evento");
+						// TODO: da continuare per l'evento di fine target
+						break;
+					}
+
+					break;
+				case TargetResolutionStatus.ON_GOING:
+					Log.PrintMessage("Target ONGOING");
+					RenderIfAny(state);
+					break;
+			}
+		}
+			
+
+	}
+
+	private void TargetInputCancel()
+	{
 		if(Input.IsActionJustPressed(LamplighterInputMap.Back))
-			CurrentTargetResolver?.Cancel();
+		{
+			var resolutionData = CurrentTargetResolver?.Cancel();
+
+			DebugLamplighter.Assert(resolutionData != null, "resolutionData is null");
+			DebugLamplighter.Assert(resolutionData.TargetResolutionStatus == TargetResolutionStatus.CANCELED, "resolutionData.TargetResolutionStatus is NOT CANCELED WHEN IT SHOULD BE");
+
+
+			// TODO: Target risolto, chiamare evento
+		}
+			
 	}
 
 	private void RenderIfAny(TargetCursorState cursorState)

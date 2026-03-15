@@ -19,8 +19,8 @@ public abstract class TargetResolver : ITargetResolver
 		IsActive = isActive;
 	}
 
-	public abstract TargetResolutionData Select();
-	public abstract TargetResolutionData Cancel();
+	public abstract TargetCursorState Select();
+	public abstract TargetCursorState Cancel();
 	public abstract TargetCursorState MoveTarget(Vector2 direction);
 
 	public abstract void Dispose();

@@ -18,19 +18,13 @@ public class ShapeTargetResolver : TargetResolver
 		return new PositionCursorState(new Vector3(0,0,0));
 	}
 
-	public override TargetResolutionData Select()
+	public override TargetCursorState Select()
 	{
-		return new TargetResolutionData(
-				new TargetResolutionContext(),
-				TargetResolutionStatus.ON_GOING
-			);
+		throw new System.NotImplementedException();
 	}
-	public override TargetResolutionData Cancel()
+	public override TargetCursorState Cancel()
 	{
-		return new TargetResolutionData(
-				new TargetResolutionContext(),
-				TargetResolutionStatus.CANCELED
-			);
+		throw new System.NotImplementedException();
 	}
 
 	public override void Dispose()

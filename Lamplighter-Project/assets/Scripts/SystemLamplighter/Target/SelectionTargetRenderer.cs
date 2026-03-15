@@ -21,11 +21,11 @@ public partial class SelectionTargetRenderer : Control, ITargetRenderer
 	[Export]
 	NodePath _cameraPath;
 
-	public bool IsInitialized => _selectionTargetsUi.Count > 0;
+	public bool IsInitialized => _selectionTargetsUiDictionary.Count > 0;
 
 	private ActorCursorState _lastActorCursorState;
 
-	Dictionary<ITargetable, SelectionLabel> _selectionTargetsUi;
+	Dictionary<ITargetable, SelectionLabel> _selectionTargetsUiDictionary;
 	ITargetableProvider _targetableProvider;
 	Camera3D _camera;
 
@@ -33,7 +33,7 @@ public partial class SelectionTargetRenderer : Control, ITargetRenderer
 	{
 		base._Ready();
 
-		_selectionTargetsUi = new Dictionary<ITargetable, SelectionLabel>();
+		_selectionTargetsUiDictionary = new Dictionary<ITargetable, SelectionLabel>();
 		_ui.Visible = false;
 		//_camera = GetNode<Camera3D>(_cameraPath);
 	}
@@ -54,7 +54,7 @@ public partial class SelectionTargetRenderer : Control, ITargetRenderer
 		if(_menuContainer.GetChildCount() != targetables.Count)
 		{
 			_menuContainer.CleanChildren();
-			_selectionTargetsUi.Clear();
+			_selectionTargetsUiDictionary.Clear();
 
 			foreach(var targetable in _targetableProvider.GetTargetables())
 			{
@@ -64,7 +64,7 @@ public partial class SelectionTargetRenderer : Control, ITargetRenderer
 				if(button is SelectionLabel selectionLabel)
 				{
 					selectionLabel.SetLabelText(targetable.TargetableName);
-					_selectionTargetsUi.TryAdd(targetable, selectionLabel);
+					_selectionTargetsUiDictionary.TryAdd(targetable, selectionLabel);
 				}
 				else 
 					DebugLamplighter.Assert(true, "button is not a SelectionLabel");
@@ -88,36 +88,60 @@ public partial class SelectionTargetRenderer : Control, ITargetRenderer
 		{
 			InitMenu();
 
-			if(_selectionTargetsUi.TryGetValue(state.TargetableSelected, out SelectionLabel selectionLabel))
+			// if(_selectionTargetsUi.TryGetValue(state.TargetableFocused, out SelectionLabel selectionLabel))
+			// {
+			// 	if(selectionLabel.IsSelected)
+			// 		selectionLabel.Unfocus();
+			// 	else
+			// 		selectionLabel.Focus();
+			// }
+
+			
+			foreach(var element in _selectionTargetsUiDictionary)
 			{
-				if(selectionLabel.IsSelected)
-					selectionLabel.Unfocus();
-				else
+				var targetable = element.Key;
+				var selectionLabel = element.Value;
+
+				if(state.TargetablesSelected.Count > 0)
+				{
+					if(state.TargetablesSelected.Contains(targetable))
+					{
+						selectionLabel.Select();
+					}
+					else
+					{
+						selectionLabel.Deselect();
+					}
+				}
+
+				if(targetable == state.TargetableFocused)
 					selectionLabel.Focus();
+				else
+					selectionLabel.Unfocus();
 			}
 
-			if(_lastActorCursorState != null && state != null)
-				Log.PrintMessage($"LAST CURSOR:{_lastActorCursorState.TargetableSelected.TargetableName} - CURRENT CURSOR: {state.TargetableSelected.TargetableName}");
-			if(_lastActorCursorState != null && _lastActorCursorState.TargetableSelected != state.TargetableSelected)
-			{
+			// if(_lastActorCursorState != null && state != null)
+			// 	Log.PrintMessage($"LAST CURSOR:{_lastActorCursorState.TargetableFocused.TargetableName} - CURRENT CURSOR: {state.TargetableFocused.TargetableName}");
+			// if(_lastActorCursorState != null && _lastActorCursorState.TargetableFocused != state.TargetableFocused)
+			// {
 				
-				_lastActorCursorState.TargetableSelected.Deselect();
-				_selectionTargetsUi.TryGetValue(_lastActorCursorState.TargetableSelected, out SelectionLabel lastSelectionLabel);
-				Log.PrintMessage($"LAST SELECTION LABEL:{lastSelectionLabel.Label}");
-				lastSelectionLabel?.Unfocus();
-			}
+			// 	_lastActorCursorState.TargetableFocused.Deselect();
+			// 	_selectionTargetsUiDictionary.TryGetValue(_lastActorCursorState.TargetableFocused, out SelectionLabel lastSelectionLabel);
+			// 	Log.PrintMessage($"LAST SELECTION LABEL:{lastSelectionLabel.Label}");
+			// 	lastSelectionLabel?.Unfocus();
+			// }
 
 
-			//_camera.LookAt(_combatActorPositionProvider.GetPosition(state.ActorSelected));
-			state.TargetableSelected.Select();
+			// //_camera.LookAt(_combatActorPositionProvider.GetPosition(state.ActorSelected));
+			// state.TargetableFocused.Select();
 
-			_lastActorCursorState = state;
+			// _lastActorCursorState = state;
 		}
 	}
 
 	public override void _ExitTree()
 	{
-		_selectionTargetsUi.Clear();
+		_selectionTargetsUiDictionary.Clear();
 
 		_lastActorCursorState = null;
 

@@ -15,7 +15,7 @@ namespace SystemLamplighter.Target;
 /// <summary>
 /// View per la gestione dei Target
 /// </summary>
-public partial class TargetView : ControlView, IHighlighter
+public partial class TargetView : ControlView
 {
 	[Export]
 	private NodePath _selectionTargetUiPath;
@@ -25,7 +25,7 @@ public partial class TargetView : ControlView, IHighlighter
 	/// </summary>
 	protected Godot.Collections.Array<GroupsName> _groups;
 	private SelectionTargetRenderer _selectionTargetUi;
-	private IHighlightSystem _highlightSystem;
+	
 
 	public override void _EnterTree()
 	{
@@ -35,11 +35,6 @@ public partial class TargetView : ControlView, IHighlighter
 	public override void Init()
 	{
 		CheckNodes();
-	}
-
-	public void InitHighlighterSystem(IHighlightSystem highlightSystem)
-	{
-		_highlightSystem = highlightSystem;
 	}
 
 	public void CheckNodes()

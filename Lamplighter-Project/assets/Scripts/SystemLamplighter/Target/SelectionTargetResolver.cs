@@ -53,6 +53,9 @@ public class SelectionTargetResolver : TargetResolver
 
 	public override TargetCursorState MoveTarget(Vector2 direction)
 	{
+		// TODO: Sistemare
+
+
 		var curTarIndex = _targetableProvider.GetIndex(_currentTargetFocused);
 
 		var i = curTarIndex + (int)Math.Round(-direction.Y);
@@ -66,37 +69,47 @@ public class SelectionTargetResolver : TargetResolver
 		return new ActorCursorState(_currentTargetFocused);
 	}
 
-	public override TargetResolutionData Select()
+	public override TargetCursorState Select()
 	{
-		_currentCountTargetsSelected++;
-		_targetablesSelected.Add(_currentTargetFocused);
-
-		if(_currentCountTargetsSelected >= _currentTargetData.NumberOfTargets)
+		if(_targetablesSelected.Contains(_currentTargetFocused))
 		{
-			return new TargetResolutionData(
-				new TargetResolutionContext(_targetablesSelected, _casterActor),
-				TargetResolutionStatus.RESOLVED
-			);
+			_currentCountTargetsSelected--;
+			_targetablesSelected.Remove(_currentTargetFocused);
 		}
 		else
 		{
-			return new TargetResolutionData(
-				new TargetResolutionContext(),
-				TargetResolutionStatus.ON_GOING
-			);
+			_currentCountTargetsSelected++;
+			_targetablesSelected.Add(_currentTargetFocused);
+		}
+
+		return CheckResolution();
+	}
+
+	private TargetCursorState CheckResolution()
+	{
+		if(_currentCountTargetsSelected >= _currentTargetData.NumberOfTargets)
+		{
+			var state = new ActorCursorState(_targetablesSelected, _currentTargetFocused, TargetResolutionStatus.RESOLVED);
+			Dispose();
+			return state;
+		}
+		else
+		{
+			return new ActorCursorState(_targetablesSelected, _currentTargetFocused, TargetResolutionStatus.ON_GOING);
 		}
 	}
 
-	public override TargetResolutionData Cancel()
+	public override TargetCursorState Cancel()
 	{
-		return new TargetResolutionData(
-				new TargetResolutionContext(),
-				TargetResolutionStatus.CANCELED
-			);
+		return new ActorCursorState(_targetablesSelected, _currentTargetFocused, TargetResolutionStatus.CANCELED);
 	}
 
 	public override void Dispose()
 	{
-		
+		_targetablesSelected.Clear();
+		_currentTargetFocused = null;
+		_currentTargetData = null;
+		_currentCountTargetsSelected = 0;
+		_casterActor = null;
 	}
 }
