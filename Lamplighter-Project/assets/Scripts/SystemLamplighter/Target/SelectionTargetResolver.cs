@@ -53,9 +53,15 @@ public class SelectionTargetResolver : TargetResolver
 
 	public override TargetCursorState MoveTarget(Vector2 direction)
 	{
-		var curIndex = _targetableProvider.GetIndex(_currentTargetFocused);
+		var curTarIndex = _targetableProvider.GetIndex(_currentTargetFocused);
 
-		var index = Math.Max(0, curIndex + (int)Math.Round(direction.Y)) % _targetableProvider.Count;
+		var i = curTarIndex + (int)Math.Round(-direction.Y);
+
+		var index = i < 0 ? _targetableProvider.Count - 1 : i % _targetableProvider.Count;
+		
+		_currentTargetFocused = _targetableProvider.GetTargetable(index);
+
+		Log.PrintMessage($"TARGET FOCUSED: {_currentTargetFocused.TargetableName} - INDEX: {index}");
 
 		return new ActorCursorState(_currentTargetFocused);
 	}

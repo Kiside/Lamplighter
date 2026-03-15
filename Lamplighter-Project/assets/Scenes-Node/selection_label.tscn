@@ -17,6 +17,7 @@ theme_override_constants/margin_right = 2
 theme_override_constants/margin_bottom = 10
 
 [node name="TextureRect" type="TextureRect" parent="MarginContainer" unique_id=936584100]
+visible = false
 layout_mode = 2
 texture = ExtResource("2_rkpkw")
 expand_mode = 2

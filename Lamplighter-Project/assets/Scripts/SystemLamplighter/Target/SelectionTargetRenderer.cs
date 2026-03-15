@@ -91,19 +91,20 @@ public partial class SelectionTargetRenderer : Control, ITargetRenderer
 			if(_selectionTargetsUi.TryGetValue(state.TargetableSelected, out SelectionLabel selectionLabel))
 			{
 				if(selectionLabel.IsSelected)
-					selectionLabel.Deselect();
+					selectionLabel.Unfocus();
 				else
-					selectionLabel.Select();
+					selectionLabel.Focus();
 			}
 
-			//Log.PrintMessage($"LAST CURSOR:{_lastActorCursorState.TargetableSelected.TargetableName} - CURRENT CURSOR: {state.TargetableSelected.TargetableName}");
+			if(_lastActorCursorState != null && state != null)
+				Log.PrintMessage($"LAST CURSOR:{_lastActorCursorState.TargetableSelected.TargetableName} - CURRENT CURSOR: {state.TargetableSelected.TargetableName}");
 			if(_lastActorCursorState != null && _lastActorCursorState.TargetableSelected != state.TargetableSelected)
 			{
 				
 				_lastActorCursorState.TargetableSelected.Deselect();
 				_selectionTargetsUi.TryGetValue(_lastActorCursorState.TargetableSelected, out SelectionLabel lastSelectionLabel);
 				Log.PrintMessage($"LAST SELECTION LABEL:{lastSelectionLabel.Label}");
-				lastSelectionLabel?.Deselect();
+				lastSelectionLabel?.Unfocus();
 			}
 
 
