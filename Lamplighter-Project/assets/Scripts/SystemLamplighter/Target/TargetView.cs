@@ -73,13 +73,12 @@ public partial class TargetView : ControlView
 		string second = string.Empty;
 		string first = string.Empty;
 
+		string numberOfTargets = (targetData.NumberOfTargets > 1) ? $"{targetData.NumberOfTargets} targets" : "a target";
+
 		switch (targetData.TargetType)
 		{
 			case TargetType.SINGLE:
-				first = "Select a target to";
-				break;
-			case TargetType.GROUP:
-				first = $"Select {targetData.NumberOfTargets} targets to";
+				first = $"Select {numberOfTargets} to";
 				break;
 			case TargetType.SELF:
 				break;

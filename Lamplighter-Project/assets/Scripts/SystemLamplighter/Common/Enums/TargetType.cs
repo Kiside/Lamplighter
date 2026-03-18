@@ -6,7 +6,6 @@ namespace SystemLamplighter.Common.Enums
 		SINGLE,
 		CIRCLE,
 		LINE,
-		CONE,
-		GROUP
+		CONE
 	}
 }

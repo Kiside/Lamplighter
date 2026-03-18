@@ -14,6 +14,7 @@ metadata/_custom_type_script = "uid://bpbc03hvyphga"
 [sub_resource type="Resource" id="Resource_q2g51"]
 script = ExtResource("2_1gig1")
 _targeType = 5
+_whoTarget = Array[int]([1, 0])
 _numberOfTargets = 2
 metadata/_custom_type_script = "uid://ctl8s5v2fkwwc"
 

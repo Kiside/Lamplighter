@@ -43,13 +43,13 @@ public partial class SelectionTargetRenderer : Control, ITargetRenderer
 		_targetableProvider = context.TargetableProvider;
 	}
 
-	public void InitMenu()
+	public void InitMenu(ActorCursorState state)
 	{
 		DebugLamplighter.Assert(_targetableProvider != null, "_targetableProvider is null");
 		DebugLamplighter.Assert(_selectionButton != null, "_selectionButton is null");
 		
 		EnableUi(true);
-		var targetables =  _targetableProvider.GetTargetables();
+		var targetables =  _targetableProvider.GetTargetables(state.WhoTarget);
 
 		if(_menuContainer.GetChildCount() != targetables.Count)
 		{
@@ -86,7 +86,7 @@ public partial class SelectionTargetRenderer : Control, ITargetRenderer
 	{
 		if(targetCursorState is ActorCursorState state)
 		{
-			InitMenu();
+			InitMenu(state);
 			
 			foreach(var element in _selectionTargetsUiDictionary)
 			{

@@ -65,8 +65,6 @@ public class TargetService
 			break;
 			case Common.Enums.TargetType.CONE:
 			break;
-			case Common.Enums.TargetType.GROUP:
-			break;
 		}
 	}
 

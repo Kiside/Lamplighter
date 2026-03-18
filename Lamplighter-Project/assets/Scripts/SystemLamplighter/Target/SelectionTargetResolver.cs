@@ -4,6 +4,7 @@ using Characters.Interfaces;
 using Godot;
 using Microsoft.Extensions.DependencyInjection;
 using SystemLamplighter.Bootstrap;
+using SystemLamplighter.Common.Enums;
 using SystemLamplighter.DataStructure.GeneralData;
 using SystemLamplighter.Debug;
 using SystemLamplighter.Extensions;
@@ -20,6 +21,7 @@ public class SelectionTargetResolver : TargetResolver
 	private ICombatActor _casterActor;
 	private ITargetable _currentTargetFocused;
 	private ITargetData _currentTargetData;
+	private List<TargeTableType> _currentWhoTarget => _currentTargetData.WhoTarget;
 	private int _currentCountTargetsSelected;
 	private List<ITargetable> _targetablesSelected;
 
@@ -39,7 +41,7 @@ public class SelectionTargetResolver : TargetResolver
 		IsActive = true;
 		_currentTargetData = action.TargetData;
 		_casterActor = casterActor;
-		_currentTargetFocused = _targetableProvider.GetTargetable(0);
+		_currentTargetFocused = _targetableProvider.GetTargetable(0, action.TargetData.WhoTarget);
 		_currentCountTargetsSelected = 0;
 		
 		if(_targetablesSelected == null)
@@ -56,13 +58,13 @@ public class SelectionTargetResolver : TargetResolver
 		// TODO: Sistemare
 
 
-		var curTarIndex = _targetableProvider.GetIndex(_currentTargetFocused);
+		var curTarIndex = _targetableProvider.GetIndex(_currentTargetFocused, _currentWhoTarget);
 
 		var i = curTarIndex + (int)Math.Round(-direction.Y);
 
-		var index = i < 0 ? _targetableProvider.Count - 1 : i % _targetableProvider.Count;
+		var index = i < 0 ? _targetableProvider.CountOf(_currentWhoTarget) - 1 : i % _targetableProvider.Count;
 		
-		_currentTargetFocused = _targetableProvider.GetTargetable(index);
+		_currentTargetFocused = _targetableProvider.GetTargetable(index, _currentWhoTarget);
 
 		Log.PrintMessage($"TARGET FOCUSED: {_currentTargetFocused.TargetableName} - INDEX: {index}");
 
@@ -89,19 +91,19 @@ public class SelectionTargetResolver : TargetResolver
 	{
 		if(_currentCountTargetsSelected >= _currentTargetData.NumberOfTargets)
 		{
-			var state = new ActorCursorState(_targetablesSelected, _currentTargetFocused, TargetResolutionStatus.RESOLVED);
+			var state = new ActorCursorState(_targetablesSelected, _currentTargetFocused, _currentWhoTarget ,TargetResolutionStatus.RESOLVED);
 			Dispose();
 			return state;
 		}
 		else
 		{
-			return new ActorCursorState(_targetablesSelected, _currentTargetFocused, TargetResolutionStatus.ON_GOING);
+			return new ActorCursorState(_targetablesSelected, _currentTargetFocused, _currentWhoTarget ,TargetResolutionStatus.ON_GOING);
 		}
 	}
 
 	public override TargetCursorState Cancel()
 	{
-		return new ActorCursorState(_targetablesSelected, _currentTargetFocused, TargetResolutionStatus.CANCELED);
+		return new ActorCursorState(_targetablesSelected, _currentTargetFocused, _currentWhoTarget ,TargetResolutionStatus.CANCELED);
 	}
 
 	public override void Dispose()
