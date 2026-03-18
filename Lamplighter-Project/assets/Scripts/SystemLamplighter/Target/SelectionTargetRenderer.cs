@@ -34,7 +34,7 @@ public partial class SelectionTargetRenderer : Control, ITargetRenderer
 		base._Ready();
 
 		_selectionTargetsUiDictionary = new Dictionary<ITargetable, SelectionLabel>();
-		_ui.Visible = false;
+		EnableUi(false);
 		//_camera = GetNode<Camera3D>(_cameraPath);
 	}
 
@@ -48,7 +48,7 @@ public partial class SelectionTargetRenderer : Control, ITargetRenderer
 		DebugLamplighter.Assert(_targetableProvider != null, "_targetableProvider is null");
 		DebugLamplighter.Assert(_selectionButton != null, "_selectionButton is null");
 		
-		_ui.Visible = true;
+		EnableUi(true);
 		var targetables =  _targetableProvider.GetTargetables();
 
 		if(_menuContainer.GetChildCount() != targetables.Count)
@@ -138,6 +138,8 @@ public partial class SelectionTargetRenderer : Control, ITargetRenderer
 			// _lastActorCursorState = state;
 		}
 	}
+
+	public void EnableUi(bool value) => _ui.Visible = value;
 
 	public override void _ExitTree()
 	{

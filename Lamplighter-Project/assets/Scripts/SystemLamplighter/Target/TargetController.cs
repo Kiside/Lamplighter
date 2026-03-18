@@ -26,8 +26,9 @@ public partial class TargetController : AbstractController<TargetView, TargetMod
 	/// Salvo il target che è in questo momento il caster
 	/// </summary>
 	private ICombatActor _currentActorCaster;
-
 	private ITargetResolverFactory _targetResolverFactory;
+
+	private bool _enabled = false;
 	
 	public override void Init()
 	{
@@ -42,6 +43,10 @@ public partial class TargetController : AbstractController<TargetView, TargetMod
 
 	private void OnStartTarget(StartTargetEvent ev)
 	{
+		_enabled = true;
+		_currentActorCaster = null;
+		CurrentTargetResolver = null;
+
 		DebugLamplighter.Assert(ev != null, "ev is null");
 		DebugLamplighter.Assert(ev.Action != null, "action is null");
 		DebugLamplighter.Assert(ev.Actor != null, "actor is null");
@@ -51,11 +56,16 @@ public partial class TargetController : AbstractController<TargetView, TargetMod
 		_currentActorCaster = ev.Actor;
 		CurrentTargetResolver = _targetResolverFactory.Create(targetType);
 
+		_view.ShowInfo(ev.Action);
+
 		RenderIfAny(CurrentTargetResolver.ResolveTargets(ev.Action, ev.Actor));
 	}
 
 	public override void _PhysicsProcess(double delta)
 	{
+		if(!_enabled)
+			return;
+		
 		base._PhysicsProcess(delta);
 
 		TargetMovement();
@@ -73,7 +83,6 @@ public partial class TargetController : AbstractController<TargetView, TargetMod
 		var inputVector = new Vector2(0, y);
 		if(inputVector != Vector2.Zero)
 			RenderIfAny(CurrentTargetResolver?.MoveTarget(inputVector));
-		
 	}
 
 	private void TargetInputHandler()
@@ -84,6 +93,7 @@ public partial class TargetController : AbstractController<TargetView, TargetMod
 
 	private void TargetInputSelect()
 	{
+		// TODO: Testare anche con attacco multitarget
 		if(Input.IsActionJustPressed(LamplighterInputMap.Select))
 		{
 			var state = CurrentTargetResolver?.Select();
@@ -99,10 +109,9 @@ public partial class TargetController : AbstractController<TargetView, TargetMod
 						case PositionCursorState positionCursorState:
 						break;
 						case ActorCursorState actorCursorState:
-						// TODO: Probabilmente in ResolutionContext dovrà andare un TargetCursorState
-						var resolutionData = new TargetResolutionContext(actorCursorState.TargetablesSelected, _currentActorCaster);
-						Log.PrintMessage("Target risolto, chiamare evento");
-						// TODO: da continuare per l'evento di fine target
+						// TODO: Probabilmente in ResolutionContext dovrà andare un TargetCursorState?
+						_view.HideUi();
+						EndTarget(new TargetResolutionContext(actorCursorState.TargetablesSelected, _currentActorCaster));
 						break;
 					}
 
@@ -113,8 +122,12 @@ public partial class TargetController : AbstractController<TargetView, TargetMod
 					break;
 			}
 		}
-			
+	}
 
+	private void EndTarget(TargetResolutionContext resolutionData)
+	{
+		_enabled = false;
+		this.PublishEvent(new EndTargetEvent(resolutionData));
 	}
 
 	private void TargetInputCancel()

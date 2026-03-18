@@ -18,7 +18,9 @@ script = ExtResource("2_m4xlp")
 
 [node name="TargetView" type="Node" parent="." unique_id=1047881918]
 script = ExtResource("4_tilgp")
-_selectionTargetUiPath = NodePath("SelectionTagetUi")
+_infoUiPath = NodePath("TargetViewUi")
+_infoLabelPath = NodePath("TargetViewUi/RectInfo/InfoTargetLabel")
+_selectionTargetUiPath = NodePath("SelectionTargetUi")
 _groups = Array[int]([4])
 
 [node name="TargetViewUi" type="Control" parent="TargetView" unique_id=1971265428]
@@ -26,15 +28,14 @@ layout_mode = 3
 anchors_preset = 0
 
 [node name="RectInfo" type="ColorRect" parent="TargetView/TargetViewUi" unique_id=342423425]
-visible = false
 custom_minimum_size = Vector2(500, 100)
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -20.0
-offset_right = 20.0
-offset_bottom = 40.0
+offset_left = 345.0
+offset_right = 845.0
+offset_bottom = 100.0
 grow_horizontal = 2
 color = Color(0.16062862, 0.16062862, 0.16062862, 1)
 
@@ -53,7 +54,7 @@ label_settings = SubResource("LabelSettings_w6ugs")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="SelectionTagetUi" type="Control" parent="TargetView" unique_id=672313700 node_paths=PackedStringArray("_ui", "_menuContainer") groups=["renderer"]]
+[node name="SelectionTargetUi" type="Control" parent="TargetView" unique_id=672313700 node_paths=PackedStringArray("_ui", "_menuContainer") groups=["renderer"]]
 layout_mode = 3
 anchors_preset = 0
 script = ExtResource("5_m4xlp")
@@ -61,7 +62,7 @@ _ui = NodePath("MenuSelection")
 _menuContainer = NodePath("MenuSelection/MarginContainer/TargetLabelContainer")
 _selectionButton = ExtResource("6_102yp")
 
-[node name="MenuSelection" type="ColorRect" parent="TargetView/SelectionTagetUi" unique_id=242064225]
+[node name="MenuSelection" type="ColorRect" parent="TargetView/SelectionTargetUi" unique_id=242064225]
 custom_minimum_size = Vector2(230, 250)
 layout_mode = 0
 offset_top = 147.93
@@ -69,7 +70,7 @@ offset_right = 230.0
 offset_bottom = 397.93024
 color = Color(0.04264705, 0.083107494, 0.1341039, 1)
 
-[node name="MarginContainer" type="MarginContainer" parent="TargetView/SelectionTagetUi/MenuSelection" unique_id=48607182]
+[node name="MarginContainer" type="MarginContainer" parent="TargetView/SelectionTargetUi/MenuSelection" unique_id=48607182]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -81,6 +82,6 @@ theme_override_constants/margin_top = 15
 theme_override_constants/margin_right = 25
 theme_override_constants/margin_bottom = 15
 
-[node name="TargetLabelContainer" type="VBoxContainer" parent="TargetView/SelectionTagetUi/MenuSelection/MarginContainer" unique_id=775363900]
+[node name="TargetLabelContainer" type="VBoxContainer" parent="TargetView/SelectionTargetUi/MenuSelection/MarginContainer" unique_id=775363900]
 layout_mode = 2
 theme_override_constants/separation = -8

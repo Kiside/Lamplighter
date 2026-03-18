@@ -66,7 +66,7 @@ namespace SystemLamplighter.Combat.Core
 			if (ev.Actor != Actor)
 				return;
 
-			// Eseguo l'azione
+			// TODO Eseguire l'azione
 			// Ad azione eseguita resetto la posizione del personaggio sull'ATB
 			_publishEndExecuteAction.Publish(new AtbEndExecuteActionEvent(Actor));
 		}
@@ -86,7 +86,6 @@ namespace SystemLamplighter.Combat.Core
 				return;
 
 			_disposeEndTargetEvent?.Dispose();
-			// Eseguzione dell'attacco 
 			AtbProperties.EndCommandStatus(CurrentAction.ActionSpeedMultiplier);
 			_publishCommandPhaseEnd.Publish(new AtbCommandPhaseEndEvent(Actor));
 		}

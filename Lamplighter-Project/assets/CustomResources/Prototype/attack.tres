@@ -2,13 +2,20 @@
 
 [ext_resource type="Animation" uid="uid://qmk2rfydunp3" path="res://assets/Resources/Animations/Characters/Proto/Main_Attack01.res" id="1_dnjco"]
 [ext_resource type="Script" uid="uid://53pv7v0c5gad" path="res://assets/Scripts/SystemLamplighter/DataStructure/ActionsData/AttackAction.cs" id="1_snht1"]
+[ext_resource type="Script" uid="uid://bpbc03hvyphga" path="res://assets/Scripts/SystemLamplighter/DataStructure/EffectsData/DamageData.cs" id="2_bwj14"]
 [ext_resource type="Script" uid="uid://ctl8s5v2fkwwc" path="res://assets/Scripts/SystemLamplighter/DataStructure/GeneralData/TargetData.cs" id="3_bwj14"]
+
+[sub_resource type="Resource" id="Resource_p40ih"]
+script = ExtResource("2_bwj14")
+Damage = 2.0
+PushbackForce = 0.2
+AtbPositionDamage = 0.45
+metadata/_custom_type_script = "uid://bpbc03hvyphga"
 
 [sub_resource type="Resource" id="Resource_asu6r"]
 script = ExtResource("3_bwj14")
 _targeType = 1
 _numberOfTargets = 1
-metadata/_custom_type_script = "uid://b0bguw84ovcwk"
 
 [resource]
 script = ExtResource("1_snht1")
@@ -16,5 +23,5 @@ _name = "attack"
 _actionSpeedMultiplier = 2.0
 _targetData = SubResource("Resource_asu6r")
 _animation = ExtResource("1_dnjco")
-_effects = null
+_effects = Array[Object]([SubResource("Resource_p40ih")])
 metadata/_custom_type_script = "uid://53pv7v0c5gad"
