@@ -87,15 +87,6 @@ public partial class SelectionTargetRenderer : Control, ITargetRenderer
 		if(targetCursorState is ActorCursorState state)
 		{
 			InitMenu();
-
-			// if(_selectionTargetsUi.TryGetValue(state.TargetableFocused, out SelectionLabel selectionLabel))
-			// {
-			// 	if(selectionLabel.IsSelected)
-			// 		selectionLabel.Unfocus();
-			// 	else
-			// 		selectionLabel.Focus();
-			// }
-
 			
 			foreach(var element in _selectionTargetsUiDictionary)
 			{

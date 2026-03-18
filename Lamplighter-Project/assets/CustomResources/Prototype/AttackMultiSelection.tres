@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="AttackAction" format=3 uid="uid://bpjrqtp7ju6et"]
+
+[ext_resource type="Script" uid="uid://bpbc03hvyphga" path="res://assets/Scripts/SystemLamplighter/DataStructure/EffectsData/DamageData.cs" id="1_8ex04"]
+[ext_resource type="Script" uid="uid://53pv7v0c5gad" path="res://assets/Scripts/SystemLamplighter/DataStructure/ActionsData/AttackAction.cs" id="1_tweui"]
+[ext_resource type="Script" uid="uid://ctl8s5v2fkwwc" path="res://assets/Scripts/SystemLamplighter/DataStructure/GeneralData/TargetData.cs" id="2_1gig1"]
+
+[sub_resource type="Resource" id="Resource_of4i8"]
+script = ExtResource("1_8ex04")
+Damage = 1.5
+PushbackForce = 0.3
+AtbPositionDamage = 0.1
+metadata/_custom_type_script = "uid://bpbc03hvyphga"
+
+[sub_resource type="Resource" id="Resource_q2g51"]
+script = ExtResource("2_1gig1")
+_targeType = 5
+_numberOfTargets = 2
+metadata/_custom_type_script = "uid://ctl8s5v2fkwwc"
+
+[resource]
+script = ExtResource("1_tweui")
+_name = "Multi Attack"
+_actionSpeedMultiplier = 2.0
+_targetData = SubResource("Resource_q2g51")
+_effects = Array[Object]([SubResource("Resource_of4i8")])
+metadata/_custom_type_script = "uid://53pv7v0c5gad"
