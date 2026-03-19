@@ -94,6 +94,49 @@ shape = SubResource("BoxShape3D_uvot1")
 _position = NodePath("../CSGMesh3D")
 _targetableType = 1
 
+[node name="Enemy2" type="CharacterBody3D" parent="." unique_id=924751154 groups=["enemy"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.4510217, 0.5407543, 2.8083699)
+script = ExtResource("2_aw6lp")
+View = NodePath("NpView")
+Model = NodePath("NpModel")
+MovementNode = NodePath("MovementNode")
+CombatNode = NodePath("CombatNode")
+
+[node name="CSGMesh3D" type="CSGMesh3D" parent="Enemy2" unique_id=318609877]
+material_override = SubResource("StandardMaterial3D_qcquh")
+mesh = SubResource("BoxMesh_ejd0h")
+
+[node name="NpModel" type="Node" parent="Enemy2" unique_id=459565166]
+script = ExtResource("3_8uc3x")
+_combatLoadoutNode = NodePath("../CombatLoadout")
+_atbCharacterProperties = SubResource("Resource_80fhm")
+_groups = Array[int]([1])
+
+[node name="NpView" type="Node" parent="Enemy2" unique_id=1629711028]
+script = ExtResource("4_66ris")
+
+[node name="CombatNode" type="Node" parent="Enemy2" unique_id=43397440]
+script = ExtResource("7_uvot1")
+
+[node name="MovementNode" type="Node" parent="Enemy2" unique_id=1836434462]
+script = ExtResource("8_7o5g0")
+
+[node name="CombatLoadout" type="Node" parent="Enemy2" unique_id=1944233316]
+script = ExtResource("9_uvot1")
+_attack = Array[ExtResource("10_uvot1")]([ExtResource("11_hp1yv")])
+_defense = Array[ExtResource("12_7o5g0")]([ExtResource("13_x5dwk")])
+_magic = Array[ExtResource("14_hp1yv")]([ExtResource("15_23igw")])
+_items = Array[ExtResource("16_h0r1b")]([ExtResource("17_gor4l")])
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Enemy2" unique_id=1140903271]
+shape = SubResource("BoxShape3D_uvot1")
+
+[node name="Highlightable" parent="Enemy2" unique_id=902796545 groups=["highlightable"] instance=ExtResource("18_7o5g0")]
+
+[node name="Targetable" parent="Enemy2" unique_id=1827955138 node_paths=PackedStringArray("_position") instance=ExtResource("19_hp1yv")]
+_position = NodePath("../CSGMesh3D")
+_targetableType = 1
+
 [node name="Charlie" parent="." unique_id=1180252911 instance=ExtResource("1_qfi3i")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.010365605, 0)
 

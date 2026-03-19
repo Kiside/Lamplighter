@@ -41,6 +41,10 @@ public class SelectionTargetResolver : TargetResolver
 		IsActive = true;
 		_currentTargetData = action.TargetData;
 		_casterActor = casterActor;
+		if(_currentTargetData.TargetType == TargetType.SELF)
+		{
+			_currentTargetFocused = _targetableProvider.GetTargetable(_casterActor.AtbProperties.Name);
+		}
 		_currentTargetFocused = _targetableProvider.GetTargetable(0, action.TargetData.WhoTarget);
 		_currentCountTargetsSelected = 0;
 		
@@ -50,13 +54,15 @@ public class SelectionTargetResolver : TargetResolver
 		if(_targetablesSelected.Count > 0)
 			_targetablesSelected.Clear();
 
-		return new ActorCursorState(_currentTargetFocused);
+		return new ActorCursorState(_currentTargetFocused, _currentTargetData.WhoTarget);
 	}
 
 	public override TargetCursorState MoveTarget(Vector2 direction)
 	{
 		// TODO: Sistemare
 
+		if(_currentTargetData.TargetType == TargetType.SELF)
+			return new ActorCursorState(_currentTargetFocused, _currentTargetData.WhoTarget);
 
 		var curTarIndex = _targetableProvider.GetIndex(_currentTargetFocused, _currentWhoTarget);
 
@@ -68,7 +74,7 @@ public class SelectionTargetResolver : TargetResolver
 
 		Log.PrintMessage($"TARGET FOCUSED: {_currentTargetFocused.TargetableName} - INDEX: {index}");
 
-		return new ActorCursorState(_currentTargetFocused);
+		return new ActorCursorState(_currentTargetFocused, _currentTargetData.WhoTarget);
 	}
 
 	public override TargetCursorState Select()

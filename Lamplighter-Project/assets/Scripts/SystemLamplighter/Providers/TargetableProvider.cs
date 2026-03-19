@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Formats.Tar;
 using System.Linq;
 using SystemLamplighter.Common.Enums;
+using SystemLamplighter.Tool;
 
 public class TargetableProvider : ITargetableProvider
 {
@@ -24,6 +25,7 @@ public class TargetableProvider : ITargetableProvider
 		var typeSet = new HashSet<TargeTableType>(type);
     	return _targetables.Where(t => typeSet.Contains(t.TargeTableType)).ToList();
 	} 
+	public ITargetable GetTargetable(string targetableName) => _targetables.Find(t => t.TargetableName == targetableName);
 	public ITargetable GetTargetable(ITargetable targetable) => _targetables.Find(t => t == targetable);
 	public ITargetable GetTargetable(int index) => _targetables[index];
 	public ITargetable GetTargetable(int index, List<TargeTableType> type)

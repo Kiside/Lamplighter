@@ -44,7 +44,7 @@ public partial class TargetData : Resource, ITargetData
 	public int NumberOfTargets {get{return _numberOfTargets;}}
 	public float Range{get;}
 
-	public TargetData () : this(TargetType.SINGLE, new Godot.Collections.Array<TargeTableType> () ,0f, 1, 0f) {}
+	public TargetData () : this(TargetType.SELECTION, new Godot.Collections.Array<TargeTableType> () ,0f, 1, 0f) {}
 
 	public TargetData (TargetType targetType,
 	Godot.Collections.Array<TargeTableType> whoTarget,

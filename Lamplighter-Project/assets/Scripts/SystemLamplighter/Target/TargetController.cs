@@ -10,6 +10,7 @@ using SystemLamplighter.Tool;
 using System.Collections.Generic;
 using SystemLamplighter.Setup;
 using Characters.Interfaces;
+using SystemLamplighter.Common.Enums;
 
 namespace SystemLamplighter.Target;
 
@@ -26,6 +27,7 @@ public partial class TargetController : AbstractController<TargetView, TargetMod
 	/// Salvo il target che è in questo momento il caster
 	/// </summary>
 	private ICombatActor _currentActorCaster;
+	private TargetType _currentTargetType;
 	private ITargetResolverFactory _targetResolverFactory;
 
 	private bool _enabled = false;
@@ -45,16 +47,17 @@ public partial class TargetController : AbstractController<TargetView, TargetMod
 	{
 		_enabled = true;
 		_currentActorCaster = null;
+		
 		CurrentTargetResolver = null;
 
 		DebugLamplighter.Assert(ev != null, "ev is null");
 		DebugLamplighter.Assert(ev.Action != null, "action is null");
 		DebugLamplighter.Assert(ev.Actor != null, "actor is null");
 
-		var targetType = ev.Action.TargetData.TargetType;
+		_currentTargetType = ev.Action.TargetData.TargetType;
 		
 		_currentActorCaster = ev.Actor;
-		CurrentTargetResolver = _targetResolverFactory.Create(targetType);
+		CurrentTargetResolver = _targetResolverFactory.Create(_currentTargetType);
 
 		_view.ShowInfo(ev.Action);
 
@@ -156,7 +159,7 @@ public partial class TargetController : AbstractController<TargetView, TargetMod
 				_view.ShapeTargetRender(positionCursorState);
 				break;
 			case ActorCursorState actorCursorState:
-				_view.SelectionTargetRender(actorCursorState);
+				_view.SelectionTargetRender(actorCursorState, _currentTargetType);
 				break;
 		}
 	}

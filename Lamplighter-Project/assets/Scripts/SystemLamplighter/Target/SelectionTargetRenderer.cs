@@ -43,35 +43,45 @@ public partial class SelectionTargetRenderer : Control, ITargetRenderer
 		_targetableProvider = context.TargetableProvider;
 	}
 
-	public void InitMenu(ActorCursorState state)
+	public void InitMenu(ActorCursorState state, TargetType targetType)
 	{
 		DebugLamplighter.Assert(_targetableProvider != null, "_targetableProvider is null");
 		DebugLamplighter.Assert(_selectionButton != null, "_selectionButton is null");
 		
 		EnableUi(true);
-		var targetables =  _targetableProvider.GetTargetables(state.WhoTarget);
 
-		if(_menuContainer.GetChildCount() != targetables.Count)
+		Clean();
+
+		if(targetType == TargetType.SELF)
 		{
-			_menuContainer.CleanChildren();
-			_selectionTargetsUiDictionary.Clear();
+			CreateButton(state.TargetableFocused);
+		}
+		else
+		{
+			var targetables =  _targetableProvider.GetTargetables(state.WhoTarget);
 
-			foreach(var targetable in _targetableProvider.GetTargetables())
+			if(_menuContainer.GetChildCount() != targetables.Count)
 			{
-				var button = _selectionButton.Instantiate();
-				_menuContainer.AddChild(button);
-
-				if(button is SelectionLabel selectionLabel)
+				foreach(var targetable in targetables)
 				{
-					selectionLabel.SetLabelText(targetable.TargetableName);
-					_selectionTargetsUiDictionary.TryAdd(targetable, selectionLabel);
+					CreateButton(targetable);
 				}
-				else 
-					DebugLamplighter.Assert(true, "button is not a SelectionLabel");
 			}
 		}
+	}
 
-		
+	private void CreateButton(ITargetable targetable)
+	{
+		var button = _selectionButton.Instantiate();
+		_menuContainer.AddChild(button);
+
+		if(button is SelectionLabel selectionLabel)
+		{
+			selectionLabel.SetLabelText(targetable.TargetableName);
+			_selectionTargetsUiDictionary.TryAdd(targetable, selectionLabel);
+		}
+		else 
+			DebugLamplighter.Assert(true, "button is not a SelectionLabel");
 	}
 
 	public bool CanRender(TargetCursorState targetCursorState)
@@ -82,11 +92,11 @@ public partial class SelectionTargetRenderer : Control, ITargetRenderer
 		return false;
 	}
 
-	public void Render(TargetCursorState targetCursorState)
+	public void Render(TargetCursorState targetCursorState, TargetType targetType)
 	{
 		if(targetCursorState is ActorCursorState state)
 		{
-			InitMenu(state);
+			InitMenu(state, targetType);
 			
 			foreach(var element in _selectionTargetsUiDictionary)
 			{
@@ -110,31 +120,20 @@ public partial class SelectionTargetRenderer : Control, ITargetRenderer
 				else
 					selectionLabel.Unfocus();
 			}
-
-			// if(_lastActorCursorState != null && state != null)
-			// 	Log.PrintMessage($"LAST CURSOR:{_lastActorCursorState.TargetableFocused.TargetableName} - CURRENT CURSOR: {state.TargetableFocused.TargetableName}");
-			// if(_lastActorCursorState != null && _lastActorCursorState.TargetableFocused != state.TargetableFocused)
-			// {
-				
-			// 	_lastActorCursorState.TargetableFocused.Deselect();
-			// 	_selectionTargetsUiDictionary.TryGetValue(_lastActorCursorState.TargetableFocused, out SelectionLabel lastSelectionLabel);
-			// 	Log.PrintMessage($"LAST SELECTION LABEL:{lastSelectionLabel.Label}");
-			// 	lastSelectionLabel?.Unfocus();
-			// }
-
-
-			// //_camera.LookAt(_combatActorPositionProvider.GetPosition(state.ActorSelected));
-			// state.TargetableFocused.Select();
-
-			// _lastActorCursorState = state;
 		}
+	}
+
+	private void Clean()
+	{
+		_menuContainer.CleanChildren();
+		_selectionTargetsUiDictionary.Clear();
 	}
 
 	public void EnableUi(bool value) => _ui.Visible = value;
 
 	public override void _ExitTree()
 	{
-		_selectionTargetsUiDictionary.Clear();
+		Clean();
 
 		_lastActorCursorState = null;
 

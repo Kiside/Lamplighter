@@ -3,7 +3,7 @@ namespace SystemLamplighter.Common.Enums
 	public enum TargetType
 	{
 		SELF,
-		SINGLE,
+		SELECTION,
 		CIRCLE,
 		LINE,
 		CONE

@@ -9,6 +9,8 @@ using SystemLamplighter.Target.Interfaces;
 
 namespace SystemLamplighter.Target;
 
+// todo: da cancellare
+
 /// <summary>
 /// Servizio per la targetizzazione, contiene la logica per risolvere i target
 /// </summary>
@@ -58,7 +60,7 @@ public class TargetService
 			break;
 			case Common.Enums.TargetType.SELF:
 			break;
-			case Common.Enums.TargetType.SINGLE:
+			case Common.Enums.TargetType.SELECTION:
 			HandleSingleTarget(targetData);
 			break;
 			case Common.Enums.TargetType.LINE:

@@ -77,7 +77,7 @@ public partial class TargetView : ControlView
 
 		switch (targetData.TargetType)
 		{
-			case TargetType.SINGLE:
+			case TargetType.SELECTION:
 				first = $"Select {numberOfTargets} to";
 				break;
 			case TargetType.SELF:
@@ -109,12 +109,12 @@ public partial class TargetView : ControlView
 	{
 		//_currentTargetRenderer = GetNode<ShapeTargetRenderer>(_shapeTargetUiPath);
 	}
-	public void SelectionTargetRender(ActorCursorState actorCursorState)
+	public void SelectionTargetRender(ActorCursorState actorCursorState, TargetType targetType)
 	{
 		_currentTargetRenderer = GetNode<SelectionTargetRenderer>(_selectionTargetUiPath);
 		
 		if(_currentTargetRenderer.CanRender(actorCursorState))
-			_currentTargetRenderer.Render(actorCursorState);
+			_currentTargetRenderer.Render(actorCursorState, targetType);
 	}
 
 	public void HideUi()
