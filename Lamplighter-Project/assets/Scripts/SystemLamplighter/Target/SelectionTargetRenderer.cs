@@ -50,18 +50,18 @@ public partial class SelectionTargetRenderer : Control, ITargetRenderer
 		
 		EnableUi(true);
 
-		Clean();
-
-		if(targetType == TargetType.SELF)
+		if(targetType == TargetType.SELF && _menuContainer.GetChildCount() == 0)
 		{
 			CreateButton(state.TargetableFocused);
 		}
-		else
+		else if(targetType == TargetType.SELECTION)
 		{
 			var targetables =  _targetableProvider.GetTargetables(state.WhoTarget);
 
 			if(_menuContainer.GetChildCount() != targetables.Count)
 			{
+				Clean();
+
 				foreach(var targetable in targetables)
 				{
 					CreateButton(targetable);
@@ -94,28 +94,33 @@ public partial class SelectionTargetRenderer : Control, ITargetRenderer
 
 	public void Render(TargetCursorState targetCursorState, TargetType targetType)
 	{
-		if(targetCursorState is ActorCursorState state)
+		Log.PrintMessage($"ENTRO");
+		if(targetCursorState is ActorCursorState actorCursorState)
 		{
-			InitMenu(state, targetType);
+			InitMenu(actorCursorState, targetType);
 			
 			foreach(var element in _selectionTargetsUiDictionary)
 			{
+				GD.Print("");
 				var targetable = element.Key;
 				var selectionLabel = element.Value;
 
-				if(state.TargetablesSelected.Count > 0)
+				if(actorCursorState.TargetablesSelected.Count >= 0)
 				{
-					if(state.TargetablesSelected.Contains(targetable))
+					Log.PrintMessage($"{actorCursorState.TargetablesSelected.Count}");
+					if(actorCursorState.TargetablesSelected.Contains(targetable))
 					{
+						Log.PrintMessage("SELECT");
 						selectionLabel.Select();
 					}
 					else
 					{
+						Log.PrintMessage("DESELECT");
 						selectionLabel.Deselect();
 					}
 				}
 
-				if(targetable == state.TargetableFocused)
+				if(targetable == actorCursorState.TargetableFocused)
 					selectionLabel.Focus();
 				else
 					selectionLabel.Unfocus();

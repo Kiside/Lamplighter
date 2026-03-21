@@ -21,6 +21,15 @@ public class ActorCursorState : TargetCursorState
 
 	public ActorCursorState(List<ITargetable> targetablesSelected, 
 	ITargetable targetableFocused, 
+	List<TargeTableType> whoTarget) : base(TargetResolutionStatus.ON_GOING)
+	{
+		TargetablesSelected = targetablesSelected;
+		TargetableFocused = targetableFocused;
+		WhoTarget = whoTarget;
+	}
+
+	public ActorCursorState(List<ITargetable> targetablesSelected, 
+	ITargetable targetableFocused, 
 	List<TargeTableType> whoTarget,
 	TargetResolutionStatus targetResolutionStatus) : base(targetResolutionStatus)
 	{

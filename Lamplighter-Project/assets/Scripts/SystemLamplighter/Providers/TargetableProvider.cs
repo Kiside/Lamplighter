@@ -8,13 +8,42 @@ public class TargetableProvider : ITargetableProvider
 {
 	private List<ITargetable> _targetables;
 
+	private List<ITargetable> _alliesTargetable;
+	private List<ITargetable> _enemiesTargetable;
+	private List<ITargetable> _environmentsTargetable;
+
 	public void Init(List<ITargetable> targetables)
 	{
 		if(_targetables is null)
 			_targetables = new List<ITargetable>();
 
 		_targetables = targetables;
+
+		FilterTargetables();
 	}
+
+	private void FilterTargetables()
+	{
+		foreach(var targetable in _targetables)
+		{
+			switch(targetable.TargeTableType)
+			{
+				case TargeTableType.Ally:
+					_alliesTargetable ??= new List<ITargetable>();
+					_alliesTargetable.Add(targetable);
+					break;
+				case TargeTableType.Enemy:
+					_enemiesTargetable ??= new List<ITargetable>();
+					_enemiesTargetable.Add(targetable);
+					break;
+				case TargeTableType.Environment:
+					_environmentsTargetable ??= new List<ITargetable>();
+					_environmentsTargetable.Add(targetable);
+					break;
+			}
+		}
+	}
+
 	public void AddTargetable(ITargetable targetable) => _targetables.Add(targetable);
 	
 	public void RemoveTargetable(ITargetable targetable) => _targetables.Remove(targetable);

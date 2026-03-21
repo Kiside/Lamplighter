@@ -66,23 +66,27 @@ public class SelectionTargetResolver : TargetResolver
 
 		var curTarIndex = _targetableProvider.GetIndex(_currentTargetFocused, _currentWhoTarget);
 
+		Log.PrintMessage($"CurIndex: {curTarIndex} - directionY: {-direction.Y}");
+
 		var i = curTarIndex + (int)Math.Round(-direction.Y);
 
-		var index = i < 0 ? _targetableProvider.CountOf(_currentWhoTarget) - 1 : i % _targetableProvider.Count;
-		
+		var index = i < 0 ? _targetableProvider.CountOf(_currentWhoTarget) - 1 : i % _targetableProvider.CountOf(_currentWhoTarget);
+		Log.PrintMessage($"INDEX: {index}");
 		_currentTargetFocused = _targetableProvider.GetTargetable(index, _currentWhoTarget);
 
-		Log.PrintMessage($"TARGET FOCUSED: {_currentTargetFocused.TargetableName} - INDEX: {index}");
+		
 
-		return new ActorCursorState(_currentTargetFocused, _currentTargetData.WhoTarget);
+		return new ActorCursorState(_targetablesSelected, _currentTargetFocused, _currentTargetData.WhoTarget);
 	}
 
 	public override TargetCursorState Select()
 	{
 		if(_targetablesSelected.Contains(_currentTargetFocused))
 		{
+			Log.PrintMessage("REMOVE");
 			_currentCountTargetsSelected--;
 			_targetablesSelected.Remove(_currentTargetFocused);
+			Log.PrintMessage("count targetableSelected: " + _targetablesSelected.Count);
 		}
 		else
 		{
