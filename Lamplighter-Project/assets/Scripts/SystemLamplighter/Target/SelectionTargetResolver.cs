@@ -37,13 +37,15 @@ public class SelectionTargetResolver : TargetResolver
 		DebugLamplighter.Assert(action != null, "action is null");
 		DebugLamplighter.Assert(casterActor != null, "caster actor is null");
 		DebugLamplighter.Assert(_targetableProvider != null || _targetableProvider.Count > 0, "_targetableProvider is null or empty");
-
+		
 		IsActive = true;
 		_currentTargetData = action.TargetData;
 		_casterActor = casterActor;
 		if(_currentTargetData.TargetType == TargetType.SELF)
 		{
-			_currentTargetFocused = _targetableProvider.GetTargetable(_casterActor.AtbProperties.Name);
+			// TODO: Verdere se è possibile non usare il nome per tale get ma un identificativo migliore
+			_currentTargetFocused = _targetableProvider.GetTargetable(_casterActor.Id);
+			//_currentTargetFocused = _targetableProvider.GetTargetable(_casterActor.AtbProperties.Name);
 		}
 		_currentTargetFocused = _targetableProvider.GetTargetable(0, action.TargetData.WhoTarget);
 		_currentCountTargetsSelected = 0;

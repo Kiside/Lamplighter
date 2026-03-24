@@ -14,7 +14,7 @@ namespace Characters
 	/// </summary>
 	/// <typeparam name="TView"></typeparam>
 	/// <typeparam name="TModel"></typeparam>
-	public partial class CharacterController<TView, TModel> : AbstractCharacterController
+	public partial class CharacterController<TView, TModel> : AbstractCharacterController, IIdentificable
 	where TView : AbstractView
 	where TModel : AbstractModel
 	{
@@ -25,7 +25,16 @@ namespace Characters
 
 		protected TView _view;
 		protected TModel _model;
+
+		public Identification Id { get; private set; }
 		
+		protected void InitId()
+		{
+			if(Id == null)
+			{
+				Id = new Identification(this.Name);
+			}
+		}
 
 		/// <summary>
 		/// Prima implementazione basilare di Init()
@@ -33,6 +42,7 @@ namespace Characters
 		public sealed override void Init()
 		{
 			NodeChecking();
+			InitId();
 			OnInit();
 		}
 

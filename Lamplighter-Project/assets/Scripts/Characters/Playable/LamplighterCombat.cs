@@ -6,6 +6,7 @@ using SystemLamplighter.Extensions;
 using Characters.Abstract;
 using SystemLamplighter.Interfaces;
 using SystemLamplighter.Combat.Core;
+using SystemLamplighter.Tool;
 
 namespace Characters.Playable;
 /// <summary>
@@ -19,12 +20,16 @@ namespace Characters.Playable;
 		{
 			base.Init(controller);
 
+			var sub = this.GetSubscriber<AtbCommandPhaseStartedEvent>();
+
+			Log.PrintMessage($"sub: {sub}");
+
 			_turnBasedCombat = new TurnBasedCombat(controller.BattleMenuController, 
 			controller.CombatActor,
 			this.GetPublisher<AtbCommandPhaseEndEvent>(),
 			this.GetPublisher<AtbEndExecuteActionEvent>(),
 			this.GetPublisher<StartTargetEvent>(),
-			this.GetSubscriber<AtbCommandPhaseStartedEvent>(),
+			sub,
 			this.GetSubscriber<AtbExecuteActionEvent>(),
 			this.GetSubscriber<EndTargetEvent>()
 			);
@@ -51,3 +56,5 @@ namespace Characters.Playable;
 			base._ExitTree();
 		}
 	}
+
+

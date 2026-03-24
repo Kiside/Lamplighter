@@ -14,6 +14,7 @@ using SystemLamplighter.Abstract.MVC;
 using SystemLamplighter.Common.Enums;
 using SystemLamplighter.Interfaces;
 using SystemLamplighter.Combat.Actor;
+using SystemLamplighter.Tool;
 
 namespace Characters.Playable
 {
@@ -64,8 +65,12 @@ namespace Characters.Playable
 		{
 			NodeChecking();
 			SubscribeBattleMenu();
+		}
 
-			_combatActor = new CombatActor(_atbCharacterProperties, _combatLoadout);
+		public void InitCombatActor(Identification id)
+		{
+			Log.PrintMessage("InitCombatActor");
+			_combatActor = new CombatActor(_atbCharacterProperties, _combatLoadout, id);
 		}
 
 		private void SubscribeBattleMenu() 

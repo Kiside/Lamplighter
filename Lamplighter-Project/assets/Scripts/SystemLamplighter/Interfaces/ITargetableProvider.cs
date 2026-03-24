@@ -10,6 +10,7 @@ public interface ITargetableProvider
 	public void Clear();
 	public List<ITargetable> GetTargetables();
 	public List<ITargetable> GetTargetables(List<TargeTableType> type);
+	public ITargetable GetTargetable(Identification id);
 	public ITargetable GetTargetable(string targetableName);
 	public ITargetable GetTargetable(ITargetable targetable);
 	public ITargetable GetTargetable(int index);

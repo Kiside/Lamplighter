@@ -1,5 +1,7 @@
+using System;
 using Godot;
 using SystemLamplighter.Common.Enums;
+using SystemLamplighter.Debug;
 
 public partial class Targetable : Node, ITargetable
 {
@@ -20,15 +22,23 @@ public partial class Targetable : Node, ITargetable
 	private string _name = "";
 	
 	public Vector3 Position => _position.GlobalPosition;
-
 	public TargeTableType TargeTableType => _targetableType;
 	public string TargetableName => _name;
+	public Identification Id {get; private set;}
 
 	public override void _Ready()
 	{
 		base._Ready();
 		if(_name == string.Empty)
 			_name = GetParent().Name;
+
+		if(Id == null)
+		{
+			if(GetParent() is IIdentificable parent)
+				Id = parent.Id;
+			else 
+				DebugLamplighter.Assert(true, "The parent is not IIdentificable");
+		}
 	}
 
 	public void Select()

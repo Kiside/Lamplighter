@@ -105,6 +105,8 @@ namespace SystemLamplighter.ATB
 				_stackCurrentActorsInCommand.Add(currentCharacter);
 			}
 
+			Log.PrintMessage($"{currentCharacter.Id.Name} {currentCharacter.Id.ID} COMMAND");
+
 			_subscriptionAtbCommandPhaseEnd = _subscriberAtbCommandPhaseEnd.Subscribe(OnCommandEnd);
 			_subscriptionAtbCommandPhaseEnd.AddTo(_bag);
 			_publishAtbCommandPhaseStartEvent.Publish(new AtbCommandPhaseStartedEvent(currentCharacter));

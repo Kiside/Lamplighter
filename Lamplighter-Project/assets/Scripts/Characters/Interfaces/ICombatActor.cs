@@ -5,6 +5,7 @@ using SystemLamplighter.ATB;
 using SystemLamplighter.Common.Enums;
 using SystemLamplighter.Interfaces;
 using System.Numerics;
+using System;
 
 namespace Characters.Interfaces;
 
@@ -18,4 +19,5 @@ public interface ICombatActor
     public CombatLoadout CombatLoadout { get; }
     public IActionData CurrentAction { get; set; }
     public AtbCharacterStatus UpdateAtbPosition(float value);
+    public Identification Id {get;}
 }

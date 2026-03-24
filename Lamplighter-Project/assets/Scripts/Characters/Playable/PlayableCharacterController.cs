@@ -55,7 +55,14 @@ namespace Characters.Playable
 			_combat.Init(this);
 			_movement.Init(this);
 
+			SetIdCombatActor();
+
 			Subscribe();
+		}
+
+		private void SetIdCombatActor()
+		{
+			_model.InitCombatActor(Id);
 		}
 
 		public ICombatActor GetCombatInterface() => CombatActor;

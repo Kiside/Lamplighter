@@ -52,6 +52,8 @@ namespace SystemLamplighter.Combat.Core
 
 			_bag = DisposableBag.CreateBuilder();
 
+			Log.PrintMessage($"subscribed phase command started {_subscriberCommandPhaseStarted}");
+
 			_subscriberCommandPhaseStarted.Subscribe(OnCommandPhaseStarted).AddTo(_bag);
 			_subscriberExecuteActionEvent.Subscribe(OnExecuteCombatAction).AddTo(_bag);
 

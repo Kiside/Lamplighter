@@ -8,6 +8,7 @@ using SystemLamplighter.Debug;
 using SystemLamplighter.Events;
 using SystemLamplighter.Interfaces;
 using SystemLamplighter.Abstract.MVC;
+using SystemLamplighter.Tool;
 
 
 namespace SystemLamplighter.BattleMenu
@@ -50,7 +51,9 @@ namespace SystemLamplighter.BattleMenu
 			DebugLamplighter.Assert(Menus != null, "There is no Menus");
 			DebugLamplighter.Assert(Menus.Count > 0, "There is no element in Menus");
 			
-			OnOpenSubMenu?.Invoke(Menus.First(m => m.Id == subMenu));
+			Log.PrintMessage("RequestOpenSubMenu: " + subMenu);
+
+			OnOpenSubMenu?.Invoke(Menus.First(m => m.Id == subMenu));		
 		}
 
 		public void OpenSubMenu(IReadOnlyList<IActionData> subMenuButtonNames)
