@@ -52,10 +52,10 @@ namespace Characters.Playable
 
 		protected override void OnInit()
 		{
+			SetIdCombatActor();
+
 			_combat.Init(this);
 			_movement.Init(this);
-
-			SetIdCombatActor();
 
 			Subscribe();
 		}
