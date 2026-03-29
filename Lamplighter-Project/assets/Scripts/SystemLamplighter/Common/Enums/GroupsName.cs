@@ -11,6 +11,7 @@ public enum GroupsName
 	highlighter,
 	controllers,
 	renderer,
-	targetable
+	targetable,
+	walkable
 
 }

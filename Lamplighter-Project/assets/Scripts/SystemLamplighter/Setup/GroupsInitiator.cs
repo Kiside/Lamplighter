@@ -5,6 +5,8 @@ using SystemLamplighter.Interfaces;
 using SystemLamplighter.Common.Enums;
 using System.Linq;
 
+
+// TODO: probabilmente da cancellare 
 namespace SystemLamplighter.Setup;
 /// <summary>
 /// Classe per aggiungere il nodo in un gruppo in modo automatico
