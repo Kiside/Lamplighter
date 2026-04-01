@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://c5mvvlosts20h" path="res://assets/Characters/Playable/charlie.tscn" id="1_qfi3i"]
 [ext_resource type="Script" uid="uid://devy8gu6rokai" path="res://assets/Scripts/Characters/NPC/NpCharacterController.cs" id="2_aw6lp"]
 [ext_resource type="PackedScene" uid="uid://bjvqik1fmkboh" path="res://assets/Scenes-Environmet/proto_combat.tscn" id="2_mw5we"]
+[ext_resource type="PackedScene" uid="uid://smrtor31vc68" path="res://assets/Resources/Models/floor_proto.tscn" id="2_x5dwk"]
 [ext_resource type="Script" uid="uid://bc6bjkwcn78h6" path="res://assets/Scripts/Characters/NPC/NpCharacterModel.cs" id="3_8uc3x"]
 [ext_resource type="Script" uid="uid://b3kvxr43rq8mm" path="res://assets/Scripts/Characters/NPC/NpCharacterView.cs" id="4_66ris"]
 [ext_resource type="Image" uid="uid://cqklojhdlw85m" path="res://assets/Resources/Avatars/enemies.png" id="4_naehx"]
@@ -21,9 +22,9 @@
 [ext_resource type="Resource" uid="uid://bjd0r2gvapdf" path="res://assets/CustomResources/Prototype/healthItem.tres" id="17_gor4l"]
 [ext_resource type="PackedScene" uid="uid://dyhr28frl1avx" path="res://assets/Scenes-Node/highlightable.tscn" id="18_7o5g0"]
 [ext_resource type="PackedScene" uid="uid://cu7tp8wr5c5y6" path="res://assets/Scenes-Node/targetable.tscn" id="19_hp1yv"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mw5we"]
-albedo_color = Color(0.46229059, 0.46229059, 0.46229059, 1)
+[ext_resource type="Script" uid="uid://dnx4tgkhr5a1i" path="res://assets/Scripts/SystemLamplighter/Navigation/NavigationSystem.cs" id="22_h0r1b"]
+[ext_resource type="Script" uid="uid://dwohowhq81y4d" path="res://assets/Scripts/SystemLamplighter/Debug/DebugMasterNode.cs" id="24_chj2u"]
+[ext_resource type="Script" uid="uid://c0awbro2jcb4v" path="res://assets/Scripts/SystemLamplighter/Debug/DebugNavigationSystem.cs" id="25_23igw"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qcquh"]
 albedo_color = Color(0.46126777, 0, 0.01909638, 1)
@@ -46,10 +47,8 @@ metadata/_custom_type_script = "uid://dpwp74optcgd5"
 script = ExtResource("1_qcquh")
 _getNodesOfGroups = Array[int]([5])
 
-[node name="CSGBox3D" type="CSGBox3D" parent="." unique_id=819949778]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0358276, 0)
-material_override = SubResource("StandardMaterial3D_mw5we")
-size = Vector3(21.6799, 0.0296631, 20.2432)
+[node name="FloorProto2" parent="." unique_id=703619226 groups=["walkable"] instance=ExtResource("2_x5dwk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.17597556, 0)
 
 [node name="Enemy" type="CharacterBody3D" parent="." unique_id=1970786060 groups=["enemy"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.564902, 0.5407543, 0.04921341)
@@ -144,5 +143,16 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.010365605, 0)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=2112330929]
 transform = Transform3D(1, 0, 0, 0, 0.56336695, 0.82620686, 0, -0.82620686, 0.56336695, 0, 0.010365605, 0)
+
+[node name="Navigation" type="Node" parent="." unique_id=750886176]
+script = ExtResource("22_h0r1b")
+_gridStep = 0.5
+_debugColorPoint = Color(0, 1, 0, 0)
+
+[node name="DebugMaster" type="Node" parent="." unique_id=2029330679]
+script = ExtResource("24_chj2u")
+
+[node name="DebystemugNavigationS" type="Node" parent="DebugMaster" unique_id=709504440]
+script = ExtResource("25_23igw")
 
 [editable path="ProtoCombat"]

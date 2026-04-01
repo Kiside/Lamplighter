@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://smrtor31vc68"]
+
+[ext_resource type="PackedScene" uid="uid://r5utxec7hedc" path="res://assets/Resources/Models/FloorProto.glb" id="1_r1l3g"]
+[ext_resource type="Material" uid="uid://br8jrg5r6syxj" path="res://assets/Materials/Characters/proto_Charlie.tres" id="2_olvcy"]
+
+[node name="FloorProto" unique_id=703619226 instance=ExtResource("1_r1l3g")]
+
+[node name="Cube" parent="." index="0" unique_id=738506055]
+material_override = ExtResource("2_olvcy")
