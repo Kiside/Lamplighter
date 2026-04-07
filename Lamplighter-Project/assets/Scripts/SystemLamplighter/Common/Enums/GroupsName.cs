@@ -12,6 +12,7 @@ public enum GroupsName
 	controllers,
 	renderer,
 	targetable,
-	walkable
+	walkable,
+	navigationSystem
 
 }

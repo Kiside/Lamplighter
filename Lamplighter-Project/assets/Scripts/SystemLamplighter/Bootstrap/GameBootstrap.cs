@@ -14,6 +14,7 @@ using System.Linq;
 using SystemLamplighter.Debug;
 using SystemLamplighter.Extensions;
 using SystemLamplighter.DataStructure.GeneralData;
+using SystemLamplighter.Navigation;
 
 namespace SystemLamplighter.Bootstrap;
 
@@ -40,7 +41,18 @@ public partial class GameBootstrap : Node
 
         InitTargetController();
 		InitSelectionTargetRender();
+		InitNavitationSystem();
     }
+
+	private void InitNavitationSystem()
+	{
+		var navigationSystem = this.GetNodesOfGroup(GroupsName.navigationSystem)
+		.FirstOrDefault(n => n is NavigationSystem) as NavigationSystem;
+
+		DebugLamplighter.Assert(navigationSystem != null, "navigationSystem is null");
+
+		navigationSystem.BootstrapInit(Services.GetRequiredService<NavigationAstarService>());
+	}
 
 	private void InitSelectionTargetRender()
 	{
@@ -90,6 +102,7 @@ public partial class GameBootstrap : Node
 
 		services.AddSingleton<ITargetResolverFactory, TargetResolverFactory>();
 
+		services.AddTransient<NavigationAstarService>();
 
 		// Message pipe
 		services.AddMessagePipe();

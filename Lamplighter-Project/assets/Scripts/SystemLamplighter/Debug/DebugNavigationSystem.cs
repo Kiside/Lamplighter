@@ -1,13 +1,17 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using Godot;
+using Microsoft.Extensions.DependencyInjection;
+using SystemLamplighter.Bootstrap;
 using SystemLamplighter.Debug;
+using SystemLamplighter.Extensions;
 using SystemLamplighter.Navigation;
 using SystemLamplighter.Tool;
 
 [Tool]
 public partial class DebugNavigationSystem : Node
 {
+	
 	[Export]
 	private float _gridStep = 1.0f;
 	[Export]
@@ -24,7 +28,9 @@ public partial class DebugNavigationSystem : Node
 
 	private ImmediateMesh _debugMesh;
 	private MeshInstance3D _debugMeshInstance;
-	private INavigationSystem _navigationSystem;
+	//private NavigationSystem _navigationSystem;
+
+	private NavigationAstarService _navigationService;
 
 	public override void _EnterTree()
 	{
@@ -33,32 +39,64 @@ public partial class DebugNavigationSystem : Node
 		base._EnterTree();
 	}
 
-	private bool GetNavigationSystem()
+	private void InitNavigationService()
 	{
-		if(this.GetParent() is DebugMasterNode debugMasterNode)
-		{
-			_navigationSystem = debugMasterNode.GetNodeOf<INavigationSystem>();
-			if(_navigationSystem != null)
-			{
-				Log.PrintMessage("perfect");
-				return true;
-			}
-		}
-		Log.PrintMessage("esco");
-		return false;
+		if(_navigationService == null)
+					_navigationService = new NavigationAstarService();
 	}
+
+
+	// public void Init()
+	// {
+	// 	if(_pointsDictionary == null)
+	// 		_pointsDictionary = new Dictionary<Godot.Vector3, long>();
+	// 	else 
+	// 	 	_pointsDictionary.Clear();
+
+	// 	if(_astar == null)
+    //     	_astar = new AStar3D();
+    // 	else
+    //     	_astar.Clear();
+
+	// 	var walkables = this.GetNodesOfGroups(_groups);
+	// 	GD.Print($"Walkables trovati: {walkables.Count}"); // <- quanti ne trova?
+		
+	// 	GetWalkables(walkables);
+		
+	// 	GD.Print($"Points aggiunti: {_pointsDictionary.Count}"); // <- quanti punti?
+	// }
+
+	// private bool GetNavigationSystem()
+	// {
+	// 	if(this.GetParent() is DebugMasterNode debugMasterNode)
+	// 	{
+	// 		if(_navigationService == null)
+	// 			_navigationService = debugMasterNode.GetNodeOf<NavigationSystem>();
+	// 		if(_navigationService != null)
+	// 		{
+	// 			Log.PrintMessage("perfect");
+	// 			return true;
+	// 		}
+	// 	}
+	// 	Log.PrintMessage("esco");
+	// 	return false;
+	// }
 
 	private void BakeButtonClick()
 	{
 			if(Engine.IsEditorHint())
 			{
-				if(!GetNavigationSystem())
-			{
-				DebugLamplighter.Assert(true, "Can't get navigtationsystem");
-				return;
-			}
-				_navigationSystem.Init();
-				ClearDebugPoints();
+			// 	if(!GetNavigationSystem())
+			// {
+			// 	DebugLamplighter.Assert(true, "Can't get navigtationsystem");
+			// 	return;
+			// }
+
+				// _navigationSystem = GetParent() as NavigationSystem;
+				// _navigationSystem.Init();
+				//ClearDebugPoints();
+				InitNavigationService();
+				_navigationService.Init(this.GetNodesOfGroup(SystemLamplighter.Common.Enums.GroupsName.walkable), _gridStep, _gridYTemp);
 				DrawDebugPoints();
 				NotifyPropertyListChanged();
 			}
@@ -68,11 +106,13 @@ public partial class DebugNavigationSystem : Node
 	{
 		if(Engine.IsEditorHint())
 			{
-				if(!GetNavigationSystem())
-				{
-					DebugLamplighter.Assert(true, "Can't get navigtationsystem");
-					return;
-				}
+				// if(!GetNavigationSystem())
+				// {
+				// 	DebugLamplighter.Assert(true, "Can't get navigtationsystem");
+				// 	return;
+				// }
+				//_navigationSystem = GetParent() as NavigationSystem;
+				InitNavigationService();
 				ClearDebugPoints();
 				NotifyPropertyListChanged();
 			}
@@ -101,7 +141,7 @@ public partial class DebugNavigationSystem : Node
 		_debugMesh.ClearSurfaces();
 		_debugMesh.SurfaceBegin(Mesh.PrimitiveType.Points);
 
-		foreach(var point in _navigationSystem.PointsDictionary.Keys)
+		foreach(var point in _navigationService.PointsDictionary.Keys)
 		{
 			_debugMesh.SurfaceSetColor(Colors.Green);
 			_debugMesh.SurfaceAddVertex(point);
@@ -120,10 +160,22 @@ public partial class DebugNavigationSystem : Node
 			_debugMesh = null;
 		}
 		
-		if(_navigationSystem.PointsDictionary != null)
-			_navigationSystem.PointsDictionary.Clear();
+		if(_navigationService.PointsDictionary != null)
+			_navigationService.PointsDictionary.Clear();
 
-		if(_navigationSystem.Astar != null)
-			_navigationSystem.Astar.Clear();
+		if(_navigationService.Astar != null)
+			_navigationService.Astar.Clear();
+	}
+
+	public override void _ExitTree()
+	{
+		if(_navigationService != null)
+		{
+			ClearButtonClick();
+			_navigationService.Dispose();
+			_navigationService = null;
+		}
+			
+		base._ExitTree();
 	}
 }

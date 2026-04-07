@@ -43,6 +43,15 @@ metadata/_custom_type_script = "uid://dpwp74optcgd5"
 
 [node name="ProtoLevel" type="Node3D" unique_id=1351766654]
 
+[node name="Navigation" type="Node" parent="." unique_id=750886176]
+script = ExtResource("22_h0r1b")
+_gridStep = 0.5
+
+[node name="DebystemugNavigationS" type="Node" parent="Navigation" unique_id=709504440]
+script = ExtResource("25_23igw")
+_gridStep = 0.5
+_debugColorPoint = Color(0, 0.89411765, 0, 0)
+
 [node name="GameBootstrap" type="Node" parent="." unique_id=1881634156]
 script = ExtResource("1_qcquh")
 _getNodesOfGroups = Array[int]([5])
@@ -144,15 +153,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.010365605, 0)
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=2112330929]
 transform = Transform3D(1, 0, 0, 0, 0.56336695, 0.82620686, 0, -0.82620686, 0.56336695, 0, 0.010365605, 0)
 
-[node name="Navigation" type="Node" parent="." unique_id=750886176]
-script = ExtResource("22_h0r1b")
-_gridStep = 0.5
-_debugColorPoint = Color(0, 1, 0, 0)
-
 [node name="DebugMaster" type="Node" parent="." unique_id=2029330679]
 script = ExtResource("24_chj2u")
-
-[node name="DebystemugNavigationS" type="Node" parent="DebugMaster" unique_id=709504440]
-script = ExtResource("25_23igw")
 
 [editable path="ProtoCombat"]
