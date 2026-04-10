@@ -34,6 +34,7 @@ controllers="gruppo generico per tutti i controller che possono servire "
 renderer="gruppo generico per i renderer"
 targetable="gruppo per i nodi targetable"
 walkable="gruppo generico per zone \"camminabili\" per l'algoritmo di navigazione"
+bindable="gruppo generico per i nodi \"bindabili\""
 
 [input]
 

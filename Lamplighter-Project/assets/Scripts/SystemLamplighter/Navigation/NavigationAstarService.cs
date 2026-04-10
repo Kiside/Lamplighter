@@ -3,6 +3,7 @@ using Godot;
 
 public class NavigationAstarService : INavigationAstar
 {
+	// ? Ma va bene avere un unico dizionario per tutti i punti anche se quest'ultimi possono essere su mesh diverse?
 	public float GridStep;
 	public float GridYTemp;
 	public Dictionary<Godot.Vector3, long> PointsDictionary { get; private set; }
@@ -43,33 +44,32 @@ public class NavigationAstarService : INavigationAstar
 		return Astar.GetPointPath(fromId,toId);
 	}
 
+	private void CalculatePoints(MeshInstance3D mesh, Vector3 origin)
+	{
+		Aabb aabb = mesh.GetAabb();
+		origin = aabb.Position;
+		var x_steps = aabb.Size.X / GridStep;
+		var z_steps = aabb.Size.Z / GridStep;
+		var surfaceY = aabb.Position.Y + aabb.Size.Y;
+
+		for (var x = 0; x < x_steps; x++)
+		{
+			for (var z = 0; z < z_steps; z++)
+			{
+				var nextPoint = origin + new Godot.Vector3(x * GridStep, 0, z * GridStep);
+				nextPoint.Y = surfaceY + 0.05f;
+				AddPoint(nextPoint);
+			}
+		}
+	}
+
 	private void GetWalkables(Godot.Collections.Array<Node> walkables)
 	{
 		foreach (var walkable in walkables)
 		{
-
-			Godot.Vector3 origin = new Godot.Vector3();
-
 			if (walkable is MeshInstance3D mesh)
 			{
-				Aabb aabb = mesh.GetAabb();
-				GD.Print($"AABB : {aabb}");
-				origin = aabb.Position;
-				var x_steps = aabb.Size.X / GridStep;
-				var z_steps = aabb.Size.Z / GridStep;
-				var surfaceY = aabb.Position.Y + aabb.Size.Y;
-
-
-				for (var x = 0; x < x_steps; x++)
-				{
-					for (var z = 0; z < z_steps; z++)
-					{
-						var nextPoint = origin + new Godot.Vector3(x * GridStep, 0, z * GridStep);
-						nextPoint.Y = surfaceY + 0.05f;
-						AddPoint(nextPoint);
-
-					}
-				}
+				CalculatePoints(mesh, new Godot.Vector3());
 			}
 			if (walkable.GetChildCount() > 0)
 			{
@@ -77,29 +77,13 @@ public class NavigationAstarService : INavigationAstar
 				{
 					if (wChild is MeshInstance3D childMesh)
 					{
-						Aabb aabb = childMesh.GetAabb();
-						GD.Print($"AABB : {aabb}");
-						origin = aabb.Position;
-						var x_steps = aabb.Size.X / GridStep;
-						var z_steps = aabb.Size.Z / GridStep;
-						var surfaceY = aabb.Position.Y + aabb.Size.Y;
-
-
-						for (var x = 0; x < x_steps; x++)
-						{
-							for (var z = 0; z < z_steps; z++)
-							{
-								var nextPoint = origin + new Godot.Vector3(x * GridStep, 0, z * GridStep);
-								nextPoint.Y = surfaceY + 0.05f;
-								AddPoint(nextPoint);
-
-							}
-						}
+						CalculatePoints(childMesh, new Vector3());
 					}
 
 				}
 			}
 
+			ConnectPoints();
 		}
 	}
 

@@ -15,6 +15,7 @@ using SystemLamplighter.Debug;
 using SystemLamplighter.Extensions;
 using SystemLamplighter.DataStructure.GeneralData;
 using SystemLamplighter.Navigation;
+using Characters.Playable;
 
 namespace SystemLamplighter.Bootstrap;
 
@@ -24,7 +25,8 @@ public partial class GameBootstrap : Node
 	/// nodi che deve trovare il gamebootstrap
 	/// </summary>
 	[Export]
-	private Godot.Collections.Array<GroupsName> _getNodesOfGroups;
+	private SceneBinder _sceneBinder;
+
 
 
 	public static IServiceProvider Services {get; private set;}
@@ -44,10 +46,22 @@ public partial class GameBootstrap : Node
 		InitNavitationSystem();
     }
 
+	private void InitTurnBasicMovement()
+	{
+		var lamplighterMovementNode = _sceneBinder.Bind<LamplighterMovement>();
+
+		DebugLamplighter.Assert(lamplighterMovementNode != null, "lampligterMovementNode is null");
+
+		lamplighterMovementNode.BootstrapInit(Services.GetRequiredService<TurnBasicMovementResolver>());
+	}
+
 	private void InitNavitationSystem()
 	{
-		var navigationSystem = this.GetNodesOfGroup(GroupsName.navigationSystem)
-		.FirstOrDefault(n => n is NavigationSystem) as NavigationSystem;
+		// var navigationSystem = this.GetNodesOfGroup(GroupsName.navigationSystem)
+		// .FirstOrDefault(n => n is NavigationSystem) as NavigationSystem;
+
+		// Ottine il selectionTargetRender dalla scena
+		var navigationSystem = _sceneBinder.Bind<NavigationSystem>();
 
 		DebugLamplighter.Assert(navigationSystem != null, "navigationSystem is null");
 
@@ -56,8 +70,11 @@ public partial class GameBootstrap : Node
 
 	private void InitSelectionTargetRender()
 	{
-		var selectionTargetRender = this.GetNodesOfGroup(GroupsName.renderer)
-		.FirstOrDefault(n => n is SelectionTargetRenderer) as SelectionTargetRenderer;
+		// var selectionTargetRender = this.GetNodesOfGroup(GroupsName.renderer)
+		// .FirstOrDefault(n => n is SelectionTargetRenderer) as SelectionTargetRenderer;
+
+		// Ottine il selectionTargetRender dalla scena
+		var selectionTargetRender = _sceneBinder.Bind<SelectionTargetRenderer>();
 
 		DebugLamplighter.Assert(selectionTargetRender != null, "selectionTargetRender is null");
 
@@ -71,9 +88,12 @@ public partial class GameBootstrap : Node
 
 	private void InitTargetController()
 	{
+		
+        // var targetController = this.GetNodesOfGroups(_getNodesOfGroups)
+		// 	.FirstOrDefault(n => n is TargetController) as TargetController;
+
 		// Ottieni il nodo TargetController dalla scena
-        var targetController = this.GetNodesOfGroups(_getNodesOfGroups)
-			.FirstOrDefault(n => n is TargetController) as TargetController;
+		var targetController = _sceneBinder.Bind<TargetController>();
 
 		DebugLamplighter.Assert(targetController != null, "targetController is null");
 		
@@ -102,7 +122,9 @@ public partial class GameBootstrap : Node
 
 		services.AddSingleton<ITargetResolverFactory, TargetResolverFactory>();
 
-		services.AddTransient<NavigationAstarService>();
+		services.AddSingleton<INavigationAstar ,NavigationAstarService>();
+
+		services.AddTransient<TurnBasicMovementResolver>();
 
 		// Message pipe
 		services.AddMessagePipe();

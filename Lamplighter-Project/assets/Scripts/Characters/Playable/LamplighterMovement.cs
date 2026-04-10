@@ -12,6 +12,8 @@ namespace Characters.Playable
 	/// </summary>
 	public partial class LamplighterMovement : AbstractMovement<PlayableCharacterController>
 	{
+		TurnBasicMovementResolver _turnBasicMovementResolver;
+
 		public override void Init(PlayableCharacterController controller)
 		{
 			base.Init(controller);
@@ -50,6 +52,11 @@ namespace Characters.Playable
 			return _targetVelocity;
 		}
 
+		public void BootstrapInit(TurnBasicMovementResolver turnBasicMovementResolver)
+		{
+			_turnBasicMovementResolver = turnBasicMovementResolver;
+		}
+	
 		public void FreeMove()
 		{
 

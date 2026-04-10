@@ -8,7 +8,7 @@
 
 [sub_resource type="LabelSettings" id="LabelSettings_w6ugs"]
 
-[node name="TargetController" type="Node" unique_id=536833510 groups=["controllers"]]
+[node name="TargetController" type="Node" unique_id=536833510 groups=["bindable"]]
 script = ExtResource("1_w6ugs")
 View = NodePath("TargetView")
 Model = NodePath("TargetModel")
@@ -54,7 +54,7 @@ label_settings = SubResource("LabelSettings_w6ugs")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="SelectionTargetUi" type="Control" parent="TargetView" unique_id=672313700 node_paths=PackedStringArray("_ui", "_menuContainer") groups=["renderer"]]
+[node name="SelectionTargetUi" type="Control" parent="TargetView" unique_id=672313700 node_paths=PackedStringArray("_ui", "_menuContainer") groups=["bindable"]]
 layout_mode = 3
 anchors_preset = 0
 script = ExtResource("5_m4xlp")

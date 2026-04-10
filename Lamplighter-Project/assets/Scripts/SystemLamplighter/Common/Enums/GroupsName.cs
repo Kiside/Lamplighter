@@ -13,6 +13,7 @@ public enum GroupsName
 	renderer,
 	targetable,
 	walkable,
-	navigationSystem
+	navigationSystem,
+	bindable
 
 }

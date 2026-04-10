@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://bjvqik1fmkboh" path="res://assets/Scenes-Environmet/proto_combat.tscn" id="2_mw5we"]
 [ext_resource type="PackedScene" uid="uid://smrtor31vc68" path="res://assets/Resources/Models/floor_proto.tscn" id="2_x5dwk"]
 [ext_resource type="Script" uid="uid://bc6bjkwcn78h6" path="res://assets/Scripts/Characters/NPC/NpCharacterModel.cs" id="3_8uc3x"]
+[ext_resource type="Script" uid="uid://c6uo1si5yfkbx" path="res://assets/Scripts/SystemLamplighter/Bootstrap/SceneBinder.cs" id="3_mkya5"]
 [ext_resource type="Script" uid="uid://b3kvxr43rq8mm" path="res://assets/Scripts/Characters/NPC/NpCharacterView.cs" id="4_66ris"]
 [ext_resource type="Image" uid="uid://cqklojhdlw85m" path="res://assets/Resources/Avatars/enemies.png" id="4_naehx"]
 [ext_resource type="Script" uid="uid://dpwp74optcgd5" path="res://assets/Scripts/SystemLamplighter/ATB/AtbCharacterProperties.cs" id="5_uidbe"]
@@ -43,18 +44,16 @@ metadata/_custom_type_script = "uid://dpwp74optcgd5"
 
 [node name="ProtoLevel" type="Node3D" unique_id=1351766654]
 
-[node name="Navigation" type="Node" parent="." unique_id=750886176]
+[node name="Navigation" type="Node" parent="." unique_id=750886176 groups=["bindable"]]
 script = ExtResource("22_h0r1b")
 _gridStep = 0.5
 
-[node name="DebystemugNavigationS" type="Node" parent="Navigation" unique_id=709504440]
-script = ExtResource("25_23igw")
-_gridStep = 0.5
-_debugColorPoint = Color(0, 0.89411765, 0, 0)
-
 [node name="GameBootstrap" type="Node" parent="." unique_id=1881634156]
 script = ExtResource("1_qcquh")
-_getNodesOfGroups = Array[int]([5])
+
+[node name="SceneBinder" type="Node" parent="GameBootstrap" unique_id=2104835989]
+script = ExtResource("3_mkya5")
+_getNodesOfGroups = Array[int]([10])
 
 [node name="FloorProto2" parent="." unique_id=703619226 groups=["walkable"] instance=ExtResource("2_x5dwk")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.17597556, 0)
@@ -155,5 +154,10 @@ transform = Transform3D(1, 0, 0, 0, 0.56336695, 0.82620686, 0, -0.82620686, 0.56
 
 [node name="DebugMaster" type="Node" parent="." unique_id=2029330679]
 script = ExtResource("24_chj2u")
+
+[node name="DebystemugNavigationS" type="Node" parent="DebugMaster" unique_id=709504440]
+script = ExtResource("25_23igw")
+_gridStep = 0.5
+_debugColorPoint = Color(0, 0.89411765, 0, 0)
 
 [editable path="ProtoCombat"]

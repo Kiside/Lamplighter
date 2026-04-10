@@ -3,7 +3,5 @@ using Godot;
 
 public interface INavigationSystem
 {
-	public Dictionary<Godot.Vector3, long> PointsDictionary {get;}
-	public AStar3D Astar {get;}
-	public void Init();
+	public Godot.Vector3[] FindPath(Godot.Vector3 from, Godot.Vector3 to);
 }
