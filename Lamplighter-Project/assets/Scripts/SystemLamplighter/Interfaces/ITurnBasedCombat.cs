@@ -1,4 +1,5 @@
 using System;
+using SystemLamplighter.DataStructure.GeneralData;
 namespace SystemLamplighter.Interfaces;
 
 /// <summary>
@@ -6,6 +7,7 @@ namespace SystemLamplighter.Interfaces;
 /// </summary>
 public interface ITurnBasedCombat : IDisposable
 {
+	public void Init(TurnBasedCombatContext turnBasedCombatContext);
 	public void ActionChoosedHandler(IActionData actionData);
 	public void OpenBattleSubMenuHandler(ISubMenuDefinition subMenuIds);
 	public void HandleAttackAction();

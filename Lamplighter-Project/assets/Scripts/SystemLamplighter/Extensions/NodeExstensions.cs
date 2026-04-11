@@ -15,24 +15,45 @@ public static class NodeExstensions
 		}
 	}
 
-	public static Godot.Collections.Array<Node> GetNodesOfGroups(this Node node, Godot.Collections.Array<GroupsName> _groups)
+	// public static Godot.Collections.Array<Node> GetNodesOfGroups(this Node node, Godot.Collections.Array<GroupsName> _groups)
+	// {
+	// 	if(_groups == null && _groups.Count <= 0)
+	// 			return null;
+
+	// 		Godot.Collections.Array<Node> array = new Godot.Collections.Array<Node>();
+	// 		foreach (var g in _groups)
+	// 		{
+	// 			array.AddRange(node.GetTree().GetNodesInGroup($"{g}"));
+	// 		}
+
+	// 		return array;
+	// }
+
+	public static Godot.Collections.Array<Node> GetNodesOfGroups(this Node node, params GroupsName[] groups)
 	{
-		if(_groups == null && _groups.Count <= 0)
-				return null;
+		if (groups == null || groups.Length == 0)
+			return new Godot.Collections.Array<Node>();
 
-			Godot.Collections.Array<Node> array = new Godot.Collections.Array<Node>();
-			foreach (var g in _groups)
-			{
-				array.AddRange(node.GetTree().GetNodesInGroup($"{g}"));
-			}
+		Godot.Collections.Array<Node> array = new Godot.Collections.Array<Node>();
+		foreach (var g in groups)
+			array.AddRange(node.GetTree().GetNodesInGroup($"{g}"));
 
-			return array;
+		return array;
 	}
 
-	public static Godot.Collections.Array<Node> GetNodesOfGroup(this Node node, GroupsName group)
+	public static Godot.Collections.Array<Node> GetNodesOfGroups(this Node node, Godot.Collections.Array<GroupsName> groups)
 	{
-		return node.GetTree().GetNodesInGroup($"{group}");
+		if (groups == null || groups.Count == 0)
+			return new Godot.Collections.Array<Node>();
+
+		return node.GetNodesOfGroups(groups);
 	}
+
+	// public static Godot.Collections.Array<Node> GetNodesOfGroups(this Node node, GroupsName group)
+	// {
+	// 	return node.GetTree().GetNodesInGroup($"{group}");
+	// }
+
 
 
 	public static void AddToGroups(this Node node, List<string> groups)

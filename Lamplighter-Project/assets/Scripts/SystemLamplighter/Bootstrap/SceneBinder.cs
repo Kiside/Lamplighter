@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Linq;
 using Godot;
 using SystemLamplighter.Common.Enums;
@@ -9,7 +10,13 @@ namespace SystemLamplighter.Bootstrap;
 public partial class SceneBinder : Node
 {
 	[Export]
-	private Godot.Collections.Array<GroupsName> _getNodesOfGroups; 
+	private Godot.Collections.Array<GroupsName> _getNodesOfGroups;
+
+	public System.Collections.Generic.IEnumerable<T> BindAll<T>() where T : Node
+	{
+		var nodes = this.GetNodesOfGroups(_getNodesOfGroups);
+		return nodes.OfType<T>();
+	}
 
 	public T Bind<T>() where T : Node
 	{

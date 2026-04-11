@@ -4,6 +4,8 @@ using System.Diagnostics;
 using SystemLamplighter;
 using SystemLamplighter.Common.Input;
 using Characters.Abstract;
+using SystemLamplighter.Bootstrap;
+using SystemLamplighter.Debug;
 
 namespace Characters.Playable
 {
@@ -14,12 +16,21 @@ namespace Characters.Playable
 	{
 		TurnBasicMovementResolver _turnBasicMovementResolver;
 
+		// TODO: creare una classe che si occupa del calcolo che viene fatto ora in RealtimeMove
+
+		public void BootstrapInit(TurnBasicMovementResolver turnBasicMovementResolver)
+		{
+			_turnBasicMovementResolver = turnBasicMovementResolver;
+		}
+
 		public override void Init(PlayableCharacterController controller)
 		{
 			base.Init(controller);
+
+			DebugLamplighter.Assert(_turnBasicMovementResolver != null, "_turnBasicMovementResolver is null");
 		}
 
-		public override Vector3 Move(double delta)
+		public override Vector3 RealtimeMove(double delta)
 		{
 			Vector3 direction = Vector3.Zero;
 
@@ -52,10 +63,7 @@ namespace Characters.Playable
 			return _targetVelocity;
 		}
 
-		public void BootstrapInit(TurnBasicMovementResolver turnBasicMovementResolver)
-		{
-			_turnBasicMovementResolver = turnBasicMovementResolver;
-		}
+		public override Godot.Vector3[] PointToPointMove(Godot.Vector3 from, Godot.Vector3 to) => _turnBasicMovementResolver.ResolveMovement(from, to);
 	
 		public void FreeMove()
 		{

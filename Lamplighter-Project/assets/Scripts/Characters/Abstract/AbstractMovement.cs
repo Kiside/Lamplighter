@@ -32,7 +32,15 @@ namespace Characters.Abstract
 			_controller = controller;
 		}
 
-		public abstract Godot.Vector3 Move(double delta);
+		public virtual Godot.Vector3 RealtimeMove(double delta)
+		{
+			return Godot.Vector3.Zero;
+		}
+
+		public virtual Godot.Vector3[] PointToPointMove(Godot.Vector3 from, Godot.Vector3 to)
+		{
+			return new Godot.Vector3[0];
+		}
 	}
 }
 

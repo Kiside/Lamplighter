@@ -99,7 +99,7 @@ namespace Characters.Playable
 			_combat.Combat();
 			if(!_movement.Disable)
 			{
-				Velocity = _movement.Move(delta);
+				Velocity = _movement.RealtimeMove(delta);
 				MoveAndSlide();
 			}
 				

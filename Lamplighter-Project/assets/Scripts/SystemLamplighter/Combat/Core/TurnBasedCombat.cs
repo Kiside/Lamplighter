@@ -11,6 +11,9 @@ using SystemLamplighter.Interfaces;
 using Characters.Loadout;
 using System.Runtime.InteropServices;
 using System;
+using SystemLamplighter.DataStructure.GeneralData;
+using SystemLamplighter.Debug;
+using System.Numerics;
 
 
 namespace SystemLamplighter.Combat.Core
@@ -18,11 +21,16 @@ namespace SystemLamplighter.Combat.Core
 	public class TurnBasedCombat : ITurnBasedCombat, ICombatCommandHandler, ICombatActionExecutor
 	{
 		public BattleMenuController _battleMenuController {get; private set;}
-		public ICombatActor Actor {get; set;}
+		// TODO: Controllare se Actor serve nel contesto, dato che viene passato più volte anche da altre parti
+		public ICombatActor Actor {get; private set;}
 		public CombatLoadout CombatLoadout {get => Actor.CombatLoadout;}
 		public AtbCharacterProperties AtbProperties {get => Actor.AtbProperties;}
 		public IActionData CurrentAction { get => Actor.CurrentAction; set => Actor.CurrentAction = value;}
-		
+		public TargetResolutionContext TargetResolutionContext {get; private set;}
+
+		private readonly TurnBasicMovementResolver _movementResolver;
+		private readonly ITargetableProvider _targetableProvider;
+	
 		private IPublisher<AtbCommandPhaseEndEvent> _publishCommandPhaseEnd;
 		private IPublisher<AtbEndExecuteActionEvent> _publishEndExecuteAction;
 		private IPublisher<StartTargetEvent> _publisherStartTarget;
@@ -32,25 +40,24 @@ namespace SystemLamplighter.Combat.Core
 		private IDisposable _disposeEndTargetEvent;
 		private readonly DisposableBagBuilder _bag;
 
-		public TurnBasedCombat(BattleMenuController battleMenuController, 
-		ICombatActor combatActor, 
-		IPublisher<AtbCommandPhaseEndEvent> publishCommandPhaseEnd,
-		IPublisher<AtbEndExecuteActionEvent> publishEndExecuteAction,
-		IPublisher<StartTargetEvent> publisherStartTarget,
-		ISubscriber<AtbCommandPhaseStartedEvent> subscriberCommandPhaseStarted,
-		ISubscriber<AtbExecuteActionEvent> subscriberExecuteAction,
-		ISubscriber<EndTargetEvent> subscriberEndTarget)
+		public TurnBasedCombat(TurnBasicMovementResolver movementResolver, ITargetableProvider targetableProvider)
 		{
-			_battleMenuController = battleMenuController;
-			Actor = combatActor;
-			_publishCommandPhaseEnd = publishCommandPhaseEnd;
-			_publishEndExecuteAction = publishEndExecuteAction;
-			_publisherStartTarget = publisherStartTarget;
-			_subscriberCommandPhaseStarted = subscriberCommandPhaseStarted;
-			_subscriberExecuteActionEvent = subscriberExecuteAction;
-			_subscriberEndTarget = subscriberEndTarget;
+			_movementResolver = movementResolver;
+			_targetableProvider = targetableProvider;
 
 			_bag = DisposableBag.CreateBuilder();
+		}
+
+		public void Init(TurnBasedCombatContext turnBasedCombatContext)
+		{
+			_battleMenuController = turnBasedCombatContext.BattleMenuController;
+			Actor = turnBasedCombatContext.Actor;
+			_publishCommandPhaseEnd = turnBasedCombatContext.PublishCommandPhaseEnd;
+			_publishEndExecuteAction = turnBasedCombatContext.PublishEndExecuteAction;
+			_publisherStartTarget = turnBasedCombatContext.PublisherStartTarget;
+			_subscriberCommandPhaseStarted = turnBasedCombatContext.SubscriberCommandPhaseStarted;
+			_subscriberExecuteActionEvent = turnBasedCombatContext.SubscriberExecuteAction;
+			_subscriberEndTarget = turnBasedCombatContext.SubscriberEndTarget;
 
 			Log.PrintMessage($"subscribed phase command started {_subscriberCommandPhaseStarted}");
 
@@ -63,12 +70,37 @@ namespace SystemLamplighter.Combat.Core
 
 		#region EVENTS HANDLER
 
+		/// <summary>
+		/// Metodo chiamato quando verrà eseguita l'azione
+		/// </summary>
+		/// <param name="ev"></param>
 		public void OnExecuteCombatAction(AtbExecuteActionEvent ev)
 		{
 			if (ev.Actor != Actor)
 				return;
 
 			// TODO Eseguire l'azione
+			// Bisogna capire la distanza dal target
+			var casterPos = _targetableProvider.GetTargetable(ev.Actor.Id).Position;
+			float maxDistanceFromTarget = 0f;
+			var targetables = TargetResolutionContext.Targetables;
+
+
+			foreach(var target in targetables)
+			{
+				var distanceFromTarget = casterPos.DistanceSquaredTo(target.Position);
+				maxDistanceFromTarget = distanceFromTarget > maxDistanceFromTarget ? distanceFromTarget : maxDistanceFromTarget;
+			}
+			// Confrontare la distanza dal target con il range dell'attacco
+			if(maxDistanceFromTarget > CurrentAction.TargetData.Range)
+			{
+				_movementResolver.ResolveMovementInRange(casterPos, targetables[0].Position, CurrentAction.TargetData.Range);
+			}
+			else
+			{
+				// In altri casi non bisogna muoversi
+			}
+
 			// Ad azione eseguita resetto la posizione del personaggio sull'ATB
 			_publishEndExecuteAction.Publish(new AtbEndExecuteActionEvent(Actor));
 		}
@@ -84,11 +116,16 @@ namespace SystemLamplighter.Combat.Core
 
 		public void OnEndTarget(EndTargetEvent ev)
 		{
+			DebugLamplighter.Assert(ev != null, "ev is null");
+			DebugLamplighter.Assert(ev.TargetResolutionContext != null, "TargetResolutionContext is null");
+
 			if (ev.TargetResolutionContext.CasterActor != Actor)
 				return;
 
+			TargetResolutionContext = null;
 			_disposeEndTargetEvent?.Dispose();
 			AtbProperties.EndCommandStatus(CurrentAction.ActionSpeedMultiplier);
+			TargetResolutionContext = ev.TargetResolutionContext;
 			_publishCommandPhaseEnd.Publish(new AtbCommandPhaseEndEvent(Actor));
 		}
 

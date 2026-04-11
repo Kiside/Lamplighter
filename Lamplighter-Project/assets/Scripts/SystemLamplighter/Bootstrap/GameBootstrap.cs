@@ -44,15 +44,33 @@ public partial class GameBootstrap : Node
         InitTargetController();
 		InitSelectionTargetRender();
 		InitNavitationSystem();
+		InitCombat();
+		InitTurnBasicMovement();
     }
+
+	private void InitCombat()
+	{
+		var lamplighterCombatNodes = _sceneBinder.BindAll<LamplighterCombat>();
+
+		DebugLamplighter.Assert(lamplighterCombatNodes != null, "lamplighterCombatNode is null");
+
+		foreach(var combatNode in lamplighterCombatNodes)
+		{
+			combatNode.BootstrapInit(Services.GetRequiredService<ITurnBasedCombat>());
+		}
+	}
 
 	private void InitTurnBasicMovement()
 	{
-		var lamplighterMovementNode = _sceneBinder.Bind<LamplighterMovement>();
+		var lamplighterMovementNodes = _sceneBinder.BindAll<LamplighterMovement>();
 
-		DebugLamplighter.Assert(lamplighterMovementNode != null, "lampligterMovementNode is null");
+		DebugLamplighter.Assert(lamplighterMovementNodes != null, "lampligterMovementNode is null");
 
-		lamplighterMovementNode.BootstrapInit(Services.GetRequiredService<TurnBasicMovementResolver>());
+		foreach(var movementNode in lamplighterMovementNodes)
+		{
+			movementNode.BootstrapInit(Services.GetRequiredService<TurnBasicMovementResolver>());
+		}
+		
 	}
 
 	private void InitNavitationSystem()
@@ -125,6 +143,8 @@ public partial class GameBootstrap : Node
 		services.AddSingleton<INavigationAstar ,NavigationAstarService>();
 
 		services.AddTransient<TurnBasicMovementResolver>();
+		
+		services.AddTransient<ITurnBasedCombat, ITurnBasedCombat>();
 
 		// Message pipe
 		services.AddMessagePipe();

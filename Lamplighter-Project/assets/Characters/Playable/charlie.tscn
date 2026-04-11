@@ -54,11 +54,11 @@ transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 shape = SubResource("BoxShape3D_0bkd4")
 
-[node name="Movement" type="Node" parent="." unique_id=2083169796]
+[node name="Movement" type="Node" parent="." unique_id=2083169796 groups=["bindable"]]
 script = ExtResource("2_momr7")
 _disable = true
 
-[node name="Combat" type="Node" parent="." unique_id=73162908]
+[node name="Combat" type="Node" parent="." unique_id=73162908 groups=["bindable"]]
 script = ExtResource("4_cx7ps")
 
 [node name="CombatLoadout" type="Node" parent="." unique_id=506505467]

@@ -96,7 +96,7 @@ public partial class DebugNavigationSystem : Node
 				// _navigationSystem.Init();
 				//ClearDebugPoints();
 				InitNavigationService();
-				_navigationService.Init(this.GetNodesOfGroup(SystemLamplighter.Common.Enums.GroupsName.walkable), _gridStep, _gridYTemp);
+				_navigationService.Init(this.GetNodesOfGroups(SystemLamplighter.Common.Enums.GroupsName.walkable), _gridStep, _gridYTemp);
 				DrawDebugPoints();
 				NotifyPropertyListChanged();
 			}

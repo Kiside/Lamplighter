@@ -44,6 +44,12 @@ public class NavigationAstarService : INavigationAstar
 		return Astar.GetPointPath(fromId,toId);
 	}
 
+	public Godot.Vector3 FindClosestWaypointTo(Godot.Vector3 point)
+	{
+		var closestId = Astar.GetClosestPoint(point);
+		return Astar.GetPointPosition(closestId);
+	}
+
 	private void CalculatePoints(MeshInstance3D mesh, Vector3 origin)
 	{
 		Aabb aabb = mesh.GetAabb();
