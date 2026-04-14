@@ -103,19 +103,19 @@ public class SelectionTargetResolver : TargetResolver
 	{
 		if(_currentCountTargetsSelected >= _currentTargetData.NumberOfTargets)
 		{
-			var state = new ActorCursorState(_targetablesSelected, _currentTargetFocused, _currentWhoTarget ,TargetResolutionStatus.RESOLVED);
+			var state = new ActorCursorState(new List<ITargetable>(_targetablesSelected), _currentTargetFocused, new List<TargeTableType>(_currentWhoTarget) ,TargetResolutionStatus.RESOLVED);
 			Dispose();
 			return state;
 		}
 		else
 		{
-			return new ActorCursorState(_targetablesSelected, _currentTargetFocused, _currentWhoTarget ,TargetResolutionStatus.ON_GOING);
+			return new ActorCursorState(new List<ITargetable>(_targetablesSelected), _currentTargetFocused, new List<TargeTableType>(_currentWhoTarget) ,TargetResolutionStatus.ON_GOING);
 		}
 	}
 
 	public override TargetCursorState Cancel()
 	{
-		return new ActorCursorState(_targetablesSelected, _currentTargetFocused, _currentWhoTarget ,TargetResolutionStatus.CANCELED);
+		return new ActorCursorState(new List<ITargetable>(_targetablesSelected), _currentTargetFocused, new List<TargeTableType>(_currentWhoTarget) ,TargetResolutionStatus.CANCELED);
 	}
 
 	public override void Dispose()

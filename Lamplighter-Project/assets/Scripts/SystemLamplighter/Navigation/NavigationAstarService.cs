@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using System.Linq;
 using Godot;
+using SystemLamplighter.Tool;
 
 public class NavigationAstarService : INavigationAstar
 {
@@ -41,7 +43,10 @@ public class NavigationAstarService : INavigationAstar
 	{
 		var fromId = Astar.GetClosestPoint(from);
 		var toId = Astar.GetClosestPoint(to);
-		return Astar.GetPointPath(fromId,toId);
+		Log.PrintMessage($"from disabled: {Astar.IsPointDisabled(fromId)} - to disabled: {Astar.IsPointDisabled(toId)}");
+		var path = Astar.GetPointPath(fromId,toId);
+		Log.PrintMessage($"path {path}");
+		return path;
 	}
 
 	public Godot.Vector3 FindClosestWaypointTo(Godot.Vector3 point)
@@ -124,6 +129,7 @@ public class NavigationAstarService : INavigationAstar
 
 		var id = Astar.GetAvailablePointId();
 		Astar.AddPoint(id, point);
+		Astar.SetPointDisabled(id, false);
 		PointsDictionary.TryAdd(WorldToAStar(point), id);
 	}
 

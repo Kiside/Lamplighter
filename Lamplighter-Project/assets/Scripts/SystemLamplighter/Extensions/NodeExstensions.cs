@@ -43,10 +43,11 @@ public static class NodeExstensions
 
 	public static Godot.Collections.Array<Node> GetNodesOfGroups(this Node node, Godot.Collections.Array<GroupsName> groups)
 	{
-		if (groups == null || groups.Count == 0)
-			return new Godot.Collections.Array<Node>();
+		Godot.Collections.Array<Node> array = new Godot.Collections.Array<Node>();
+		foreach (var g in groups)
+			array.AddRange(node.GetTree().GetNodesInGroup($"{g}"));
 
-		return node.GetNodesOfGroups(groups);
+		return array;
 	}
 
 	// public static Godot.Collections.Array<Node> GetNodesOfGroups(this Node node, GroupsName group)

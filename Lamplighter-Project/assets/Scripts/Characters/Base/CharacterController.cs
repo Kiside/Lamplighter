@@ -27,6 +27,12 @@ namespace Characters
 		protected TModel _model;
 
 		public Identification Id { get; private set; }
+
+		public override void _EnterTree()
+		{
+			InitId();
+			base._EnterTree();
+		}
 		
 		protected void InitId()
 		{
@@ -42,7 +48,7 @@ namespace Characters
 		public sealed override void Init()
 		{
 			NodeChecking();
-			InitId();
+			//InitId();
 			OnInit();
 		}
 

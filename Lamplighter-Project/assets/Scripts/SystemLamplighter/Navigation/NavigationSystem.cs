@@ -19,25 +19,21 @@ public partial class NavigationSystem : Node, INavigationSystem
 	[Export]
 	private float _gridYTemp = 0.5f;
 
-	private NavigationAstarService _navigationService;
+	private INavigationAstar _navigationService;
 
 	public override void _Ready()
 	{
 		base._Ready();
-		Init();
 	}
 
-	public void BootstrapInit(NavigationAstarService navigationAstarService)
+	public void BootstrapInit(INavigationAstar navigationAstarService)
 	{
+		DebugLamplighter.Assert(navigationAstarService != null, "navigationAstarService is null");
+
 		_navigationService = navigationAstarService;
-	}
-
-	public void Init()
-	{
-		DebugLamplighter.Assert(_navigationService != null, "Il navigation system service è null ma non dovrebbe");
-		
 		_navigationService.Init(this.GetNodesOfGroups(_groupsForWalkableElements), _gridStep, _gridYTemp);
 	}
+
 
 	public Godot.Vector3[] FindPath(Godot.Vector3 from, Godot.Vector3 to)
 	{

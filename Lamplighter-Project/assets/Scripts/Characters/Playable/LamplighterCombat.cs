@@ -18,30 +18,28 @@ namespace Characters.Playable;
 public partial class LamplighterCombat : AbstractCombat<PlayableCharacterController>
 {
 	ITurnBasedCombat _turnBasedCombat;
+	PlayableCharacterController _controller;
 
 	public override void Init(PlayableCharacterController controller)
 	{
+		_controller = controller;
 		base.Init(controller);
-
-		DebugLamplighter.Assert(_turnBasedCombat != null, "_turnBasedCombat is null");
-
-		var sub = this.GetSubscriber<AtbCommandPhaseStartedEvent>();
-
-		_turnBasedCombat.Init(new TurnBasedCombatContext(controller.BattleMenuController,
-				controller.CombatActor,
-				this.GetPublisher<AtbCommandPhaseEndEvent>(),
-				this.GetPublisher<AtbEndExecuteActionEvent>(),
-				this.GetPublisher<StartTargetEvent>(),
-				sub,
-				this.GetSubscriber<AtbExecuteActionEvent>(),
-				this.GetSubscriber<EndTargetEvent>()));
-
-
 	}
 
 	public void BootstrapInit(ITurnBasedCombat turnBasedCombat)
 	{
+		DebugLamplighter.Assert(turnBasedCombat != null, "turnBasedCombat is null");
+		
 		_turnBasedCombat = turnBasedCombat;
+
+		_turnBasedCombat.Init(new TurnBasedCombatContext(_controller.BattleMenuController,
+				_controller.CombatActor,
+				this.GetPublisher<AtbCommandPhaseEndEvent>(),
+				this.GetPublisher<AtbEndExecuteActionEvent>(),
+				this.GetPublisher<StartTargetEvent>(),
+				this.GetSubscriber<AtbCommandPhaseStartedEvent>(),
+				this.GetSubscriber<AtbExecuteActionEvent>(),
+				this.GetSubscriber<EndTargetEvent>()));
 	}
 
 	public override void Combat()

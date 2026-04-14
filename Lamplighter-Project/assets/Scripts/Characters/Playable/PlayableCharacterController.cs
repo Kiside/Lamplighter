@@ -33,6 +33,8 @@ namespace Characters.Playable
 		protected AbstractMovement<PlayableCharacterController> _movement { get => _model.Movement; set => _model.Movement = value; }
 		protected BattleMenuController _battleMenuController { get => _model.BattleMenu;}
 		private bool _lockOn = false;
+
+		private bool tweening = false;
 		private readonly DisposableBagBuilder _bag = DisposableBag.CreateBuilder();
 		#endregion
 		
@@ -102,7 +104,28 @@ namespace Characters.Playable
 				Velocity = _movement.RealtimeMove(delta);
 				MoveAndSlide();
 			}
+
+			var movement = _movement.PointToPointMove(Vector3.Back, Vector3.Back);
+
+			if(movement != null)
+			{
+				Tween(movement);
+			}
 				
+		}
+
+		private void Tween(Queue<Godot.Vector3> movement)
+		{
+			if(tweening)
+				return;
+
+			tweening = true;
+			var tween = CreateTween();
+				tween.TweenProperty(this, "position", movement.Dequeue(), 1.0f);
+				tween.TweenCallback(Callable.From(this.QueueFree));
+
+			if(movement.Count <= 0)
+				tweening = false;
 		}
 
 		public override void _ExitTree()

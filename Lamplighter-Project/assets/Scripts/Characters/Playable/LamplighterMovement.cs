@@ -6,6 +6,7 @@ using SystemLamplighter.Common.Input;
 using Characters.Abstract;
 using SystemLamplighter.Bootstrap;
 using SystemLamplighter.Debug;
+using System.Collections.Generic;
 
 namespace Characters.Playable
 {
@@ -20,14 +21,14 @@ namespace Characters.Playable
 
 		public void BootstrapInit(TurnBasicMovementResolver turnBasicMovementResolver)
 		{
+			DebugLamplighter.Assert(turnBasicMovementResolver != null, "turnBasicMovementResolver is null");
+			
 			_turnBasicMovementResolver = turnBasicMovementResolver;
 		}
 
 		public override void Init(PlayableCharacterController controller)
 		{
 			base.Init(controller);
-
-			DebugLamplighter.Assert(_turnBasicMovementResolver != null, "_turnBasicMovementResolver is null");
 		}
 
 		public override Vector3 RealtimeMove(double delta)
@@ -63,7 +64,7 @@ namespace Characters.Playable
 			return _targetVelocity;
 		}
 
-		public override Godot.Vector3[] PointToPointMove(Godot.Vector3 from, Godot.Vector3 to) => _turnBasicMovementResolver.ResolveMovement(from, to);
+		public override Queue<Godot.Vector3> PointToPointMove(Godot.Vector3 from, Godot.Vector3 to) => _turnBasicMovementResolver.Movement;
 	
 		public void FreeMove()
 		{

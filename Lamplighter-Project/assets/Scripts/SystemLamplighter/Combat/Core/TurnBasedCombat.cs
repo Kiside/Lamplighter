@@ -92,13 +92,14 @@ namespace SystemLamplighter.Combat.Core
 				maxDistanceFromTarget = distanceFromTarget > maxDistanceFromTarget ? distanceFromTarget : maxDistanceFromTarget;
 			}
 			// Confrontare la distanza dal target con il range dell'attacco
-			if(maxDistanceFromTarget > CurrentAction.TargetData.Range)
+			if(CurrentAction.TargetData.Range != 0f && maxDistanceFromTarget > CurrentAction.TargetData.Range)
 			{
 				_movementResolver.ResolveMovementInRange(casterPos, targetables[0].Position, CurrentAction.TargetData.Range);
 			}
 			else
 			{
 				// In altri casi non bisogna muoversi
+				_movementResolver.ResolveMovement(casterPos, targetables[0].Position);
 			}
 
 			// Ad azione eseguita resetto la posizione del personaggio sull'ATB

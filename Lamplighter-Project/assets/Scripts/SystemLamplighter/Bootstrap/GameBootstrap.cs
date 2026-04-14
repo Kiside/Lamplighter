@@ -16,6 +16,7 @@ using SystemLamplighter.Extensions;
 using SystemLamplighter.DataStructure.GeneralData;
 using SystemLamplighter.Navigation;
 using Characters.Playable;
+using SystemLamplighter.Tool;
 
 namespace SystemLamplighter.Bootstrap;
 
@@ -32,21 +33,21 @@ public partial class GameBootstrap : Node
 	public static IServiceProvider Services {get; private set;}
 	public override void _EnterTree()
 	{
-		base._EnterTree();
-
+		Log.PrintMessage("ENTER TREE:");
 		BuildServices();
+		base._EnterTree();
 	}
 
 	public override void _Ready()
-    {
-        base._Ready();
-
-        InitTargetController();
-		InitSelectionTargetRender();
+	{
+		Log.PrintMessage("READY:");
 		InitNavitationSystem();
+		InitTargetController();
+		InitSelectionTargetRender();
 		InitCombat();
 		InitTurnBasicMovement();
-    }
+		base._Ready();
+	}
 
 	private void InitCombat()
 	{
@@ -79,11 +80,15 @@ public partial class GameBootstrap : Node
 		// .FirstOrDefault(n => n is NavigationSystem) as NavigationSystem;
 
 		// Ottine il selectionTargetRender dalla scena
+		Log.PrintMessage("navigation system");
 		var navigationSystem = _sceneBinder.Bind<NavigationSystem>();
+		Log.PrintMessage("after binding navigation system");
 
 		DebugLamplighter.Assert(navigationSystem != null, "navigationSystem is null");
 
-		navigationSystem.BootstrapInit(Services.GetRequiredService<NavigationAstarService>());
+		Log.PrintMessage("bootstrap navigation");
+		navigationSystem.BootstrapInit(Services.GetRequiredService<INavigationAstar>());
+		Log.PrintMessage("after bootstrap navigation");
 	}
 
 	private void InitSelectionTargetRender()
@@ -107,7 +112,7 @@ public partial class GameBootstrap : Node
 	private void InitTargetController()
 	{
 		
-        // var targetController = this.GetNodesOfGroups(_getNodesOfGroups)
+		// var targetController = this.GetNodesOfGroups(_getNodesOfGroups)
 		// 	.FirstOrDefault(n => n is TargetController) as TargetController;
 
 		// Ottieni il nodo TargetController dalla scena
@@ -115,41 +120,52 @@ public partial class GameBootstrap : Node
 
 		DebugLamplighter.Assert(targetController != null, "targetController is null");
 		
-        // Risolvi la factory dal container DI
-        var factory = Services.GetRequiredService<ITargetResolverFactory>();
-        // Iniettala nel TargetController
-        targetController.BootstrapInit(factory);
+		// Risolvi la factory dal container DI
+		var factory = Services.GetRequiredService<ITargetResolverFactory>();
+		// Iniettala nel TargetController
+		targetController.BootstrapInit(factory);
 	}
 
 	private void BuildServices()
 	{
+		Log.PrintMessage("building");
 		var services = new ServiceCollection();
 
 		// CORE
 		services.AddSingleton<IBattleService, BattleService>();
 		services.AddSingleton<ICombatActorRegistry, CombatActorRegistry>();
 		services.AddSingleton<ICombatActorPositionProvider<Node3D>, CombatActorPosition3DProvider>();
+		Log.PrintMessage("BattleService - CombatActorRegistry - CombatActorPosition3DProvider");
 
 		services.AddSingleton<IHighlightSystem, HighlightSystem>(); 
 		services.AddSingleton<ICombatActorHighlightableProvider, CombatActorHighlightableProvider>();
+		Log.PrintMessage("HighlightSystem - CombatActorHighlightableProvider");
 
 		services.AddSingleton<ITargetableProvider, TargetableProvider>();
+		Log.PrintMessage("TargetableProvider");
 		
 		services.AddTransient<SelectionTargetResolver>();
 		services.AddTransient<ShapeTargetResolver>();
+		Log.PrintMessage("SelectionTargetResolver - ShapeTargetResolver");
 
 		services.AddSingleton<ITargetResolverFactory, TargetResolverFactory>();
+		Log.PrintMessage("ITargetResolverFactory");
 
 		services.AddSingleton<INavigationAstar ,NavigationAstarService>();
+		Log.PrintMessage("INavigationAstar");
 
 		services.AddTransient<TurnBasicMovementResolver>();
+		Log.PrintMessage("TurnBasicMovementResolver");
 		
-		services.AddTransient<ITurnBasedCombat, ITurnBasedCombat>();
+		services.AddTransient<ITurnBasedCombat, TurnBasedCombat>();
+		Log.PrintMessage("ITurnBasedCombat");
 
 		// Message pipe
 		services.AddMessagePipe();
 
 		Services = services.BuildServiceProvider();
+
+		Log.PrintMessage("Services Builded");
 	}
 
 

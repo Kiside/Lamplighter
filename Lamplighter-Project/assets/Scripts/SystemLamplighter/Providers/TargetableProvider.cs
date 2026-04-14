@@ -52,7 +52,7 @@ public class TargetableProvider : ITargetableProvider
 	public List<ITargetable> GetTargetables(List<TargeTableType> type)
 	{
 		var typeSet = new HashSet<TargeTableType>(type);
-    	return _targetables.Where(t => typeSet.Contains(t.TargeTableType)).ToList();
+		return _targetables.Where(t => typeSet.Contains(t.TargeTableType)).ToList();
 	} 
 	public ITargetable GetTargetable(Identification id) => _targetables.Find(t => t.Id.ID == id.ID);
 	public ITargetable GetTargetable(string targetableName) => _targetables.Find(t => t.TargetableName == targetableName);
@@ -61,18 +61,18 @@ public class TargetableProvider : ITargetableProvider
 	public ITargetable GetTargetable(int index, List<TargeTableType> type)
 	{
 		var typeSet = new HashSet<TargeTableType>(type);
-    	return _targetables.Where(t => typeSet.Contains(t.TargeTableType)).ToList()[index];
+		return _targetables.Where(t => typeSet.Contains(t.TargeTableType)).ToList()[index];
 	}
 	public int GetIndex(ITargetable targetable) => _targetables.IndexOf(targetable);
 	public int GetIndex(ITargetable targetable, List<TargeTableType> type)
 	{
 		var typeSet = new HashSet<TargeTableType>(type);
-    	return _targetables.Where(t => typeSet.Contains(t.TargeTableType)).ToList().IndexOf(targetable);
+		return _targetables.Where(t => typeSet.Contains(t.TargeTableType)).ToList().IndexOf(targetable);
 	}
 	public int Count => _targetables.Count;
 	public int CountOf(List<TargeTableType> type)
 	{
 		var typeSet = new HashSet<TargeTableType>(type);
-    	return _targetables.Where(t => typeSet.Contains(t.TargeTableType)).ToList().Count;
+		return _targetables.Where(t => typeSet.Contains(t.TargeTableType)).ToList().Count;
 	}
 }

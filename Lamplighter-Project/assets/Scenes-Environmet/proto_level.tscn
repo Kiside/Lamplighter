@@ -48,13 +48,6 @@ metadata/_custom_type_script = "uid://dpwp74optcgd5"
 script = ExtResource("22_h0r1b")
 _gridStep = 0.5
 
-[node name="GameBootstrap" type="Node" parent="." unique_id=1881634156]
-script = ExtResource("1_qcquh")
-
-[node name="SceneBinder" type="Node" parent="GameBootstrap" unique_id=2104835989]
-script = ExtResource("3_mkya5")
-_getNodesOfGroups = Array[int]([10])
-
 [node name="FloorProto2" parent="." unique_id=703619226 groups=["walkable"] instance=ExtResource("2_x5dwk")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.17597556, 0)
 
@@ -159,5 +152,13 @@ script = ExtResource("24_chj2u")
 script = ExtResource("25_23igw")
 _gridStep = 0.5
 _debugColorPoint = Color(0, 0.89411765, 0, 0)
+
+[node name="GameBootstrap" type="Node" parent="." unique_id=1881634156 node_paths=PackedStringArray("_sceneBinder")]
+script = ExtResource("1_qcquh")
+_sceneBinder = NodePath("SceneBinder")
+
+[node name="SceneBinder" type="Node" parent="GameBootstrap" unique_id=2104835989]
+script = ExtResource("3_mkya5")
+_getNodesOfGroups = Array[int]([10])
 
 [editable path="ProtoCombat"]
