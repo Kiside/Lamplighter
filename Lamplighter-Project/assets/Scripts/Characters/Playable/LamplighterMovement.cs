@@ -64,8 +64,14 @@ namespace Characters.Playable
 			return _targetVelocity;
 		}
 
-		public override Queue<Godot.Vector3> PointToPointMove(Godot.Vector3 from, Godot.Vector3 to) => _turnBasicMovementResolver.Movement;
-	
+		public override Godot.Vector3? PointToPointMove(Godot.Vector3 from, Godot.Vector3 to)
+		{
+			if (_turnBasicMovementResolver.Movement.Count == 0)
+				return null;
+
+			return _turnBasicMovementResolver.Movement.Dequeue();
+		}
+
 		public void FreeMove()
 		{
 

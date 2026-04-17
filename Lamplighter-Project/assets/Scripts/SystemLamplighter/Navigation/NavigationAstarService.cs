@@ -43,9 +43,7 @@ public class NavigationAstarService : INavigationAstar
 	{
 		var fromId = Astar.GetClosestPoint(from);
 		var toId = Astar.GetClosestPoint(to);
-		Log.PrintMessage($"from disabled: {Astar.IsPointDisabled(fromId)} - to disabled: {Astar.IsPointDisabled(toId)}");
 		var path = Astar.GetPointPath(fromId,toId);
-		Log.PrintMessage($"path {path}");
 		return path;
 	}
 
@@ -94,29 +92,30 @@ public class NavigationAstarService : INavigationAstar
 				}
 			}
 
-			ConnectPoints();
 		}
+		
+		ConnectPoints();
 	}
 
 	private void ConnectPoints()
 	{
-		foreach (var point in PointsDictionary.Keys)
+		foreach (var point in PointsDictionary.Keys.ToList())
 		{
-			for (var x = -GridStep; x <= GridStep; x++)
+			var currentId = PointsDictionary[point];
+
+			for (var x = -1; x <= 1; x++)
 			{
-				var currentId = PointsDictionary[point];
-				for (var z = -GridStep; z <= GridStep; z++)
+				for (var z = -1; z <= 1; z++)
 				{
-					var searchOffset = new Godot.Vector3(x, 0, z);
-					if (searchOffset != Godot.Vector3.Zero)
+					if (x == 0 && z == 0) continue;
+
+					var searchOffset = new Vector3(x * GridStep, 0, z * GridStep);
+					var potentialNeighbor = WorldToAStar(point + searchOffset);
+
+					if (PointsDictionary.TryGetValue(potentialNeighbor, out long neighborId))
 					{
-						var potentialNeighbor = WorldToAStar(point + searchOffset);
-						if (PointsDictionary.ContainsKey(potentialNeighbor))
-						{
-							var neighborId = PointsDictionary[potentialNeighbor];
-							if (!Astar.ArePointsConnected(currentId, neighborId))
-								Astar.ConnectPoints(currentId, neighborId);
-						}
+						if (!Astar.ArePointsConnected(currentId, neighborId))
+							Astar.ConnectPoints(currentId, neighborId);
 					}
 				}
 			}

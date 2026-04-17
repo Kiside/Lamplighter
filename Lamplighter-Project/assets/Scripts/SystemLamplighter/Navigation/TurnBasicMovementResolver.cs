@@ -12,12 +12,12 @@ public class TurnBasicMovementResolver
     public TurnBasicMovementResolver(INavigationAstar navigation)
     {
         _navigation = navigation;
+        Movement = new Queue<Godot.Vector3>();
     }
 
     public Godot.Vector3[] ResolveMovement(Godot.Vector3 from, Godot.Vector3 to)
     {
         var movement = _navigation.FindPath(from, to);
-        Movement = null;
         Movement = new Queue<Godot.Vector3>(movement);
         Log.PrintMessage("ResolveMovement");
         return movement;
@@ -29,7 +29,6 @@ public class TurnBasicMovementResolver
         var optimalPoint = targetPosition + direction * range;
         
         var movement = ResolveMovement(casterPostion, optimalPoint);
-        Movement = null;
         Movement = new Queue<Godot.Vector3>(movement);
         Log.PrintMessage("ResolveMovementInRange");
         return movement;

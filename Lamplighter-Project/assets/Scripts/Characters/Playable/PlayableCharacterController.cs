@@ -14,6 +14,7 @@ using SystemLamplighter.DataStructure;
 using Characters.Abstract;
 using SystemLamplighter.Interfaces;
 using SystemLamplighter.Setup;
+using SystemLamplighter.Tool;
 
 namespace Characters.Playable
 {
@@ -106,26 +107,29 @@ namespace Characters.Playable
 			}
 
 			var movement = _movement.PointToPointMove(Vector3.Back, Vector3.Back);
+			
 
-			if(movement != null)
+			if(movement.HasValue)
 			{
+				Log.PrintMessage($"movement: {movement}");
 				Tween(movement);
 			}
 				
 		}
 
-		private void Tween(Queue<Godot.Vector3> movement)
+		private void Tween(Godot.Vector3? movement)
 		{
 			if(tweening)
 				return;
 
+			Log.PrintMessage($"Start tween");
 			tweening = true;
 			var tween = CreateTween();
-				tween.TweenProperty(this, "position", movement.Dequeue(), 1.0f);
+				tween.TweenProperty(this, "position", (Godot.Vector3)movement, 1.0f);
 				tween.TweenCallback(Callable.From(this.QueueFree));
 
-			if(movement.Count <= 0)
-				tweening = false;
+			
+			tweening = false;
 		}
 
 		public override void _ExitTree()
