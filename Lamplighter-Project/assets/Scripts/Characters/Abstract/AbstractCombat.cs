@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace Characters.Abstract
@@ -23,6 +24,8 @@ namespace Characters.Abstract
 		}
 
 		public abstract void Combat();
+
+		public abstract Queue<Godot.Vector3> Move();
 	}
 }
 

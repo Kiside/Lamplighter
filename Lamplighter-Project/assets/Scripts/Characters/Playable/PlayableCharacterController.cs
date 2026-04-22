@@ -106,14 +106,19 @@ namespace Characters.Playable
 				MoveAndSlide();
 			}
 
-			var movement = _movement.PointToPointMove(Vector3.Back, Vector3.Back);
-			
+			//var movement = _movement.PointToPointMove(Vector3.Back, Vector3.Back);
+			var movement = _combat.Move();
 
-			if(movement.HasValue)
+			if (movement != null)
 			{
 				Log.PrintMessage($"movement: {movement}");
-				Tween(movement);
 			}
+
+			// if(movement.HasValue)
+			// {
+			// 	Log.PrintMessage($"movement: {movement}");
+			// 	Tween(movement);
+			// }
 				
 		}
 

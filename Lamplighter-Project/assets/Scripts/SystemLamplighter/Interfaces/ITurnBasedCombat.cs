@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using SystemLamplighter.DataStructure.GeneralData;
 namespace SystemLamplighter.Interfaces;
 
@@ -7,6 +8,7 @@ namespace SystemLamplighter.Interfaces;
 /// </summary>
 public interface ITurnBasedCombat : IDisposable
 {
+	Queue<Godot.Vector3> CombatMovement {get;}
 	public void Init(TurnBasedCombatContext turnBasedCombatContext);
 	public void ActionChoosedHandler(IActionData actionData);
 	public void OpenBattleSubMenuHandler(ISubMenuDefinition subMenuIds);

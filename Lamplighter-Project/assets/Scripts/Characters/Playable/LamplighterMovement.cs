@@ -7,6 +7,7 @@ using Characters.Abstract;
 using SystemLamplighter.Bootstrap;
 using SystemLamplighter.Debug;
 using System.Collections.Generic;
+using SystemLamplighter.Tool;
 
 namespace Characters.Playable
 {
@@ -16,6 +17,8 @@ namespace Characters.Playable
 	public partial class LamplighterMovement : AbstractMovement<PlayableCharacterController>
 	{
 		TurnBasicMovementResolver _turnBasicMovementResolver;
+
+		public Queue<Godot.Vector3> Movement {get; private set;}
 
 		// TODO: creare una classe che si occupa del calcolo che viene fatto ora in RealtimeMove
 
@@ -66,6 +69,8 @@ namespace Characters.Playable
 
 		public override Godot.Vector3? PointToPointMove(Godot.Vector3 from, Godot.Vector3 to)
 		{
+			if(_turnBasicMovementResolver.Movement.Count != 0)
+				Log.PrintMessage($"----MOVIMENTO DIVERSO DA ZERO-----{_turnBasicMovementResolver.Movement}");
 			if (_turnBasicMovementResolver.Movement.Count == 0)
 				return null;
 

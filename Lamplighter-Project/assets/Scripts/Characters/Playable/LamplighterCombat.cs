@@ -10,6 +10,7 @@ using SystemLamplighter.Tool;
 using SystemLamplighter.DataStructure.GeneralData;
 using System.Diagnostics;
 using SystemLamplighter.Debug;
+using System.Collections.Generic;
 
 namespace Characters.Playable;
 /// <summary>
@@ -56,6 +57,8 @@ public partial class LamplighterCombat : AbstractCombat<PlayableCharacterControl
 	{
 
 	}
+
+	public override Queue<Godot.Vector3> Move() => _turnBasedCombat.CombatMovement;
 
 	public override void _ExitTree()
 	{

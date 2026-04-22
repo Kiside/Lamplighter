@@ -69,6 +69,7 @@ public partial class GameBootstrap : Node
 
 		foreach(var movementNode in lamplighterMovementNodes)
 		{
+			
 			movementNode.BootstrapInit(Services.GetRequiredService<TurnBasicMovementResolver>());
 		}
 		
@@ -166,6 +167,14 @@ public partial class GameBootstrap : Node
 		Services = services.BuildServiceProvider();
 
 		Log.PrintMessage("Services Builded");
+	}
+
+	public override void _PhysicsProcess(double delta)
+	{
+		base._PhysicsProcess(delta);
+
+		if(Input.IsActionJustReleased("debug"))
+			Log.PrintMessage($"Movement now: {Services.GetRequiredService<TurnBasicMovementResolver>().Movement.Count}");
 	}
 
 
