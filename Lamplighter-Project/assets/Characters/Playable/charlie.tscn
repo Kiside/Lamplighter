@@ -24,12 +24,12 @@
 
 [node name="Charlie" type="CharacterBody3D" unique_id=1785233195 groups=["ally"]]
 script = ExtResource("1_0iqh4")
-View = NodePath("CharlieView")
-Model = NodePath("CharlieModel")
+ViewPath = NodePath("CharlieView")
+ModelPath = NodePath("CharlieModel")
 MovementNode = NodePath("Movement")
 CombatNode = NodePath("Combat")
 
-[node name="CharlieModel" type="Node" parent="." unique_id=18616143]
+[node name="CharlieModel" type="Node" parent="." unique_id=18616143 groups=["bindable"]]
 script = ExtResource("2_l8s2m")
 _combatLoadoutNode = NodePath("../CombatLoadout")
 _atbCharacterProperties = ExtResource("3_xa4mk")

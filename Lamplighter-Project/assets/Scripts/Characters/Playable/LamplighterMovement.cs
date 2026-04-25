@@ -16,13 +16,13 @@ namespace Characters.Playable
 	/// </summary>
 	public partial class LamplighterMovement : AbstractMovement<PlayableCharacterController>
 	{
-		TurnBasicMovementResolver _turnBasicMovementResolver;
+		TurnBasedMovementGlobalResolver _turnBasicMovementResolver;
 
 		public Queue<Godot.Vector3> Movement {get; private set;}
 
 		// TODO: creare una classe che si occupa del calcolo che viene fatto ora in RealtimeMove
 
-		public void BootstrapInit(TurnBasicMovementResolver turnBasicMovementResolver)
+		public void BootstrapInit(TurnBasedMovementGlobalResolver turnBasicMovementResolver)
 		{
 			DebugLamplighter.Assert(turnBasicMovementResolver != null, "turnBasicMovementResolver is null");
 			
@@ -67,14 +67,19 @@ namespace Characters.Playable
 			return _targetVelocity;
 		}
 
-		public override Godot.Vector3? PointToPointMove(Godot.Vector3 from, Godot.Vector3 to)
-		{
-			if(_turnBasicMovementResolver.Movement.Count != 0)
-				Log.PrintMessage($"----MOVIMENTO DIVERSO DA ZERO-----{_turnBasicMovementResolver.Movement}");
-			if (_turnBasicMovementResolver.Movement.Count == 0)
+		public override Godot.Vector3? PointToPointMove(Godot.Vector3 from, Godot.Vector3 to, Identification id)
+		{			
+			if(_turnBasicMovementResolver.GetMovement(id).Count > 0)
+				return _turnBasicMovementResolver.GetMovement(id).Dequeue();
+			else 
 				return null;
 
-			return _turnBasicMovementResolver.Movement.Dequeue();
+			// if(_turnBasicMovementResolver.Movement.Count != 0)
+			// 	Log.PrintMessage($"----MOVIMENTO DIVERSO DA ZERO-----{_turnBasicMovementResolver.Movement}");
+			// if (_turnBasicMovementResolver.Movement.Count == 0)
+			// 	return null;
+
+			// return _turnBasicMovementResolver.Movement.Dequeue();
 		}
 
 		public void FreeMove()

@@ -39,7 +39,7 @@ namespace Characters.Abstract
 			return Godot.Vector3.Zero;
 		}
 
-		public virtual Godot.Vector3? PointToPointMove(Godot.Vector3 from, Godot.Vector3 to) 
+		public virtual Godot.Vector3? PointToPointMove(Godot.Vector3 from, Godot.Vector3 to, Identification id) 
 		{
 			return new Godot.Vector3();
 		}

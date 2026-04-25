@@ -19,12 +19,15 @@ namespace Characters
 	where TModel : AbstractModel
 	{
 		[Export]
-		public NodePath View;
+		public NodePath ViewPath;
 		[Export]
-		public NodePath Model;
+		public NodePath ModelPath;
 
 		protected TView _view;
 		protected TModel _model;
+
+		public TView View => _view;
+		public TModel Model => _model;
 
 		public Identification Id { get; private set; }
 
@@ -65,10 +68,10 @@ namespace Characters
 		/// </summary>
 		protected override void NodeChecking()
 		{
-			_view = GetNode<TView>(View);
+			_view = GetNode<TView>(ViewPath);
 			_view.Init();
 
-			_model = GetNode<TModel>(Model);
+			_model = GetNode<TModel>(ModelPath);
 			_model.Init();
 
 			Assert();

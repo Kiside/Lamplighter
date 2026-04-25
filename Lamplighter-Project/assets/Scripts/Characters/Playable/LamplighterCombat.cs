@@ -11,6 +11,7 @@ using SystemLamplighter.DataStructure.GeneralData;
 using System.Diagnostics;
 using SystemLamplighter.Debug;
 using System.Collections.Generic;
+using Characters.Interfaces;
 
 namespace Characters.Playable;
 /// <summary>
@@ -21,13 +22,15 @@ public partial class LamplighterCombat : AbstractCombat<PlayableCharacterControl
 	ITurnBasedCombat _turnBasedCombat;
 	PlayableCharacterController _controller;
 
+	public ICombatActor CombatActor => _controller.CombatActor;
+
 	public override void Init(PlayableCharacterController controller)
 	{
 		_controller = controller;
 		base.Init(controller);
 	}
 
-	public void BootstrapInit(ITurnBasedCombat turnBasedCombat)
+	public void BootstrapInit(ITurnBasedCombat turnBasedCombat, TurnBasedMovementGlobalResolver movementResolver)
 	{
 		DebugLamplighter.Assert(turnBasedCombat != null, "turnBasedCombat is null");
 		
@@ -40,7 +43,8 @@ public partial class LamplighterCombat : AbstractCombat<PlayableCharacterControl
 				this.GetPublisher<StartTargetEvent>(),
 				this.GetSubscriber<AtbCommandPhaseStartedEvent>(),
 				this.GetSubscriber<AtbExecuteActionEvent>(),
-				this.GetSubscriber<EndTargetEvent>()));
+				this.GetSubscriber<EndTargetEvent>()),
+				movementResolver);
 	}
 
 	public override void Combat()
@@ -57,8 +61,6 @@ public partial class LamplighterCombat : AbstractCombat<PlayableCharacterControl
 	{
 
 	}
-
-	public override Queue<Godot.Vector3> Move() => _turnBasedCombat.CombatMovement;
 
 	public override void _ExitTree()
 	{

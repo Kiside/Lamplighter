@@ -30,7 +30,7 @@ namespace SystemLamplighter.Combat.Core
 		public IActionData CurrentAction { get => Actor.CurrentAction; set => Actor.CurrentAction = value;}
 		public TargetResolutionContext TargetResolutionContext {get; private set;}
 
-		private readonly TurnBasicMovementResolver _movementResolver;
+		private TurnBasedMovementGlobalResolver _movementResolver;
 		private readonly ITargetableProvider _targetableProvider;
 	
 		private IPublisher<AtbCommandPhaseEndEvent> _publishCommandPhaseEnd;
@@ -42,18 +42,17 @@ namespace SystemLamplighter.Combat.Core
 		private IDisposable _disposeEndTargetEvent;
 		private readonly DisposableBagBuilder _bag;
 
-		public Queue<Godot.Vector3> CombatMovement {get; private set;} 
-
-		public TurnBasedCombat(TurnBasicMovementResolver movementResolver, ITargetableProvider targetableProvider)
+		public TurnBasedCombat(TurnBasedMovementGlobalResolver movementResolver, ITargetableProvider targetableProvider)
 		{
-			_movementResolver = movementResolver;
+			//_movementResolver = movementResolver;
 			_targetableProvider = targetableProvider;
 
 			_bag = DisposableBag.CreateBuilder();
 		}
 
-		public void Init(TurnBasedCombatContext turnBasedCombatContext)
+		public void Init(TurnBasedCombatContext turnBasedCombatContext, TurnBasedMovementGlobalResolver movementResolver)
 		{
+			_movementResolver = movementResolver;
 			_battleMenuController = turnBasedCombatContext.BattleMenuController;
 			Actor = turnBasedCombatContext.Actor;
 			_publishCommandPhaseEnd = turnBasedCombatContext.PublishCommandPhaseEnd;
@@ -70,8 +69,6 @@ namespace SystemLamplighter.Combat.Core
 
 			_battleMenuController.OnActionClick += ActionChoosedHandler;
 			_battleMenuController.OnOpenSubMenu += OpenBattleSubMenuHandler;
-
-			CombatMovement = new Queue<Godot.Vector3>();
 		}
 
 		#region EVENTS HANDLER
@@ -100,14 +97,12 @@ namespace SystemLamplighter.Combat.Core
 			// Confrontare la distanza dal target con il range dell'attacco
 			if(CurrentAction.TargetData.Range != 0f && maxDistanceFromTarget > CurrentAction.TargetData.Range)
 			{
-				var m = _movementResolver.ResolveMovementInRange(casterPos, targetables[0].Position, CurrentAction.TargetData.Range);
-				CombatMovement = new Queue<Godot.Vector3>(m);
+				var m = _movementResolver.ResolveMovementInRange(casterPos, targetables[0].Position, CurrentAction.TargetData.Range, Actor.Id);
 			}
 			else
 			{
 				// In altri casi non bisogna muoversi
-				var m = _movementResolver.ResolveMovement(casterPos, targetables[0].Position);
-				CombatMovement = new Queue<Godot.Vector3>(m);
+				var m = _movementResolver.ResolveMovement(casterPos, targetables[0].Position, Actor.Id);
 			}
 
 			// Ad azione eseguita resetto la posizione del personaggio sull'ATB

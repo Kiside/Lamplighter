@@ -17,9 +17,4 @@ public partial class LamplighterNpcCombat : AbstractCombat<NpCharacterController
 	{
 
 	}
-
-	public override  Queue<Godot.Vector3> Move()
-	{
-		return new Queue<Godot.Vector3> ();
-	}
 }

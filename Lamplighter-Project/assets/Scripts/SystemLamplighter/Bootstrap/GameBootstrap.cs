@@ -17,6 +17,10 @@ using SystemLamplighter.DataStructure.GeneralData;
 using SystemLamplighter.Navigation;
 using Characters.Playable;
 using SystemLamplighter.Tool;
+using Characters;
+using SystemLamplighter.Abstract.MVC;
+using Characters.NPC;
+
 
 namespace SystemLamplighter.Bootstrap;
 
@@ -41,12 +45,49 @@ public partial class GameBootstrap : Node
 	public override void _Ready()
 	{
 		Log.PrintMessage("READY:");
+		
 		InitNavitationSystem();
 		InitTargetController();
 		InitSelectionTargetRender();
-		InitCombat();
-		InitTurnBasicMovement();
+		InitCharacter();
+		//InitCombat();
+		//InitTurnBasicMovement();
 		base._Ready();
+	}
+
+	private void InitCharacter()
+	{
+		var playablecharacterNodes = _sceneBinder.BindAll<PlayableCharacterModel>();
+		//var noPlayableCharacterNodes = _sceneBinder.BindAll<NpCharacterModel>();
+
+		var globalMovementResolver = Services.GetRequiredService<TurnBasedMovementGlobalResolver>();
+
+		DebugLamplighter.Assert(playablecharacterNodes != null, "playableCharacterNodes is null");
+
+		// TODO : IL GLOBAL MOVMENT RESOLVER È UN SINGLETEON, BISOGNA FARE IN MODO CHE OGNI COMBAT NODE GLI DIA IL PROPRIO IDENTIFICATIVO
+
+		// Foreach Playable
+		foreach(var playableCharacter in playablecharacterNodes)
+		{
+			InitGlobalMovementResolverIntoCharacters(playableCharacter.Combat as LamplighterCombat, 
+			playableCharacter.Movement as LamplighterMovement, 
+			globalMovementResolver);
+		}
+
+		// FOREACH NO PLAYABLE CHARACTER
+		// foreach(var noPlayableCharacter in noPlayableCharacterNodes)
+		// {
+		// 	InitGlobalMovementResolverIntoCharacters(noPlayableCharacter.Combat as LamplighterCombat, noPlayableCharacter.Movement as LamplighterMovement, globalMovementResolver);
+		// }
+	}
+
+	private void InitGlobalMovementResolverIntoCharacters(LamplighterCombat combatNode, LamplighterMovement movementNode, TurnBasedMovementGlobalResolver globalMovementResolver)
+	{
+		combatNode.BootstrapInit(Services.GetRequiredService<ITurnBasedCombat>(), globalMovementResolver);
+
+		DebugLamplighter.Assert(globalMovementResolver.InsertIdentification(combatNode.CombatActor.Id), "Failed to add Id to GlobalMovementResolver.MovementDictionary");
+
+		movementNode.BootstrapInit(globalMovementResolver);
 	}
 
 	private void InitCombat()
@@ -57,7 +98,7 @@ public partial class GameBootstrap : Node
 
 		foreach(var combatNode in lamplighterCombatNodes)
 		{
-			combatNode.BootstrapInit(Services.GetRequiredService<ITurnBasedCombat>());
+			combatNode.BootstrapInit(Services.GetRequiredService<ITurnBasedCombat>(),Services.GetRequiredService<TurnBasedMovementGlobalResolver>());
 		}
 	}
 
@@ -69,8 +110,7 @@ public partial class GameBootstrap : Node
 
 		foreach(var movementNode in lamplighterMovementNodes)
 		{
-			
-			movementNode.BootstrapInit(Services.GetRequiredService<TurnBasicMovementResolver>());
+			movementNode.BootstrapInit(Services.GetRequiredService<TurnBasedMovementGlobalResolver>());
 		}
 		
 	}
@@ -155,7 +195,8 @@ public partial class GameBootstrap : Node
 		services.AddSingleton<INavigationAstar ,NavigationAstarService>();
 		Log.PrintMessage("INavigationAstar");
 
-		services.AddTransient<TurnBasicMovementResolver>();
+		//services.AddTransient<TurnBasedMovementGlobalResolver>();
+		services.AddSingleton<TurnBasedMovementGlobalResolver>();
 		Log.PrintMessage("TurnBasicMovementResolver");
 		
 		services.AddTransient<ITurnBasedCombat, TurnBasedCombat>();
@@ -174,7 +215,7 @@ public partial class GameBootstrap : Node
 		base._PhysicsProcess(delta);
 
 		if(Input.IsActionJustReleased("debug"))
-			Log.PrintMessage($"Movement now: {Services.GetRequiredService<TurnBasicMovementResolver>().Movement.Count}");
+			Log.PrintMessage($"Movement now: {Services.GetRequiredService<TurnBasedMovementGlobalResolver>().Movement.Count}");
 	}
 
 

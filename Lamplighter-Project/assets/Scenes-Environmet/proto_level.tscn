@@ -54,8 +54,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.17597556, 0)
 [node name="Enemy" type="CharacterBody3D" parent="." unique_id=1970786060 groups=["enemy"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.564902, 0.5407543, 0.04921341)
 script = ExtResource("2_aw6lp")
-View = NodePath("NpView")
-Model = NodePath("NpModel")
+ViewPath = NodePath("NpView")
+ModelPath = NodePath("NpModel")
 MovementNode = NodePath("MovementNode")
 CombatNode = NodePath("CombatNode")
 
@@ -63,7 +63,7 @@ CombatNode = NodePath("CombatNode")
 material_override = SubResource("StandardMaterial3D_qcquh")
 mesh = SubResource("BoxMesh_ejd0h")
 
-[node name="NpModel" type="Node" parent="Enemy" unique_id=1708917238]
+[node name="NpModel" type="Node" parent="Enemy" unique_id=1708917238 groups=["bindable"]]
 script = ExtResource("3_8uc3x")
 _combatLoadoutNode = NodePath("../CombatLoadout")
 _atbCharacterProperties = SubResource("Resource_80fhm")
@@ -97,8 +97,8 @@ _targetableType = 1
 [node name="Enemy2" type="CharacterBody3D" parent="." unique_id=924751154 groups=["enemy"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.4510217, 0.5407543, 2.8083699)
 script = ExtResource("2_aw6lp")
-View = NodePath("NpView")
-Model = NodePath("NpModel")
+ViewPath = NodePath("NpView")
+ModelPath = NodePath("NpModel")
 MovementNode = NodePath("MovementNode")
 CombatNode = NodePath("CombatNode")
 
@@ -106,7 +106,7 @@ CombatNode = NodePath("CombatNode")
 material_override = SubResource("StandardMaterial3D_qcquh")
 mesh = SubResource("BoxMesh_ejd0h")
 
-[node name="NpModel" type="Node" parent="Enemy2" unique_id=459565166]
+[node name="NpModel" type="Node" parent="Enemy2" unique_id=459565166 groups=["bindable"]]
 script = ExtResource("3_8uc3x")
 _combatLoadoutNode = NodePath("../CombatLoadout")
 _atbCharacterProperties = SubResource("Resource_80fhm")

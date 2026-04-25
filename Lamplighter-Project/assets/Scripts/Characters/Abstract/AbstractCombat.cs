@@ -24,8 +24,6 @@ namespace Characters.Abstract
 		}
 
 		public abstract void Combat();
-
-		public abstract Queue<Godot.Vector3> Move();
 	}
 }
 
