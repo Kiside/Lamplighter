@@ -8,6 +8,6 @@ albedo_color = Color(0.52906674, 0.5290667, 0.5290667, 1)
 
 [node name="FloorProto" unique_id=703619226 instance=ExtResource("1_r1l3g")]
 
-[node name="Cube" parent="." index="0" unique_id=738506055]
+[node name="Cube" parent="." index="0" unique_id=738506055 groups=["navigationMesh"]]
 material_override = ExtResource("2_olvcy")
 material_overlay = SubResource("StandardMaterial3D_r1l3g")

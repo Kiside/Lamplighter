@@ -8,6 +8,7 @@ using SystemLamplighter.Bootstrap;
 using SystemLamplighter.Debug;
 using System.Collections.Generic;
 using SystemLamplighter.Tool;
+using System.IO;
 
 namespace Characters.Playable
 {
@@ -16,22 +17,36 @@ namespace Characters.Playable
 	/// </summary>
 	public partial class LamplighterMovement : AbstractMovement<PlayableCharacterController>
 	{
+		[Export]
+		NodePath _navAgentPath;
+
+		NavigationAgent3D _navAgent;
 		TurnBasedMovementGlobalResolver _turnBasicMovementResolver;
+
+		MovementService _movementService;
 
 		public Queue<Godot.Vector3> Movement {get; private set;}
 
 		// TODO: creare una classe che si occupa del calcolo che viene fatto ora in RealtimeMove
 
-		public void BootstrapInit(TurnBasedMovementGlobalResolver turnBasicMovementResolver)
+		public void BootstrapInit(IMovementService movementService)
 		{
-			DebugLamplighter.Assert(turnBasicMovementResolver != null, "turnBasicMovementResolver is null");
+			DebugLamplighter.Assert(movementService != null, "movementService is null");
 			
-			_turnBasicMovementResolver = turnBasicMovementResolver;
+			_movementService = movementService as MovementService;
+			_movementService.SetNavigationAgent(_navAgent);
 		}
 
 		public override void Init(PlayableCharacterController controller)
 		{
 			base.Init(controller);
+
+			DebugLamplighter.Assert(_navAgentPath != null, "_navAgentPath is null");
+
+			if(_navAgentPath != null)
+				_navAgent = GetNode<NavigationAgent3D>(_navAgentPath);
+
+			DebugLamplighter.Assert(_navAgent != null, "_navAgent is null");
 		}
 
 		public override Vector3 RealtimeMove(double delta)
@@ -68,18 +83,15 @@ namespace Characters.Playable
 		}
 
 		public override Godot.Vector3? PointToPointMove(Godot.Vector3 from, Godot.Vector3 to, Identification id)
-		{			
-			if(_turnBasicMovementResolver.GetMovement(id).Count > 0)
-				return _turnBasicMovementResolver.GetMovement(id).Dequeue();
-			else 
-				return null;
+		{
+			if (_movementService == null)
+				return null;			
+			return _movementService.TargetPositionMovement(_controller.GlobalPosition) * Speed;
+		}
 
-			// if(_turnBasicMovementResolver.Movement.Count != 0)
-			// 	Log.PrintMessage($"----MOVIMENTO DIVERSO DA ZERO-----{_turnBasicMovementResolver.Movement}");
-			// if (_turnBasicMovementResolver.Movement.Count == 0)
-			// 	return null;
-
-			// return _turnBasicMovementResolver.Movement.Dequeue();
+		public override bool IsMovementFinished()
+		{
+			return _movementService.IsNavigationFinished();
 		}
 
 		public void FreeMove()

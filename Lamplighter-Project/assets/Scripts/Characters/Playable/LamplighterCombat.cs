@@ -22,7 +22,21 @@ public partial class LamplighterCombat : AbstractCombat<PlayableCharacterControl
 	ITurnBasedCombat _turnBasedCombat;
 	PlayableCharacterController _controller;
 
+	IMovementService _movementService;
+
 	public ICombatActor CombatActor => _controller.CombatActor;
+
+	[Export]
+	NodePath AnimationPlayerPath;
+
+	AnimationPlayer _animationPlayer;
+
+	public override void _EnterTree()
+	{
+		if(AnimationPlayerPath != null)
+			_animationPlayer = GetNode<AnimationPlayer>(AnimationPlayerPath);
+		base._EnterTree();
+	}
 
 	public override void Init(PlayableCharacterController controller)
 	{
@@ -30,7 +44,7 @@ public partial class LamplighterCombat : AbstractCombat<PlayableCharacterControl
 		base.Init(controller);
 	}
 
-	public void BootstrapInit(ITurnBasedCombat turnBasedCombat, TurnBasedMovementGlobalResolver movementResolver)
+	public void BootstrapInit(ITurnBasedCombat turnBasedCombat, IMovementService movementService)
 	{
 		DebugLamplighter.Assert(turnBasedCombat != null, "turnBasedCombat is null");
 		
@@ -44,7 +58,8 @@ public partial class LamplighterCombat : AbstractCombat<PlayableCharacterControl
 				this.GetSubscriber<AtbCommandPhaseStartedEvent>(),
 				this.GetSubscriber<AtbExecuteActionEvent>(),
 				this.GetSubscriber<EndTargetEvent>()),
-				movementResolver);
+				movementService,
+				_animationPlayer);
 	}
 
 	public override void Combat()

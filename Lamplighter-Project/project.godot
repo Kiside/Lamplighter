@@ -35,6 +35,7 @@ renderer="gruppo generico per i renderer"
 targetable="gruppo per i nodi targetable"
 walkable="gruppo generico per zone \"camminabili\" per l'algoritmo di navigazione"
 bindable="gruppo generico per i nodi \"bindabili\""
+navigationMesh="gruppo per le mesh da prendere in considerazione dal navigation region3D"
 
 [input]
 

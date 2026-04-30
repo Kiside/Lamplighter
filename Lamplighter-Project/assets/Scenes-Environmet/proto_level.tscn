@@ -42,6 +42,12 @@ metadata/_custom_type_script = "uid://dpwp74optcgd5"
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_uvot1"]
 
+[sub_resource type="NavigationMesh" id="NavigationMesh_mkya5"]
+vertices = PackedVector3Array(-11.205366, 0.41061437, -11.205366, -11.205366, 0.41061437, 11.294634, 11.294634, 0.41061437, 11.294634, 11.294634, 0.41061437, -11.205366)
+polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1)]
+geometry_source_geometry_mode = 2
+geometry_source_group_name = &"navigationMesh"
+
 [node name="ProtoLevel" type="Node3D" unique_id=1351766654]
 
 [node name="Navigation" type="Node" parent="." unique_id=750886176 groups=["bindable"]]
@@ -160,5 +166,8 @@ _sceneBinder = NodePath("SceneBinder")
 [node name="SceneBinder" type="Node" parent="GameBootstrap" unique_id=2104835989]
 script = ExtResource("3_mkya5")
 _getNodesOfGroups = Array[int]([10])
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="." unique_id=779666796]
+navigation_mesh = SubResource("NavigationMesh_mkya5")
 
 [editable path="ProtoCombat"]

@@ -43,6 +43,8 @@ namespace Characters.Abstract
 		{
 			return new Godot.Vector3();
 		}
+
+		public abstract bool IsMovementFinished(); 
 	}
 }
 

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Godot;
 using SystemLamplighter.DataStructure.GeneralData;
 namespace SystemLamplighter.Interfaces;
 
@@ -8,7 +9,7 @@ namespace SystemLamplighter.Interfaces;
 /// </summary>
 public interface ITurnBasedCombat : IDisposable
 {
-	public void Init(TurnBasedCombatContext turnBasedCombatContext, TurnBasedMovementGlobalResolver movementResolver);
+	public void Init(TurnBasedCombatContext turnBasedCombatContext, IMovementService movementService, AnimationPlayer animationPlayer);
 	public void ActionChoosedHandler(IActionData actionData);
 	public void OpenBattleSubMenuHandler(ISubMenuDefinition subMenuIds);
 	public void HandleAttackAction();

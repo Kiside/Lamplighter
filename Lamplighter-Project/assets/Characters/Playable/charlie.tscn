@@ -56,10 +56,13 @@ shape = SubResource("BoxShape3D_0bkd4")
 
 [node name="Movement" type="Node" parent="." unique_id=2083169796 groups=["bindable"]]
 script = ExtResource("2_momr7")
+_navAgentPath = NodePath("../NavigationAgent3D")
+Speed = 2
 _disable = true
 
 [node name="Combat" type="Node" parent="." unique_id=73162908 groups=["bindable"]]
 script = ExtResource("4_cx7ps")
+AnimationPlayerPath = NodePath("../Pivot/Main/AnimationPlayer")
 
 [node name="CombatLoadout" type="Node" parent="." unique_id=506505467]
 script = ExtResource("5_xa4mk")
@@ -73,5 +76,8 @@ _magic = Array[ExtResource("14_voq6j")]([ExtResource("11_x47ln")])
 
 [node name="Targetable" parent="." unique_id=1186375305 node_paths=PackedStringArray("_position") instance=ExtResource("18_voq6j")]
 _position = NodePath("../Pivot/Main")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=117737303]
+debug_enabled = true
 
 [editable path="Pivot/Main"]

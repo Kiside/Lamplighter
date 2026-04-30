@@ -60,7 +60,7 @@ public partial class GameBootstrap : Node
 		var playablecharacterNodes = _sceneBinder.BindAll<PlayableCharacterModel>();
 		//var noPlayableCharacterNodes = _sceneBinder.BindAll<NpCharacterModel>();
 
-		var globalMovementResolver = Services.GetRequiredService<TurnBasedMovementGlobalResolver>();
+		var movementService = Services.GetRequiredService<IMovementService>();
 
 		DebugLamplighter.Assert(playablecharacterNodes != null, "playableCharacterNodes is null");
 
@@ -69,9 +69,9 @@ public partial class GameBootstrap : Node
 		// Foreach Playable
 		foreach(var playableCharacter in playablecharacterNodes)
 		{
-			InitGlobalMovementResolverIntoCharacters(playableCharacter.Combat as LamplighterCombat, 
+			InitMovementService(playableCharacter.Combat as LamplighterCombat, 
 			playableCharacter.Movement as LamplighterMovement, 
-			globalMovementResolver);
+			movementService);
 		}
 
 		// FOREACH NO PLAYABLE CHARACTER
@@ -81,55 +81,57 @@ public partial class GameBootstrap : Node
 		// }
 	}
 
-	private void InitGlobalMovementResolverIntoCharacters(LamplighterCombat combatNode, LamplighterMovement movementNode, TurnBasedMovementGlobalResolver globalMovementResolver)
+	private void InitMovementService(LamplighterCombat combatNode, LamplighterMovement movementNode, IMovementService movementService)
 	{
-		combatNode.BootstrapInit(Services.GetRequiredService<ITurnBasedCombat>(), globalMovementResolver);
+		combatNode.BootstrapInit(Services.GetRequiredService<ITurnBasedCombat>(), movementService);
 
-		DebugLamplighter.Assert(globalMovementResolver.InsertIdentification(combatNode.CombatActor.Id), "Failed to add Id to GlobalMovementResolver.MovementDictionary");
-
-		movementNode.BootstrapInit(globalMovementResolver);
+		movementNode.BootstrapInit(movementService);
 	}
 
-	private void InitCombat()
-	{
-		var lamplighterCombatNodes = _sceneBinder.BindAll<LamplighterCombat>();
+	// private void InitCombat()
+	// {
+	// 	var lamplighterCombatNodes = _sceneBinder.BindAll<LamplighterCombat>();
 
-		DebugLamplighter.Assert(lamplighterCombatNodes != null, "lamplighterCombatNode is null");
+	// 	DebugLamplighter.Assert(lamplighterCombatNodes != null, "lamplighterCombatNode is null");
 
-		foreach(var combatNode in lamplighterCombatNodes)
-		{
-			combatNode.BootstrapInit(Services.GetRequiredService<ITurnBasedCombat>(),Services.GetRequiredService<TurnBasedMovementGlobalResolver>());
-		}
-	}
+	// 	foreach(var combatNode in lamplighterCombatNodes)
+	// 	{
+	// 		combatNode.BootstrapInit(Services.GetRequiredService<ITurnBasedCombat>(),Services.GetRequiredService<TurnBasedMovementGlobalResolver>());
+	// 	}
+	// }
 
-	private void InitTurnBasicMovement()
-	{
-		var lamplighterMovementNodes = _sceneBinder.BindAll<LamplighterMovement>();
+	// private void InitTurnBasicMovement()
+	// {
+	// 	var lamplighterMovementNodes = _sceneBinder.BindAll<LamplighterMovement>();
 
-		DebugLamplighter.Assert(lamplighterMovementNodes != null, "lampligterMovementNode is null");
+	// 	DebugLamplighter.Assert(lamplighterMovementNodes != null, "lampligterMovementNode is null");
 
-		foreach(var movementNode in lamplighterMovementNodes)
-		{
-			movementNode.BootstrapInit(Services.GetRequiredService<TurnBasedMovementGlobalResolver>());
-		}
+	// 	foreach(var movementNode in lamplighterMovementNodes)
+	// 	{
+	// 		movementNode.BootstrapInit(Services.GetRequiredService<TurnBasedMovementGlobalResolver>());
+	// 	}
 		
-	}
+	// }
 
 	private void InitNavitationSystem()
 	{
 		// var navigationSystem = this.GetNodesOfGroup(GroupsName.navigationSystem)
 		// .FirstOrDefault(n => n is NavigationSystem) as NavigationSystem;
 
+		var navigationRegion = _sceneBinder.BindAll<NavigationRegion3D>();
+
+		
+
 		// Ottine il selectionTargetRender dalla scena
-		Log.PrintMessage("navigation system");
-		var navigationSystem = _sceneBinder.Bind<NavigationSystem>();
-		Log.PrintMessage("after binding navigation system");
+		// Log.PrintMessage("navigation system");
+		// var navigationSystem = _sceneBinder.Bind<NavigationSystem>();
+		// Log.PrintMessage("after binding navigation system");
 
-		DebugLamplighter.Assert(navigationSystem != null, "navigationSystem is null");
+		// DebugLamplighter.Assert(navigationSystem != null, "navigationSystem is null");
 
-		Log.PrintMessage("bootstrap navigation");
-		navigationSystem.BootstrapInit(Services.GetRequiredService<INavigationAstar>());
-		Log.PrintMessage("after bootstrap navigation");
+		// Log.PrintMessage("bootstrap navigation");
+		// navigationSystem.BootstrapInit(Services.GetRequiredService<INavigationAstar>());
+		// Log.PrintMessage("after bootstrap navigation");
 	}
 
 	private void InitSelectionTargetRender()
@@ -195,9 +197,11 @@ public partial class GameBootstrap : Node
 		services.AddSingleton<INavigationAstar ,NavigationAstarService>();
 		Log.PrintMessage("INavigationAstar");
 
+		services.AddTransient<IMovementService, MovementService>();
+
 		//services.AddTransient<TurnBasedMovementGlobalResolver>();
-		services.AddSingleton<TurnBasedMovementGlobalResolver>();
-		Log.PrintMessage("TurnBasicMovementResolver");
+		// services.AddSingleton<TurnBasedMovementGlobalResolver>();
+		// Log.PrintMessage("TurnBasicMovementResolver");
 		
 		services.AddTransient<ITurnBasedCombat, TurnBasedCombat>();
 		Log.PrintMessage("ITurnBasedCombat");
@@ -208,14 +212,6 @@ public partial class GameBootstrap : Node
 		Services = services.BuildServiceProvider();
 
 		Log.PrintMessage("Services Builded");
-	}
-
-	public override void _PhysicsProcess(double delta)
-	{
-		base._PhysicsProcess(delta);
-
-		if(Input.IsActionJustReleased("debug"))
-			Log.PrintMessage($"Movement now: {Services.GetRequiredService<TurnBasedMovementGlobalResolver>().Movement.Count}");
 	}
 
 

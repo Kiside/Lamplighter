@@ -16,4 +16,9 @@ public partial class LamplighterNpcMovement : AbstractMovement<NpCharacterContro
 	{
 		return Godot.Vector3.Zero;
 	}
+
+	public override bool IsMovementFinished()
+		{
+			return true;
+		}
 }

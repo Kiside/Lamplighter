@@ -16,6 +16,8 @@ using SystemLamplighter.Debug;
 using System.Numerics;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using Godot;
 
 
 namespace SystemLamplighter.Combat.Core
@@ -30,7 +32,7 @@ namespace SystemLamplighter.Combat.Core
 		public IActionData CurrentAction { get => Actor.CurrentAction; set => Actor.CurrentAction = value;}
 		public TargetResolutionContext TargetResolutionContext {get; private set;}
 
-		private TurnBasedMovementGlobalResolver _movementResolver;
+		private MovementService _movementService;
 		private readonly ITargetableProvider _targetableProvider;
 	
 		private IPublisher<AtbCommandPhaseEndEvent> _publishCommandPhaseEnd;
@@ -42,7 +44,9 @@ namespace SystemLamplighter.Combat.Core
 		private IDisposable _disposeEndTargetEvent;
 		private readonly DisposableBagBuilder _bag;
 
-		public TurnBasedCombat(TurnBasedMovementGlobalResolver movementResolver, ITargetableProvider targetableProvider)
+		AnimationPlayer _animationPlayer;
+
+		public TurnBasedCombat(ITargetableProvider targetableProvider)
 		{
 			//_movementResolver = movementResolver;
 			_targetableProvider = targetableProvider;
@@ -50,9 +54,9 @@ namespace SystemLamplighter.Combat.Core
 			_bag = DisposableBag.CreateBuilder();
 		}
 
-		public void Init(TurnBasedCombatContext turnBasedCombatContext, TurnBasedMovementGlobalResolver movementResolver)
+		public void Init(TurnBasedCombatContext turnBasedCombatContext, IMovementService movementService, AnimationPlayer animationPlayer)
 		{
-			_movementResolver = movementResolver;
+			_movementService = movementService as MovementService;
 			_battleMenuController = turnBasedCombatContext.BattleMenuController;
 			Actor = turnBasedCombatContext.Actor;
 			_publishCommandPhaseEnd = turnBasedCombatContext.PublishCommandPhaseEnd;
@@ -69,6 +73,8 @@ namespace SystemLamplighter.Combat.Core
 
 			_battleMenuController.OnActionClick += ActionChoosedHandler;
 			_battleMenuController.OnOpenSubMenu += OpenBattleSubMenuHandler;
+
+			_animationPlayer = animationPlayer;
 		}
 
 		#region EVENTS HANDLER
@@ -97,16 +103,44 @@ namespace SystemLamplighter.Combat.Core
 			// Confrontare la distanza dal target con il range dell'attacco
 			if(CurrentAction.TargetData.Range != 0f && maxDistanceFromTarget > CurrentAction.TargetData.Range)
 			{
-				var m = _movementResolver.ResolveMovementInRange(casterPos, targetables[0].Position, CurrentAction.TargetData.Range, Actor.Id);
+				_movementService.SetCalculatedOptmizeTargetPosition(casterPos, targetables[0].Position, CurrentAction.TargetData.Range);
 			}
 			else
 			{
 				// In altri casi non bisogna muoversi
-				var m = _movementResolver.ResolveMovement(casterPos, targetables[0].Position, Actor.Id);
+				_movementService.SetTargetPosition(targetables[0].Position);
 			}
 
 			// Ad azione eseguita resetto la posizione del personaggio sull'ATB
-			_publishEndExecuteAction.Publish(new AtbEndExecuteActionEvent(Actor));
+			//_publishEndExecuteAction.Publish(new AtbEndExecuteActionEvent(Actor));
+			_ = ExecuteCombatActionTask();
+		}
+
+		private async Task ExecuteCombatActionTask()
+		{
+			try
+			{
+				while(!_movementService.IsNavigationFinished())
+				{
+					await Task.Delay(100);
+				}
+				
+				_animationPlayer.Play(Actor.CurrentAction.Animation.ResourceName);
+
+				while(_animationPlayer.IsPlaying())
+				{
+					await Task.Delay(100);
+				}
+				_animationPlayer.Stop();
+				
+
+				_publishEndExecuteAction.Publish(new AtbEndExecuteActionEvent(Actor));
+			}
+			catch (Exception ex)
+			{
+				Log.PrintWarning($"{ex}");
+			}
+			
 		}
 
 		public void OnCommandPhaseStarted(AtbCommandPhaseStartedEvent evt)
