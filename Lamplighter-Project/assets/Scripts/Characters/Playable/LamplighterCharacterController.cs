@@ -21,7 +21,7 @@ namespace Characters.Playable
 	/// <summary>
 	/// Classe per il controller del personaggio
 	/// </summary>
-	public partial class PlayableCharacterController : CharacterController<PlayableCharacterView,PlayableCharacterModel>, 
+	public partial class LamplighterCharacterController : CharacterController<LamplighterCharacterView,LamplighterCharacterModel>, 
 	IHasCombatInterface<ICombatActor>
 	{
 		#region PUBLIC
@@ -30,8 +30,8 @@ namespace Characters.Playable
 		#endregion
 
 		#region PROTECTED/PRIVATE PROPERTIES 
-		protected AbstractCombat<PlayableCharacterController> _combat { get => _model.Combat; set => _model.Combat = value; }
-		protected AbstractMovement<PlayableCharacterController> _movement { get => _model.Movement; set => _model.Movement = value; }
+		protected AbstractCombat<LamplighterCharacterController> _combat { get => _model.Combat; set => _model.Combat = value; }
+		protected AbstractMovement<LamplighterCharacterController> _movement { get => _model.Movement; set => _model.Movement = value; }
 		protected BattleMenuController _battleMenuController { get => _model.BattleMenu;}
 		private bool _lockOn = false;
 
@@ -91,10 +91,10 @@ namespace Characters.Playable
 			Debug.Assert(CombatNode != null, $"{noNode} CombatNode is null.");
 
 			if (MovementNode != null)
-				_movement = GetNode<AbstractMovement<PlayableCharacterController>>(MovementNode);
+				_movement = GetNode<AbstractMovement<LamplighterCharacterController>>(MovementNode);
 
 			if (CombatNode != null)
-				_combat = GetNode<AbstractCombat<PlayableCharacterController>>(CombatNode);
+				_combat = GetNode<AbstractCombat<LamplighterCharacterController>>(CombatNode);
 		}
 
 		public override void _PhysicsProcess(double delta)

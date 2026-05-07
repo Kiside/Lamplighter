@@ -17,10 +17,10 @@ namespace Characters.Playable;
 /// <summary>
 /// Classer per il combattimento in Lamplighter
 /// </summary>
-public partial class LamplighterCombat : AbstractCombat<PlayableCharacterController>
+public partial class LamplighterCombat : AbstractCombat<LamplighterCharacterController>
 {
 	ITurnBasedCombat _turnBasedCombat;
-	PlayableCharacterController _controller;
+	LamplighterCharacterController _controller;
 
 	IMovementService _movementService;
 
@@ -38,7 +38,7 @@ public partial class LamplighterCombat : AbstractCombat<PlayableCharacterControl
 		base._EnterTree();
 	}
 
-	public override void Init(PlayableCharacterController controller)
+	public override void Init(LamplighterCharacterController controller)
 	{
 		_controller = controller;
 		base.Init(controller);

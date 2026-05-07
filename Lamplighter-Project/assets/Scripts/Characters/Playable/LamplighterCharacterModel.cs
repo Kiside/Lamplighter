@@ -21,7 +21,7 @@ namespace Characters.Playable
 	/// <summary>
 	/// Classe Model per il personaggio
 	/// </summary>
-	public partial class PlayableCharacterModel : AbstractModel
+	public partial class LamplighterCharacterModel : AbstractModel
 	{
 		#region EXPORT PROPERTIES
 		[Export]
@@ -33,8 +33,8 @@ namespace Characters.Playable
 		#endregion
 
 		#region PROTECTED PROPERTIES 
-		protected AbstractCombat<PlayableCharacterController> _combat;
-		protected AbstractMovement<PlayableCharacterController> _movement;
+		protected AbstractCombat<LamplighterCharacterController> _combat;
+		protected AbstractMovement<LamplighterCharacterController> _movement;
 
 		protected BattleMenuController _battleMenu;
 
@@ -47,8 +47,8 @@ namespace Characters.Playable
 		#endregion
 
 		#region PUBLIC PROPERTIES
-		public AbstractCombat<PlayableCharacterController> Combat { get => _combat; set => _combat = value; }
-		public AbstractMovement<PlayableCharacterController> Movement { get => _movement; set => _movement = value; }
+		public AbstractCombat<LamplighterCharacterController> Combat { get => _combat; set => _combat = value; }
+		public AbstractMovement<LamplighterCharacterController> Movement { get => _movement; set => _movement = value; }
 		public ICombatActor CombatActor => _combatActor;
 		public BattleMenuController BattleMenu {get => _battleMenu;}
 		public CombatLoadout CombatLoadout { get => _combatLoadout; set => _combatLoadout = value; }

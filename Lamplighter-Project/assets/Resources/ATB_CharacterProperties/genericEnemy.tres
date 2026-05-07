@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="AtbCharacterProperties" format=3 uid="uid://dh3hyj8ml3kd5"]
+
+[ext_resource type="Image" uid="uid://cqklojhdlw85m" path="res://assets/Resources/Avatars/enemies.png" id="1_srikh"]
+[ext_resource type="Script" uid="uid://dpwp74optcgd5" path="res://assets/Scripts/SystemLamplighter/ATB/AtbCharacterProperties.cs" id="2_sfsg5"]
+
+[resource]
+script = ExtResource("2_sfsg5")
+_avatar = ExtResource("1_srikh")
+_speed = 0.1
+_name = "Enemy"
+_characterType = 1
+metadata/_custom_type_script = "uid://dpwp74optcgd5"

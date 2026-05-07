@@ -8,8 +8,7 @@
 [ext_resource type="Script" uid="uid://bc6bjkwcn78h6" path="res://assets/Scripts/Characters/NPC/NpCharacterModel.cs" id="3_8uc3x"]
 [ext_resource type="Script" uid="uid://c6uo1si5yfkbx" path="res://assets/Scripts/SystemLamplighter/Bootstrap/SceneBinder.cs" id="3_mkya5"]
 [ext_resource type="Script" uid="uid://b3kvxr43rq8mm" path="res://assets/Scripts/Characters/NPC/NpCharacterView.cs" id="4_66ris"]
-[ext_resource type="Image" uid="uid://cqklojhdlw85m" path="res://assets/Resources/Avatars/enemies.png" id="4_naehx"]
-[ext_resource type="Script" uid="uid://dpwp74optcgd5" path="res://assets/Scripts/SystemLamplighter/ATB/AtbCharacterProperties.cs" id="5_uidbe"]
+[ext_resource type="Resource" uid="uid://dh3hyj8ml3kd5" path="res://assets/Resources/ATB_CharacterProperties/genericEnemy.tres" id="5_xo7eh"]
 [ext_resource type="Script" uid="uid://dgpafgjng8e3w" path="res://assets/Scripts/Characters/NPC/LamplighterNpcCombat.cs" id="7_uvot1"]
 [ext_resource type="Script" uid="uid://cfd2sruxh3u7l" path="res://assets/Scripts/Characters/NPC/LamplighterNpcMovement.cs" id="8_7o5g0"]
 [ext_resource type="Script" uid="uid://hpv57386fhw0" path="res://assets/Scripts/Characters/Loadout/CombatLoadout.cs" id="9_uvot1"]
@@ -23,22 +22,19 @@
 [ext_resource type="Resource" uid="uid://bjd0r2gvapdf" path="res://assets/CustomResources/Prototype/healthItem.tres" id="17_gor4l"]
 [ext_resource type="PackedScene" uid="uid://dyhr28frl1avx" path="res://assets/Scenes-Node/highlightable.tscn" id="18_7o5g0"]
 [ext_resource type="PackedScene" uid="uid://cu7tp8wr5c5y6" path="res://assets/Scenes-Node/targetable.tscn" id="19_hp1yv"]
+[ext_resource type="Script" uid="uid://0rkd4hh7dr53" path="res://assets/Scripts/Characters/Playable/LamplighterCharacterController.cs" id="21_gor4l"]
+[ext_resource type="Script" uid="uid://cou4bfs5gnolp" path="res://assets/Scripts/Characters/Playable/LamplighterCharacterModel.cs" id="21_w6ram"]
 [ext_resource type="Script" uid="uid://dnx4tgkhr5a1i" path="res://assets/Scripts/SystemLamplighter/Navigation/NavigationSystem.cs" id="22_h0r1b"]
+[ext_resource type="Script" uid="uid://i2ivjf6e807r" path="res://assets/Scripts/Characters/Playable/LamplighterCharacterView.cs" id="22_hev2j"]
+[ext_resource type="Script" uid="uid://43moiapfoih4" path="res://assets/Scripts/Characters/Playable/LamplighterCombat.cs" id="23_hev2j"]
 [ext_resource type="Script" uid="uid://dwohowhq81y4d" path="res://assets/Scripts/SystemLamplighter/Debug/DebugMasterNode.cs" id="24_chj2u"]
+[ext_resource type="Script" uid="uid://sc5ny07t4tg3" path="res://assets/Scripts/Characters/Playable/LamplighterMovement.cs" id="24_nbpjs"]
 [ext_resource type="Script" uid="uid://c0awbro2jcb4v" path="res://assets/Scripts/SystemLamplighter/Debug/DebugNavigationSystem.cs" id="25_23igw"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qcquh"]
 albedo_color = Color(0.46126777, 0, 0.01909638, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_ejd0h"]
-
-[sub_resource type="Resource" id="Resource_80fhm"]
-script = ExtResource("5_uidbe")
-_avatar = ExtResource("4_naehx")
-_speed = 0.1
-_name = "Enemy"
-_characterType = 1
-metadata/_custom_type_script = "uid://dpwp74optcgd5"
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_uvot1"]
 
@@ -57,6 +53,48 @@ _gridStep = 0.5
 [node name="FloorProto2" parent="." unique_id=703619226 groups=["walkable"] instance=ExtResource("2_x5dwk")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.17597556, 0)
 
+[node name="Enemy3" type="CharacterBody3D" parent="." unique_id=592894439 groups=["enemy"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.4510217, 0.5407543, 2.8083699)
+script = ExtResource("21_gor4l")
+ViewPath = NodePath("NpView")
+ModelPath = NodePath("NpModel")
+MovementNode = NodePath("MovementNode")
+CombatNode = NodePath("CombatNode")
+
+[node name="CSGMesh3D" type="CSGMesh3D" parent="Enemy3" unique_id=308743338]
+material_override = SubResource("StandardMaterial3D_qcquh")
+mesh = SubResource("BoxMesh_ejd0h")
+
+[node name="NpModel" type="Node" parent="Enemy3" unique_id=240273156 groups=["bindable"]]
+script = ExtResource("21_w6ram")
+_combatLoadoutNode = NodePath("../CombatLoadout")
+_atbCharacterProperties = ExtResource("5_xo7eh")
+
+[node name="NpView" type="Node" parent="Enemy3" unique_id=775076532]
+script = ExtResource("22_hev2j")
+
+[node name="CombatNode" type="Node" parent="Enemy3" unique_id=64274010]
+script = ExtResource("23_hev2j")
+
+[node name="MovementNode" type="Node" parent="Enemy3" unique_id=2050175385]
+script = ExtResource("24_nbpjs")
+
+[node name="CombatLoadout" type="Node" parent="Enemy3" unique_id=826838040]
+script = ExtResource("9_uvot1")
+_attack = Array[ExtResource("10_uvot1")]([ExtResource("11_hp1yv")])
+_defense = Array[ExtResource("12_7o5g0")]([ExtResource("13_x5dwk")])
+_magic = Array[ExtResource("14_hp1yv")]([ExtResource("15_23igw")])
+_items = Array[ExtResource("16_h0r1b")]([ExtResource("17_gor4l")])
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Enemy3" unique_id=1369978317]
+shape = SubResource("BoxShape3D_uvot1")
+
+[node name="Highlightable" parent="Enemy3" unique_id=2011998685 groups=["highlightable"] instance=ExtResource("18_7o5g0")]
+
+[node name="Targetable" parent="Enemy3" unique_id=1893697076 node_paths=PackedStringArray("_position") instance=ExtResource("19_hp1yv")]
+_position = NodePath("../CSGMesh3D")
+_targetableType = 1
+
 [node name="Enemy" type="CharacterBody3D" parent="." unique_id=1970786060 groups=["enemy"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.564902, 0.5407543, 0.04921341)
 script = ExtResource("2_aw6lp")
@@ -72,7 +110,7 @@ mesh = SubResource("BoxMesh_ejd0h")
 [node name="NpModel" type="Node" parent="Enemy" unique_id=1708917238 groups=["bindable"]]
 script = ExtResource("3_8uc3x")
 _combatLoadoutNode = NodePath("../CombatLoadout")
-_atbCharacterProperties = SubResource("Resource_80fhm")
+_atbCharacterProperties = ExtResource("5_xo7eh")
 _groups = Array[int]([1])
 
 [node name="NpView" type="Node" parent="Enemy" unique_id=1403210870]
@@ -122,7 +160,7 @@ mesh = SubResource("BoxMesh_ejd0h")
 [node name="NpModel" type="Node" parent="Enemy2" unique_id=459565166 groups=["bindable"]]
 script = ExtResource("3_8uc3x")
 _combatLoadoutNode = NodePath("../CombatLoadout")
-_atbCharacterProperties = SubResource("Resource_80fhm")
+_atbCharacterProperties = ExtResource("5_xo7eh")
 _groups = Array[int]([1])
 
 [node name="NpView" type="Node" parent="Enemy2" unique_id=1629711028]

@@ -57,7 +57,7 @@ public partial class GameBootstrap : Node
 
 	private void InitCharacter()
 	{
-		var playablecharacterNodes = _sceneBinder.BindAll<PlayableCharacterModel>();
+		var playablecharacterNodes = _sceneBinder.BindAll<LamplighterCharacterModel>();
 		//var noPlayableCharacterNodes = _sceneBinder.BindAll<NpCharacterModel>();
 
 		var movementService = Services.GetRequiredService<IMovementService>();

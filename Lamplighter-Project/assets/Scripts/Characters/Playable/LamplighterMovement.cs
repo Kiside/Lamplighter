@@ -15,7 +15,7 @@ namespace Characters.Playable
 	/// <summary>
 	/// Classe per il movimento del personaggio in Lamplighter
 	/// </summary>
-	public partial class LamplighterMovement : AbstractMovement<PlayableCharacterController>
+	public partial class LamplighterMovement : AbstractMovement<LamplighterCharacterController>
 	{
 		[Export]
 		NodePath _navAgentPath;
@@ -37,7 +37,7 @@ namespace Characters.Playable
 			_movementService.SetNavigationAgent(_navAgent);
 		}
 
-		public override void Init(PlayableCharacterController controller)
+		public override void Init(LamplighterCharacterController controller)
 		{
 			base.Init(controller);
 
