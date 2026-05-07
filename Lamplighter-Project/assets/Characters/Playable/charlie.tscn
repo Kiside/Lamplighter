@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://c5mvvlosts20h"]
 
 [ext_resource type="Script" uid="uid://0rkd4hh7dr53" path="res://assets/Scripts/Characters/Playable/PlayableCharacterController.cs" id="1_0iqh4"]
-[ext_resource type="Material" uid="uid://br8jrg5r6syxj" path="res://assets/Materials/Characters/proto_Charlie.tres" id="1_qebit"]
 [ext_resource type="Script" uid="uid://cou4bfs5gnolp" path="res://assets/Scripts/Characters/Playable/PlayableCharacterModel.cs" id="2_l8s2m"]
 [ext_resource type="Script" uid="uid://sc5ny07t4tg3" path="res://assets/Scripts/Characters/Playable/LamplighterMovement.cs" id="2_momr7"]
 [ext_resource type="Resource" uid="uid://di5386yh3jgk7" path="res://assets/CustomResources/Prototype/ATB Character Properties/Charlie.tres" id="3_xa4mk"]
@@ -22,6 +21,8 @@
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_0bkd4"]
 
+[sub_resource type="SphereShape3D" id="SphereShape3D_voq6j"]
+
 [node name="Charlie" type="CharacterBody3D" unique_id=1785233195 groups=["ally"]]
 script = ExtResource("1_0iqh4")
 ViewPath = NodePath("CharlieView")
@@ -39,10 +40,6 @@ _battleMenuNode = NodePath("../BattleMenuController")
 script = ExtResource("4_wjmeh")
 
 [node name="Pivot" type="Node3D" parent="." unique_id=1831366952]
-
-[node name="CSGBox3D" type="CSGBox3D" parent="Pivot" unique_id=1606703412]
-visible = false
-material_override = ExtResource("1_qebit")
 
 [node name="Camera3D" type="Camera3D" parent="Pivot" unique_id=1964138431]
 transform = Transform3D(-3.2543e-08, 0.66762483, -0.74449784, 2.91828e-08, 0.74449784, 0.66762483, 1, -1.5987208e-14, -4.3711356e-08, -2.1404297, 2.184058, 0.034)
@@ -79,5 +76,15 @@ _position = NodePath("../Pivot/Main")
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=117737303]
 debug_enabled = true
+
+[node name="HitBoxArea" type="Area3D" parent="." unique_id=1252538082 groups=["hitboxarea"]]
+collision_layer = 2
+collision_mask = 2
+
+[node name="DirectHitBox" type="CollisionShape3D" parent="HitBoxArea" unique_id=1861803725]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.2101829, 0.84968996, 0)
+shape = SubResource("SphereShape3D_voq6j")
+disabled = true
+debug_color = Color(0.9022043, 0.000159024, 0.75872076, 0.41960785)
 
 [editable path="Pivot/Main"]

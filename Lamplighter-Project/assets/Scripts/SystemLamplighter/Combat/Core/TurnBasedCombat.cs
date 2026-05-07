@@ -133,7 +133,7 @@ namespace SystemLamplighter.Combat.Core
 				}
 				_animationPlayer.Stop();
 				
-
+				// TODO: il personaggio deve trovare una posizione in cui andare 
 				_publishEndExecuteAction.Publish(new AtbEndExecuteActionEvent(Actor));
 			}
 			catch (Exception ex)

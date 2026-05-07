@@ -91,7 +91,11 @@ _defense = Array[ExtResource("12_7o5g0")]([ExtResource("13_x5dwk")])
 _magic = Array[ExtResource("14_hp1yv")]([ExtResource("15_23igw")])
 _items = Array[ExtResource("16_h0r1b")]([ExtResource("17_gor4l")])
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Enemy" unique_id=1275443056]
+[node name="HurtArea" type="Area3D" parent="Enemy" unique_id=939762784]
+collision_layer = 2
+collision_mask = 2
+
+[node name="HurtBox" type="CollisionShape3D" parent="Enemy/HurtArea" unique_id=1275443056]
 shape = SubResource("BoxShape3D_uvot1")
 
 [node name="Highlightable" parent="Enemy" unique_id=91866639 groups=["highlightable"] instance=ExtResource("18_7o5g0")]
@@ -99,6 +103,9 @@ shape = SubResource("BoxShape3D_uvot1")
 [node name="Targetable" parent="Enemy" unique_id=1186375305 node_paths=PackedStringArray("_position") instance=ExtResource("19_hp1yv")]
 _position = NodePath("../CSGMesh3D")
 _targetableType = 1
+
+[node name="Collision" type="CollisionShape3D" parent="Enemy" unique_id=620464623]
+shape = SubResource("BoxShape3D_uvot1")
 
 [node name="Enemy2" type="CharacterBody3D" parent="." unique_id=924751154 groups=["enemy"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.4510217, 0.5407543, 2.8083699)
