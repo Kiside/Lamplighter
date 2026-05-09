@@ -81,7 +81,6 @@ namespace SystemLamplighter.ATB
 								break;
 							// Se un personaggio entra in fase di Action
 							case AtbCharacterStatus.ACTION:
-								Log.PrintMessage($"{currentCharacter.AtbProperties.Name} ACTION");
 								ActionStatusHandler(currentCharacter);
 								break;
 						}
@@ -123,6 +122,7 @@ namespace SystemLamplighter.ATB
 
 			Log.PrintMessage($"{ev.Actor.AtbProperties.Name} ha finito il command");
 			_subscriptionAtbCommandPhaseEnd?.Dispose();
+			// TODO: Quello che c'è scritto sotto
 			// ! PROBABILMENTE NON MI SERVE PIÙ "_currentActorInCommand" DA CONTROLLARE
 			//_currentActorInCommand.AtbProperties.EndCommandStatus(ev.Actor.AtbProperties.SpeedMultiplier);
 			_stackCurrentActorsInCommand.Remove(ev.Actor);

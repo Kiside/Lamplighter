@@ -29,14 +29,14 @@ namespace Characters.Playable
 		[Export]
 		protected AtbCharacterProperties _atbCharacterProperties;
 		[Export]
-		protected NodePath _battleMenuNode;
+		protected NodePath _combatBrainNode;
 		#endregion
 
 		#region PROTECTED PROPERTIES 
 		protected AbstractCombat<LamplighterCharacterController> _combat;
 		protected AbstractMovement<LamplighterCharacterController> _movement;
 
-		protected BattleMenuController _battleMenu;
+		protected ICombatBrain _combatBrain;
 
 		protected CombatLoadout _combatLoadout;
 
@@ -50,7 +50,7 @@ namespace Characters.Playable
 		public AbstractCombat<LamplighterCharacterController> Combat { get => _combat; set => _combat = value; }
 		public AbstractMovement<LamplighterCharacterController> Movement { get => _movement; set => _movement = value; }
 		public ICombatActor CombatActor => _combatActor;
-		public BattleMenuController BattleMenu {get => _battleMenu;}
+		public ICombatBrain CombatBrain {get => _combatBrain;}
 		public CombatLoadout CombatLoadout { get => _combatLoadout; set => _combatLoadout = value; }
 		public NodePath CombatLoadoutNode {get => _combatLoadoutNode;}
 		public AtbCharacterProperties AtbCharacterProperties => _atbCharacterProperties;
@@ -64,7 +64,6 @@ namespace Characters.Playable
 		public override void Init()
 		{
 			NodeChecking();
-			SubscribeBattleMenu();
 		}
 
 		public void InitCombatActor(Identification id)
@@ -73,48 +72,23 @@ namespace Characters.Playable
 			_combatActor = new CombatActor(_atbCharacterProperties, _combatLoadout, id);
 		}
 
-		private void SubscribeBattleMenu() 
-		{
-			_battleMenu.OnOpenSubMenu += TriggerOnOpenSubMenu;
-			_battleMenu.OnActionClick += TriggerOnActionClicked;
-		}
-		private void UnsubscribeBattleMenu() 
-		{
-			_battleMenu.OnOpenSubMenu -= TriggerOnOpenSubMenu;
-			_battleMenu.OnActionClick -= TriggerOnActionClicked;
-		}
-
-
-		private void TriggerOnOpenSubMenu(ISubMenuDefinition subMenu)
-		{
-			OnOpenBattleSubMenu?.Invoke(subMenu);
-		}
-
-		private void TriggerOnActionClicked(IActionData actionData)
-		{
-			DebugLamplighter.Assert(actionData != null, "actionData is null");
-
-			_currentAction = actionData;
-			OnActionClicked?.Invoke();
-		}
-
 		private void NodeChecking()
 		{
 			string noNode = "There is no ";
 			DebugLamplighter.Assert(_combatLoadoutNode != null, $"{noNode} CombatLoadout is null");
 			DebugLamplighter.Assert(_atbCharacterProperties != null, $"{noNode} AtbCharacterProperties is null");
-			DebugLamplighter.Assert(_battleMenuNode != null, $"{noNode} battleMenuNode is null");
+			DebugLamplighter.Assert(_combatBrainNode != null, "There is no _combatBrainNode is null");
 
 			if(_combatLoadoutNode != null)
 				_combatLoadout  = GetNode<CombatLoadout>(_combatLoadoutNode);
 
-			if(_battleMenuNode != null)
-				_battleMenu = GetNode<BattleMenuController>(_battleMenuNode);
+			
+			if(_combatBrainNode != null)
+				_combatBrain = GetNode<ICombatBrain>(_combatBrainNode);
 		}
 
 		public override void _ExitTree()
 		{
-			UnsubscribeBattleMenu();
 			base._ExitTree();
 		}
 	}

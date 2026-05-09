@@ -7,7 +7,7 @@ namespace SystemLamplighter.DataStructure.GeneralData;
 
 public class TurnBasedCombatContext
 {
-	public BattleMenuController BattleMenuController { get; private set; }
+	public ICombatBrain CombatBrain { get; private set; }
 	public ICombatActor Actor { get; private set; }
 	public IPublisher<AtbCommandPhaseEndEvent> PublishCommandPhaseEnd { get; private set; }
 	public IPublisher<AtbEndExecuteActionEvent> PublishEndExecuteAction { get; private set; }
@@ -16,7 +16,7 @@ public class TurnBasedCombatContext
 	public ISubscriber<AtbExecuteActionEvent> SubscriberExecuteAction { get; private set; }
 	public ISubscriber<EndTargetEvent> SubscriberEndTarget { get; private set; }
 
-	public TurnBasedCombatContext(BattleMenuController battleMenuController,
+	public TurnBasedCombatContext(ICombatBrain battleMenuController,
 		ICombatActor combatActor,
 		IPublisher<AtbCommandPhaseEndEvent> publishCommandPhaseEnd,
 		IPublisher<AtbEndExecuteActionEvent> publishEndExecuteAction,
@@ -25,7 +25,7 @@ public class TurnBasedCombatContext
 		ISubscriber<AtbExecuteActionEvent> subscriberExecuteAction,
 		ISubscriber<EndTargetEvent> subscriberEndTarget)
 	{
-		BattleMenuController = battleMenuController;
+		CombatBrain = battleMenuController;
 		Actor = combatActor;
 		PublishCommandPhaseEnd = publishCommandPhaseEnd;
 		PublishEndExecuteAction = publishEndExecuteAction;

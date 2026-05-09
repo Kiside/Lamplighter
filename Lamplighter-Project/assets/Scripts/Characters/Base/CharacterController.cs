@@ -29,6 +29,7 @@ namespace Characters
 		public TView View => _view;
 		public TModel Model => _model;
 
+		// TODO: DA METTERE NEL MODEL? FORSE INUTILE CHE SIA QUI?
 		public Identification Id { get; private set; }
 
 		public override void _EnterTree()

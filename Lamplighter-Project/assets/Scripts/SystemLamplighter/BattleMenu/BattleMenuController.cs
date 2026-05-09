@@ -16,11 +16,11 @@ namespace SystemLamplighter.BattleMenu
 	/// <summary>
 	/// Controller del menu di battaglia
 	/// </summary>
-	public partial class BattleMenuController : AbstractController<BattleMenuView, BattleMenuModel>
+	public partial class BattleMenuController : AbstractController<BattleMenuView, BattleMenuModel>, ICombatBrain
 	{
 		public bool Visible => _view.Visible;
-		public void Show() => _view.Visible = true;
-		public void Hide() => _view.Visible = false;
+		public void TurnOn() => _view.Visible = true;
+		public void TurnOff() => _view.Visible = false;
 
 		private List<ISubMenuDefinition> Menus => _model._menus;
 
@@ -37,13 +37,7 @@ namespace SystemLamplighter.BattleMenu
 			_view.BuildMenu(Menus);
 
 			if(_model.startHide)
-				Hide();
-		}
-
-		// Called every frame. 'delta' is the elapsed time since the previous frame.
-		public override void _Process(double delta)
-		{
-
+				TurnOff();
 		}
 
 		private void RequestOpenSubMenu(string subMenu)
@@ -61,9 +55,9 @@ namespace SystemLamplighter.BattleMenu
 			_view.OpenSubMenu(subMenuButtonNames);
 		}
 
-		private void Action(IActionData actionData)
+		public void Action(IActionData actionData)
 		{
-			Hide();
+			TurnOff();
 			OnActionClick?.Invoke(actionData);
 		}
 

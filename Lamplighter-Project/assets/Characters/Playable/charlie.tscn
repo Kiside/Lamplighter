@@ -34,7 +34,7 @@ CombatNode = NodePath("Combat")
 script = ExtResource("2_l8s2m")
 _combatLoadoutNode = NodePath("../CombatLoadout")
 _atbCharacterProperties = ExtResource("3_xa4mk")
-_battleMenuNode = NodePath("../BattleMenuController")
+_combatBrainNode = NodePath("../BattleMenuController")
 
 [node name="CharlieView" type="Node" parent="." unique_id=774414345]
 script = ExtResource("4_wjmeh")

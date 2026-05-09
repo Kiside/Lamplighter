@@ -26,13 +26,13 @@ namespace Characters.Playable
 	{
 		#region PUBLIC
 		public ICombatActor CombatActor {get => _model.CombatActor;}
-		public BattleMenuController BattleMenuController => _battleMenuController; 
+		public ICombatBrain CombatBrain => _combatBrain; 
 		#endregion
 
 		#region PROTECTED/PRIVATE PROPERTIES 
 		protected AbstractCombat<LamplighterCharacterController> _combat { get => _model.Combat; set => _model.Combat = value; }
 		protected AbstractMovement<LamplighterCharacterController> _movement { get => _model.Movement; set => _model.Movement = value; }
-		protected BattleMenuController _battleMenuController { get => _model.BattleMenu;}
+		protected ICombatBrain _combatBrain { get => _model.CombatBrain;}
 		private bool _lockOn = false;
 
 		private bool tweening = false;

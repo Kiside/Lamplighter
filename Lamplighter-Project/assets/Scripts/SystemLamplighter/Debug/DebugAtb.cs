@@ -54,7 +54,7 @@ public partial class DebugAtb : Node
 	Image _enemiesImage;
 
 	private ActionTimeBattleController _atbController;
-	private BattleMenuController _battleMenuController;
+	private ICombatBrain _battleMenuController;
 
 	private CombatSceneCollector _battleManager;
 
@@ -81,7 +81,7 @@ public partial class DebugAtb : Node
 			Log.PrintWarning("There is no BattleMenu");
 
 
-		_battleMenuController = GetNode<BattleMenuController>(BattleMenu);
+		_battleMenuController = GetNode<ICombatBrain>(BattleMenu);
 		_atbController = GetNode<ActionTimeBattleController>(Atb);
 		_atbController.OnCommandEvent += ShowBattleMenu;
 	}
@@ -127,7 +127,7 @@ public partial class DebugAtb : Node
 
 	public void ShowBattleMenu()
 	{
-		_battleMenuController.Show();
+		_battleMenuController.TurnOn();
 	}
 
 	public void StartCombatClick()

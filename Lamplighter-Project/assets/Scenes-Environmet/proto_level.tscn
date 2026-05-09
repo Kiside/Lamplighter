@@ -2,15 +2,10 @@
 
 [ext_resource type="Script" uid="uid://bja0qd5k5kaa7" path="res://assets/Scripts/SystemLamplighter/Bootstrap/GameBootstrap.cs" id="1_qcquh"]
 [ext_resource type="PackedScene" uid="uid://c5mvvlosts20h" path="res://assets/Characters/Playable/charlie.tscn" id="1_qfi3i"]
-[ext_resource type="Script" uid="uid://devy8gu6rokai" path="res://assets/Scripts/Characters/NPC/NpCharacterController.cs" id="2_aw6lp"]
 [ext_resource type="PackedScene" uid="uid://bjvqik1fmkboh" path="res://assets/Scenes-Environmet/proto_combat.tscn" id="2_mw5we"]
 [ext_resource type="PackedScene" uid="uid://smrtor31vc68" path="res://assets/Resources/Models/floor_proto.tscn" id="2_x5dwk"]
-[ext_resource type="Script" uid="uid://bc6bjkwcn78h6" path="res://assets/Scripts/Characters/NPC/NpCharacterModel.cs" id="3_8uc3x"]
 [ext_resource type="Script" uid="uid://c6uo1si5yfkbx" path="res://assets/Scripts/SystemLamplighter/Bootstrap/SceneBinder.cs" id="3_mkya5"]
-[ext_resource type="Script" uid="uid://b3kvxr43rq8mm" path="res://assets/Scripts/Characters/NPC/NpCharacterView.cs" id="4_66ris"]
 [ext_resource type="Resource" uid="uid://dh3hyj8ml3kd5" path="res://assets/Resources/ATB_CharacterProperties/genericEnemy.tres" id="5_xo7eh"]
-[ext_resource type="Script" uid="uid://dgpafgjng8e3w" path="res://assets/Scripts/Characters/NPC/LamplighterNpcCombat.cs" id="7_uvot1"]
-[ext_resource type="Script" uid="uid://cfd2sruxh3u7l" path="res://assets/Scripts/Characters/NPC/LamplighterNpcMovement.cs" id="8_7o5g0"]
 [ext_resource type="Script" uid="uid://hpv57386fhw0" path="res://assets/Scripts/Characters/Loadout/CombatLoadout.cs" id="9_uvot1"]
 [ext_resource type="Script" uid="uid://53pv7v0c5gad" path="res://assets/Scripts/SystemLamplighter/DataStructure/ActionsData/AttackAction.cs" id="10_uvot1"]
 [ext_resource type="Resource" uid="uid://dlftjlcuk3pr4" path="res://assets/CustomResources/Prototype/attack.tres" id="11_hp1yv"]
@@ -22,6 +17,7 @@
 [ext_resource type="Resource" uid="uid://bjd0r2gvapdf" path="res://assets/CustomResources/Prototype/healthItem.tres" id="17_gor4l"]
 [ext_resource type="PackedScene" uid="uid://dyhr28frl1avx" path="res://assets/Scenes-Node/highlightable.tscn" id="18_7o5g0"]
 [ext_resource type="PackedScene" uid="uid://cu7tp8wr5c5y6" path="res://assets/Scenes-Node/targetable.tscn" id="19_hp1yv"]
+[ext_resource type="Script" uid="uid://1dwbacc7ive8" path="res://assets/Scripts/SystemLamplighter/NpcCombat/NpcCombatBrain.cs" id="20_nbpjs"]
 [ext_resource type="Script" uid="uid://0rkd4hh7dr53" path="res://assets/Scripts/Characters/Playable/LamplighterCharacterController.cs" id="21_gor4l"]
 [ext_resource type="Script" uid="uid://cou4bfs5gnolp" path="res://assets/Scripts/Characters/Playable/LamplighterCharacterModel.cs" id="21_w6ram"]
 [ext_resource type="Script" uid="uid://dnx4tgkhr5a1i" path="res://assets/Scripts/SystemLamplighter/Navigation/NavigationSystem.cs" id="22_h0r1b"]
@@ -53,7 +49,7 @@ _gridStep = 0.5
 [node name="FloorProto2" parent="." unique_id=703619226 groups=["walkable"] instance=ExtResource("2_x5dwk")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.17597556, 0)
 
-[node name="Enemy3" type="CharacterBody3D" parent="." unique_id=592894439 groups=["enemy"]]
+[node name="Enemy" type="CharacterBody3D" parent="." unique_id=592894439 groups=["enemy"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.4510217, 0.5407543, 2.8083699)
 script = ExtResource("21_gor4l")
 ViewPath = NodePath("NpView")
@@ -61,132 +57,49 @@ ModelPath = NodePath("NpModel")
 MovementNode = NodePath("MovementNode")
 CombatNode = NodePath("CombatNode")
 
-[node name="CSGMesh3D" type="CSGMesh3D" parent="Enemy3" unique_id=308743338]
+[node name="CSGMesh3D" type="CSGMesh3D" parent="Enemy" unique_id=308743338]
 material_override = SubResource("StandardMaterial3D_qcquh")
 mesh = SubResource("BoxMesh_ejd0h")
 
-[node name="NpModel" type="Node" parent="Enemy3" unique_id=240273156 groups=["bindable"]]
+[node name="NpModel" type="Node" parent="Enemy" unique_id=240273156 groups=["bindable"]]
 script = ExtResource("21_w6ram")
 _combatLoadoutNode = NodePath("../CombatLoadout")
 _atbCharacterProperties = ExtResource("5_xo7eh")
+_combatBrainNode = NodePath("../CombatBrain")
 
-[node name="NpView" type="Node" parent="Enemy3" unique_id=775076532]
+[node name="NpView" type="Node" parent="Enemy" unique_id=775076532]
 script = ExtResource("22_hev2j")
 
-[node name="CombatNode" type="Node" parent="Enemy3" unique_id=64274010]
+[node name="CombatNode" type="Node" parent="Enemy" unique_id=64274010]
 script = ExtResource("23_hev2j")
+AnimationPlayerPath = NodePath("../AnimationPlayer")
 
-[node name="MovementNode" type="Node" parent="Enemy3" unique_id=2050175385]
+[node name="MovementNode" type="Node" parent="Enemy" unique_id=2050175385]
 script = ExtResource("24_nbpjs")
+_navAgentPath = NodePath("../NavigationAgent3D")
 
-[node name="CombatLoadout" type="Node" parent="Enemy3" unique_id=826838040]
+[node name="CombatLoadout" type="Node" parent="Enemy" unique_id=826838040]
 script = ExtResource("9_uvot1")
 _attack = Array[ExtResource("10_uvot1")]([ExtResource("11_hp1yv")])
 _defense = Array[ExtResource("12_7o5g0")]([ExtResource("13_x5dwk")])
 _magic = Array[ExtResource("14_hp1yv")]([ExtResource("15_23igw")])
 _items = Array[ExtResource("16_h0r1b")]([ExtResource("17_gor4l")])
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Enemy3" unique_id=1369978317]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Enemy" unique_id=1369978317]
 shape = SubResource("BoxShape3D_uvot1")
 
-[node name="Highlightable" parent="Enemy3" unique_id=2011998685 groups=["highlightable"] instance=ExtResource("18_7o5g0")]
+[node name="Highlightable" parent="Enemy" unique_id=2011998685 groups=["highlightable"] instance=ExtResource("18_7o5g0")]
 
-[node name="Targetable" parent="Enemy3" unique_id=1893697076 node_paths=PackedStringArray("_position") instance=ExtResource("19_hp1yv")]
+[node name="Targetable" parent="Enemy" unique_id=1893697076 node_paths=PackedStringArray("_position") instance=ExtResource("19_hp1yv")]
 _position = NodePath("../CSGMesh3D")
 _targetableType = 1
 
-[node name="Enemy" type="CharacterBody3D" parent="." unique_id=1970786060 groups=["enemy"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.564902, 0.5407543, 0.04921341)
-script = ExtResource("2_aw6lp")
-ViewPath = NodePath("NpView")
-ModelPath = NodePath("NpModel")
-MovementNode = NodePath("MovementNode")
-CombatNode = NodePath("CombatNode")
+[node name="CombatBrain" type="Node" parent="Enemy" unique_id=101598166]
+script = ExtResource("20_nbpjs")
 
-[node name="CSGMesh3D" type="CSGMesh3D" parent="Enemy" unique_id=529525893]
-material_override = SubResource("StandardMaterial3D_qcquh")
-mesh = SubResource("BoxMesh_ejd0h")
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Enemy" unique_id=1907612481]
 
-[node name="NpModel" type="Node" parent="Enemy" unique_id=1708917238 groups=["bindable"]]
-script = ExtResource("3_8uc3x")
-_combatLoadoutNode = NodePath("../CombatLoadout")
-_atbCharacterProperties = ExtResource("5_xo7eh")
-_groups = Array[int]([1])
-
-[node name="NpView" type="Node" parent="Enemy" unique_id=1403210870]
-script = ExtResource("4_66ris")
-
-[node name="CombatNode" type="Node" parent="Enemy" unique_id=287794978]
-script = ExtResource("7_uvot1")
-
-[node name="MovementNode" type="Node" parent="Enemy" unique_id=238625101]
-script = ExtResource("8_7o5g0")
-
-[node name="CombatLoadout" type="Node" parent="Enemy" unique_id=1511632761]
-script = ExtResource("9_uvot1")
-_attack = Array[ExtResource("10_uvot1")]([ExtResource("11_hp1yv")])
-_defense = Array[ExtResource("12_7o5g0")]([ExtResource("13_x5dwk")])
-_magic = Array[ExtResource("14_hp1yv")]([ExtResource("15_23igw")])
-_items = Array[ExtResource("16_h0r1b")]([ExtResource("17_gor4l")])
-
-[node name="HurtArea" type="Area3D" parent="Enemy" unique_id=939762784]
-collision_layer = 2
-collision_mask = 2
-
-[node name="HurtBox" type="CollisionShape3D" parent="Enemy/HurtArea" unique_id=1275443056]
-shape = SubResource("BoxShape3D_uvot1")
-
-[node name="Highlightable" parent="Enemy" unique_id=91866639 groups=["highlightable"] instance=ExtResource("18_7o5g0")]
-
-[node name="Targetable" parent="Enemy" unique_id=1186375305 node_paths=PackedStringArray("_position") instance=ExtResource("19_hp1yv")]
-_position = NodePath("../CSGMesh3D")
-_targetableType = 1
-
-[node name="Collision" type="CollisionShape3D" parent="Enemy" unique_id=620464623]
-shape = SubResource("BoxShape3D_uvot1")
-
-[node name="Enemy2" type="CharacterBody3D" parent="." unique_id=924751154 groups=["enemy"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.4510217, 0.5407543, 2.8083699)
-script = ExtResource("2_aw6lp")
-ViewPath = NodePath("NpView")
-ModelPath = NodePath("NpModel")
-MovementNode = NodePath("MovementNode")
-CombatNode = NodePath("CombatNode")
-
-[node name="CSGMesh3D" type="CSGMesh3D" parent="Enemy2" unique_id=318609877]
-material_override = SubResource("StandardMaterial3D_qcquh")
-mesh = SubResource("BoxMesh_ejd0h")
-
-[node name="NpModel" type="Node" parent="Enemy2" unique_id=459565166 groups=["bindable"]]
-script = ExtResource("3_8uc3x")
-_combatLoadoutNode = NodePath("../CombatLoadout")
-_atbCharacterProperties = ExtResource("5_xo7eh")
-_groups = Array[int]([1])
-
-[node name="NpView" type="Node" parent="Enemy2" unique_id=1629711028]
-script = ExtResource("4_66ris")
-
-[node name="CombatNode" type="Node" parent="Enemy2" unique_id=43397440]
-script = ExtResource("7_uvot1")
-
-[node name="MovementNode" type="Node" parent="Enemy2" unique_id=1836434462]
-script = ExtResource("8_7o5g0")
-
-[node name="CombatLoadout" type="Node" parent="Enemy2" unique_id=1944233316]
-script = ExtResource("9_uvot1")
-_attack = Array[ExtResource("10_uvot1")]([ExtResource("11_hp1yv")])
-_defense = Array[ExtResource("12_7o5g0")]([ExtResource("13_x5dwk")])
-_magic = Array[ExtResource("14_hp1yv")]([ExtResource("15_23igw")])
-_items = Array[ExtResource("16_h0r1b")]([ExtResource("17_gor4l")])
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Enemy2" unique_id=1140903271]
-shape = SubResource("BoxShape3D_uvot1")
-
-[node name="Highlightable" parent="Enemy2" unique_id=902796545 groups=["highlightable"] instance=ExtResource("18_7o5g0")]
-
-[node name="Targetable" parent="Enemy2" unique_id=1827955138 node_paths=PackedStringArray("_position") instance=ExtResource("19_hp1yv")]
-_position = NodePath("../CSGMesh3D")
-_targetableType = 1
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="Enemy" unique_id=1094585275]
 
 [node name="Charlie" parent="." unique_id=1180252911 instance=ExtResource("1_qfi3i")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.010365605, 0)

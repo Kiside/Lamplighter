@@ -19,9 +19,9 @@ public class TargetResolverFactory : ITargetResolverFactory
 	{
 		return targetType switch
 		{
-			TargetType.SELECTION => GameBootstrap.Services.GetRequiredService<SelectionTargetResolver>(),
+			TargetType.SELECTION => _serviceProvider.GetRequiredService<SelectionTargetResolver>(),
 			
-			TargetType.CIRCLE or TargetType.LINE or TargetType.CONE => GameBootstrap.Services.GetRequiredService<ShapeTargetResolver>(),
+			TargetType.CIRCLE or TargetType.LINE or TargetType.CONE => _serviceProvider.GetRequiredService<ShapeTargetResolver>(),
 			_ => null
 		};
 	}

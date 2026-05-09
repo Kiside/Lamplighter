@@ -11,7 +11,7 @@ public interface ITurnBasedCombat : IDisposable
 {
 	public void Init(TurnBasedCombatContext turnBasedCombatContext, IMovementService movementService, AnimationPlayer animationPlayer);
 	public void ActionChoosedHandler(IActionData actionData);
-	public void OpenBattleSubMenuHandler(ISubMenuDefinition subMenuIds);
+	//public void OpenBattleSubMenuHandler(ISubMenuDefinition subMenuIds);
 	public void HandleAttackAction();
 	public void HandleGuardAction();
 	public void HandleMagicAction();

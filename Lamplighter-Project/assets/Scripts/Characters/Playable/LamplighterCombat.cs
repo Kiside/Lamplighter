@@ -44,13 +44,14 @@ public partial class LamplighterCombat : AbstractCombat<LamplighterCharacterCont
 		base.Init(controller);
 	}
 
-	public void BootstrapInit(ITurnBasedCombat turnBasedCombat, IMovementService movementService)
+	public void BootstrapInit(ITurnBasedCombatFactory turnBasedCombatFactory, IMovementService movementService)
 	{
-		DebugLamplighter.Assert(turnBasedCombat != null, "turnBasedCombat is null");
+		DebugLamplighter.Assert(turnBasedCombatFactory != null, "turnBasedCombat is null");
 		
-		_turnBasedCombat = turnBasedCombat;
 
-		_turnBasedCombat.Init(new TurnBasedCombatContext(_controller.BattleMenuController,
+		_turnBasedCombat = turnBasedCombatFactory.Create(_controller.CombatActor.AtbProperties.CharacterType);
+
+		_turnBasedCombat.Init(new TurnBasedCombatContext(_controller.CombatBrain,
 				_controller.CombatActor,
 				this.GetPublisher<AtbCommandPhaseEndEvent>(),
 				this.GetPublisher<AtbEndExecuteActionEvent>(),

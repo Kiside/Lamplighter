@@ -24,6 +24,7 @@ namespace SystemLamplighter.Combat.Core
 {
 	public class TurnBasedCombat : ITurnBasedCombat, ICombatCommandHandler, ICombatActionExecutor
 	{
+		
 		public BattleMenuController _battleMenuController {get; private set;}
 		// TODO: Controllare se Actor serve nel contesto, dato che viene passato più volte anche da altre parti
 		public ICombatActor Actor {get; private set;}
@@ -34,7 +35,8 @@ namespace SystemLamplighter.Combat.Core
 
 		private MovementService _movementService;
 		private readonly ITargetableProvider _targetableProvider;
-	
+
+		#region eventsAttributes
 		private IPublisher<AtbCommandPhaseEndEvent> _publishCommandPhaseEnd;
 		private IPublisher<AtbEndExecuteActionEvent> _publishEndExecuteAction;
 		private IPublisher<StartTargetEvent> _publisherStartTarget;
@@ -43,6 +45,7 @@ namespace SystemLamplighter.Combat.Core
 		private ISubscriber<EndTargetEvent> _subscriberEndTarget;
 		private IDisposable _disposeEndTargetEvent;
 		private readonly DisposableBagBuilder _bag;
+		#endregion
 
 		AnimationPlayer _animationPlayer;
 
@@ -57,7 +60,12 @@ namespace SystemLamplighter.Combat.Core
 		public void Init(TurnBasedCombatContext turnBasedCombatContext, IMovementService movementService, AnimationPlayer animationPlayer)
 		{
 			_movementService = movementService as MovementService;
-			_battleMenuController = turnBasedCombatContext.BattleMenuController;
+
+			if(turnBasedCombatContext.CombatBrain is BattleMenuController battleMenuController)
+				_battleMenuController = battleMenuController;
+			else
+				DebugLamplighter.Assert(true, "Il ICombatBrain non è un battleMenuController, quando dovrebbe");
+
 			Actor = turnBasedCombatContext.Actor;
 			_publishCommandPhaseEnd = turnBasedCombatContext.PublishCommandPhaseEnd;
 			_publishEndExecuteAction = turnBasedCombatContext.PublishEndExecuteAction;
@@ -65,8 +73,6 @@ namespace SystemLamplighter.Combat.Core
 			_subscriberCommandPhaseStarted = turnBasedCombatContext.SubscriberCommandPhaseStarted;
 			_subscriberExecuteActionEvent = turnBasedCombatContext.SubscriberExecuteAction;
 			_subscriberEndTarget = turnBasedCombatContext.SubscriberEndTarget;
-
-			Log.PrintMessage($"subscribed phase command started {_subscriberCommandPhaseStarted}");
 
 			_subscriberCommandPhaseStarted.Subscribe(OnCommandPhaseStarted).AddTo(_bag);
 			_subscriberExecuteActionEvent.Subscribe(OnExecuteCombatAction).AddTo(_bag);
@@ -79,6 +85,7 @@ namespace SystemLamplighter.Combat.Core
 
 		#region EVENTS HANDLER
 
+		// todo: AGGIUNGERE ANCHE QUESTO ALL'INTERFACCIA?
 		/// <summary>
 		/// Metodo chiamato quando verrà eseguita l'azione
 		/// </summary>
@@ -88,7 +95,7 @@ namespace SystemLamplighter.Combat.Core
 			if (ev.Actor != Actor)
 				return;
 
-			// TODO Eseguire l'azione
+			
 			// Bisogna capire la distanza dal target
 			var casterPos = _targetableProvider.GetTargetable(ev.Actor.Id).Position;
 			float maxDistanceFromTarget = 0f;
@@ -143,15 +150,17 @@ namespace SystemLamplighter.Combat.Core
 			
 		}
 
+		// TODO DA AGGIUNGERE ALL'INTERFACCIA?
 		public void OnCommandPhaseStarted(AtbCommandPhaseStartedEvent evt)
 		{
 			if (evt.Actor != Actor)
 				return;
 
 			// TODO: forse non deve essere qui che si gestisce tale evento
-			_battleMenuController.Show();
+			_battleMenuController.TurnOn();
 		}
 
+		// TODO DA AGGIUNGERE ALL'INTERFACCIA?
 		public void OnEndTarget(EndTargetEvent ev)
 		{
 			DebugLamplighter.Assert(ev != null, "ev is null");
@@ -162,11 +171,16 @@ namespace SystemLamplighter.Combat.Core
 
 			TargetResolutionContext = null;
 			_disposeEndTargetEvent?.Dispose();
+			// TODO: la riga EndCommandStatus(...) può essere gestita dall'evento _publishCommandPhaseEnd? Controllare e provare
 			AtbProperties.EndCommandStatus(CurrentAction.ActionSpeedMultiplier);
 			TargetResolutionContext = ev.TargetResolutionContext;
 			_publishCommandPhaseEnd.Publish(new AtbCommandPhaseEndEvent(Actor));
 		}
 
+		/// <summary>
+		/// Quando l'utente sceglie nel primo menu cosa fare (attaccare, usare un oggetto, scappare o ecc...)
+		/// </summary>
+		/// <param name="subMenuIds"></param>
 		public void OpenBattleSubMenuHandler(ISubMenuDefinition subMenuIds)
 		{
 			if (subMenuIds.IsImmediate)
@@ -187,7 +201,8 @@ namespace SystemLamplighter.Combat.Core
 
 			_disposeEndTargetEvent =_subscriberEndTarget.Subscribe(OnEndTarget);
 			_publisherStartTarget.Publish(new StartTargetEvent(Actor, CurrentAction));
-
+			
+			// TODO Probabilmente tutti da cancellare
 			// Che tipo di azione è? In base alla tipologia di azione ci saranno "cose da fare"
 			switch (CurrentAction.ActionType)
 			{
