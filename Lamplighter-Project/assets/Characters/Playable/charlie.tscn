@@ -6,6 +6,7 @@
 [ext_resource type="Resource" uid="uid://di5386yh3jgk7" path="res://assets/CustomResources/Prototype/ATB Character Properties/Charlie.tres" id="3_xa4mk"]
 [ext_resource type="Script" uid="uid://43moiapfoih4" path="res://assets/Scripts/Characters/Playable/LamplighterCombat.cs" id="4_cx7ps"]
 [ext_resource type="Script" uid="uid://i2ivjf6e807r" path="res://assets/Scripts/Characters/Playable/LamplighterCharacterView.cs" id="4_wjmeh"]
+[ext_resource type="Script" uid="uid://bengrutw61o3f" path="res://assets/Scripts/SystemLamplighter/DataStructure/GeneralData/CharacterStatistics.cs" id="4_x47ln"]
 [ext_resource type="Script" uid="uid://hpv57386fhw0" path="res://assets/Scripts/Characters/Loadout/CombatLoadout.cs" id="5_xa4mk"]
 [ext_resource type="PackedScene" uid="uid://bvygo0ty7e5kj" path="res://assets/Resources/Models/Characters/Proto/main.tscn" id="6_voq6j"]
 [ext_resource type="Resource" uid="uid://dlftjlcuk3pr4" path="res://assets/CustomResources/Prototype/attack.tres" id="7_uuub8"]
@@ -19,11 +20,20 @@
 [ext_resource type="PackedScene" uid="uid://dyhr28frl1avx" path="res://assets/Scenes-Node/highlightable.tscn" id="17_vju8h"]
 [ext_resource type="PackedScene" uid="uid://cu7tp8wr5c5y6" path="res://assets/Scenes-Node/targetable.tscn" id="18_voq6j"]
 
+[sub_resource type="Resource" id="Resource_lox3l"]
+script = ExtResource("4_x47ln")
+MaxHealth = 100.0
+CurrentHealth = 100.0
+metadata/_custom_type_script = "uid://bengrutw61o3f"
+
 [sub_resource type="BoxShape3D" id="BoxShape3D_0bkd4"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_voq6j"]
+radius = 1.4359508
 
-[node name="Charlie" type="CharacterBody3D" unique_id=1785233195 groups=["ally"]]
+[sub_resource type="BoxShape3D" id="BoxShape3D_x47ln"]
+
+[node name="Charlie" type="CharacterBody3D" unique_id=1785233195 groups=["ally", "bindable"]]
 script = ExtResource("1_0iqh4")
 ViewPath = NodePath("CharlieView")
 ModelPath = NodePath("CharlieModel")
@@ -34,7 +44,9 @@ CombatNode = NodePath("Combat")
 script = ExtResource("2_l8s2m")
 _combatLoadoutNode = NodePath("../CombatLoadout")
 _atbCharacterProperties = ExtResource("3_xa4mk")
+_statistics = SubResource("Resource_lox3l")
 _combatBrainNode = NodePath("../BattleMenuController")
+_hurtBoxAreaNode = NodePath("../HurtBoxArea")
 
 [node name="CharlieView" type="Node" parent="." unique_id=774414345]
 script = ExtResource("4_wjmeh")
@@ -82,9 +94,18 @@ collision_layer = 2
 collision_mask = 2
 
 [node name="DirectHitBox" type="CollisionShape3D" parent="HitBoxArea" unique_id=1861803725]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.2101829, 0.84968996, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.018085, 0.84968996, 0.8018993)
 shape = SubResource("SphereShape3D_voq6j")
 disabled = true
 debug_color = Color(0.9022043, 0.000159024, 0.75872076, 0.41960785)
+
+[node name="HurtBoxArea" type="Area3D" parent="." unique_id=427959197 groups=["hurtBoxArea"]]
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="HurtBoxArea" unique_id=1548395947]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.49463987, 0)
+shape = SubResource("BoxShape3D_x47ln")
+debug_color = Color(1, 0.90000004, 0, 0.41960785)
 
 [editable path="Pivot/Main"]

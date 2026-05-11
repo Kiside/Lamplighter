@@ -29,7 +29,11 @@ namespace Characters.Playable
 		[Export]
 		protected AtbCharacterProperties _atbCharacterProperties;
 		[Export]
+		protected CharacterStatistics _statistics;
+		[Export]
 		protected NodePath _combatBrainNode;
+		[Export]
+		protected NodePath _hurtBoxAreaNode;
 		#endregion
 
 		#region PROTECTED PROPERTIES 
@@ -43,6 +47,7 @@ namespace Characters.Playable
 		protected IActionData _currentAction;
 
 		protected ICombatActor _combatActor;
+		protected Area3D _hurtBoxArea;
 		private bool _lockOn = false;
 		#endregion
 
@@ -54,12 +59,10 @@ namespace Characters.Playable
 		public CombatLoadout CombatLoadout { get => _combatLoadout; set => _combatLoadout = value; }
 		public NodePath CombatLoadoutNode {get => _combatLoadoutNode;}
 		public AtbCharacterProperties AtbCharacterProperties => _atbCharacterProperties;
+		public CharacterStatistics Statistics => _statistics;
+		public Area3D HurtBoxArea => _hurtBoxArea;
 		public bool LockOn { get => _lockOn; set => _lockOn = value; }
-		public IActionData CurrentAction {get => _currentAction; set => _currentAction = value; }
 		#endregion
-
-		public event Action<ISubMenuDefinition> OnOpenBattleSubMenu;  
-		public event Action OnActionClicked;
 
 		public override void Init()
 		{
@@ -72,12 +75,14 @@ namespace Characters.Playable
 			_combatActor = new CombatActor(_atbCharacterProperties, _combatLoadout, id);
 		}
 
+	
 		private void NodeChecking()
 		{
 			string noNode = "There is no ";
 			DebugLamplighter.Assert(_combatLoadoutNode != null, $"{noNode} CombatLoadout is null");
 			DebugLamplighter.Assert(_atbCharacterProperties != null, $"{noNode} AtbCharacterProperties is null");
 			DebugLamplighter.Assert(_combatBrainNode != null, "There is no _combatBrainNode is null");
+			DebugLamplighter.Assert(_hurtBoxAreaNode != null, "There is no HitBoxArea");
 
 			if(_combatLoadoutNode != null)
 				_combatLoadout  = GetNode<CombatLoadout>(_combatLoadoutNode);
@@ -85,6 +90,9 @@ namespace Characters.Playable
 			
 			if(_combatBrainNode != null)
 				_combatBrain = GetNode<ICombatBrain>(_combatBrainNode);
+
+			if(_hurtBoxAreaNode != null)
+				_hurtBoxArea = GetNode<Area3D>(_hurtBoxAreaNode);
 		}
 
 		public override void _ExitTree()

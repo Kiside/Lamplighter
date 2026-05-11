@@ -36,6 +36,8 @@ namespace Characters.Playable
 		private bool _lockOn = false;
 
 		private bool tweening = false;
+		private IEffectResolver _effectResolver;
+
 		private readonly DisposableBagBuilder _bag = DisposableBag.CreateBuilder();
 		#endregion
 		
@@ -73,13 +75,19 @@ namespace Characters.Playable
 		#region Subscribe/Unsubscribe
 		protected override void Subscribe()
 		{
-			
+			_model.HurtBoxArea.AreaEntered += OnHurtBoxAreEntered;
 		}
 		protected override void Unsubscribe()
 		{
 			_bag.Build().Dispose();
 		}
 		#endregion
+
+		protected void OnHurtBoxAreEntered(Area3D areaEntered)
+		{
+			if(areaEntered.IsInGroup("hurtBoxArea") && areaEntered is HitBoxArea hitBoxArea)
+				_effectResolver.Resolve(hitBoxArea.ActionData);
+		}
 
 		// TODO IL NODE CHECKING È DA CONTROLLARE BENE SE PUÒ ESSERE GENERALIZZATO ANCORA
 		protected override void NodeChecking()
@@ -95,6 +103,11 @@ namespace Characters.Playable
 
 			if (CombatNode != null)
 				_combat = GetNode<AbstractCombat<LamplighterCharacterController>>(CombatNode);
+		}
+
+		public void BootstrapInit(IEffectResolver effectResolver)
+		{
+			_effectResolver = effectResolver;
 		}
 
 		public override void _PhysicsProcess(double delta)

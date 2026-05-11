@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://smrtor31vc68" path="res://assets/Resources/Models/floor_proto.tscn" id="2_x5dwk"]
 [ext_resource type="Script" uid="uid://c6uo1si5yfkbx" path="res://assets/Scripts/SystemLamplighter/Bootstrap/SceneBinder.cs" id="3_mkya5"]
 [ext_resource type="Resource" uid="uid://dh3hyj8ml3kd5" path="res://assets/Resources/ATB_CharacterProperties/genericEnemy.tres" id="5_xo7eh"]
+[ext_resource type="Script" uid="uid://bengrutw61o3f" path="res://assets/Scripts/SystemLamplighter/DataStructure/GeneralData/CharacterStatistics.cs" id="6_gor4l"]
 [ext_resource type="Script" uid="uid://hpv57386fhw0" path="res://assets/Scripts/Characters/Loadout/CombatLoadout.cs" id="9_uvot1"]
 [ext_resource type="Script" uid="uid://53pv7v0c5gad" path="res://assets/Scripts/SystemLamplighter/DataStructure/ActionsData/AttackAction.cs" id="10_uvot1"]
 [ext_resource type="Resource" uid="uid://dlftjlcuk3pr4" path="res://assets/CustomResources/Prototype/attack.tres" id="11_hp1yv"]
@@ -32,7 +33,15 @@ albedo_color = Color(0.46126777, 0, 0.01909638, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_ejd0h"]
 
+[sub_resource type="Resource" id="Resource_xo7eh"]
+script = ExtResource("6_gor4l")
+MaxHealth = 10.0
+CurrentHealth = 10.0
+metadata/_custom_type_script = "uid://bengrutw61o3f"
+
 [sub_resource type="BoxShape3D" id="BoxShape3D_uvot1"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_mkya5"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_mkya5"]
 vertices = PackedVector3Array(-11.205366, 0.41061437, -11.205366, -11.205366, 0.41061437, 11.294634, 11.294634, 0.41061437, 11.294634, 11.294634, 0.41061437, -11.205366)
@@ -49,7 +58,7 @@ _gridStep = 0.5
 [node name="FloorProto2" parent="." unique_id=703619226 groups=["walkable"] instance=ExtResource("2_x5dwk")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.17597556, 0)
 
-[node name="Enemy" type="CharacterBody3D" parent="." unique_id=592894439 groups=["enemy"]]
+[node name="Enemy" type="CharacterBody3D" parent="." unique_id=592894439 groups=["bindable", "enemy"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.4510217, 0.5407543, 2.8083699)
 script = ExtResource("21_gor4l")
 ViewPath = NodePath("NpView")
@@ -65,7 +74,9 @@ mesh = SubResource("BoxMesh_ejd0h")
 script = ExtResource("21_w6ram")
 _combatLoadoutNode = NodePath("../CombatLoadout")
 _atbCharacterProperties = ExtResource("5_xo7eh")
+_statistics = SubResource("Resource_xo7eh")
 _combatBrainNode = NodePath("../CombatBrain")
+_hurtBoxAreaNode = NodePath("../HurtBoxArea")
 
 [node name="NpView" type="Node" parent="Enemy" unique_id=775076532]
 script = ExtResource("22_hev2j")
@@ -100,6 +111,14 @@ script = ExtResource("20_nbpjs")
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Enemy" unique_id=1907612481]
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="Enemy" unique_id=1094585275]
+
+[node name="HurtBoxArea" type="Area3D" parent="Enemy" unique_id=1695116739 groups=["hurtBoxArea"]]
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Enemy/HurtBoxArea" unique_id=1282113518]
+shape = SubResource("BoxShape3D_mkya5")
+debug_color = Color(0.97, 0.8406667, 0, 0.41960785)
 
 [node name="Charlie" parent="." unique_id=1180252911 instance=ExtResource("1_qfi3i")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.010365605, 0)

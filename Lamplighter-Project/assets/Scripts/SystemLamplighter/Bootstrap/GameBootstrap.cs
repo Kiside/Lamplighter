@@ -48,11 +48,23 @@ public partial class GameBootstrap : Node
 		
 		InitTargetController();
 		InitSelectionTargetRender();
-		InitCharacter();
+		InitCombatAndMovementCharacter();
 		base._Ready();
 	}
 
-	private void InitCharacter()
+	public void InitCharacters()
+	{
+		var characterNodes = _sceneBinder.BindAll<LamplighterCharacterController>();
+
+		DebugLamplighter.Assert(characterNodes != null, "playableCharacterNodes is null");
+
+		foreach(var character in characterNodes)
+		{
+			character.BootstrapInit(Services.GetRequiredService<IEffectResolver>());
+		}
+	}
+
+	private void InitCombatAndMovementCharacter()
 	{
 		var playablecharacterNodes = _sceneBinder.BindAll<LamplighterCharacterModel>();
 		//var noPlayableCharacterNodes = _sceneBinder.BindAll<NpCharacterModel>();
@@ -153,6 +165,9 @@ public partial class GameBootstrap : Node
 		services.AddTransient<NpcTurnBasedCombat>();
 		services.AddTransient<TurnBasedCombat>();
 		Log.PrintMessage("ITurnBasedCombat");
+
+		services.AddTransient<IEffectResolver, EffectResolver>();
+		Log.PrintMessage("IEffectResolver");
 
 		// Message pipe
 		services.AddMessagePipe();
