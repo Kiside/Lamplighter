@@ -7,11 +7,17 @@ using SystemLamplighter.Interfaces;
 
 public partial class HitBoxArea : Area3D
 {
-	public List<IEffectData> ActionData {get { return ActionData; } private set
-		{
-			ActionData = null;
+	private List<IEffectData> _actionData;
+
+	public List<IEffectData> ActionData 
+	{ 
+		get 
+		{ 
+			_actionData = null;
 			if(this.GetParent() is LamplighterCharacterController character)
-				ActionData = character.CombatActor.CurrentAction.Effects.ToList();	
-		}
+				_actionData = character.CombatActor.CurrentAction.Effects.ToList();
+
+			return _actionData;   
+		} 
 	}
 }

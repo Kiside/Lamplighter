@@ -22,9 +22,9 @@ public partial class DamageData : EffectData
         AtbPositionDamage = atbPositionDamage;
     }
 
-    public override void Apply()
+    public override void Apply(CharacterStatistics target)
     {
-        
+        target.CurrentHealth -= Damage;
     }
 }
 

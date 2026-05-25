@@ -46,6 +46,7 @@ public partial class GameBootstrap : Node
 	{
 		Log.PrintMessage("READY:");
 		
+		InitCharacters();
 		InitTargetController();
 		InitSelectionTargetRender();
 		InitCombatAndMovementCharacter();

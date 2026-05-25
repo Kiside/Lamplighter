@@ -1,4 +1,4 @@
 public interface IEffectData
 {
-	public void Apply();
+	public void Apply(CharacterStatistics target);
 }

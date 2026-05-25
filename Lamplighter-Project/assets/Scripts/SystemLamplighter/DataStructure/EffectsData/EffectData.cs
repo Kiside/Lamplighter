@@ -10,5 +10,5 @@ public abstract partial class EffectData : Resource, IEffectData
 {
 	// Ogni apply sarà diverso, quindi quando si dovrà applicare l'effetto ogni classe
 	// derivata da EffectData potrà dire cosa capita 
-	public abstract void Apply();
+	public abstract void Apply(CharacterStatistics target);
 } 

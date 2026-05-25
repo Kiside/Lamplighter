@@ -2,10 +2,8 @@ using System.Collections.Generic;
 
 public interface IEffectResolver
 {
-	public float CurrentHealth {get;}
-	public float MaxHealth {get;}
-	public float TempHealth {get;}
-	public void SetHealth(float health);
+	public CharacterStatistics Statistics {get;}
 	public float Resolve(List<IEffectData> effects);
+	public void Init(CharacterStatistics statistics);
 
 }

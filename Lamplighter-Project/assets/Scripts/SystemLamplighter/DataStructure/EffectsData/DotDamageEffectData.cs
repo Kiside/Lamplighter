@@ -31,7 +31,7 @@ public partial class DotDamageEffectData : EffectData
 		_dotDamageType = dotDamageType;
 	}
 
-	public override void Apply()
+	public override void Apply(CharacterStatistics target)
 	{
 		throw new System.NotImplementedException();
 	}

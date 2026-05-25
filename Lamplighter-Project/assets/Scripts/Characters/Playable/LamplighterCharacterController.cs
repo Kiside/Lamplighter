@@ -85,7 +85,8 @@ namespace Characters.Playable
 
 		protected void OnHurtBoxAreEntered(Area3D areaEntered)
 		{
-			if(areaEntered.IsInGroup("hurtBoxArea") && areaEntered is HitBoxArea hitBoxArea)
+			Log.PrintMessage("Entrato!!!!");
+			if(areaEntered.IsInGroup("hitboxarea") && areaEntered is HitBoxArea hitBoxArea)
 				_effectResolver.Resolve(hitBoxArea.ActionData);
 		}
 
@@ -108,6 +109,7 @@ namespace Characters.Playable
 		public void BootstrapInit(IEffectResolver effectResolver)
 		{
 			_effectResolver = effectResolver;
+			_effectResolver.Init(_model.Statistics);
 		}
 
 		public override void _PhysicsProcess(double delta)

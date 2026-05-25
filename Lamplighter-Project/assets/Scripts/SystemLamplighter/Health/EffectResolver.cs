@@ -4,21 +4,21 @@ using SystemLamplighter.Tool;
 
 public class EffectResolver : IEffectResolver
 {
-	public float CurrentHealth {get; private set;}
+	public CharacterStatistics Statistics {get; private set;}
 
-	public float MaxHealth {get; private set;}
-
-	public float TempHealth {get; private set;}
-
-	public void SetHealth(float health)
+	public void Init(CharacterStatistics statistics)
 	{
-		CurrentHealth = health;
-		MaxHealth = health;
-		TempHealth = 0f;
+		Statistics = statistics;
 	}
+
 	public float Resolve(List<IEffectData> effects)
 	{
-		Log.PrintMessage("RESOLVE EFFECT");
+		Log.PrintMessage($"HEALTH: {Statistics.CurrentHealth}");
+		foreach(var e in effects)
+		{
+			e.Apply(Statistics);
+		}
+		Log.PrintMessage($"HEALTH AFTER DAMAGE: {Statistics.CurrentHealth}");
 		return 0f;
 	}
 }
