@@ -29,7 +29,7 @@ namespace Characters.Playable
 		[Export]
 		protected AtbCharacterProperties _atbCharacterProperties;
 		[Export]
-		protected CharacterStatistics _statistics;
+		protected CharacterProperties _characterProperties;
 		[Export]
 		protected NodePath _combatBrainNode;
 		[Export]
@@ -59,7 +59,7 @@ namespace Characters.Playable
 		public CombatLoadout CombatLoadout { get => _combatLoadout; set => _combatLoadout = value; }
 		public NodePath CombatLoadoutNode {get => _combatLoadoutNode;}
 		public AtbCharacterProperties AtbCharacterProperties => _atbCharacterProperties;
-		public CharacterStatistics Statistics => _statistics;
+		public CharacterProperties CharacterProperties => _characterProperties;
 		public Area3D HurtBoxArea => _hurtBoxArea;
 		public bool LockOn { get => _lockOn; set => _lockOn = value; }
 		#endregion
@@ -69,10 +69,10 @@ namespace Characters.Playable
 			NodeChecking();
 		}
 
-		public void InitCombatActor(Identification id)
+		public void InitCombatActor(Identification id, IAtbCharacterService atbCharacterService)
 		{
 			Log.PrintMessage("InitCombatActor");
-			_combatActor = new CombatActor(_atbCharacterProperties, _combatLoadout, id);
+			_combatActor = new CombatActor(_atbCharacterProperties, _combatLoadout, id, atbCharacterService);
 		}
 
 	

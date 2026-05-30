@@ -39,7 +39,7 @@ public partial class StatModifierEffectData : EffectData
 
 
 
-	public override void Apply(CharacterStatistics target)
+	public override void Apply(CharacterProperties target)
 	{
 		throw new System.NotImplementedException();
 	}

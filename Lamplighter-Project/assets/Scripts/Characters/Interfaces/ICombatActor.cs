@@ -14,6 +14,7 @@ namespace Characters.Interfaces;
 /// </summary>
 public interface ICombatActor
 {
+    public IAtbCharacterService CharacterService {get; }
     public AtbCharacterProperties AtbProperties { get; }
     public AtbCharacterStatus AtbStatus { get; }
     public CombatLoadout CombatLoadout { get; }

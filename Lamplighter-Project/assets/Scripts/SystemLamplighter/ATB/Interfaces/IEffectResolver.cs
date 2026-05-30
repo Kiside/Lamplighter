@@ -2,8 +2,8 @@ using System.Collections.Generic;
 
 public interface IEffectResolver
 {
-	public CharacterStatistics Statistics {get;}
+	public CharacterProperties Statistics {get;}
 	public float Resolve(List<IEffectData> effects);
-	public void Init(CharacterStatistics statistics);
+	public void Init(CharacterProperties statistics);
 
 }

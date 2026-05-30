@@ -19,7 +19,6 @@ using Characters.Playable;
 using SystemLamplighter.Tool;
 using Characters;
 using SystemLamplighter.Abstract.MVC;
-using Characters.NPC;
 
 
 namespace SystemLamplighter.Bootstrap;
@@ -61,7 +60,8 @@ public partial class GameBootstrap : Node
 
 		foreach(var character in characterNodes)
 		{
-			character.BootstrapInit(Services.GetRequiredService<IEffectResolver>());
+			character.BootstrapInit(Services.GetRequiredService<IEffectResolver>(),
+			Services.GetRequiredService<IAtbCharacterService>());
 		}
 	}
 
@@ -169,6 +169,9 @@ public partial class GameBootstrap : Node
 
 		services.AddTransient<IEffectResolver, EffectResolver>();
 		Log.PrintMessage("IEffectResolver");
+
+		services.AddTransient<IAtbCharacterService, AtbCharacterService>();
+		Log.PrintMessage("IAtbCharacterService");
 
 		// Message pipe
 		services.AddMessagePipe();

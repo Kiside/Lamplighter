@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://smrtor31vc68" path="res://assets/Resources/Models/floor_proto.tscn" id="2_x5dwk"]
 [ext_resource type="Script" uid="uid://c6uo1si5yfkbx" path="res://assets/Scripts/SystemLamplighter/Bootstrap/SceneBinder.cs" id="3_mkya5"]
 [ext_resource type="Resource" uid="uid://dh3hyj8ml3kd5" path="res://assets/Resources/ATB_CharacterProperties/genericEnemy.tres" id="5_xo7eh"]
-[ext_resource type="Script" uid="uid://bengrutw61o3f" path="res://assets/Scripts/SystemLamplighter/DataStructure/GeneralData/CharacterStatistics.cs" id="6_gor4l"]
+[ext_resource type="Script" uid="uid://b8dw0uyei4d23" path="res://assets/Scripts/SystemLamplighter/DataStructure/GeneralData/CharacterProperties.cs" id="6_gor4l"]
 [ext_resource type="Script" uid="uid://hpv57386fhw0" path="res://assets/Scripts/Characters/Loadout/CombatLoadout.cs" id="9_uvot1"]
 [ext_resource type="Script" uid="uid://53pv7v0c5gad" path="res://assets/Scripts/SystemLamplighter/DataStructure/ActionsData/AttackAction.cs" id="10_uvot1"]
 [ext_resource type="Resource" uid="uid://dlftjlcuk3pr4" path="res://assets/CustomResources/Prototype/attack.tres" id="11_hp1yv"]
@@ -33,11 +33,12 @@ albedo_color = Color(0.46126777, 0, 0.01909638, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_ejd0h"]
 
-[sub_resource type="Resource" id="Resource_xo7eh"]
+[sub_resource type="Resource" id="Resource_gor4l"]
 script = ExtResource("6_gor4l")
 MaxHealth = 10.0
 CurrentHealth = 10.0
-metadata/_custom_type_script = "uid://bengrutw61o3f"
+AtbCharacterProperties = ExtResource("5_xo7eh")
+metadata/_custom_type_script = "uid://b8dw0uyei4d23"
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_uvot1"]
 
@@ -74,7 +75,7 @@ mesh = SubResource("BoxMesh_ejd0h")
 script = ExtResource("21_w6ram")
 _combatLoadoutNode = NodePath("../CombatLoadout")
 _atbCharacterProperties = ExtResource("5_xo7eh")
-_statistics = SubResource("Resource_xo7eh")
+_characterProperties = SubResource("Resource_gor4l")
 _combatBrainNode = NodePath("../CombatBrain")
 _hurtBoxAreaNode = NodePath("../HurtBoxArea")
 

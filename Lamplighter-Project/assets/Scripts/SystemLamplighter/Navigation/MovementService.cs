@@ -1,5 +1,6 @@
 using Godot;
 
+// TODO: CAMBIARE NOME A CLASSE E INTERFACCIA?
 public class MovementService : IMovementService
 {
 	public Godot.Vector3 Direction {get; private set;}

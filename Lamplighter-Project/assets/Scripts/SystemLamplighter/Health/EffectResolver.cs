@@ -4,9 +4,9 @@ using SystemLamplighter.Tool;
 
 public class EffectResolver : IEffectResolver
 {
-	public CharacterStatistics Statistics {get; private set;}
+	public CharacterProperties Statistics {get; private set;}
 
-	public void Init(CharacterStatistics statistics)
+	public void Init(CharacterProperties statistics)
 	{
 		Statistics = statistics;
 	}

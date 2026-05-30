@@ -13,7 +13,7 @@ public partial class HealData : EffectData
 
 	public float HealAmount=> _healAmount;
 
-	public override void Apply(CharacterStatistics target)
+	public override void Apply(CharacterProperties target)
 	{
 		throw new System.NotImplementedException();
 	}

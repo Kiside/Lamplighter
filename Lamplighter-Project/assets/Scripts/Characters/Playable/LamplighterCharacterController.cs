@@ -37,6 +37,7 @@ namespace Characters.Playable
 
 		private bool tweening = false;
 		private IEffectResolver _effectResolver;
+		private IAtbCharacterService _atbCharacterService;
 
 		private readonly DisposableBagBuilder _bag = DisposableBag.CreateBuilder();
 		#endregion
@@ -67,7 +68,7 @@ namespace Characters.Playable
 
 		private void SetIdCombatActor()
 		{
-			_model.InitCombatActor(Id);
+			_model.InitCombatActor(Id, _atbCharacterService);
 		}
 
 		public ICombatActor GetCombatInterface() => CombatActor;
@@ -106,10 +107,13 @@ namespace Characters.Playable
 				_combat = GetNode<AbstractCombat<LamplighterCharacterController>>(CombatNode);
 		}
 
-		public void BootstrapInit(IEffectResolver effectResolver)
+		public void BootstrapInit(IEffectResolver effectResolver, IAtbCharacterService atbCharacterService)
 		{
 			_effectResolver = effectResolver;
-			_effectResolver.Init(_model.Statistics);
+			_effectResolver.Init(_model.CharacterProperties);
+
+			_atbCharacterService = atbCharacterService;
+			_atbCharacterService.Init(_model.CharacterProperties);
 		}
 
 		public override void _PhysicsProcess(double delta)
