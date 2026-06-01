@@ -38,6 +38,7 @@ bindable="gruppo generico per i nodi \"bindabili\""
 navigationMesh="gruppo per le mesh da prendere in considerazione dal navigation region3D"
 hitboxarea="gruppo per collisionshape hitbox"
 hurtBoxArea="gruppo per le aree che sono hurtbox"
+combatActor="gruppo per i combat actors"
 
 [input]
 

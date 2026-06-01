@@ -66,9 +66,10 @@ namespace Characters.Playable
 			Subscribe();
 		}
 
+		// TODO: Metodo da cancellare? 
 		private void SetIdCombatActor()
 		{
-			_model.InitCombatActor(Id, _atbCharacterService);
+			//_model.InitCombatActor(Id, _atbCharacterService);
 		}
 
 		public ICombatActor GetCombatInterface() => CombatActor;
@@ -81,6 +82,7 @@ namespace Characters.Playable
 		protected override void Unsubscribe()
 		{
 			_bag.Build().Dispose();
+			_atbCharacterService.Dispose();
 		}
 		#endregion
 
@@ -113,7 +115,11 @@ namespace Characters.Playable
 			_effectResolver.Init(_model.CharacterProperties);
 
 			_atbCharacterService = atbCharacterService;
-			_atbCharacterService.Init(_model.CharacterProperties);
+			_atbCharacterService.Init(_model.CharacterProperties, 
+			this.GetSubscriber<AtbEndExecuteActionEvent>(),
+			this.GetSubscriber<AtbCommandPhaseEndEvent>());
+
+			CombatActor.Init(atbCharacterService);
 		}
 
 		public override void _PhysicsProcess(double delta)

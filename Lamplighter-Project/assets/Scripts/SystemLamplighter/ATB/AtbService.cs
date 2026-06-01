@@ -18,7 +18,7 @@ namespace SystemLamplighter.ATB
 	public class AtbService : IAtbService
 	{
 		#region ICombatActorRegistry
-		ICombatActorRegistry _combatActorRegistry;
+		ICombatActorProvider _combatActorRegistry;
 		int _actorsCount => _combatActorRegistry.GetActors().Count;
 		#endregion
 		List<ICombatActor> _stackCurrentActorsInCommand;
@@ -37,7 +37,7 @@ namespace SystemLamplighter.ATB
 		#endregion
 
 
-		public AtbService(bool inCharging, ICombatActorRegistry combatActorRegistry,
+		public AtbService(bool inCharging, ICombatActorProvider combatActorRegistry,
 		ISubscriber<AtbCommandPhaseEndEvent> atbCommandPhaseEndSubscriber,
 		ISubscriber<CombatEndEvent> subscriberCombatEnd,
 		IPublisher<AtbCommandPhaseStartedEvent> publishAtbCommandPhaseStartEvent,

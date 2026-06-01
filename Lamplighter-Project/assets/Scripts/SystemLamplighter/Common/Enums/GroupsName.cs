@@ -14,6 +14,7 @@ public enum GroupsName
 	targetable,
 	walkable,
 	navigationSystem,
-	bindable
+	bindable,
+	combatActor
 
 }

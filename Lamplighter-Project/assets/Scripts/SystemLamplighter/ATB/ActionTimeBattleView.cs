@@ -81,7 +81,7 @@ namespace SystemLamplighter.ATB
 		public void UpdatePositions()
 		{
 			var barWidth = _control.Size.X;
-			var charactersRegistry = GameBootstrap.Services.GetRequiredService<ICombatActorRegistry>();
+			var charactersRegistry = GameBootstrap.Services.GetRequiredService<ICombatActorProvider>();
 
 			foreach(var actor in charactersRegistry.GetActors())
 			{

@@ -14,9 +14,9 @@ public class BattleService : IBattleService
 {
 	private readonly IPublisher<CombatStartedEvent> _publisherCombatStarted;
 	private readonly IPublisher<CombatEndEvent> _publisherCombatEnded;
-	ICombatActorRegistry _combatActorRegistry;
+	ICombatActorProvider _combatActorRegistry;
 
-	public BattleService(IPublisher<CombatStartedEvent> publisherCombatStarted, IPublisher<CombatEndEvent>  publisherCombatEnded, ICombatActorRegistry combatActorRegistry)
+	public BattleService(IPublisher<CombatStartedEvent> publisherCombatStarted, IPublisher<CombatEndEvent>  publisherCombatEnded, ICombatActorProvider combatActorRegistry)
 	{
 		_publisherCombatStarted = publisherCombatStarted;
 		_publisherCombatEnded = publisherCombatEnded;
@@ -33,7 +33,7 @@ public class BattleService : IBattleService
 	{ 
 		foreach(var a in _combatActorRegistry.GetActors())
 		{
-			Log.PrintMessage($"actors: {a.AtbProperties.Name}");
+			Log.PrintMessage($"actors: {a.Id}");
 		}
 		_publisherCombatStarted.Publish(new CombatStartedEvent(_combatActorRegistry.GetActors()));
 	}

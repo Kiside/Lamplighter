@@ -136,7 +136,7 @@ public partial class GameBootstrap : Node
 		// CORE
 		// todo BATTLE SERVICE DA CANCELLARE 
 		services.AddSingleton<IBattleService, BattleService>();
-		services.AddSingleton<ICombatActorRegistry, CombatActorRegistry>();
+		services.AddSingleton<ICombatActorProvider, CombatActorProvider>();
 		services.AddSingleton<ICombatActorPositionProvider<Node3D>, CombatActorPosition3DProvider>();
 		Log.PrintMessage("BattleService - CombatActorRegistry - CombatActorPosition3DProvider");
 

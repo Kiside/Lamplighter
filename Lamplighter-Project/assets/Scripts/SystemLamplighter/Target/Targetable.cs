@@ -2,6 +2,7 @@ using System;
 using Godot;
 using SystemLamplighter.Common.Enums;
 using SystemLamplighter.Debug;
+using SystemLamplighter.Extensions;
 
 public partial class Targetable : Node, ITargetable
 {
@@ -34,10 +35,12 @@ public partial class Targetable : Node, ITargetable
 
 		if(Id == null)
 		{
-			if(GetParent() is IIdentificable parent)
-				Id = parent.Id;
-			else 
-				DebugLamplighter.Assert(true, "The parent is not IIdentificable");
+			Id = this.SetIdentification();
+			// TODO Da cancellare 
+			// if(GetParent() is IIdentificable parent)
+			// 	Id = parent.Id;
+			// else 
+			// 	DebugLamplighter.Assert(true, "The parent is not IIdentificable");
 		}
 	}
 

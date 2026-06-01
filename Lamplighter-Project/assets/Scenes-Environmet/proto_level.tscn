@@ -7,6 +7,7 @@
 [ext_resource type="Script" uid="uid://c6uo1si5yfkbx" path="res://assets/Scripts/SystemLamplighter/Bootstrap/SceneBinder.cs" id="3_mkya5"]
 [ext_resource type="Resource" uid="uid://dh3hyj8ml3kd5" path="res://assets/Resources/ATB_CharacterProperties/genericEnemy.tres" id="5_xo7eh"]
 [ext_resource type="Script" uid="uid://b8dw0uyei4d23" path="res://assets/Scripts/SystemLamplighter/DataStructure/GeneralData/CharacterProperties.cs" id="6_gor4l"]
+[ext_resource type="Script" uid="uid://ddymqvpgff53j" path="res://assets/Scripts/SystemLamplighter/Combat/Actor/CombatActor.cs" id="8_xo7eh"]
 [ext_resource type="Script" uid="uid://hpv57386fhw0" path="res://assets/Scripts/Characters/Loadout/CombatLoadout.cs" id="9_uvot1"]
 [ext_resource type="Script" uid="uid://53pv7v0c5gad" path="res://assets/Scripts/SystemLamplighter/DataStructure/ActionsData/AttackAction.cs" id="10_uvot1"]
 [ext_resource type="Resource" uid="uid://dlftjlcuk3pr4" path="res://assets/CustomResources/Prototype/attack.tres" id="11_hp1yv"]
@@ -74,13 +75,17 @@ mesh = SubResource("BoxMesh_ejd0h")
 [node name="NpModel" type="Node" parent="Enemy" unique_id=240273156 groups=["bindable"]]
 script = ExtResource("21_w6ram")
 _combatLoadoutNode = NodePath("../CombatLoadout")
-_atbCharacterProperties = ExtResource("5_xo7eh")
+_combatActorNode = NodePath("../CombatActor")
 _characterProperties = SubResource("Resource_gor4l")
 _combatBrainNode = NodePath("../CombatBrain")
 _hurtBoxAreaNode = NodePath("../HurtBoxArea")
 
 [node name="NpView" type="Node" parent="Enemy" unique_id=775076532]
 script = ExtResource("22_hev2j")
+
+[node name="CombatActor" type="Node" parent="Enemy" unique_id=174340681 node_paths=PackedStringArray("CombatLoadout") groups=["combatActor"]]
+script = ExtResource("8_xo7eh")
+CombatLoadout = NodePath("../CombatLoadout")
 
 [node name="CombatNode" type="Node" parent="Enemy" unique_id=64274010]
 script = ExtResource("23_hev2j")

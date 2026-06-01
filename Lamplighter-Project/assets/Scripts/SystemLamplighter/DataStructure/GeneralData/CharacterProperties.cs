@@ -2,6 +2,7 @@
 using System.Security.Cryptography.X509Certificates;
 using Godot;
 using SystemLamplighter.ATB;
+using SystemLamplighter.Common.Enums;
 
 [GlobalClass]
 public partial class CharacterProperties : Resource
@@ -28,7 +29,18 @@ public partial class CharacterProperties : Resource
 	public AtbCharacterProperties AtbCharacterProperties;
 
 	public float AtbSpeed => AtbCharacterProperties.Speed;
-	public float AtbSpeedMultiplier => AtbCharacterProperties.SpeedMultiplier;
+	public float AtbSpeedMultiplier { 
+		get {return AtbCharacterProperties.SpeedMultiplier;} 
+		set{AtbCharacterProperties.SpeedMultiplier = value;}
+	}
+	public float AtbBarPosition { 
+		get {return AtbCharacterProperties.Position;} 
+		set{AtbCharacterProperties.Position = value;}
+	}
+
+
+	public AtbCharacterStatus AtbCharacterStatus => AtbCharacterProperties.Status;
+	public AtbCharacterType AtbCharacterType => AtbCharacterProperties.CharacterType;
 	
 
 	public CharacterProperties() : this(0f,0f,0f,0f,0f,0f,0f,0f,0f, new AtbCharacterProperties()) {}

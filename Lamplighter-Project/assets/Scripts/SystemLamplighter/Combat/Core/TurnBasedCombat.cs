@@ -172,7 +172,7 @@ namespace SystemLamplighter.Combat.Core
 			TargetResolutionContext = null;
 			_disposeEndTargetEvent?.Dispose();
 			// TODO: la riga EndCommandStatus(...) può essere gestita dall'evento _publishCommandPhaseEnd? Controllare e provare
-			AtbProperties.EndCommandStatus(CurrentAction.ActionSpeedMultiplier);
+			//AtbProperties.EndCommandStatus(CurrentAction.ActionSpeedMultiplier);
 			TargetResolutionContext = ev.TargetResolutionContext;
 			_publishCommandPhaseEnd.Publish(new AtbCommandPhaseEndEvent(Actor));
 		}

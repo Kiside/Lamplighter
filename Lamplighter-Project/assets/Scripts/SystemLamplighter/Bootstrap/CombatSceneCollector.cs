@@ -26,8 +26,7 @@ namespace SystemLamplighter.Bootstrap
 		
 
 		private IBattleService _battleService;
-		private ICombatActorRegistry _combatActorRegistry;
-		private ICombatActorPositionProvider<Node3D> _combatActorPositionProvider;
+		private ICombatActorProvider _combatProvider;
 
 		public override void _Ready()
 		{
@@ -43,11 +42,8 @@ namespace SystemLamplighter.Bootstrap
 			_battleService = GameBootstrap.Services
 			.GetRequiredService<IBattleService>();
 
-			_combatActorRegistry = GameBootstrap.Services.
-			GetRequiredService<ICombatActorRegistry>();
-
-			_combatActorPositionProvider = GameBootstrap.Services.
-			GetRequiredService<ICombatActorPositionProvider<Node3D>>();
+			_combatProvider = GameBootstrap.Services.
+			GetRequiredService<ICombatActorProvider>();
 			
 			GetCombatActorsHandler();
 		}
@@ -62,7 +58,7 @@ namespace SystemLamplighter.Bootstrap
 		/// </summary>
 		private void GetCombatActorsHandler()
 		{
-			Godot.Collections.Array<Node> array = GetNodesOfGroups();
+			var array = GetNodesOfGroups();
 			if(array != null)
 				InitActors(array);
 		}
@@ -77,21 +73,18 @@ namespace SystemLamplighter.Bootstrap
 				return;
 
 			List<ICombatActor> actors = new List<ICombatActor>();
-			Dictionary<ICombatActor, Node3D> positions = new Dictionary<ICombatActor, Node3D>();
+
 			foreach(var a in array)
 				{
 					Log.PrintMessage($"- {a.Name}");
-					if(a is IHasCombatInterface<ICombatActor> combat)
+					if(a is ICombatActor combat)
 					{
-						actors.Add(combat.GetCombatInterface());
-						if(a is Node3D node3D)
-							positions.Add(combat.GetCombatInterface(), node3D);
+						actors.Add(combat);
 					}
 				}
 			
 			
-			_combatActorRegistry.Init(actors);
-			_combatActorPositionProvider.Init(positions);
+			_combatProvider.Init(actors);
 		}
 	}
 }	

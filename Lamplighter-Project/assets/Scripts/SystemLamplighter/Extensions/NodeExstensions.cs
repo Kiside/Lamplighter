@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using Godot;
 using SystemLamplighter.Common.Enums;
+using SystemLamplighter.Debug;
+using SystemLamplighter.Tool;
 
 namespace SystemLamplighter.Extensions;
 
@@ -15,19 +17,15 @@ public static class NodeExstensions
 		}
 	}
 
-	// public static Godot.Collections.Array<Node> GetNodesOfGroups(this Node node, Godot.Collections.Array<GroupsName> _groups)
-	// {
-	// 	if(_groups == null && _groups.Count <= 0)
-	// 			return null;
+	public static Identification SetIdentification(this Node node)
+	{
+		if (node.GetParent() is IIdentificable parent)
+			return parent.Id;
+		else
+			Log.PrintWarning($"The parent of {node.Name} is not IIdentificable");
 
-	// 		Godot.Collections.Array<Node> array = new Godot.Collections.Array<Node>();
-	// 		foreach (var g in _groups)
-	// 		{
-	// 			array.AddRange(node.GetTree().GetNodesInGroup($"{g}"));
-	// 		}
-
-	// 		return array;
-	// }
+		return null;
+	}
 
 	public static Godot.Collections.Array<Node> GetNodesOfGroups(this Node node, params GroupsName[] groups)
 	{

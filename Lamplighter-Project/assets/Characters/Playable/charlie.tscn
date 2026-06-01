@@ -9,6 +9,7 @@
 [ext_resource type="Script" uid="uid://i2ivjf6e807r" path="res://assets/Scripts/Characters/Playable/LamplighterCharacterView.cs" id="4_wjmeh"]
 [ext_resource type="Script" uid="uid://hpv57386fhw0" path="res://assets/Scripts/Characters/Loadout/CombatLoadout.cs" id="5_xa4mk"]
 [ext_resource type="PackedScene" uid="uid://bvygo0ty7e5kj" path="res://assets/Resources/Models/Characters/Proto/main.tscn" id="6_voq6j"]
+[ext_resource type="Script" uid="uid://ddymqvpgff53j" path="res://assets/Scripts/SystemLamplighter/Combat/Actor/CombatActor.cs" id="7_1psa7"]
 [ext_resource type="Resource" uid="uid://dlftjlcuk3pr4" path="res://assets/CustomResources/Prototype/attack.tres" id="7_uuub8"]
 [ext_resource type="Resource" uid="uid://dcd5ackoimdk6" path="res://assets/CustomResources/Prototype/defense.tres" id="9_vju8h"]
 [ext_resource type="Script" uid="uid://53pv7v0c5gad" path="res://assets/Scripts/SystemLamplighter/DataStructure/ActionsData/AttackAction.cs" id="10_lb2da"]
@@ -45,7 +46,7 @@ CombatNode = NodePath("Combat")
 [node name="CharlieModel" type="Node" parent="." unique_id=18616143 groups=["bindable"]]
 script = ExtResource("2_l8s2m")
 _combatLoadoutNode = NodePath("../CombatLoadout")
-_atbCharacterProperties = ExtResource("3_xa4mk")
+_combatActorNode = NodePath("../CombatActor")
 _characterProperties = SubResource("Resource_1psa7")
 _combatBrainNode = NodePath("../BattleMenuController")
 _hurtBoxAreaNode = NodePath("../HurtBoxArea")
@@ -64,6 +65,10 @@ transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1326448688]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 shape = SubResource("BoxShape3D_0bkd4")
+
+[node name="CombatActor" type="Node" parent="." unique_id=287435751 node_paths=PackedStringArray("CombatLoadout") groups=["combatActor"]]
+script = ExtResource("7_1psa7")
+CombatLoadout = NodePath("../CombatLoadout")
 
 [node name="Movement" type="Node" parent="." unique_id=2083169796 groups=["bindable"]]
 script = ExtResource("2_momr7")

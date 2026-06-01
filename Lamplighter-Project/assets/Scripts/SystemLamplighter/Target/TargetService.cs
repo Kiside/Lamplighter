@@ -18,7 +18,7 @@ public class TargetService
 {
 	private Camera3D _camera;
 
-	private readonly ICombatActorRegistry _combatActors;
+	private readonly ICombatActorProvider _combatActors;
 	private readonly ICombatActorPositionProvider<Node3D> _combatActorPosition;
 
 	private ISubscriber<StartTargetEvent> _subscriberStartTarget;
@@ -34,7 +34,7 @@ public class TargetService
 
 		_camera = camera;
 
-		_combatActors = GameBootstrap.Services.GetRequiredService<ICombatActorRegistry>();
+		_combatActors = GameBootstrap.Services.GetRequiredService<ICombatActorProvider>();
 		_combatActorPosition = GameBootstrap.Services.GetRequiredService<ICombatActorPositionProvider<Node3D>>();
 
 		_subscriberStartTarget = subscriberStartTarget;

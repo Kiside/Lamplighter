@@ -11,11 +11,11 @@ namespace SystemLamplighter.Combat.Actor
 	/// <summary>
 	/// Classe per gestire CHI sta combattendo
 	/// </summary>
-	public class CombatActorRegistry : ICombatActorRegistry
+	public class CombatActorProvider : ICombatActorProvider
 	{
 		private List<ICombatActor> _actors;
 
-		public CombatActorRegistry()
+		public CombatActorProvider()
 		{
 			_actors = new List<ICombatActor>();
 		}

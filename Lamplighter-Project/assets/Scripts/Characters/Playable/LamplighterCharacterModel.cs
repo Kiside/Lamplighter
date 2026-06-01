@@ -23,11 +23,12 @@ namespace Characters.Playable
 	/// </summary>
 	public partial class LamplighterCharacterModel : AbstractModel
 	{
+		// TODO: COMBATLOADOUT DA CANCELLARE PROBABILMENTE
 		#region EXPORT PROPERTIES
 		[Export]
 		protected NodePath _combatLoadoutNode;
 		[Export]
-		protected AtbCharacterProperties _atbCharacterProperties;
+		protected NodePath _combatActorNode;
 		[Export]
 		protected CharacterProperties _characterProperties;
 		[Export]
@@ -58,7 +59,6 @@ namespace Characters.Playable
 		public ICombatBrain CombatBrain {get => _combatBrain;}
 		public CombatLoadout CombatLoadout { get => _combatLoadout; set => _combatLoadout = value; }
 		public NodePath CombatLoadoutNode {get => _combatLoadoutNode;}
-		public AtbCharacterProperties AtbCharacterProperties => _atbCharacterProperties;
 		public CharacterProperties CharacterProperties => _characterProperties;
 		public Area3D HurtBoxArea => _hurtBoxArea;
 		public bool LockOn { get => _lockOn; set => _lockOn = value; }
@@ -69,25 +69,21 @@ namespace Characters.Playable
 			NodeChecking();
 		}
 
-		public void InitCombatActor(Identification id, IAtbCharacterService atbCharacterService)
-		{
-			Log.PrintMessage("InitCombatActor");
-			_combatActor = new CombatActor(_atbCharacterProperties, _combatLoadout, id, atbCharacterService);
-		}
-
 	
 		private void NodeChecking()
 		{
 			string noNode = "There is no ";
 			DebugLamplighter.Assert(_combatLoadoutNode != null, $"{noNode} CombatLoadout is null");
-			DebugLamplighter.Assert(_atbCharacterProperties != null, $"{noNode} AtbCharacterProperties is null");
-			DebugLamplighter.Assert(_combatBrainNode != null, "There is no _combatBrainNode is null");
-			DebugLamplighter.Assert(_hurtBoxAreaNode != null, "There is no HitBoxArea");
+			DebugLamplighter.Assert(_combatActorNode != null, $"{noNode} CombatActor is null");
+			DebugLamplighter.Assert(_combatBrainNode != null, $"{noNode} _combatBrainNode is null");
+			DebugLamplighter.Assert(_hurtBoxAreaNode != null, $"{noNode} HitBoxArea");
 
 			if(_combatLoadoutNode != null)
 				_combatLoadout  = GetNode<CombatLoadout>(_combatLoadoutNode);
 
-			
+			if(_combatActorNode != null)
+				_combatActor  = GetNode<ICombatActor>(_combatActorNode);
+				
 			if(_combatBrainNode != null)
 				_combatBrain = GetNode<ICombatBrain>(_combatBrainNode);
 

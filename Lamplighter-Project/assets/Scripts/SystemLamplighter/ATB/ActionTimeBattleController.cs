@@ -44,7 +44,7 @@ namespace SystemLamplighter.ATB
 
 			_atbService = new AtbService(
 			false, 
-			GameBootstrap.Services.GetRequiredService<ICombatActorRegistry>(),
+			GameBootstrap.Services.GetRequiredService<ICombatActorProvider>(),
 			this.GetSubscriber<AtbCommandPhaseEndEvent>(),
 			this.GetSubscriber<CombatEndEvent>(),
 			this.GetPublisher<AtbCommandPhaseStartedEvent>(),
@@ -76,7 +76,7 @@ namespace SystemLamplighter.ATB
 			DebugLamplighter.Assert(character != null, "character is null");
 			Assert();
 
-			character.AtbProperties.Subscribe();
+			character.Subscribe();
 			//_model.AddCharacter(character);
 			_view.AddCharacter(character);
 		}

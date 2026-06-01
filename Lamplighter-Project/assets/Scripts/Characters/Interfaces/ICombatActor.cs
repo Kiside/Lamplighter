@@ -15,10 +15,13 @@ namespace Characters.Interfaces;
 public interface ICombatActor
 {
     public IAtbCharacterService CharacterService {get; }
-    public AtbCharacterProperties AtbProperties { get; }
     public AtbCharacterStatus AtbStatus { get; }
     public CombatLoadout CombatLoadout { get; }
     public IActionData CurrentAction { get; set; }
-    public AtbCharacterStatus UpdateAtbPosition(float value);
     public Identification Id {get;}
+    public AtbCharacterProperties AtbProperties {get;}
+    public AtbCharacterStatus UpdateAtbPosition(float value);
+    public void Init(IAtbCharacterService atbCharacterService);
+    public void Unsubscribe();
+    public void Subscribe();
 }

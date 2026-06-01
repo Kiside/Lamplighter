@@ -47,7 +47,7 @@ namespace SystemLamplighter.ATB
 
 			foreach(var c in _charactersInCombat)
 			{
-				c.AtbProperties.Unsubscribe();
+				c.CharacterService.Unsubscribe();
 			}
 			_charactersInCombat.Clear();
 		}

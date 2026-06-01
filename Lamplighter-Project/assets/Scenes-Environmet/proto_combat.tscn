@@ -13,7 +13,7 @@
 [node name="CombatSceneCollector" type="Node" parent="." unique_id=248073592]
 script = ExtResource("2_4t55p")
 _autoStartCombat = false
-_groups = Array[int]([0, 1])
+_groups = Array[int]([11])
 
 [node name="ATB" parent="." unique_id=922059732 instance=ExtResource("1_7okkr")]
 
@@ -30,6 +30,6 @@ _allies = []
 script = ExtResource("12_lc0uq")
 _groups = Array[int]([3, 4])
 
-[node name="TargetablesSceneCollector" type="Node" parent="." unique_id=1617449711 groups=["targetable"]]
+[node name="TargetablesSceneCollector" type="Node" parent="." unique_id=1617449711]
 script = ExtResource("7_4t55p")
 _groups = Array[int]([7])

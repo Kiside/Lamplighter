@@ -9,7 +9,7 @@ namespace SystemLamplighter.Interfaces;
 /// <summary>
 /// Interfaccia per il registro dei personaggi che combattono
 /// </summary>
-public interface ICombatActorRegistry
+public interface ICombatActorProvider
 {
 	public void Init(List<ICombatActor> actors);
 	public void RemoveActor(ICombatActor actor);
