@@ -3,6 +3,12 @@ using MessagePipe;
 using SystemLamplighter.Common.Enums;
 using SystemLamplighter.Events;
 
+
+namespace SystemLamplighter.ATB.Interfaces;
+
+/// <summary>
+/// Interfaccia per la logica di business di un personaggio nell'ATB
+/// </summary>
 public interface IAtbCharacterService
 {
 	public CharacterProperties CharacterProperties {get;}

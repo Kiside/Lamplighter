@@ -4,6 +4,9 @@ using SystemLamplighter.Debug;
 
 namespace SystemLamplighter.Bootstrap
 {
+	/// <summary>
+	/// Classe generica per i "Collector" oggetti che si occupano di collezionare i nodi di uno stesso gruppo
+	/// </summary>
 	public partial class BaseCollector : Node
 	{
 		[Export]

@@ -15,6 +15,8 @@ using Characters.Abstract;
 using SystemLamplighter.Interfaces;
 using SystemLamplighter.Setup;
 using SystemLamplighter.Tool;
+using SystemLamplighter.ATB.Interfaces;
+using SystemLamplighter.Area;
 
 namespace Characters.Playable
 {
@@ -26,6 +28,9 @@ namespace Characters.Playable
 	{
 		#region PUBLIC
 		public ICombatActor CombatActor {get => _model.CombatActor;}
+		/// <summary>
+		/// Variabile che gestisce il modo in cui il personaggio combatte 
+		/// </summary>
 		public ICombatBrain CombatBrain => _combatBrain; 
 		#endregion
 
@@ -36,7 +41,13 @@ namespace Characters.Playable
 		private bool _lockOn = false;
 
 		private bool tweening = false;
+		/// <summary>
+		/// Variabile che si occupa della logica della risoluzione di "effetti" sul personaggio
+		/// </summary>
 		private IEffectResolver _effectResolver;
+		/// <summary>
+		/// Variabile che si occupa delle logiche di business riguardo l'Action Time Bar del personaggio
+		/// </summary>
 		private IAtbCharacterService _atbCharacterService;
 
 		private readonly DisposableBagBuilder _bag = DisposableBag.CreateBuilder();
@@ -72,6 +83,7 @@ namespace Characters.Playable
 			//_model.InitCombatActor(Id, _atbCharacterService);
 		}
 
+		// TODO: Metodo da cancellare?
 		public ICombatActor GetCombatInterface() => CombatActor;
 
 		#region Subscribe/Unsubscribe
@@ -86,9 +98,12 @@ namespace Characters.Playable
 		}
 		#endregion
 
+		/// <summary>
+		/// Metodo chiamato quando entra un corpo nella "HurtBox"
+		/// </summary>
+		/// <param name="areaEntered"></param>
 		protected void OnHurtBoxAreEntered(Area3D areaEntered)
 		{
-			Log.PrintMessage("Entrato!!!!");
 			if(areaEntered.IsInGroup("hitboxarea") && areaEntered is HitBoxArea hitBoxArea)
 				_effectResolver.Resolve(hitBoxArea.ActionData);
 		}
@@ -109,6 +124,11 @@ namespace Characters.Playable
 				_combat = GetNode<AbstractCombat<LamplighterCharacterController>>(CombatNode);
 		}
 
+		/// <summary>
+		/// Metodo chiamato dal bootstrap per inizializzare e passare gli oggetti che servono al personaggio
+		/// </summary>
+		/// <param name="effectResolver"></param>
+		/// <param name="atbCharacterService"></param>
 		public void BootstrapInit(IEffectResolver effectResolver, IAtbCharacterService atbCharacterService)
 		{
 			_effectResolver = effectResolver;
@@ -124,7 +144,7 @@ namespace Characters.Playable
 
 		public override void _PhysicsProcess(double delta)
 		{
-			_combat.Combat();
+			//_combat.Combat();
 			if(!_movement.Disable)
 			{
 				Velocity = _movement.RealtimeMove(delta);
@@ -136,29 +156,6 @@ namespace Characters.Playable
 				
 			Velocity = (Vector3) _movement.PointToPointMove(Vector3.Back, Vector3.Back, Id);;
 			MoveAndSlide();
-			// var movement = _movement.PointToPointMove(Vector3.Back, Vector3.Back, Id);
-			
-			// if(movement != null && movement != Vector3.Zero)
-			// {
-			// 	Velocity = (Vector3) movement;
-			// 	MoveAndSlide();
-			// }
-				
-		}
-
-		private void Tween(Godot.Vector3? movement)
-		{
-			if(tweening)
-				return;
-
-			Log.PrintMessage($"Start tween");
-			tweening = true;
-			var tween = CreateTween();
-				tween.TweenProperty(this, "position", (Godot.Vector3)movement, 1.0f);
-				tween.TweenCallback(Callable.From(this.QueueFree));
-
-			
-			tweening = false;
 		}
 
 		public override void _ExitTree()

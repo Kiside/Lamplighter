@@ -19,18 +19,25 @@ namespace Characters.Playable;
 /// </summary>
 public partial class LamplighterCombat : AbstractCombat<LamplighterCharacterController>
 {
-	ITurnBasedCombat _turnBasedCombat;
-	LamplighterCharacterController _controller;
-
-	IMovementService _movementService;
-
-	public ICombatActor CombatActor => _controller.CombatActor;
-
+	#region Export variable
 	[Export]
 	NodePath AnimationPlayerPath;
+	#endregion
 
-	AnimationPlayer _animationPlayer;
+	#region  Private variable
+	private ITurnBasedCombat _turnBasedCombat;
+	private LamplighterCharacterController _controller;
+	private AnimationPlayer _animationPlayer;
+	#endregion 
 
+	#region Public variable
+	public ICombatActor CombatActor => _controller.CombatActor;
+	#endregion
+
+	
+
+	
+	#region Methods
 	public override void _EnterTree()
 	{
 		if(AnimationPlayerPath != null)
@@ -63,26 +70,13 @@ public partial class LamplighterCombat : AbstractCombat<LamplighterCharacterCont
 				_animationPlayer);
 	}
 
-	public override void Combat()
-	{
-
-	}
-
-	protected void LockOn()
-	{
-
-	}
-
-	protected void Attack()
-	{
-
-	}
-
 	public override void _ExitTree()
 	{
 		_turnBasedCombat.Dispose();
 		base._ExitTree();
 	}
+
+	#endregion
 }
 
 

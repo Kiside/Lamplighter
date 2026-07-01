@@ -7,32 +7,44 @@ using SystemLamplighter.Common.Enums;
 using SystemLamplighter.Debug;
 using SystemLamplighter.Events;
 
+namespace SystemLamplighter.ATB.Interfaces;
+
+/// <summary>
+/// Classe con le logiche business del personaggio sull'ATB
+/// </summary>
 public class AtbCharacterService : IAtbCharacterService
 {
+	#region  Public Variables
 	public CharacterProperties CharacterProperties { get; private set; }
 	public ISubscriber<AtbEndExecuteActionEvent> _subscriberAtbEndExecuteActionEvent;
 	public ISubscriber<AtbCommandPhaseEndEvent> _subscribeAtbCommandPhaseEndEvent;
+	#endregion 
+
+	#region Private Variables
 	private AtbCharacterType CharacterType => CharacterProperties.AtbCharacterType;
 	private AtbCharacterStatus _status;
 
-	float _barPosition
+	private float _barPosition
 	{
 		get { return CharacterProperties.AtbBarPosition; }
 		set { CharacterProperties.AtbBarPosition = value; }
 	}
-	float _speed => CharacterProperties.AtbSpeed;
-	float _speedMultiplier
+	private float _speed => CharacterProperties.AtbSpeed;
+
+	private float _speedMultiplier
 	{
 		get { return CharacterProperties.AtbSpeedMultiplier; }
 		set { CharacterProperties.AtbSpeedMultiplier = value; }
 	}
+
 	private AtbCharacterProperties AtbCharacterProperties
 	=> CharacterProperties.AtbCharacterProperties;
 
 
 	private readonly DisposableBagBuilder _bag = DisposableBag.CreateBuilder();
+	#endregion
 
-
+	#region Methods
 	public void Init(CharacterProperties characterProperties,
 	ISubscriber<AtbEndExecuteActionEvent> subscriberAtbEndExecuteActionEvent,
 	ISubscriber<AtbCommandPhaseEndEvent> subscribeAtbCommandPhaseEndEvent)
@@ -44,6 +56,10 @@ public class AtbCharacterService : IAtbCharacterService
 		_subscribeAtbCommandPhaseEndEvent = subscribeAtbCommandPhaseEndEvent;
 	}
 
+	/// <summary>
+	/// Metodo per Controllare lo stato del personaggio sull'ATB (IN CARICA, COMMAND, AZIONE IN CARICA, AZIONE  )
+	/// </summary>
+	/// <returns></returns>
 	public AtbCharacterStatus CheckPositionStatus()
 	{
 		if (_status == AtbCharacterStatus.CHARGE &&
@@ -63,6 +79,10 @@ public class AtbCharacterService : IAtbCharacterService
 		return _status;
 	}
 
+	/// <summary>
+	/// Metodo chiamato quando arriva l'evento che lo stato "Command" è concluso
+	/// </summary>
+	/// <param name="ev"></param>
 	public void OnEndCommandStatus(AtbCommandPhaseEndEvent ev)
 	{
 		if (ev.Actor.AtbProperties != AtbCharacterProperties)
@@ -72,6 +92,10 @@ public class AtbCharacterService : IAtbCharacterService
 		_status = AtbCharacterStatus.CHARGE_ACTION;
 	}
 
+	/// <summary>
+	/// Metodo chiamato quando arriva l'evento che l'Azione si è conclusa
+	/// </summary>
+	/// <param name="ev"></param>
 	public void OnEndAction(AtbEndExecuteActionEvent ev)
 	{
 		if (ev.Actor.AtbProperties != AtbCharacterProperties)
@@ -94,6 +118,12 @@ public class AtbCharacterService : IAtbCharacterService
 		_bag?.Build().Dispose();
 	}
 
+
+	/// <summary>
+	/// Metodo che aggiorna la posizione del personaggio sull'ATB
+	/// </summary>
+	/// <param name="value"></param>
+	/// <returns></returns>
 	public AtbCharacterStatus UpdatePosition(float value)
 	{
 		DebugLamplighter.Assert(value > 0, "speed is negative");
@@ -112,4 +142,5 @@ public class AtbCharacterService : IAtbCharacterService
 	{
 		Unsubscribe();
 	}
+	#endregion
 }

@@ -13,7 +13,7 @@ using SystemLamplighter.Common.Constants;
 namespace SystemLamplighter.ATB
 {
 	[GlobalClass]
-	// Classe che costruisce e mantiene le info dei avatar sul ATB
+	// Resource che costruisce e mantiene le info dei avatar sull' ATB
 	public partial class AtbCharacterProperties : Resource, IAtbCharacterProperties
 	{
 		#region PRIVATE PROPERTIES
@@ -50,107 +50,5 @@ namespace SystemLamplighter.ATB
 
 		private readonly DisposableBagBuilder _bag = DisposableBag.CreateBuilder();
 		
-
-		// #region CONSTRUCTOR
-		// public void Init(Image avatar, float speed, string name, AtbCharacterType atbCharacterType,ICharacterControllerAtb character)
-		// {
-		// 	DebugLamplighter.Assert(avatar != null, "avatar is null");
-		// 	DebugLamplighter.Assert(name != null, "name is null");
-		// 	DebugLamplighter.Assert(name != String.Empty, "name is empty");
-		// 	DebugLamplighter.Assert(speed > 0, "speed is negative");
-		// 	DebugLamplighter.Assert(character != null, "character is null");
-
-		// 	_avatar = avatar;
-		// 	_speed = speed;
-		// 	_name = name;
-		// 	_characterType = atbCharacterType;
-		// 	_status = AtbCharacterStatus.CHARGE;
-		// }
-		// #endregion
-
-		// public void Subscribe()
-		// {
-		// 	this.SubscribeEventResource<AtbEndExecuteActionEvent>(OnEndAction).AddTo(_bag);
-		// }
-
-		// public void Unsubscribe()
-		// {
-		// 	_bag?.Build().Dispose();
-		// }
-
-		// #region METHODS
-		// /// <summary>
-		// /// Metodo per la modifica della posizione del personaggio sulla barra
-		// /// </summary>
-		// /// <param name="value"></param>
-		// /// <returns></returns>
-		// public AtbCharacterStatus UpdatePosition(float value)
-		// {
-		// 	DebugLamplighter.Assert(value > 0, "speed is negative");
-
-		// 	if (CharacterType == AtbCharacterType.ALLY && _status == AtbCharacterStatus.COM)
-		// 		return _status;
-
-
-		// 	_barPosition += (_speed * _speedMultiplier) * value;
-		// 	_barPosition = Mathf.Clamp(_barPosition, 0, 1);
-
-		// 	return CheckPositionStatus();
-		// }
-
-		// /// <summary>
-		// /// Controlla se la posizione del personaggio è al threshold per il cambio status a command
-		// /// </summary>
-		// /// <returns></returns>
-		// private AtbCharacterStatus CheckPositionStatus()
-		// {
-		// 	if (_status == AtbCharacterStatus.CHARGE && 
-		// 	_barPosition >= AtbConstants.ATB_COMAND_THRESHOLD)
-		// 	{
-		// 		if(_characterType == AtbCharacterType.ALLY)
-		// 			_barPosition = AtbConstants.ATB_COMAND_THRESHOLD;
-		// 		_status = AtbCharacterStatus.COM;
-				
-		// 	}
-
-		// 	if(_status == AtbCharacterStatus.CHARGE_ACTION && _barPosition >= AtbConstants.ATB_END)
-		// 	{
-				
-		// 		_status = AtbCharacterStatus.ACTION;
-		// 	}
-
-			
-		// 	return _status;
-		// }
-
-		// public void EndCommandStatus(float speedMultiplier) 
-		// {
-		// 	_speedMultiplier = speedMultiplier;
-		// 	_status = AtbCharacterStatus.CHARGE_ACTION;
-		// }
-
-		// /// <summary>
-		// /// Alla fine dell'azione avvenuta resetta le posizioni
-		// /// </summary>
-		// public void OnEndAction(AtbEndExecuteActionEvent ev)
-		// {
-		// 	if(ev.Actor.AtbProperties != this)
-		// 		return;
-			
-			
-		// 	_barPosition = 0f;
-		// 	_speedMultiplier = 1f;
-		// 	_status = AtbCharacterStatus.CHARGE;
-		// }
-
-
-		// /// <summary>
-		// /// Chiama l'azione del personaggio
-		// /// </summary>
-		// public void Action()
-		// {
-		// 	//_character.AtbAction();
-		// }
-		// #endregion
 	}
 }

@@ -6,6 +6,7 @@ using SystemLamplighter.Common.Enums;
 using SystemLamplighter.Interfaces;
 using System.Numerics;
 using System;
+using SystemLamplighter.ATB.Interfaces;
 
 namespace Characters.Interfaces;
 

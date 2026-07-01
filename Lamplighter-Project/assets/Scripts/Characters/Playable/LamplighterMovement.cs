@@ -17,18 +17,26 @@ namespace Characters.Playable
 	/// </summary>
 	public partial class LamplighterMovement : AbstractMovement<LamplighterCharacterController>
 	{
+		#region Export Variable
 		[Export]
 		NodePath _navAgentPath;
+		#endregion
 
+		#region Private Variable
 		NavigationAgent3D _navAgent;
 		TurnBasedMovementGlobalResolver _turnBasicMovementResolver;
 
 		MovementService _movementService;
+		#endregion 
 
+		#region Public Variable
 		public Queue<Godot.Vector3> Movement {get; private set;}
+		#endregion
 
 		// TODO: creare una classe che si occupa del calcolo che viene fatto ora in RealtimeMove
 
+
+		#region METHODS
 		public void BootstrapInit(IMovementService movementService)
 		{
 			DebugLamplighter.Assert(movementService != null, "movementService is null");
@@ -94,14 +102,6 @@ namespace Characters.Playable
 			return _movementService.IsNavigationFinished();
 		}
 
-		public void FreeMove()
-		{
-
-		}
-
-		public void CombatMove()
-		{
-
-		}
+		#endregion
 	}
 }

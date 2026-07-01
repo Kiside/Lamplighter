@@ -12,9 +12,6 @@ namespace Characters.Abstract
 	public abstract partial class AbstractCombat<TController> : Node
 	where TController : AbstractCharacterController
 	{
-		[Export]
-		public float Damage = 0;
-
 		TController _controller;
 
 		public virtual void Init(TController controller)
@@ -22,8 +19,6 @@ namespace Characters.Abstract
 			Debug.Assert(controller != null, "Controller is null");
 			_controller = controller;
 		}
-
-		public abstract void Combat();
 	}
 }
 

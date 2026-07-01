@@ -5,6 +5,9 @@ using SystemLamplighter.Common.Enums;
 namespace SystemLamplighter.ATB.Interfaces;
 
 
+/// <summary>
+/// Interfaccia per le proprietà di un personaggio nell'ATB
+/// </summary>
 public interface IAtbCharacterProperties
 {
 	public string Name {get;}
@@ -14,10 +17,4 @@ public interface IAtbCharacterProperties
 	public float SpeedMultiplier {get; set;}
 	public float Position {get;}
 	public AtbCharacterStatus Status {get;}
-
-	// public void Init(Image avatar, float speed, string name, AtbCharacterType atbCharacterType,ICharacterControllerAtb character);
-	// public AtbCharacterStatus UpdatePosition(float value);
-
-	// public void Subscribe();
-	// public void Unsubscribe();
 }

@@ -18,26 +18,37 @@ namespace Characters
 	where TView : AbstractView
 	where TModel : AbstractModel
 	{
+		#region Export Variable	
 		[Export]
 		public NodePath ViewPath;
 		[Export]
 		public NodePath ModelPath;
+		#endregion
 
+		#region Protected variable
 		protected TView _view;
 		protected TModel _model;
+		#endregion
 
+		#region Public variable
 		public TView View => _view;
 		public TModel Model => _model;
+		
 
 		// TODO: DA METTERE NEL MODEL? FORSE INUTILE CHE SIA QUI?
 		public Identification Id { get; private set; }
+		#endregion
 
+		#region  Methods
 		public override void _EnterTree()
 		{
 			InitId();
 			base._EnterTree();
 		}
 		
+		/// <summary>
+		/// Metodo per inizializzare la variabile di identificazione del personaggio
+		/// </summary>
 		protected void InitId()
 		{
 			if(Id == null)
@@ -84,13 +95,10 @@ namespace Characters
 			Debug.Assert(_view != null, "_view is null");
 		}
 
-		public virtual List<IActionData> GetAttacksId() { return new List<IActionData>();}
-		public virtual List<IActionData> GetMagicsId(){ return new List<IActionData>();}
-		public virtual List<IActionData> GetItemsId() { return new List<IActionData>();}
-		public virtual List<IActionData> GetDefenseId() {return new List<IActionData>();}
-
 		protected virtual void Subscribe() {}
 		protected virtual void Unsubscribe() {}
+
+		#endregion
 
 	}
 }
