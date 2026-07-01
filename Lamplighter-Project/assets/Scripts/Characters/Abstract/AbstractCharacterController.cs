@@ -11,6 +11,7 @@ namespace Characters.Abstract
 	public abstract partial class AbstractCharacterController : CharacterBody3D, ICharacterController
 	{
 
+
 		[Export]
 		public NodePath MovementNode;
 		[Export]
