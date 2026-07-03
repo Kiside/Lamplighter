@@ -1,4 +1,7 @@
 using Godot;
+using SystemLamplighter.Navigation;
+
+namespace SystemLamplighter.Navigation;
 
 // TODO: CAMBIARE NOME A CLASSE E INTERFACCIA?
 public class MovementService : IMovementService

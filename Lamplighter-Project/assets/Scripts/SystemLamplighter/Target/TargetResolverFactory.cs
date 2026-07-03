@@ -6,6 +6,11 @@ using SystemLamplighter.Common.Enums;
 using SystemLamplighter.Target;
 using SystemLamplighter.Target.Interfaces;
 
+namespace SystemLamplighter.Target;
+
+/// <summary>
+/// Factory per la scelta della tipologia di target resolver
+/// </summary>
 public class TargetResolverFactory : ITargetResolverFactory
 {
 	private readonly IServiceProvider _serviceProvider;

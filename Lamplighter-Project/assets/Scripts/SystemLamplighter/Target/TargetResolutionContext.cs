@@ -1,7 +1,14 @@
 using System.Collections.Generic;
 using Characters.Interfaces;
 using Godot;
+using SystemLamplighter.Target.Interfaces;
 
+
+namespace SystemLamplighter.Target;
+
+/// <summary>
+/// Classe i dati da passare per la risoluzione della fase di targetizzazione
+/// </summary>
 public class TargetResolutionContext
 {
 	public List<ITargetable> Targetables { get; private set; }

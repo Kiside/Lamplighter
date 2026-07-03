@@ -4,6 +4,7 @@ using MessagePipe;
 using Microsoft.Extensions.DependencyInjection;
 using SystemLamplighter.Bootstrap;
 using SystemLamplighter.DataStructure.GeneralData;
+using SystemLamplighter.Events;
 using SystemLamplighter.Interfaces;
 using SystemLamplighter.Target.Interfaces;
 

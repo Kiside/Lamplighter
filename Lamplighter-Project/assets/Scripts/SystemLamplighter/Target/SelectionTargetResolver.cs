@@ -9,11 +9,14 @@ using SystemLamplighter.DataStructure.GeneralData;
 using SystemLamplighter.Debug;
 using SystemLamplighter.Extensions;
 using SystemLamplighter.Interfaces;
+using SystemLamplighter.Target.Interfaces;
 using SystemLamplighter.Tool;
 
 namespace SystemLamplighter.Target;
 
-
+/// <summary>
+/// Classe per la renderizzazione estetica della targetizzazione tramite selezione
+/// </summary>
 public class SelectionTargetResolver : TargetResolver
 {
 	private readonly ITargetableProvider _targetableProvider;

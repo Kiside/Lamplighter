@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using Godot;
 using SystemLamplighter.Common.Enums;
 using SystemLamplighter.DataStructure.GeneralData;
+using SystemLamplighter.Target.Interfaces;
+
 
 namespace SystemLamplighter.Interfaces;
 

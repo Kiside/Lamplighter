@@ -1,5 +1,13 @@
 using System.Collections.Generic;
 using Godot;
+
+namespace SystemLamplighter.Navigation;
+
+
+// TODO: OBSOLETO?
+/// <summary>
+/// Interfaccia per la navigazione Astar
+/// </summary>
 public interface INavigationAstar
 {
 	public Dictionary<Godot.Vector3, long> PointsDictionary {get;}

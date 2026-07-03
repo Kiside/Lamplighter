@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Characters.Interfaces;
 using SystemLamplighter.Common.Enums;
+using SystemLamplighter.Target.Interfaces;
 
 namespace SystemLamplighter.DataStructure.GeneralData;
 

@@ -1,9 +1,16 @@
 using System;
 using Godot;
 using SystemLamplighter.Common.Enums;
+using SystemLamplighter.DataStructure.GeneralData;
 using SystemLamplighter.Debug;
 using SystemLamplighter.Extensions;
+using SystemLamplighter.Target.Interfaces;
 
+namespace SystemLamplighter.Target;
+
+/// <summary>
+/// Classe nodo per gli oggetti targetable
+/// </summary>
 public partial class Targetable : Node, ITargetable
 {
 	/// <summary>

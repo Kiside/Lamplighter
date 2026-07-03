@@ -1,6 +1,9 @@
 using System;
 using Godot;
 using SystemLamplighter.Common.Enums;
+using SystemLamplighter.DataStructure.GeneralData;
+
+namespace SystemLamplighter.Target.Interfaces;
 
 public interface ITargetable
 {

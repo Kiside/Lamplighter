@@ -8,8 +8,14 @@ using SystemLamplighter.DataStructure.GeneralData;
 using SystemLamplighter.Debug;
 using SystemLamplighter.Extensions;
 using SystemLamplighter.Interfaces;
+using SystemLamplighter.Target.Interfaces;
 using SystemLamplighter.Tool;
 
+namespace SystemLamplighter.Target;
+
+/// <summary>
+/// Classe che renderizza l'estetica della selezione di un target
+/// </summary>
 public partial class SelectionTargetRenderer : Control, ITargetRenderer
 {
 	[Export]

@@ -1,7 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using Godot;
+using SystemLamplighter.Navigation;
 using SystemLamplighter.Tool;
+
+namespace SystemLamplighter.Navigation;
 
 public class NavigationAstarService : INavigationAstar
 {

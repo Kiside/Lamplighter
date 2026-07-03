@@ -2,8 +2,16 @@ using System.Collections.Generic;
 using System.Formats.Tar;
 using System.Linq;
 using SystemLamplighter.Common.Enums;
+using SystemLamplighter.DataStructure.GeneralData;
+using SystemLamplighter.Interfaces;
 using SystemLamplighter.Tool;
+using SystemLamplighter.Target.Interfaces;
 
+namespace SystemLamplighter.Providers;
+
+/// <summary>
+/// Classe che permette la gestione di tutti gli oggetti targettabili
+/// </summary>
 public class TargetableProvider : ITargetableProvider
 {
 	private List<ITargetable> _targetables;

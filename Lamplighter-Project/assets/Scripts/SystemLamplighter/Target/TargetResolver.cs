@@ -6,6 +6,9 @@ using SystemLamplighter.DataStructure.GeneralData;
 
 namespace SystemLamplighter.Target;
 
+/// <summary>
+/// Classe astratta per il targetResolver
+/// </summary>
 public abstract class TargetResolver : ITargetResolver
 {
 	public bool IsActive { get; set; }

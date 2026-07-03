@@ -9,6 +9,8 @@ using SystemLamplighter.Tool;
 
 namespace SystemLamplighter.Navigation;
 
+// TODO Probabilmente obsoleto
+
 //[Tool]
 public partial class NavigationSystem : Node, INavigationSystem
 {

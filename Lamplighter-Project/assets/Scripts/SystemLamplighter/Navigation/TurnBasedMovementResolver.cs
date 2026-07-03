@@ -1,9 +1,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
+using SystemLamplighter.DataStructure.GeneralData;
 using SystemLamplighter.Debug;
+using SystemLamplighter.Navigation;
 using SystemLamplighter.Tool;
 
+namespace SystemLamplighter.Navigation;
+
+// TODO Obsoleto?
+
+/// <summary>
+/// Classe per la risoluzione globale del movimento
+/// </summary>
 public class TurnBasedMovementGlobalResolver
 {
 	private readonly INavigationAstar _navigation;

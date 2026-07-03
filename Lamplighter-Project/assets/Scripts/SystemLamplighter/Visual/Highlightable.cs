@@ -4,6 +4,10 @@ using SystemLamplighter.Interfaces;
 using SystemLamplighter.Setup;
 using SystemLamplighter.Tool;
 
+namespace SystemLamplighter.Visual;
+
+// TODO: Da cancellare?
+
 public partial class Highlightable : Node,  IHighlightable
 {
 	/// <summary>

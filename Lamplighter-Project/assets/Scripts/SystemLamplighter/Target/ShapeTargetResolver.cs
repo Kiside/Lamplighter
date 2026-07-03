@@ -6,6 +6,9 @@ using SystemLamplighter.DataStructure.GeneralData;
 
 namespace SystemLamplighter.Target;
 
+/// <summary>
+/// Classe per risolvere la targetizzazione tramite shape
+/// </summary>
 public class ShapeTargetResolver : TargetResolver
 {
 	public override TargetCursorState ResolveTargets(IActionData action, ICombatActor mainActor)
