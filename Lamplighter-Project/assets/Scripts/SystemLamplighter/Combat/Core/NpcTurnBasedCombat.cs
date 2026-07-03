@@ -2,6 +2,11 @@ using Godot;
 using SystemLamplighter.DataStructure.GeneralData;
 using SystemLamplighter.Interfaces;
 
+namespace SystemLamplighter.Combat.Core;
+
+/// <summary>
+/// Classe per il combattimento degli NPC
+/// </summary>
 public class NpcTurnBasedCombat : ITurnBasedCombat
 {
 	private readonly ITargetableProvider _targetableProvider;

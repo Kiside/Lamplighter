@@ -22,9 +22,12 @@ using Godot;
 
 namespace SystemLamplighter.Combat.Core
 {
+	/// <summary>
+	/// Classe che si occupa di gestire il combattimento del giocatore
+	/// </summary>
 	public class TurnBasedCombat : ITurnBasedCombat, ICombatCommandHandler, ICombatActionExecutor
 	{
-		
+		#region PUBLIC VARIABLES
 		public BattleMenuController _battleMenuController {get; private set;}
 		// TODO: Controllare se Actor serve nel contesto, dato che viene passato più volte anche da altre parti
 		public ICombatActor Actor {get; private set;}
@@ -32,9 +35,12 @@ namespace SystemLamplighter.Combat.Core
 		public AtbCharacterProperties AtbProperties {get => Actor.AtbProperties;}
 		public IActionData CurrentAction { get => Actor.CurrentAction; set => Actor.CurrentAction = value;}
 		public TargetResolutionContext TargetResolutionContext {get; private set;}
+		#endregion
 
+		#region PRIVATE VARIABLES
 		private MovementService _movementService;
 		private readonly ITargetableProvider _targetableProvider;
+		#endregion
 
 		#region eventsAttributes
 		private IPublisher<AtbCommandPhaseEndEvent> _publishCommandPhaseEnd;
@@ -76,9 +82,10 @@ namespace SystemLamplighter.Combat.Core
 
 			_subscriberCommandPhaseStarted.Subscribe(OnCommandPhaseStarted).AddTo(_bag);
 			_subscriberExecuteActionEvent.Subscribe(OnExecuteCombatAction).AddTo(_bag);
-
-			_battleMenuController.OnActionClick += ActionChoosedHandler;
-			_battleMenuController.OnOpenSubMenu += OpenBattleSubMenuHandler;
+			
+			// PROBABILMENTE METODI DA CANCELLARE, TEST PER VEDERE SE SI ROMPE QUALCOSA COMMENTANDOLI
+			//_battleMenuController.OnActionClick += ActionChoosedHandler;
+			//_battleMenuController.OnOpenSubMenu += OpenBattleSubMenuHandler;
 
 			_animationPlayer = animationPlayer;
 		}
@@ -123,6 +130,39 @@ namespace SystemLamplighter.Combat.Core
 			_ = ExecuteCombatActionTask();
 		}
 
+		
+		// TODO DA AGGIUNGERE ALL'INTERFACCIA?
+		public void OnCommandPhaseStarted(AtbCommandPhaseStartedEvent evt)
+		{
+			if (evt.Actor != Actor)
+				return;
+
+			// TODO: forse non deve essere qui che si gestisce tale evento
+			_battleMenuController.TurnOn();
+		}
+
+		// TODO DA AGGIUNGERE ALL'INTERFACCIA?
+		public void OnEndTarget(EndTargetEvent ev)
+		{
+			DebugLamplighter.Assert(ev != null, "ev is null");
+			DebugLamplighter.Assert(ev.TargetResolutionContext != null, "TargetResolutionContext is null");
+
+			if (ev.TargetResolutionContext.CasterActor != Actor)
+				return;
+
+			TargetResolutionContext = null;
+			_disposeEndTargetEvent?.Dispose();
+			// TODO: la riga EndCommandStatus(...) può essere gestita dall'evento _publishCommandPhaseEnd? Controllare e provare
+			//AtbProperties.EndCommandStatus(CurrentAction.ActionSpeedMultiplier);
+			TargetResolutionContext = ev.TargetResolutionContext;
+			_publishCommandPhaseEnd.Publish(new AtbCommandPhaseEndEvent(Actor));
+		}
+		#endregion
+
+		/// <summary>
+		/// Task Asincrono che si occupa di aspettare il momento giusto per poter eseguire l'azione
+		/// </summary>
+		/// <returns></returns>
 		private async Task ExecuteCombatActionTask()
 		{
 			try
@@ -150,32 +190,6 @@ namespace SystemLamplighter.Combat.Core
 			
 		}
 
-		// TODO DA AGGIUNGERE ALL'INTERFACCIA?
-		public void OnCommandPhaseStarted(AtbCommandPhaseStartedEvent evt)
-		{
-			if (evt.Actor != Actor)
-				return;
-
-			// TODO: forse non deve essere qui che si gestisce tale evento
-			_battleMenuController.TurnOn();
-		}
-
-		// TODO DA AGGIUNGERE ALL'INTERFACCIA?
-		public void OnEndTarget(EndTargetEvent ev)
-		{
-			DebugLamplighter.Assert(ev != null, "ev is null");
-			DebugLamplighter.Assert(ev.TargetResolutionContext != null, "TargetResolutionContext is null");
-
-			if (ev.TargetResolutionContext.CasterActor != Actor)
-				return;
-
-			TargetResolutionContext = null;
-			_disposeEndTargetEvent?.Dispose();
-			// TODO: la riga EndCommandStatus(...) può essere gestita dall'evento _publishCommandPhaseEnd? Controllare e provare
-			//AtbProperties.EndCommandStatus(CurrentAction.ActionSpeedMultiplier);
-			TargetResolutionContext = ev.TargetResolutionContext;
-			_publishCommandPhaseEnd.Publish(new AtbCommandPhaseEndEvent(Actor));
-		}
 
 		/// <summary>
 		/// Quando l'utente sceglie nel primo menu cosa fare (attaccare, usare un oggetto, scappare o ecc...)
@@ -195,6 +209,8 @@ namespace SystemLamplighter.Combat.Core
 
 		}
 
+		// TODO: BISOGNA TESTARE E VEDERE SE TUTTI QUESTI METODI SONO DA TENERE O CANCELLARE
+		#region DA CANCELLARE?
 		public void ActionChoosedHandler(IActionData action)
 		{
 			CurrentAction = action;
@@ -227,8 +243,6 @@ namespace SystemLamplighter.Combat.Core
 
 			//_publishCommandPhaseEnd.Publish(new AtbCommandPhaseEndEvent(Actor));
 		}
-
-		#endregion
 		
 
 		public void HandleAttackAction()
@@ -257,6 +271,7 @@ namespace SystemLamplighter.Combat.Core
 		{ }
 		public void HandleEscapeAction()
 		{ }
+		#endregion
 
 		public void Dispose()
 		{

@@ -1,4 +1,7 @@
 using System.Collections.Generic;
+using SystemLamplighter.DataStructure.GeneralData;
+
+namespace SystemLamplighter.Interfaces;
 
 /// <summary>
 /// Interfaccia per la classi che si occupano della logica di business per la risoluzione di "effetti"

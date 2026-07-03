@@ -10,14 +10,25 @@ using System;
 using Godot;
 using SystemLamplighter.Extensions;
 using Characters.Playable;
+using SystemLamplighter.ATB.Interfaces;
 
 namespace SystemLamplighter.Combat.Actor;
 
+/// <summary>
+/// Classe per i personaggi che possono combattere
+/// </summary>
 public partial class CombatActor : Node, ICombatActor
 {
+	#region Export variable
 	[Export]
 	public CombatLoadout CombatLoadout {get; private set;}
+	#endregion
+
+	#region Private variable
 	private IActionData _currentAction;
+	#endregion 
+
+	#region Public variables
 	public IAtbCharacterService CharacterService {get ; private set;}
 	public AtbCharacterStatus AtbStatus 
 	{get {return CharacterService.CharacterProperties.AtbCharacterStatus;}}
@@ -26,6 +37,9 @@ public partial class CombatActor : Node, ICombatActor
 	public IActionData CurrentAction 
 	{get => _currentAction; set {_currentAction = value;}}
 	public Identification Id {get; private set;}
+	#endregion
+
+	#region Methods
 
 	public override void _Ready()
 	{
@@ -45,4 +59,5 @@ public partial class CombatActor : Node, ICombatActor
 
 	public void Unsubscribe() => CharacterService.Unsubscribe();
 	public void Subscribe() => CharacterService.Subscribe();
+	#endregion
 }

@@ -1,8 +1,14 @@
 using System.Collections.Generic;
 using Godot;
 using Microsoft.Extensions.DependencyInjection;
-using SystemLamplighter.Bootstrap;
 
+namespace SystemLamplighter.Bootstrap;
+
+/// <summary>
+/// Classe per la gestione dei oggetti targetable di tipo Node.
+/// Lo scopo della classe è quello di generare e mantenere le istanze che serviranno
+/// per la gestione dei oggetti targettabili
+/// </summary>
 public partial class TargetableSceneCollector : BaseCollector
 {
 	ITargetableProvider _targetableProvider;

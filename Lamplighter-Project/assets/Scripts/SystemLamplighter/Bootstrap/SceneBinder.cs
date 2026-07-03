@@ -7,6 +7,9 @@ using SystemLamplighter.Extensions;
 
 namespace SystemLamplighter.Bootstrap;
 
+/// <summary>
+/// Classe che si occupa di Bindare in modo automatico i nodi
+/// </summary>
 public partial class SceneBinder : Node
 {
 	[Export]

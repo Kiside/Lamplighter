@@ -4,6 +4,12 @@ using Godot;
 using SystemLamplighter.ATB;
 using SystemLamplighter.Common.Enums;
 
+namespace SystemLamplighter.DataStructure.GeneralData;
+
+
+/// <summary>
+/// Struttura dati per le statistiche dei personaggi
+/// </summary>
 [GlobalClass]
 public partial class CharacterProperties : Resource
 {

@@ -5,6 +5,9 @@ using SystemLamplighter.Events;
 
 namespace SystemLamplighter.DataStructure.GeneralData;
 
+/// <summary>
+/// Struttura dati per inizializzare il TurnBasedCOmbat
+/// </summary>
 public class TurnBasedCombatContext
 {
 	public ICombatBrain CombatBrain { get; private set; }

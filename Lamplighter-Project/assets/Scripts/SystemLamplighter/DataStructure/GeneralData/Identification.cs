@@ -1,5 +1,9 @@
 using System;
+namespace SystemLamplighter.DataStructure.GeneralData;
 
+/// <summary>
+/// Struttura dati per le informazioni di identificazione del giocatore 
+/// </summary>
 public class Identification
 {
 	public Guid ID { get; set; }

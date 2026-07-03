@@ -4,7 +4,7 @@ using Godot;
 
 namespace SystemLamplighter.DataStructure.ActionsData
 {
-	// ! DA CANCELLARE E REWORKARE IL SISTEMA
+	// TODO: DA CANCELLARE E REWORKARE IL SISTEMA
 	/// <summary>
 	/// Classe per l'azione di cura di un item
 	/// </summary>

@@ -7,6 +7,8 @@ using SystemLamplighter.Debug;
 
 namespace SystemLamplighter.Combat.Actor;
 
+// TODO: Questa classe è ancora funzionante o è stata sostituita?
+
 /// <summary>
 /// Classe per gestire le posizioni dei personaggi in battaglia
 /// </summary>

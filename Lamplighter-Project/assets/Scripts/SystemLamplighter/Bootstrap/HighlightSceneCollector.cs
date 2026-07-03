@@ -10,6 +10,7 @@ using SystemLamplighter.Interfaces;
 
 namespace SystemLamplighter.Bootstrap;
 
+// TODO: SERVE ANCORA?
 public partial class HighlightSceneCollector : BaseCollector
 {
 	private IHighlightSystem _highlightSystem;

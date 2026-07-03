@@ -4,6 +4,9 @@ using SystemLamplighter.Common.Enums;
 
 namespace SystemLamplighter.DataStructure.GeneralData;
 
+/// <summary>
+/// Struttura dati per passare le informazioni per il sistema di targetizzazione
+/// </summary>
 public class ActorCursorState : TargetCursorState
 {
 	public List<ITargetable> TargetablesSelected { get; private set; }

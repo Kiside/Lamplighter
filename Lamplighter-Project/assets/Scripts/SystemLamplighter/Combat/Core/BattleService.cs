@@ -10,6 +10,9 @@ using SystemLamplighter.Tool;
 
 namespace SystemLamplighter.Combat.Core;
 
+/// <summary>
+/// Servizio che si occupa nell'avviare o fermare la battaglia
+/// </summary>
 public class BattleService : IBattleService
 {
 	private readonly IPublisher<CombatStartedEvent> _publisherCombatStarted;

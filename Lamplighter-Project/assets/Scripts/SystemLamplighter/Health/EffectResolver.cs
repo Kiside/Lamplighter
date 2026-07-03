@@ -1,6 +1,8 @@
 
 using System.Collections.Generic;
 using SystemLamplighter.Tool;
+using SystemLamplighter.DataStructure.GeneralData;
+using SystemLamplighter.Interfaces;
 
 public class EffectResolver : IEffectResolver
 {

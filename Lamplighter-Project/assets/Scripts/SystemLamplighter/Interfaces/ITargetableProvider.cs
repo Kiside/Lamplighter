@@ -1,6 +1,9 @@
 using System.Collections.Generic;
 using Godot;
 using SystemLamplighter.Common.Enums;
+using SystemLamplighter.DataStructure.GeneralData;
+
+namespace SystemLamplighter.Interfaces;
 
 public interface ITargetableProvider
 {

@@ -2,6 +2,9 @@ using System.Collections.Generic;
 using Characters.Interfaces;
 using SystemLamplighter.Interfaces;
 
+namespace SystemLamplighter.Combat.Actor;
+
+// TODO: Questo va bene? O è da cancellare?
 public class CombatActorHighlightableProvider : ICombatActorHighlightableProvider
 {
 	Dictionary<ICombatActor, IHighlightable> _highlightables;

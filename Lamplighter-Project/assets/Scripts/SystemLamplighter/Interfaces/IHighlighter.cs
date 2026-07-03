@@ -1,5 +1,6 @@
 using SystemLamplighter.Interfaces;
 
+// TODO: Da cancellare?
 /// <summary>
 /// Interfaccia per l'inizializzazione dei elementi che possono evidenziare
 /// </summary>

@@ -2,6 +2,9 @@ using System.Collections.Generic;
 using Characters.Interfaces;
 using Godot;
 
+namespace SystemLamplighter.Interfaces;
+
+// TODO: Probabilmente da cancellare
 public interface ICombatActorPositionProvider<TNodeType>
 {
 	public void Init(Dictionary<ICombatActor, TNodeType> actors);
