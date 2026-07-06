@@ -7,6 +7,7 @@ using SystemLamplighter.Interfaces;
 using System.Numerics;
 using System;
 using SystemLamplighter.ATB.Interfaces;
+using SystemLamplighter.DataStructure.GeneralData;
 
 namespace Characters.Interfaces;
 

@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using SystemLamplighter.Setup;
 using Characters.Interfaces;
 using SystemLamplighter.Common.Enums;
+using SystemLamplighter.Events;
 
 namespace SystemLamplighter.Target;
 

@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using Godot;
 using Microsoft.Extensions.DependencyInjection;
+using SystemLamplighter.Interfaces;
+using SystemLamplighter.Target.Interfaces;
 
 namespace SystemLamplighter.Bootstrap;
 

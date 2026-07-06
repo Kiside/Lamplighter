@@ -1,5 +1,6 @@
 using Godot;
 using SystemLamplighter.Common.Enums;
+using SystemLamplighter.DataStructure.GeneralData;
 
 namespace SystemLamplighter.DataStructure.EffectsData;
 

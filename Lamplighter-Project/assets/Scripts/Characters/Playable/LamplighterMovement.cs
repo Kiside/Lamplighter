@@ -9,6 +9,8 @@ using SystemLamplighter.Debug;
 using System.Collections.Generic;
 using SystemLamplighter.Tool;
 using System.IO;
+using SystemLamplighter.Navigation;
+using SystemLamplighter.DataStructure.GeneralData;
 
 namespace Characters.Playable
 {
@@ -24,6 +26,7 @@ namespace Characters.Playable
 
 		#region Private Variable
 		NavigationAgent3D _navAgent;
+		// TODO: Da cancellare
 		TurnBasedMovementGlobalResolver _turnBasicMovementResolver;
 
 		MovementService _movementService;

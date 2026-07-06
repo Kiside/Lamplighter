@@ -15,6 +15,7 @@ using SystemLamplighter.Common.Enums;
 using SystemLamplighter.Interfaces;
 using SystemLamplighter.Combat.Actor;
 using SystemLamplighter.Tool;
+using SystemLamplighter.DataStructure.GeneralData;
 
 namespace Characters.Playable
 {

@@ -1,5 +1,6 @@
 using Characters.Interfaces;
 using SystemLamplighter.Interfaces;
+using SystemLamplighter.Target;
 
 namespace SystemLamplighter.DataStructure.GeneralData;
 

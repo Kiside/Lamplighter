@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Godot;
 using SystemLamplighter.DataStructure.GeneralData;
+using SystemLamplighter.Navigation;
 
 namespace SystemLamplighter.Interfaces;
 

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Numerics;
 using Characters.Interfaces;
+using SystemLamplighter.Target;
 namespace SystemLamplighter.Events;
 
 /// <summary>

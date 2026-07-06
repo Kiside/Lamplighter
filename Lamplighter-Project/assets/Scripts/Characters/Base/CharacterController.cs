@@ -6,6 +6,7 @@ using System.Diagnostics;
 using Characters.Abstract;
 using SystemLamplighter.Abstract.MVC;
 using SystemLamplighter.Interfaces;
+using SystemLamplighter.DataStructure.GeneralData;
 
 namespace Characters
 {

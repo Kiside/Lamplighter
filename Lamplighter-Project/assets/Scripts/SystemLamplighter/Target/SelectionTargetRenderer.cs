@@ -8,6 +8,7 @@ using SystemLamplighter.DataStructure.GeneralData;
 using SystemLamplighter.Debug;
 using SystemLamplighter.Extensions;
 using SystemLamplighter.Interfaces;
+using SystemLamplighter.Providers;
 using SystemLamplighter.Target.Interfaces;
 using SystemLamplighter.Tool;
 
@@ -34,6 +35,8 @@ public partial class SelectionTargetRenderer : Control, ITargetRenderer
 	Dictionary<ITargetable, SelectionLabel> _selectionTargetsUiDictionary;
 	ITargetableProvider _targetableProvider;
 	Camera3D _camera;
+
+	
 
 	public override void _Ready()
 	{

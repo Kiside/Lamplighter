@@ -18,6 +18,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Godot;
+using SystemLamplighter.Target;
+using SystemLamplighter.Navigation;
 
 
 namespace SystemLamplighter.Combat.Core
@@ -83,9 +85,8 @@ namespace SystemLamplighter.Combat.Core
 			_subscriberCommandPhaseStarted.Subscribe(OnCommandPhaseStarted).AddTo(_bag);
 			_subscriberExecuteActionEvent.Subscribe(OnExecuteCombatAction).AddTo(_bag);
 			
-			// PROBABILMENTE METODI DA CANCELLARE, TEST PER VEDERE SE SI ROMPE QUALCOSA COMMENTANDOLI
-			//_battleMenuController.OnActionClick += ActionChoosedHandler;
-			//_battleMenuController.OnOpenSubMenu += OpenBattleSubMenuHandler;
+			_battleMenuController.OnActionClick += ActionChoosedHandler;
+			_battleMenuController.OnOpenSubMenu += OpenBattleSubMenuHandler;
 
 			_animationPlayer = animationPlayer;
 		}

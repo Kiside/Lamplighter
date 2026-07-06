@@ -3,6 +3,7 @@ using System.Linq;
 using Characters.Interfaces;
 using Godot;
 using SystemLamplighter.Debug;
+using SystemLamplighter.Interfaces;
 
 
 namespace SystemLamplighter.Combat.Actor;

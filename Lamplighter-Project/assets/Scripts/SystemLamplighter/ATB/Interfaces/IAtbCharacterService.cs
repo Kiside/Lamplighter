@@ -1,6 +1,7 @@
 using Characters.Interfaces;
 using MessagePipe;
 using SystemLamplighter.Common.Enums;
+using SystemLamplighter.DataStructure.GeneralData;
 using SystemLamplighter.Events;
 
 

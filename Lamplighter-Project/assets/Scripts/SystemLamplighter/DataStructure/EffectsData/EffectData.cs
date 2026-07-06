@@ -1,4 +1,6 @@
 using Godot;
+using SystemLamplighter.DataStructure.GeneralData;
+using SystemLamplighter.Interfaces;
 
 namespace SystemLamplighter.DataStructure.EffectsData;
 

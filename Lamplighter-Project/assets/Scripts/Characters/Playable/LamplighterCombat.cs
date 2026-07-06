@@ -12,6 +12,7 @@ using System.Diagnostics;
 using SystemLamplighter.Debug;
 using System.Collections.Generic;
 using Characters.Interfaces;
+using SystemLamplighter.Navigation;
 
 namespace Characters.Playable;
 /// <summary>

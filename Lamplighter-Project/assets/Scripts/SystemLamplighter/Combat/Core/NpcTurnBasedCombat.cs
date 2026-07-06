@@ -1,6 +1,7 @@
 using Godot;
 using SystemLamplighter.DataStructure.GeneralData;
 using SystemLamplighter.Interfaces;
+using SystemLamplighter.Navigation;
 
 namespace SystemLamplighter.Combat.Core;
 

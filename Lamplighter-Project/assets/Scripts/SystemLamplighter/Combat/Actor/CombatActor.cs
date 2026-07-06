@@ -11,6 +11,7 @@ using Godot;
 using SystemLamplighter.Extensions;
 using Characters.Playable;
 using SystemLamplighter.ATB.Interfaces;
+using SystemLamplighter.DataStructure.GeneralData;
 
 namespace SystemLamplighter.Combat.Actor;
 

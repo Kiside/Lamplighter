@@ -11,6 +11,9 @@ using SystemLamplighter.Debug;
 using Characters.Playable;
 using SystemLamplighter.Tool;
 using SystemLamplighter.ATB.Interfaces;
+using SystemLamplighter.Navigation;
+using SystemLamplighter.Visual;
+using SystemLamplighter.Providers;
 
 
 namespace SystemLamplighter.Bootstrap;
@@ -102,7 +105,7 @@ public partial class GameBootstrap : Node
 
 		DebugLamplighter.Assert(selectionTargetRender != null, "selectionTargetRender is null");
 
-		var context = new SelectionTargetRendererContext
+		var context = new DataStructure.GeneralData.SelectionTargetRendererContext
 		{
 			TargetableProvider = Services.GetRequiredService<ITargetableProvider>(),
 		};
@@ -135,6 +138,7 @@ public partial class GameBootstrap : Node
 		services.AddSingleton<ICombatActorPositionProvider<Node3D>, CombatActorPosition3DProvider>();
 		Log.PrintMessage("BattleService - CombatActorRegistry - CombatActorPosition3DProvider");
 
+		// Todo: highlightsystem ecc probabilmente da cancellare
 		services.AddSingleton<IHighlightSystem, HighlightSystem>(); 
 		services.AddSingleton<ICombatActorHighlightableProvider, CombatActorHighlightableProvider>();
 		Log.PrintMessage("HighlightSystem - CombatActorHighlightableProvider");

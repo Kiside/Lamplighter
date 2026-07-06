@@ -2,7 +2,9 @@ using System;
 using System.Collections.Generic;
 using Godot;
 using SystemLamplighter.Common.Enums;
+using SystemLamplighter.DataStructure.GeneralData;
 using SystemLamplighter.Debug;
+using SystemLamplighter.Interfaces;
 using SystemLamplighter.Tool;
 
 namespace SystemLamplighter.Extensions;

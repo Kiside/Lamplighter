@@ -4,6 +4,7 @@ using MessagePipe;
 using SystemLamplighter.ATB;
 using SystemLamplighter.Common.Constants;
 using SystemLamplighter.Common.Enums;
+using SystemLamplighter.DataStructure.GeneralData;
 using SystemLamplighter.Debug;
 using SystemLamplighter.Events;
 
