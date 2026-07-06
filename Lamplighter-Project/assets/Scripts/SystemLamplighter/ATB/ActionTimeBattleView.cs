@@ -93,18 +93,6 @@ namespace SystemLamplighter.ATB
 			}
 		}
 
-		// TODO: Capire se bisogna cancellare il metodo qui sotto
-		public void UpdatePosition(float position, int index)
-		{
-			DebugLamplighter.Assert(_actorsView != null, "_characters is null");
-			DebugLamplighter.Assert(index < _actorsView.Count, "index goes overflow");
-
-			var barWidth = _control.Size.X;
-
-			float x = Mathf.Lerp(0, barWidth - avatarSize.X, position);
-			//_characters[index].Position = new Vector2(x, _characters[index].Position.Y);
-		}
-
 		public void ClearCharacters()
 		{
 			DebugLamplighter.Assert(_actorsView != null, "_characters is null");

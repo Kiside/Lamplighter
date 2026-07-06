@@ -18,7 +18,6 @@
 [ext_resource type="Resource" uid="uid://cbeyc04mt0ja6" path="res://assets/CustomResources/Prototype/AttackMultiSelection.tres" id="12_x47ln"]
 [ext_resource type="Script" uid="uid://cwd6nmn8t150p" path="res://assets/Scripts/SystemLamplighter/DataStructure/ActionsData/MagicAction.cs" id="14_voq6j"]
 [ext_resource type="PackedScene" uid="uid://bgsjemevth5s" path="res://assets/Scenes-Node/battle_menu.tscn" id="17_rd6aq"]
-[ext_resource type="PackedScene" uid="uid://dyhr28frl1avx" path="res://assets/Scenes-Node/highlightable.tscn" id="17_vju8h"]
 [ext_resource type="PackedScene" uid="uid://cu7tp8wr5c5y6" path="res://assets/Scenes-Node/targetable.tscn" id="18_voq6j"]
 [ext_resource type="Script" uid="uid://rwc1nyomeg65" path="res://assets/Scripts/SystemLamplighter/Area/HitBoxArea.cs" id="20_lox3l"]
 
@@ -87,8 +86,6 @@ _defense = Array[ExtResource("12_vju8h")]([ExtResource("9_vju8h")])
 _magic = Array[ExtResource("14_voq6j")]([ExtResource("11_x47ln")])
 
 [node name="BattleMenuController" parent="." unique_id=387986966 instance=ExtResource("17_rd6aq")]
-
-[node name="Highlightable" parent="." unique_id=91866639 groups=["highlightable"] instance=ExtResource("17_vju8h")]
 
 [node name="Targetable" parent="." unique_id=1186375305 node_paths=PackedStringArray("_position") instance=ExtResource("18_voq6j")]
 _position = NodePath("../Pivot/Main")

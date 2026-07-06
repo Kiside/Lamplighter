@@ -34,7 +34,7 @@ namespace SystemLamplighter.ATB
 		private ICombatActor _currentActorInCommand;
 
 		// PER DEBUG
-		public void CallViewUpdatePosition(float position, int index) => _view.UpdatePosition(position, index);
+		//public void CallViewUpdatePosition(float position, int index) => _view.UpdatePosition(position, index);
 
 		public override void Init()
 		{

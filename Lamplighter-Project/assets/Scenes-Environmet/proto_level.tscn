@@ -17,17 +17,14 @@
 [ext_resource type="Resource" uid="uid://cdqt0xaj3qxg8" path="res://assets/CustomResources/Prototype/basic magic.tres" id="15_23igw"]
 [ext_resource type="Script" uid="uid://bpc15l8suoj7p" path="res://assets/Scripts/SystemLamplighter/DataStructure/ActionsData/ItemAction.cs" id="16_h0r1b"]
 [ext_resource type="Resource" uid="uid://bjd0r2gvapdf" path="res://assets/CustomResources/Prototype/healthItem.tres" id="17_gor4l"]
-[ext_resource type="PackedScene" uid="uid://dyhr28frl1avx" path="res://assets/Scenes-Node/highlightable.tscn" id="18_7o5g0"]
 [ext_resource type="PackedScene" uid="uid://cu7tp8wr5c5y6" path="res://assets/Scenes-Node/targetable.tscn" id="19_hp1yv"]
 [ext_resource type="Script" uid="uid://1dwbacc7ive8" path="res://assets/Scripts/SystemLamplighter/NpcCombat/NpcCombatBrain.cs" id="20_nbpjs"]
 [ext_resource type="Script" uid="uid://0rkd4hh7dr53" path="res://assets/Scripts/Characters/Playable/LamplighterCharacterController.cs" id="21_gor4l"]
 [ext_resource type="Script" uid="uid://cou4bfs5gnolp" path="res://assets/Scripts/Characters/Playable/LamplighterCharacterModel.cs" id="21_w6ram"]
-[ext_resource type="Script" uid="uid://dnx4tgkhr5a1i" path="res://assets/Scripts/SystemLamplighter/Navigation/NavigationSystem.cs" id="22_h0r1b"]
 [ext_resource type="Script" uid="uid://i2ivjf6e807r" path="res://assets/Scripts/Characters/Playable/LamplighterCharacterView.cs" id="22_hev2j"]
 [ext_resource type="Script" uid="uid://43moiapfoih4" path="res://assets/Scripts/Characters/Playable/LamplighterCombat.cs" id="23_hev2j"]
 [ext_resource type="Script" uid="uid://dwohowhq81y4d" path="res://assets/Scripts/SystemLamplighter/Debug/DebugMasterNode.cs" id="24_chj2u"]
 [ext_resource type="Script" uid="uid://sc5ny07t4tg3" path="res://assets/Scripts/Characters/Playable/LamplighterMovement.cs" id="24_nbpjs"]
-[ext_resource type="Script" uid="uid://c0awbro2jcb4v" path="res://assets/Scripts/SystemLamplighter/Debug/DebugNavigationSystem.cs" id="25_23igw"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qcquh"]
 albedo_color = Color(0.46126777, 0, 0.01909638, 1)
@@ -52,10 +49,6 @@ geometry_source_geometry_mode = 2
 geometry_source_group_name = &"navigationMesh"
 
 [node name="ProtoLevel" type="Node3D" unique_id=1351766654]
-
-[node name="Navigation" type="Node" parent="." unique_id=750886176 groups=["bindable"]]
-script = ExtResource("22_h0r1b")
-_gridStep = 0.5
 
 [node name="FloorProto2" parent="." unique_id=703619226 groups=["walkable"] instance=ExtResource("2_x5dwk")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.17597556, 0)
@@ -105,8 +98,6 @@ _items = Array[ExtResource("16_h0r1b")]([ExtResource("17_gor4l")])
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Enemy" unique_id=1369978317]
 shape = SubResource("BoxShape3D_uvot1")
 
-[node name="Highlightable" parent="Enemy" unique_id=2011998685 groups=["highlightable"] instance=ExtResource("18_7o5g0")]
-
 [node name="Targetable" parent="Enemy" unique_id=1893697076 node_paths=PackedStringArray("_position") instance=ExtResource("19_hp1yv")]
 _position = NodePath("../CSGMesh3D")
 _targetableType = 1
@@ -136,11 +127,6 @@ transform = Transform3D(1, 0, 0, 0, 0.56336695, 0.82620686, 0, -0.82620686, 0.56
 
 [node name="DebugMaster" type="Node" parent="." unique_id=2029330679]
 script = ExtResource("24_chj2u")
-
-[node name="DebystemugNavigationS" type="Node" parent="DebugMaster" unique_id=709504440]
-script = ExtResource("25_23igw")
-_gridStep = 0.5
-_debugColorPoint = Color(0, 0.89411765, 0, 0)
 
 [node name="GameBootstrap" type="Node" parent="." unique_id=1881634156 node_paths=PackedStringArray("_sceneBinder")]
 script = ExtResource("1_qcquh")

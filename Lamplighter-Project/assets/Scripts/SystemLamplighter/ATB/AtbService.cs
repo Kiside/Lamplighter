@@ -122,9 +122,6 @@ namespace SystemLamplighter.ATB
 
 			Log.PrintMessage($"{ev.Actor.AtbProperties.Name} ha finito il command");
 			_subscriptionAtbCommandPhaseEnd?.Dispose();
-			// TODO: Quello che c'è scritto sotto
-			// ! PROBABILMENTE NON MI SERVE PIÙ "_currentActorInCommand" DA CONTROLLARE
-			//_currentActorInCommand.AtbProperties.EndCommandStatus(ev.Actor.AtbProperties.SpeedMultiplier);
 			_stackCurrentActorsInCommand.Remove(ev.Actor);
 
 			_inCharging = true;

@@ -6,7 +6,6 @@
 [ext_resource type="PackedScene" uid="uid://4qo76msb1gq4" path="res://assets/Scenes-Node/target_controller.tscn" id="5_syokn"]
 [ext_resource type="Script" uid="uid://dqm7h7gl03tnp" path="res://assets/Scripts/SystemLamplighter/Bootstrap/TargetableSceneCollector.cs" id="7_4t55p"]
 [ext_resource type="PackedScene" uid="uid://bgsjemevth5s" path="res://assets/Scenes-Node/battle_menu.tscn" id="7_5f4u0"]
-[ext_resource type="Script" uid="uid://bhxtutkxsl8ll" path="res://assets/Scripts/SystemLamplighter/Bootstrap/HighlightSceneCollector.cs" id="12_lc0uq"]
 
 [node name="ProtoCombat" type="Node" unique_id=4540119]
 
@@ -25,10 +24,6 @@ _allies = []
 [node name="TargetController" parent="." unique_id=536833510 instance=ExtResource("5_syokn")]
 
 [node name="VisualSceneCollector" type="Node" parent="." unique_id=147890580]
-
-[node name="HighlightSceneCollector" type="Node" parent="." unique_id=1300145996]
-script = ExtResource("12_lc0uq")
-_groups = Array[int]([3, 4])
 
 [node name="TargetablesSceneCollector" type="Node" parent="." unique_id=1617449711]
 script = ExtResource("7_4t55p")

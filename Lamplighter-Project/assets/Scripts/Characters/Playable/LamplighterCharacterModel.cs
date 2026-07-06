@@ -24,7 +24,8 @@ namespace Characters.Playable
 	/// </summary>
 	public partial class LamplighterCharacterModel : AbstractModel
 	{
-		// TODO: COMBATLOADOUT DA CANCELLARE PROBABILMENTE
+		// ?: COMBATLOADOUT DA CANCELLARE PROBABILMENTE
+		
 		#region EXPORT PROPERTIES
 		[Export]
 		protected NodePath _combatLoadoutNode;

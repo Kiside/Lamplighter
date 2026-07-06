@@ -190,7 +190,7 @@ public partial class DebugAtb : Node
 
 	public void OnAllySliderChange(float value)
 	{
-		_atbController.CallViewUpdatePosition(value, allyNumberIndex.Prefix.ToInt());
+		//_atbController.CallViewUpdatePosition(value, allyNumberIndex.Prefix.ToInt());
 	}
 
 

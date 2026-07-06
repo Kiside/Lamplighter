@@ -210,69 +210,13 @@ namespace SystemLamplighter.Combat.Core
 
 		}
 
-		// TODO: BISOGNA TESTARE E VEDERE SE TUTTI QUESTI METODI SONO DA TENERE O CANCELLARE
-		#region DA CANCELLARE?
 		public void ActionChoosedHandler(IActionData action)
 		{
 			CurrentAction = action;
 
 			_disposeEndTargetEvent =_subscriberEndTarget.Subscribe(OnEndTarget);
 			_publisherStartTarget.Publish(new StartTargetEvent(Actor, CurrentAction));
-			
-			// TODO Probabilmente tutti da cancellare
-			// Che tipo di azione è? In base alla tipologia di azione ci saranno "cose da fare"
-			switch (CurrentAction.ActionType)
-			{
-				case ActionType.ATTACK:
-					HandleAttackAction();
-					break;
-				case ActionType.GUARD:
-					HandleGuardAction();
-					break;
-				case ActionType.MAGIC:
-					HandleMagicAction();
-					break;
-				case ActionType.ITEM:
-					HandleItemAction();
-					break;
-				case ActionType.ESCAPE:
-					HandleEscapeAction();
-					break;
-			}
-
-			
-
-			//_publishCommandPhaseEnd.Publish(new AtbCommandPhaseEndEvent(Actor));
 		}
-		
-
-		public void HandleAttackAction()
-		{
-			if (CurrentAction is AttackAction action)
-			{
-				switch (action.AttackType)
-				{
-					case AttackType.AREA:
-						break;
-					case AttackType.PUSH:
-						break;
-					// Il caso di default è per tutte le tipologie di attacco che hanno come selezione un singolo target
-					default:
-						Log.PrintMessage("HANDLE ATTACK ACTION");
-						//SingleTargetAttack();
-						break;
-				}
-			}
-		}
-		public void HandleGuardAction()
-		{ }
-		public void HandleMagicAction()
-		{ }
-		public void HandleItemAction()
-		{ }
-		public void HandleEscapeAction()
-		{ }
-		#endregion
 
 		public void Dispose()
 		{

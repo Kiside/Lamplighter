@@ -23,8 +23,7 @@ namespace Characters.Playable
 	/// <summary>
 	/// Classe per il controller del personaggio
 	/// </summary>
-	public partial class LamplighterCharacterController : CharacterController<LamplighterCharacterView,LamplighterCharacterModel>, 
-	IHasCombatInterface<ICombatActor>
+	public partial class LamplighterCharacterController : CharacterController<LamplighterCharacterView,LamplighterCharacterModel>
 	{
 		#region PUBLIC
 		public ICombatActor CombatActor {get => _model.CombatActor;}
@@ -69,22 +68,13 @@ namespace Characters.Playable
 
 		protected override void OnInit()
 		{
-			SetIdCombatActor();
+			//SetIdCombatActor();
 
 			_combat.Init(this);
 			_movement.Init(this);
 
 			Subscribe();
 		}
-
-		// TODO: Metodo da cancellare? 
-		private void SetIdCombatActor()
-		{
-			//_model.InitCombatActor(Id, _atbCharacterService);
-		}
-
-		// TODO: Metodo da cancellare?
-		public ICombatActor GetCombatInterface() => CombatActor;
 
 		#region Subscribe/Unsubscribe
 		protected override void Subscribe()

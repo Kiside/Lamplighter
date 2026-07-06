@@ -26,8 +26,6 @@ namespace Characters.Playable
 
 		#region Private Variable
 		NavigationAgent3D _navAgent;
-		// TODO: Da cancellare
-		TurnBasedMovementGlobalResolver _turnBasicMovementResolver;
 
 		MovementService _movementService;
 		#endregion 

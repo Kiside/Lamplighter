@@ -12,7 +12,6 @@ using Characters.Playable;
 using SystemLamplighter.Tool;
 using SystemLamplighter.ATB.Interfaces;
 using SystemLamplighter.Navigation;
-using SystemLamplighter.Visual;
 using SystemLamplighter.Providers;
 
 
@@ -72,8 +71,6 @@ public partial class GameBootstrap : Node
 
 		DebugLamplighter.Assert(playablecharacterNodes != null, "playableCharacterNodes is null");
 
-		// TODO : IL GLOBAL MOVMENT RESOLVER È UN SINGLETEON, BISOGNA FARE IN MODO CHE OGNI COMBAT NODE GLI DIA IL PROPRIO IDENTIFICATIVO
-
 		// Foreach Playable
 		foreach(var playableCharacter in playablecharacterNodes)
 		{
@@ -81,12 +78,6 @@ public partial class GameBootstrap : Node
 			playableCharacter.Movement as LamplighterMovement, 
 			movementService);
 		}
-
-		// FOREACH NO PLAYABLE CHARACTER
-		// foreach(var noPlayableCharacter in noPlayableCharacterNodes)
-		// {
-		// 	InitGlobalMovementResolverIntoCharacters(noPlayableCharacter.Combat as LamplighterCombat, noPlayableCharacter.Movement as LamplighterMovement, globalMovementResolver);
-		// }
 	}
 
 	private void InitMovementService(LamplighterCombat combatNode, LamplighterMovement movementNode, IMovementService movementService)
@@ -132,16 +123,10 @@ public partial class GameBootstrap : Node
 		var services = new ServiceCollection();
 
 		// CORE
-		// todo BATTLE SERVICE DA CANCELLARE 
 		services.AddSingleton<IBattleService, BattleService>();
 		services.AddSingleton<ICombatActorProvider, CombatActorProvider>();
-		services.AddSingleton<ICombatActorPositionProvider<Node3D>, CombatActorPosition3DProvider>();
+		//services.AddSingleton<ICombatActorPositionProvider<Node3D>, CombatActorPosition3DProvider>();
 		Log.PrintMessage("BattleService - CombatActorRegistry - CombatActorPosition3DProvider");
-
-		// Todo: highlightsystem ecc probabilmente da cancellare
-		services.AddSingleton<IHighlightSystem, HighlightSystem>(); 
-		services.AddSingleton<ICombatActorHighlightableProvider, CombatActorHighlightableProvider>();
-		Log.PrintMessage("HighlightSystem - CombatActorHighlightableProvider");
 
 		services.AddSingleton<ITargetableProvider, TargetableProvider>();
 		Log.PrintMessage("TargetableProvider");
@@ -152,11 +137,6 @@ public partial class GameBootstrap : Node
 
 		services.AddSingleton<ITargetResolverFactory, TargetResolverFactory>();
 		Log.PrintMessage("ITargetResolverFactory");
-
-
-		services.AddSingleton<INavigationAstar ,NavigationAstarService>();
-		Log.PrintMessage("INavigationAstar");
-
 		services.AddTransient<IMovementService, MovementService>();
 		
 		services.AddSingleton<ITurnBasedCombatFactory, TurnBasedCombatFactory>();
